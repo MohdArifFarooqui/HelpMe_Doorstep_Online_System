@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>आवेदन की स्थिति - HelpMe Doorstep</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<header>
+<div class="brand">
+<div class="logo">🤝</div>
+<div>
+<b>HelpMe Doorstep</b>
+<small>आपकी सेवा, आपके द्वार</small>
+</div>
+</div>
+
+<a href="/">Home</a>
+</header>
+
+<main>
+
+<section class="hero">
+<h1>📋 आवेदन की स्थिति</h1>
+<p>अपने मोबाइल नंबर से अपने आवेदन का Status देखें।</p>
+</section>
+
+<form class="card" method="get" action="/status">
+
+<label>
+मोबाइल नंबर
+<input
+name="phone"
+inputmode="numeric"
+placeholder="अपना मोबाइल नंबर डालें"
+required>
+</label>
+
+<button type="submit">Status देखें</button>
+
+</form>
+
+{% if requests %}
+
+<section class="card">
+<h2>आपके आवेदन</h2>
+
+{% for r in requests %}
+
+<div class="card" style="margin-top:15px">
+
+<p><b>Application ID:</b> {{r.id}}</p>
+
+<p><b>नाम:</b> {{r.customer}}</p>
+
+<p><b>उम्र:</b> {{r.age}} वर्ष</p>
+
+<p><b>सेवा:</b> {{r.service}}</p>
+
+<p><b>पता:</b> {{r.address}}</p>
+
+<p><b>विवरण:</b> {{r.details}}</p>
+
+<p>
+<b>आवेदन की स्थिति:</b>
+<strong>{{r.status}}</strong>
+</p>
+
+<p>
+<b>आवेदन दिनांक:</b>
+{{r.created_at.strftime("%d-%m-%Y %H:%M")}}
+</p>
+
+</div>
+
+{% endfor %}
+
+</section>
+
+{% elif request.args.get("phone") %}
+
+<section class="card">
+<h3>❌ कोई आवेदन नहीं मिला</h3>
+<p>कृपया वही मोबाइल नंबर डालें जिससे आवेदन भेजा गया था।</p>
+</section>
+
+{% endif %}
+
+<section class="card contact">
+📞 <a href="tel:9219160465">9219160465</a>
+&nbsp;|&nbsp;
+<a href="https://wa.me/919219160465">WhatsApp</a>
+</section>
+
+</main>
+
+</body>
+</html>
