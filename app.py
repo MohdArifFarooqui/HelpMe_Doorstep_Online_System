@@ -16,7 +16,7 @@ ADMIN_HASH=os.environ.get("ADMIN_PASSWORD_HASH",generate_password_hash("ChangeMe
 SERVICES=["गर्भवती महिला सहायता","Senior Citizen Assistance","दिव्यांगजन सहायता","Digital & Citizen Services","अन्य सहायता"]
 class RequestItem(Base):
     __tablename__="requests"
-    id=Column(Integer,primary_key=True); customer=Column(String(120),nullable=False); phone=Column(String(30),nullable=False)
+    id=Column(Integer,primary_key=True); customer=Column(String(120),nullable=False);age=Column(Integer,nullable=False); phone=Column(String(30),nullable=False)
     service=Column(String(150),nullable=False); address=Column(Text,nullable=False); details=Column(Text,nullable=False)
     status=Column(String(30),default="Pending",nullable=False); created_at=Column(DateTime,default=datetime.now,nullable=False)
 Base.metadata.create_all(engine)
@@ -27,9 +27,9 @@ def home(): return render_template("index.html",services=SERVICES)
 @app.post("/request-service")
 def add():
     d=request.form
-    vals=[d.get("customer","").strip(),d.get("phone","").strip(),d.get("service","").strip(),d.get("address","").strip(),d.get("details","").strip()]
+    vals=[d.get("customer","").strip(),d.get("age","").strip(),d.get("phone","").strip(),d.get("service","").strip(),d.get("address","").strip(),d.get("details","").strip()]
     if not all(vals): flash("कृपया सभी जानकारी भरें।","error"); return redirect(url_for("home"))
-    DB.add(RequestItem(customer=vals[0],phone=vals[1],service=vals[2],address=vals[3],details=vals[4])); DB.commit()
+   DB.add(RequestItem(customer=vals[0],age=int(vals[1]),phone=vals[2],service=vals[3],address=vals[4],details=vals[5])); DB.commit() 
     flash("आपका सेवा अनुरोध सफलतापूर्वक भेज दिया गया है।","success"); return redirect(url_for("home"))
 @app.route("/admin",methods=["GET"])
 def admin():
