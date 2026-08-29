@@ -43,9 +43,16 @@ def login():
     return redirect(url_for("admin"))
 @app.post("/admin/status/<int:rid>")
 def status(rid):
-    if not session.get("admin"): return redirect(url_for("admin"))
-    x=DB.get(RequestItem,rid); s=request.form.get("status")
-    if x and s in {"Pending","Assigned","In Progress","Completed","Cancelled"}: x.status=s; DB.commit()
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    x = DB.get(RequestItem, rid)
+    s = request.form.get("status")
+
+    if x and s in ("Pending", "Assigned", "In Progress", "Completed", "Cancelled"):
+        x.status = s
+        DB.commit()
+
     return redirect(url_for("admin"))
 @app.post("/admin/logout")
 def logout(): session.clear(); return redirect(url_for("admin"))
