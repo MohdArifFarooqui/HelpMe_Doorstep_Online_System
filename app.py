@@ -26,11 +26,32 @@ def close(e=None): DB.remove()
 def home(): return render_template("index.html",services=SERVICES)
 @app.post("/request-service")
 def add():
-    d=request.form
-    vals=[d.get("customer","").strip(),d.get("age","").strip(),d.get("phone","").strip(),d.get("service","").strip(),d.get("address","").strip(),d.get("details","").strip()]
-    if not all(vals): flash("कृपया सभी जानकारी भरें।","error"); return redirect(url_for("home"))
-   DB.add(RequestItem(customer=vals[0],age=int(vals[1]),phone=vals[2],service=vals[3],address=vals[4],details=vals[5])); DB.commit() 
-    flash("आपका सेवा अनुरोध सफलतापूर्वक भेज दिया गया है।","success"); return redirect(url_for("home"))
+    d = request.form
+    vals = [
+        d.get("customer", "").strip(),
+        d.get("age", "").strip(),
+        d.get("phone", "").strip(),
+        d.get("service", "").strip(),
+        d.get("address", "").strip(),
+        d.get("details", "").strip()
+    ]
+
+    if not all(vals):
+        flash("कृपया सभी जानकारी भरें", "error")
+        return redirect(url_for("home"))
+
+    DB.add(RequestItem(
+        customer=vals[0],
+        age=int(vals[1]),
+        phone=vals[2],
+        service=vals[3],
+        address=vals[4],
+        details=vals[5]
+    ))
+    DB.commit()
+
+    flash("आपका सेवा अनुरोध सफलतापूर्वक भेज दिया गया है।", "success")
+    return redirect(url_for("home"))
 @app.route("/admin",methods=["GET"])
 def admin():
     if not session.get("admin"): return render_template("login.html")
