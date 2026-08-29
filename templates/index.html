@@ -3,7 +3,7 @@
 <main><section class="hero"><h1>घर बैठे सेवा अनुरोध भेजें</h1><p>अपनी आवश्यकता बताएं। हमारी टीम आपसे संपर्क करेगी।</p></section>
 {% for cat,msg in get_flashed_messages(with_categories=true) %}<div class="alert {{cat}}">{{msg}}</div>{% endfor %}
 <form class="card" method="post" action="/request-service">
-<label>नाम<input name="customer" required></label><label>मोबाइल नंबर<input name="phone" inputmode="numeric" required></label>
+<label>नाम<input name="customer" required></label><label>उम्र<input name="age" type="number" min="1" max="120" required></label><label>मोबाइल नंबर<input name="phone" inputmode="numeric" required></label>
 <label>सेवा<select name="service" required><option value="">सेवा चुनें</option>{% for s in services %}<option>{{s}}</option>{% endfor %}</select></label>
 <label>पता<textarea name="address" required></textarea></label><label>किस काम में सहायता चाहिए?<textarea name="details" required></textarea></label>
 <button>सेवा अनुरोध भेजें</button></form><section class="card contact">📞 <a href="tel:9219160465">9219160465</a> &nbsp;|&nbsp; <a href="https://wa.me/919219160465">WhatsApp</a></section></main></body></html>
