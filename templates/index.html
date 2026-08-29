@@ -10,88 +10,91 @@
 <body>
 
 <header>
-<div class="brand">
-<div class="logo">🤝</div>
-<div>
-<b>HelpMe Doorstep</b>
-<small>आपकी सेवा, आपके द्वार</small>
-</div>
-</div>
+  <div class="brand">
+    <div class="logo">🤝</div>
+    <div>
+      <b>HelpMe Doorstep</b>
+      <small>आपकी सेवा, आपके द्वार</small>
+    </div>
+  </div>
 
-<a href="/admin">Admin</a>
+  <a href="/admin">Admin</a>
 </header>
 
 <main>
 
 <section class="hero">
-<h1>घर बैठे सेवा अनुरोध भेजें</h1>
-<p>अपनी आवश्यकता बताएं। हमारी टीम आपसे संपर्क करेगी।</p>
+  <h1>घर बैठे सेवा अनुरोध भेजें</h1>
+  <p>अपनी आवश्यकता बताएं। हमारी टीम आपसे संपर्क करेगी।</p>
 </section>
 
 {% for cat,msg in get_flashed_messages(with_categories=true) %}
 <div class="alert {{cat}}">{{msg}}</div>
 {% endfor %}
 
+<!-- आवेदन की स्थिति देखने का बटन -->
+<section class="card" style="text-align:center;">
+  <h2>📋 अपने आवेदन की स्थिति देखें</h2>
+  <p>मोबाइल नंबर डालकर अपने आवेदन का Status देखें।</p>
+
+  <a href="/status"
+     style="display:inline-block;
+            padding:12px 25px;
+            background:#16a085;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            font-weight:bold;">
+    आवेदन की स्थिति देखें
+  </a>
+</section>
+
+<!-- नया आवेदन -->
 <form class="card" method="post" action="/request-service">
 
 <label>
-नाम
-<input name="customer" required>
+  नाम
+  <input name="customer" required>
 </label>
 
 <label>
-उम्र
-<input name="age" type="number" min="1" max="120" required>
+  उम्र
+  <input name="age" type="number" min="1" max="120" required>
 </label>
 
 <label>
-मोबाइल नंबर
-<input name="phone" inputmode="numeric" required>
+  मोबाइल नंबर
+  <input name="phone" inputmode="numeric" required>
 </label>
 
 <label>
-सेवा
-<select name="service" required>
-<option value="">सेवा चुनें</option>
-{% for s in services %}
-<option>{{s}}</option>
-{% endfor %}
-</select>
+  सेवा
+  <select name="service" required>
+    <option value="">सेवा चुनें</option>
+    {% for s in services %}
+    <option>{{s}}</option>
+    {% endfor %}
+  </select>
 </label>
 
 <label>
-पता
-<textarea name="address" required></textarea>
+  पता
+  <textarea name="address" required></textarea>
 </label>
 
 <label>
-किस काम में सहायता चाहिए?
-<textarea name="details" required></textarea>
+  किस काम में सहायता चाहिए?
+  <textarea name="details" required></textarea>
 </label>
 
-<button>सेवा अनुरोध भेजें</button>
+<button type="submit">सेवा अनुरोध भेजें</button>
 
 </form>
-
-<!-- Application Status -->
-<section class="card">
-<h2>📋 आवेदन की स्थिति देखें</h2>
-<p>अपने मोबाइल नंबर से अपने आवेदन का Status देखें।</p>
-
-<form method="get" action="/status">
-<label>
-मोबाइल नंबर
-<input name="phone" inputmode="numeric" required>
-</label>
-
-<button type="submit">आवेदन का Status देखें</button>
-</form>
-</section>
 
 <section class="card contact">
-📞 <a href="tel:9219160465">9219160465</a>
-&nbsp;|&nbsp;
-<a href="https://wa.me/919219160465">WhatsApp</a>
+  📞 <a href="tel:9219160465">9219160465</a>
+  &nbsp;|&nbsp;
+  <a href="https://wa.me/919219160465">WhatsApp</a>
 </section>
 
 </main>
