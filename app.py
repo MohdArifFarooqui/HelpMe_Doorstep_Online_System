@@ -76,6 +76,18 @@ def status(rid):
         DB.commit()
 
     return redirect(url_for("admin"))
+@app.get("/status")
+def check_status():
+    phone = request.args.get("phone", "").strip()
+
+    if not phone:
+        return render_template("status.html", requests=[])
+
+    requests = DB.query(RequestItem).filter(
+        RequestItem.phone == phone
+    ).order_by(RequestItem.id.desc()).all()
+
+    return render_template("status.html", requests=requests)
 @app.post("/admin/logout")
 def logout(): session.clear(); return redirect(url_for("admin"))
 @app.get("/health")
