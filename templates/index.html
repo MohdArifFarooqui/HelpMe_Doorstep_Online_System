@@ -5,6 +5,34 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HelpMe Doorstep</title>
 <link rel="stylesheet" href="/static/style.css">
+
+<style>
+.contact {
+  text-align: center;
+  font-size: 18px;
+}
+
+.contact a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.whatsapp-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.phone-icon {
+  font-size: 21px;
+}
+</style>
 </head>
 
 <body>
@@ -32,69 +60,134 @@
 <div class="alert {{cat}}">{{msg}}</div>
 {% endfor %}
 
-<!-- आवेदन की स्थिति देखने का बटन -->
+
+<!-- आवेदन की स्थिति -->
 <section class="card" style="text-align:center;">
   <h2>📋 अपने आवेदन की स्थिति देखें</h2>
-  <p>मोबाइल नंबर डालकर अपने आवेदन का Status देखें।</p>
+
+  <p>
+    मोबाइल नंबर डालकर अपने आवेदन का Status देखें।
+  </p>
 
   <a href="/status"
-     style="display:inline-block;
-            padding:12px 25px;
-            background:#16a085;
-            color:white;
-            text-decoration:none;
-            border-radius:8px;
-            font-weight:bold;">
+     style="
+       display:inline-block;
+       padding:12px 25px;
+       background:#16a085;
+       color:white;
+       text-decoration:none;
+       border-radius:8px;
+       font-weight:bold;
+     ">
     आवेदन की स्थिति देखें
   </a>
 </section>
+
 
 <!-- नया आवेदन -->
 <form class="card" method="post" action="/request-service">
 
 <label>
   नाम
-  <input name="customer" required>
+  <input
+    name="customer"
+    required
+    placeholder="अपना नाम डालें">
 </label>
 
 <label>
   उम्र
-  <input name="age" type="number" min="1" max="120" required>
+  <input
+    name="age"
+    type="number"
+    min="1"
+    max="120"
+    required
+    placeholder="उम्र डालें">
 </label>
 
 <label>
   मोबाइल नंबर
-  <input name="phone" inputmode="numeric" required>
+  <input
+    name="phone"
+    type="tel"
+    inputmode="numeric"
+    pattern="[0-9]{10}"
+    maxlength="10"
+    required
+    placeholder="10 अंकों का मोबाइल नंबर">
 </label>
 
 <label>
   सेवा
   <select name="service" required>
     <option value="">सेवा चुनें</option>
+
     {% for s in services %}
-    <option>{{s}}</option>
+    <option value="{{s}}">{{s}}</option>
     {% endfor %}
+
   </select>
 </label>
 
 <label>
   पता
-  <textarea name="address" required></textarea>
+  <textarea
+    name="address"
+    required
+    placeholder="अपना पूरा पता लिखें"></textarea>
 </label>
 
 <label>
   किस काम में सहायता चाहिए?
-  <textarea name="details" required></textarea>
+  <textarea
+    name="details"
+    required
+    placeholder="जिस काम में सहायता चाहिए वह लिखें"></textarea>
 </label>
 
-<button type="submit">सेवा अनुरोध भेजें</button>
+<button type="submit">
+  सेवा अनुरोध भेजें
+</button>
 
 </form>
 
+
+<!-- संपर्क -->
 <section class="card contact">
-  📞 <a href="tel:9219160465">9219160465</a>
-  &nbsp;|&nbsp;
-  <a href="https://wa.me/919219160465">WhatsApp</a>
+
+  <span class="phone-icon">📞</span>
+  <a href="tel:9219160465">
+    9219160465
+  </a>
+
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+
+  <a
+    class="whatsapp-link"
+    href="https://wa.me/919219160465"
+    target="_blank"
+    rel="noopener">
+
+    <!-- WhatsApp Icon -->
+    <svg
+      class="whatsapp-icon"
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="WhatsApp">
+
+      <path
+        fill="#25D366"
+        d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.44 1.75 6.34L3.08 29l6.84-1.64A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3z"/>
+
+      <path
+        fill="#fff"
+        d="M22.45 18.73c-.35-.18-2.08-1.03-2.4-1.15-.32-.12-.55-.18-.78.18-.23.35-.9 1.15-1.1 1.38-.2.23-.4.26-.75.09-.35-.18-1.47-.54-2.8-1.72-1.03-.92-1.72-2.06-1.92-2.4-.2-.35-.02-.54.15-.72.16-.16.35-.4.52-.6.17-.2.23-.35.35-.58.12-.23.06-.43-.03-.6-.09-.18-.78-1.88-1.07-2.58-.28-.68-.57-.59-.78-.6h-.66c-.23 0-.6.09-.92.43-.32.35-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.46.56 1.96.72.82.26 1.56.22 2.15.13.66-.1 2.08-.85 2.37-1.67.29-.82.29-1.52.2-1.67-.08-.15-.32-.24-.66-.41z"/>
+    </svg>
+
+    WhatsApp
+  </a>
+
 </section>
 
 </main>
