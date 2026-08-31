@@ -1,101 +1,352 @@
 <!doctype html>
 <html lang="hi">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>आवेदन की स्थिति - HelpMe Doorstep</title>
+
 <link rel="stylesheet" href="/static/style.css">
+
+<style>
+
+.status-box {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #f8faf9;
+  border: 1px solid #e1e8e5;
+}
+
+.application-id {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-assigned {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-progress {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.info-row {
+  margin: 12px 0;
+  line-height: 1.5;
+}
+
+.contact {
+  text-align: center;
+  font-size: 18px;
+}
+
+.whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.whatsapp-icon {
+  width: 24px;
+  height: 24px;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
 <div class="brand">
+
 <div class="logo">🤝</div>
+
 <div>
 <b>HelpMe Doorstep</b>
 <small>आपकी सेवा, आपके द्वार</small>
 </div>
+
 </div>
 
 <a href="/">Home</a>
+
 </header>
+
 
 <main>
 
+
 <section class="hero">
+
 <h1>📋 आवेदन की स्थिति</h1>
-<p>अपने मोबाइल नंबर से अपने आवेदन का Status देखें।</p>
+
+<p>
+अपने मोबाइल नंबर से अपने आवेदन का Status देखें।
+</p>
+
 </section>
+
+
+<!-- मोबाइल नंबर से Status खोजें -->
 
 <form class="card" method="get" action="/status">
 
 <label>
+
 मोबाइल नंबर
+
 <input
 name="phone"
+type="tel"
 inputmode="numeric"
-placeholder="अपना मोबाइल नंबर डालें"
+pattern="[0-9]{10}"
+maxlength="10"
+placeholder="10 अंकों का मोबाइल नंबर डालें"
 required>
+
 </label>
 
-<button type="submit">Status देखें</button>
+
+<button type="submit">
+Status देखें
+</button>
 
 </form>
 
+
 {% if requests %}
 
+
 <section class="card">
+
 <h2>आपके आवेदन</h2>
+
 
 {% for r in requests %}
 
-<div class="card" style="margin-top:15px">
 
-<p><b>Application ID:</b> {{r.id}}</p>
+<div class="status-box">
 
-<p><b>नाम:</b> {{r.customer}}</p>
 
-<p><b>उम्र:</b> {{r.age}} वर्ष</p>
+<div class="application-id">
 
-<p><b>सेवा:</b> {{r.service}}</p>
-
-<p><b>पता:</b> {{r.address}}</p>
-
-<p><b>विवरण:</b> {{r.details}}</p>
-
-<p>
-<b>आवेदन की स्थिति:</b>
-<strong>{{r.status}}</strong>
-</p>
-
-<p>
-<b>आवेदन दिनांक:</b>
-{{r.created_at.strftime("%d-%m-%Y %H:%M")}}
-</p>
+📄 Application ID: #{{r.id}}
 
 </div>
 
-{% endfor %}
 
-</section>
+<div class="info-row">
 
-{% elif request.args.get("phone") %}
+<b>नाम:</b>
+{{r.customer}}
 
-<section class="card">
-<h3>❌ कोई आवेदन नहीं मिला</h3>
-<p>कृपया वही मोबाइल नंबर डालें जिससे आवेदन भेजा गया था।</p>
-</section>
+</div>
+
+
+<div class="info-row">
+
+<b>उम्र:</b>
+{{r.age}} वर्ष
+
+{% if r.age >= 60 %}
+
+<br>
+<b>👴 Senior Citizen</b>
 
 {% endif %}
 
-<section class="card contact">
-📞 <a href="tel:9219160465">9219160465</a>
-&nbsp;|&nbsp;
-<a href="https://wa.me/919219160465">WhatsApp</a>
+</div>
+
+
+<div class="info-row">
+
+<b>सेवा:</b>
+{{r.service}}
+
+</div>
+
+
+<div class="info-row">
+
+<b>पता:</b>
+{{r.address}}
+
+</div>
+
+
+<div class="info-row">
+
+<b>विवरण:</b>
+{{r.details}}
+
+</div>
+
+
+<div class="info-row">
+
+<b>आवेदन की स्थिति:</b>
+
+<br>
+
+
+{% if r.status == "Pending" %}
+
+<span class="status-badge status-pending">
+⏳ Pending
+</span>
+
+
+{% elif r.status == "Assigned" %}
+
+<span class="status-badge status-assigned">
+👤 Assigned
+</span>
+
+
+{% elif r.status == "In Progress" %}
+
+<span class="status-badge status-progress">
+🔄 In Progress
+</span>
+
+
+{% elif r.status == "Completed" %}
+
+<span class="status-badge status-completed">
+✅ Completed
+</span>
+
+
+{% elif r.status == "Cancelled" %}
+
+<span class="status-badge status-cancelled">
+❌ Cancelled
+</span>
+
+
+{% else %}
+
+<span class="status-badge">
+{{r.status}}
+</span>
+
+{% endif %}
+
+</div>
+
+
+<div class="info-row">
+
+<b>📅 आवेदन दिनांक:</b>
+
+{{r.created_at.strftime("%d-%m-%Y %H:%M")}}
+
+</div>
+
+
+</div>
+
+
+{% endfor %}
+
+
 </section>
+
+
+{% elif request.args.get("phone") %}
+
+
+<section class="card">
+
+<h3>❌ कोई आवेदन नहीं मिला</h3>
+
+<p>
+कृपया वही मोबाइल नंबर डालें जिससे आवेदन भेजा गया था।
+</p>
+
+</section>
+
+
+{% endif %}
+
+
+<!-- संपर्क -->
+
+<section class="card contact">
+
+📞
+<a href="tel:9219160465">
+9219160465
+</a>
+
+&nbsp;&nbsp;|&nbsp;&nbsp;
+
+
+<a
+class="whatsapp-link"
+href="https://wa.me/919219160465"
+target="_blank"
+rel="noopener">
+
+
+<svg
+class="whatsapp-icon"
+viewBox="0 0 32 32"
+xmlns="http://www.w3.org/2000/svg">
+
+<path
+fill="#25D366"
+d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.44 1.75 6.34L3.08 29l6.84-1.64A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3z"/>
+
+<path
+fill="#fff"
+d="M22.45 18.73c-.35-.18-2.08-1.03-2.4-1.15-.32-.12-.55-.18-.78.18-.23.35-.9 1.15-1.1 1.38-.2.23-.4.26-.75.09-.35-.18-1.47-.54-2.8-1.72-1.03-.92-1.72-2.06-1.92-2.4-.2-.35-.02-.54.15-.72.16-.16.35-.4.52-.6.17-.2.23-.35.35-.58.12-.23.06-.43-.03-.6-.09-.18-.78-1.88-1.07-2.58-.28-.68-.57-.59-.78-.6h-.66c-.23 0-.6.09-.92.43-.32.35-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.46.56 1.96.72.82.26 1.56.22 2.15.13.66-.1 2.08-.85 2.37-1.67.29-.82.29-1.52.2-1.67-.08-.15-.32-.24-.66-.41z"/>
+
+</svg>
+
+WhatsApp
+
+</a>
+
+</section>
+
 
 </main>
 
 </body>
+
 </html>
