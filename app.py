@@ -144,25 +144,40 @@ def add():
         )
         return redirect(url_for("home"))
 
-    DB.add(
-        RequestItem(
-            customer=vals[0],
-            age=int(vals[1]),
-            phone=vals[2],
-            service=vals[3],
-            address=vals[4],
-            details=vals[5]
+    try:
+        age = int(vals[1])
+    except ValueError:
+        flash(
+            "कृपया सही उम्र डालें",
+            "error"
         )
+        return redirect(url_for("home"))
+
+    new_request = RequestItem(
+        customer=vals[0],
+        age=age,
+        phone=vals[2],
+        service=vals[3],
+        address=vals[4],
+        details=vals[5]
     )
 
+    DB.add(new_request)
     DB.commit()
 
+    application_id = new_request.id
+
     flash(
-        "आपका सेवा अनुरोध सफलतापूर्वक भेज दिया गया है।",
+        f"आपका आवेदन सफलतापूर्वक भेज दिया गया है। Application ID: #{application_id}",
         "success"
     )
 
-    return redirect(url_for("home"))
+    return redirect(
+        url_for(
+            "check_status",
+            phone=vals[2]
+        )
+    )
 
 
 @app.route("/admin", methods=["GET"])
