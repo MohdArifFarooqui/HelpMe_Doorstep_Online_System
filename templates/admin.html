@@ -1,1 +1,232 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HelpMe Doorstep Admin</title><link rel="stylesheet" href="/static/style.css"></head><body><header><div class="brand"><div class="logo">🤝</div><div><b>HelpMe Doorstep</b><small>Admin Panel</small></div></div><form method="post" action="/admin/logout"><button class="smallbtn">Logout</button></form></header><main><section class="card"><h2>Customer Requests</h2><div class="table"><table><tr><th>ID</th><th>Customer</th><th>Age</th><th>Service</th><th>Address</th><th>Details</th><th>Created</th><th>Status</th></tr>{% for r in requests %}<tr><td>{{r.id}}</td><td><b>{{r.customer}}</b><br>{{r.phone}}</td><td>{{r.age}} वर्ष{% if r.age >= 60 %}<br><b>Senior Citizen</b>{% endif %}</td><td>{{r.service}}</td><td>{{r.address}}</td><td>{{r.details}}</td><td>{{r.created_at.strftime("%d-%m-%Y %H:%M")}}</td><td><form method="post" action="/admin/status/{{r.id}}"><select name="status" onchange="this.form.submit()">{% for s in ["Pending","Assigned","In Progress","Completed","Cancelled"] %}<option {% if r.status==s %}selected{% endif %}>{{s}}</option>{% endfor %}</select></form></td></tr>{% else %}<tr><td colspan="8">अभी कोई request नहीं है।</td></tr>{% endfor %}</table></div></section></main></body></html>
+<!doctype html>
+<html lang="hi">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>HelpMe Doorstep Admin</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+.action-btn {
+    display:inline-block;
+    padding:7px 10px;
+    margin:2px;
+    border-radius:6px;
+    text-decoration:none;
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.call-btn {
+    background:#16a085;
+}
+
+.whatsapp-btn {
+    background:#25D366;
+}
+
+.status-box {
+    font-weight:bold;
+    padding:6px 9px;
+    border-radius:6px;
+    display:inline-block;
+}
+
+.status-select {
+    margin-top:7px;
+    padding:6px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="brand">
+
+<div class="logo">🤝</div>
+
+<div>
+<b>HelpMe Doorstep</b>
+<small>Admin Panel</small>
+</div>
+
+</div>
+
+<form method="post" action="/admin/logout">
+<button class="smallbtn">Logout</button>
+</form>
+
+</header>
+
+
+<main>
+
+<section class="card">
+
+<h2>📋 Customer Requests</h2>
+
+<div class="table">
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Customer</th>
+<th>Age</th>
+<th>Service</th>
+<th>Address</th>
+<th>Details</th>
+<th>Created</th>
+<th>Status</th>
+</tr>
+
+
+{% for r in requests %}
+
+<tr>
+
+<td>
+<b>#{{r.id}}</b>
+</td>
+
+
+<td>
+
+<b>{{r.customer}}</b>
+
+<br>
+
+📱 {{r.phone}}
+
+<br>
+
+<a
+class="action-btn call-btn"
+href="tel:{{r.phone}}">
+📞 Call
+</a>
+
+<a
+class="action-btn whatsapp-btn"
+href="https://wa.me/91{{r.phone}}"
+target="_blank">
+💬 WhatsApp
+</a>
+
+</td>
+
+
+<td>
+
+{{r.age}} वर्ष
+
+{% if r.age >= 60 %}
+
+<br>
+
+<b>👴 Senior Citizen</b>
+
+{% endif %}
+
+</td>
+
+
+<td>
+<b>{{r.service}}</b>
+</td>
+
+
+<td>
+{{r.address}}
+</td>
+
+
+<td>
+{{r.details}}
+</td>
+
+
+<td>
+{{r.created_at.strftime("%d-%m-%Y %H:%M")}}
+</td>
+
+
+<td>
+
+<span class="status-box">
+{{r.status}}
+</span>
+
+<br>
+
+
+<form
+method="post"
+action="/admin/status/{{r.id}}">
+
+<select
+class="status-select"
+name="status"
+onchange="this.form.submit()">
+
+{% for s in [
+"Pending",
+"Assigned",
+"In Progress",
+"Completed",
+"Cancelled"
+] %}
+
+<option
+value="{{s}}"
+{% if r.status == s %}
+selected
+{% endif %}>
+
+{{s}}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</form>
+
+</td>
+
+</tr>
+
+
+{% else %}
+
+<tr>
+
+<td colspan="8">
+
+अभी कोई request नहीं है।
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+</body>
+
+</html>
