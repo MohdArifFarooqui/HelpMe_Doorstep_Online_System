@@ -1,70 +1,27 @@
 <!doctype html>
 <html lang="hi">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>HelpMe Doorstep Admin</title>
-
 <link rel="stylesheet" href="/static/style.css">
-
-<style>
-.action-btn {
-    display:inline-block;
-    padding:7px 10px;
-    margin:2px;
-    border-radius:6px;
-    text-decoration:none;
-    color:white;
-    font-size:13px;
-    font-weight:bold;
-}
-
-.call-btn {
-    background:#16a085;
-}
-
-.whatsapp-btn {
-    background:#25D366;
-}
-
-.status-box {
-    font-weight:bold;
-    padding:6px 9px;
-    border-radius:6px;
-    display:inline-block;
-}
-
-.status-select {
-    margin-top:7px;
-    padding:6px;
-}
-</style>
-
 </head>
 
 <body>
 
 <header>
+  <div class="brand">
+    <div class="logo">🤝</div>
+    <div>
+      <b>HelpMe Doorstep</b>
+      <small>Admin Panel</small>
+    </div>
+  </div>
 
-<div class="brand">
-
-<div class="logo">🤝</div>
-
-<div>
-<b>HelpMe Doorstep</b>
-<small>Admin Panel</small>
-</div>
-
-</div>
-
-<form method="post" action="/admin/logout">
-<button class="smallbtn">Logout</button>
-</form>
-
+  <form method="post" action="/admin/logout">
+    <button class="smallbtn">Logout</button>
+  </form>
 </header>
-
 
 <main>
 
@@ -77,25 +34,23 @@
 <table>
 
 <tr>
-<th>ID</th>
-<th>Customer</th>
-<th>Age</th>
-<th>Service</th>
-<th>Address</th>
-<th>Details</th>
-<th>Created</th>
-<th>Status</th>
+  <th>ID</th>
+  <th>Customer</th>
+  <th>Age</th>
+  <th>Service</th>
+  <th>Address</th>
+  <th>Details</th>
+  <th>Created</th>
+  <th>Status</th>
 </tr>
-
 
 {% for r in requests %}
 
 <tr>
 
 <td>
-<b>#{{r.id}}</b>
+  <b>#{{r.id}}</b>
 </td>
-
 
 <td>
 
@@ -105,23 +60,41 @@
 
 📱 {{r.phone}}
 
+<br><br>
+
+<a
+  href="tel:{{r.phone}}"
+  style="
+  display:inline-block;
+  padding:7px 12px;
+  background:#16a085;
+  color:white;
+  text-decoration:none;
+  border-radius:6px;
+  font-weight:bold;
+  margin-bottom:5px;
+">
+  📞 Call
+</a>
+
 <br>
 
 <a
-class="action-btn call-btn"
-href="tel:{{r.phone}}">
-📞 Call
-</a>
-
-<a
-class="action-btn whatsapp-btn"
-href="https://wa.me/91{{r.phone}}"
-target="_blank">
-💬 WhatsApp
+  href="https://wa.me/91{{r.phone}}?text={{ ('नमस्ते ' ~ r.customer ~ ', आपका Application ID #' ~ r.id ~ ' का वर्तमान Status ' ~ r.status ~ ' है। - HelpMe Doorstep')|urlencode }}"
+  target="_blank"
+  style="
+  display:inline-block;
+  padding:7px 12px;
+  background:#25D366;
+  color:white;
+  text-decoration:none;
+  border-radius:6px;
+  font-weight:bold;
+">
+  🟢 WhatsApp
 </a>
 
 </td>
-
 
 <td>
 
@@ -137,44 +110,37 @@ target="_blank">
 
 </td>
 
-
 <td>
-<b>{{r.service}}</b>
+  {{r.service}}
 </td>
 
-
 <td>
-{{r.address}}
+  {{r.address}}
 </td>
 
-
 <td>
-{{r.details}}
+  {{r.details}}
 </td>
 
-
 <td>
-{{r.created_at.strftime("%d-%m-%Y %H:%M")}}
+  {{r.created_at.strftime("%d-%m-%Y %H:%M")}}
 </td>
 
-
 <td>
 
-<span class="status-box">
-{{r.status}}
-</span>
+<b>{{r.status}}</b>
 
-<br>
-
+<br><br>
 
 <form
-method="post"
-action="/admin/status/{{r.id}}">
+  method="post"
+  action="/admin/status/{{r.id}}"
+>
 
 <select
-class="status-select"
-name="status"
-onchange="this.form.submit()">
+  name="status"
+  onchange="this.form.submit()"
+>
 
 {% for s in [
 "Pending",
@@ -185,13 +151,10 @@ onchange="this.form.submit()">
 ] %}
 
 <option
-value="{{s}}"
-{% if r.status == s %}
-selected
-{% endif %}>
-
+  value="{{s}}"
+  {% if r.status == s %}selected{% endif %}
+>
 {{s}}
-
 </option>
 
 {% endfor %}
@@ -204,17 +167,12 @@ selected
 
 </tr>
 
-
 {% else %}
 
 <tr>
-
-<td colspan="8">
-
-अभी कोई request नहीं है।
-
-</td>
-
+  <td colspan="8">
+    अभी कोई request नहीं है।
+  </td>
 </tr>
 
 {% endfor %}
@@ -228,5 +186,4 @@ selected
 </main>
 
 </body>
-
 </html>
