@@ -68,7 +68,7 @@ class RequestItem(Base):
         DateTime,
         default=lambda: datetime.now(
             ZoneInfo("Asia/Kolkata")
-        ),
+        ).replace(tzinfo=None),
         nullable=False
     )
 
@@ -103,7 +103,7 @@ class User(Base):
         DateTime,
         default=lambda: datetime.now(
             ZoneInfo("Asia/Kolkata")
-        ),
+        ).replace(tzinfo=None),
         nullable=False
     )
 
