@@ -3,7 +3,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime,Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker, scoped_session
 
 app=Flask(__name__)
@@ -20,7 +20,26 @@ class RequestItem(Base):
     id=Column(Integer,primary_key=True); customer=Column(String(120),nullable=False);age=Column(Integer,nullable=False); phone=Column(String(30),nullable=False)
     service=Column(String(150),nullable=False); address=Column(Text,nullable=False); details=Column(Text,nullable=False)
     status=Column(String(30),default="Pending",nullable=False); created_at=Column(DateTime,default=lambda: datetime.now(ZoneInfo("Asia/Kolkata")),nullable=False)
-Base.metadata.create_all(engine)
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    mobile = Column(String(20), unique=True, nullable=False)
+    role = Column(String(20), nullable=False)
+    name = Column(String(120), nullable=True)
+    age = Column(Integer, nullable=True)
+    csc_id = Column(String(50), unique=True, nullable=True)
+    center_name = Column(String(150), nullable=True)
+    address = Column(Text, nullable=True)
+    latitude = Column(String(30), nullable=True)
+    longitude = Column(String(30), nullable=True)
+    approved = Column(Boolean, default=False, nullable=False)
+    active = Column(Boolean, default=True, nullable=False)
+    created_at = Column(
+        DateTime,
+        default=lambda: datetime.now(ZoneInfo("Asia/Kolkata")),
+        nullable=False
+    )Base.metadata.create_all(engine)
 @app.teardown_appcontext
 def close(e=None): DB.remove()
 @app.get("/")
