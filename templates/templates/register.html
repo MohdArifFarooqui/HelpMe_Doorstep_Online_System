@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Registration - HelpMe Doorstep</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">🤝</div>
+    <div>
+      <b>HelpMe Doorstep</b>
+      <small>आपकी सेवा, आपके द्वार</small>
+    </div>
+  </div>
+
+  <a href="/">Home</a>
+</header>
+
+<main>
+
+<section class="hero">
+  <h1>Registration</h1>
+  <p>HelpMe Doorstep से जुड़ने के लिए अपना account बनाएं</p>
+</section>
+
+<section class="card center">
+
+<h2>आप किस रूप में Register करना चाहते हैं?</h2>
+
+<form method="post" action="/register">
+
+<label>
+  Account Type
+  <select name="role" required>
+    <option value="">चुनें</option>
+    <option value="customer">👤 Customer</option>
+    <option value="csc">🏢 CSC / CSP</option>
+  </select>
+</label>
+
+<label>
+  मोबाइल नंबर
+  <input
+    name="mobile"
+    type="tel"
+    inputmode="numeric"
+    maxlength="10"
+    placeholder="10 अंकों का मोबाइल नंबर"
+    required
+  >
+</label>
+
+<div id="customer-fields">
+
+<label>
+  नाम
+  <input name="name" placeholder="अपना नाम">
+</label>
+
+<label>
+  उम्र
+  <input name="age" type="number" min="1" max="120" placeholder="उम्र">
+</label>
+
+</div>
+
+<div id="csc-fields" style="display:none;">
+
+<label>
+  CSC ID
+  <input name="csc_id" placeholder="CSC ID">
+</label>
+
+<label>
+  CSC / CSP Center Name
+  <input name="center_name" placeholder="Center का नाम">
+</label>
+
+</div>
+
+<label>
+  पता
+  <textarea name="address" placeholder="पूरा पता"></textarea>
+</label>
+
+<button type="submit">Registration शुरू करें</button>
+
+</form>
+
+</section>
+
+</main>
+
+<script>
+const role = document.querySelector('select[name="role"]');
+const customerFields = document.getElementById('customer-fields');
+const cscFields = document.getElementById('csc-fields');
+
+role.addEventListener('change', function () {
+  if (this.value === 'csc') {
+    customerFields.style.display = 'none';
+    cscFields.style.display = 'block';
+  } else {
+    customerFields.style.display = 'block';
+    cscFields.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
