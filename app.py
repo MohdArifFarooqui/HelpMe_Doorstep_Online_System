@@ -112,6 +112,29 @@ class User(Base):
 
 Base.metadata.create_all(engine)
 
+# पुराने database में नए User columns जोड़ना
+from sqlalchemy import inspect, text
+
+inspector = inspect(engine)
+user_columns = {
+    col["name"] for col in inspector.get_columns("users")
+}
+
+if "password_hash" not in user_columns:
+    with engine.begin() as conn:
+        if url.startswith("sqlite"):
+            conn.execute(
+                text(
+                    "ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"
+                )
+            )
+        else:
+            conn.execute(
+                text(
+                    "ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"
+                )
+            )
+
 
 @app.teardown_appcontext
 def close(e=None):
@@ -244,6 +267,7 @@ def worker_register():
 
     worker = User(
         mobile=mobile,
+        password_hash=generate_password_hash(password),
         role="worker",
         name=name,
         csc_id=csc_id,
