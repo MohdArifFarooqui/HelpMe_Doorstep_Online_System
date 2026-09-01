@@ -89,7 +89,11 @@ class User(Base):
     address = Column(Text, nullable=True)
     latitude = Column(String(30), nullable=True)
     longitude = Column(String(30), nullable=True)
-
+# Admin hierarchy
+    admin_level = Column(String(20), nullable=True)
+    state = Column(String(100), nullable=True)
+    district = Column(String(100), nullable=True)
+    parent_admin_id = Column(Integer, nullable=True)
     approved = Column(
         Boolean,
         default=False,
@@ -147,7 +151,26 @@ if "assigned_worker_id" not in request_columns:
                 "ALTER TABLE requests ADD COLUMN assigned_worker_id INTEGER"
             )
         )
+# पुराने database में Admin hierarchy columns जोड़ना
+user_columns = {
+    col["name"] for col in inspect(engine).get_columns("users")
+}
 
+admin_columns = {
+    "admin_level": "VARCHAR(20)",
+    "state": "VARCHAR(100)",
+    "district": "VARCHAR(100)",
+    "parent_admin_id": "INTEGER"
+}
+
+for column_name, column_type in admin_columns.items():
+    if column_name not in user_columns:
+        with engine.begin() as conn:
+            conn.execute(
+                text(
+                    f"ALTER TABLE users ADD COLUMN {column_name} {column_type}"
+                )
+            )
 @app.teardown_appcontext
 def close(e=None):
     DB.remove()
