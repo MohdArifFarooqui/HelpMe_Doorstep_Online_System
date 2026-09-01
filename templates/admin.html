@@ -402,6 +402,163 @@ font-size:13px;">
 
 </section>
 
+<!-- Worker Registration Section -->
+
+<section class="card">
+
+<h2>👷 Service Provider / Worker Registration</h2>
+
+<p>
+नए Service Provider की Registration की जानकारी यहाँ देखें।
+</p>
+
+{% if workers %}
+
+<div class="table">
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>नाम</th>
+<th>Mobile</th>
+<th>CSC ID</th>
+<th>Center</th>
+<th>Address</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for w in workers %}
+
+<tr>
+
+<td>
+<b>#{{ w.id }}</b>
+</td>
+
+<td>
+<b>{{ w.name }}</b>
+</td>
+
+<td>
+📱 {{ w.mobile }}
+
+<br><br>
+
+<a
+href="tel:{{ w.mobile }}"
+style="
+display:inline-block;
+padding:8px 14px;
+background:#16a085;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;">
+📞 Call
+</a>
+
+<br><br>
+
+<a
+href="https://wa.me/91{{ w.mobile }}"
+target="_blank"
+style="
+display:inline-block;
+padding:8px 14px;
+background:#25D366;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;">
+🟢 WhatsApp
+</a>
+
+</td>
+
+<td>
+{{ w.csc_id or "-" }}
+</td>
+
+<td>
+{{ w.center_name or "-" }}
+</td>
+
+<td>
+{{ w.address }}
+</td>
+
+<td>
+
+{% if w.approved %}
+
+<span style="color:green;font-weight:bold;">
+🟢 Approved
+</span>
+
+{% else %}
+
+<span style="color:#d68910;font-weight:bold;">
+🟡 Pending Approval
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if not w.approved %}
+
+<form
+method="post"
+action="/admin/worker/approve/{{ w.id }}">
+
+<button
+type="submit"
+class="smallbtn"
+style="background:#16a085;color:white;">
+✅ Approve
+</button>
+
+</form>
+
+{% else %}
+
+<span style="color:green;font-weight:bold;">
+✓ Approved
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% else %}
+
+<p>
+अभी कोई Worker Registration नहीं है।
+</p>
+
+{% endif %}
+
+</section>    
 
 </main>
 
