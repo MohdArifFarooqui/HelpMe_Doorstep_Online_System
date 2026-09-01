@@ -424,29 +424,6 @@ def login():
 
     return redirect(url_for("admin"))
 
-@app.post("/admin/login")
-def login():
-    username = request.form.get("username")
-    password = request.form.get("password", "")
-
-    if (
-        username == ADMIN_USER
-        and check_password_hash(
-            ADMIN_HASH,
-            password
-        )
-    ):
-        session["admin"] = True
-
-    else:
-        flash(
-            "Login failed",
-            "error"
-        )
-
-    return redirect(url_for("admin"))
-
-
 @app.post("/admin/status/<int:rid>")
 def status(rid):
     if not session.get("admin"):
