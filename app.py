@@ -79,6 +79,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     mobile = Column(String(20), unique=True, nullable=False)
+    password_hash = Column(String(255), nullable=True)
     role = Column(String(20), nullable=False)
     name = Column(String(120), nullable=True)
     age = Column(Integer, nullable=True)
@@ -180,7 +181,91 @@ def add():
         )
     )
 
+@app.route("/worker/register", methods=["GET", "POST"])
+def worker_register():
 
+    if request.method == "GET":
+        return render_template("worker_register.html")
+
+    name = request.form.get("name", "").strip()
+    mobile = request.form.get("mobile", "").strip()
+    password = request.form.get("password", "")
+    csc_id = request.form.get("csc_id", "").strip() or None
+    center_name = request.form.get("center_name", "").strip() or None
+    address = request.form.get("address", "").strip()
+
+    if not name or not mobile or not password or not address:
+        flash(
+            "कृपया सभी जरूरी जानकारी भरें",
+            "error"
+        )
+        return redirect(url_for("worker_register"))
+
+    if not mobile.isdigit() or len(mobile) != 10:
+        flash(
+            "कृपया सही 10 अंकों का मोबाइल नंबर डालें",
+            "error"
+        )
+        return redirect(url_for("worker_register"))
+
+    if len(password) < 6:
+        flash(
+            "पासवर्ड कम से कम 6 अक्षर का होना चाहिए",
+            "error"
+        )
+        return redirect(url_for("worker_register"))
+
+    existing_mobile = (
+        DB.query(User)
+        .filter(User.mobile == mobile)
+        .first()
+    )
+
+    if existing_mobile:
+        flash(
+            "यह मोबाइल नंबर पहले से Registered है",
+            "error"
+        )
+        return redirect(url_for("worker_register"))
+
+    if csc_id:
+        existing_csc = (
+            DB.query(User)
+            .filter(User.csc_id == csc_id)
+            .first()
+        )
+
+        if existing_csc:
+            flash(
+                "यह CSC ID पहले से Registered है",
+                "error"
+            )
+            return redirect(url_for("worker_register"))
+
+    worker = User(
+        mobile=mobile,
+        role="worker",
+        name=name,
+        csc_id=csc_id,
+        center_name=center_name,
+        address=address,
+        approved=False,
+        active=True
+    )
+
+    # Password अभी User model में रखने की जगह
+    # आगे dedicated password field जोड़ेंगे।
+    # इसलिए इस step में registration record save किया जा रहा है।
+
+    DB.add(worker)
+    DB.commit()
+
+    flash(
+        "Registration सफल हुआ। Admin approval के बाद आप Login कर सकेंगे।",
+        "success"
+    )
+
+    return redirect(url_for("worker_register"))
 @app.route("/admin", methods=["GET"])
 def admin():
     if not session.get("admin"):
