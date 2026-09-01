@@ -58,7 +58,8 @@ class RequestItem(Base):
     service = Column(String(150), nullable=False)
     address = Column(Text, nullable=False)
     details = Column(Text, nullable=False)
-
+    assigned_worker_id = Column(Integer, nullable=True)
+    
     status = Column(
         String(30),
         default="Pending",
