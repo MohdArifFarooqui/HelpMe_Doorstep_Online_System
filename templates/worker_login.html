@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Worker Login - HelpMe Doorstep</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+.login-card {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border: 1px solid #dce9e5;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 20px #123c2a12;
+}
+
+.login-card h1 {
+    color: #164c3b;
+    margin-bottom: 10px;
+}
+
+.login-card p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.login-card label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 6px;
+}
+
+.login-card input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border: 1px solid #ccdcd7;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.login-card button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #16a085;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-card button:hover {
+    background: #12806a;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-link a {
+    color: #16a085;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.back-link a {
+    color: #555;
+    text-decoration: none;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="brand">
+
+<div class="logo">🤝</div>
+
+<div>
+<b>HelpMe Doorstep</b>
+<small>Service Provider Login</small>
+</div>
+
+</div>
+
+</header>
+
+
+<main>
+
+<div class="login-card">
+
+<h1>👨‍🔧 Worker Login</h1>
+
+<p>
+अपने Registered Mobile Number और Password से Login करें।
+</p>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+{% for category, message in messages %}
+
+<div class="flash {{ category }}">
+{{ message }}
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+
+<form method="post" action="/worker/login">
+
+<label>
+मोबाइल नंबर
+</label>
+
+<input
+type="tel"
+name="mobile"
+placeholder="10 अंकों का मोबाइल नंबर"
+maxlength="10"
+inputmode="numeric"
+required
+>
+
+
+<label>
+पासवर्ड
+</label>
+
+<input
+type="password"
+name="password"
+placeholder="अपना Password डालें"
+required
+>
+
+
+<button type="submit">
+🔐 Login करें
+</button>
+
+</form>
+
+
+<div class="register-link">
+
+नए Service Provider हैं?
+
+<br>
+
+<a href="/worker/register">
+👉 Registration करें
+</a>
+
+</div>
+
+
+<div class="back-link">
+
+<a href="/">
+← Home पर वापस जाएँ
+</a>
+
+</div>
+
+</div>
+
+</main>
+
+</body>
+</html>
