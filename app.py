@@ -607,10 +607,11 @@ def worker_dashboard():
         return redirect(url_for("worker_login"))
 
     requests = (
-        DB.query(RequestItem)
-        .order_by(RequestItem.id.desc())
-        .all()
-    )
+    DB.query(RequestItem)
+    .filter(RequestItem.assigned_worker_id == worker.id)
+    .order_by(RequestItem.id.desc())
+    .all()
+)
 
     return render_template(
         "worker_dashboard.html",
