@@ -346,6 +346,93 @@ def approve_worker(worker_id):
         )
 
     return redirect(url_for("admin"))
+@app.post("/admin/assign/<int:rid>")
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    worker = DB.get(User, worker_id)
+
+    if worker and worker.role == "worker":
+        worker.approved = True
+        worker.active = True
+        DB.commit()
+
+        flash(
+            f"{worker.name} का Worker Registration Approve कर दिया गया है।",
+            "success"
+        )
+
+    return redirect(url_for("admin"))
+def assign_request(rid):
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    request_item = DB.get(RequestItem, rid)
+    worker_id = request.form.get("worker_id", "").strip()
+
+    if not request_item:
+        flash("Application नहीं मिला", "error")
+        return redirect(url_for("admin"))
+
+    if not worker_id:
+        request_item.assigned_worker_id = None
+        request_item.status = "Pending"
+        DB.commit()
+
+        flash(
+            f"Application #{rid} का Worker Assignment हटा दिया गया है।",
+            "success"
+        )
+        return redirect(url_for("admin"))
+
+    try:
+        worker_id = int(worker_id)
+    except ValueError:
+        flash("Invalid Worker", "error")
+        return redirect(url_for("admin"))
+
+    worker = (
+        DB.query(User)
+        .filter(User.id == worker_id)
+        .filter(User.role == "worker")
+        .filter(User.approved == True)
+        .filter(User.active == True)
+        .first()
+    )
+
+    if not worker:
+        flash("Valid Active Worker नहीं मिला", "error")
+        return redirect(url_for("admin"))
+
+    request_item.assigned_worker_id = worker.id
+    request_item.status = "Assigned"
+
+    DB.commit()
+
+    flash(
+        f"Application #{rid} {worker.name} को Assign कर दिया गया है।",
+        "success"
+    )
+
+    return redirect(url_for("admin"))    
+    
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    worker = DB.get(User, worker_id)
+
+    if worker and worker.role == "worker":
+        worker.approved = True
+        worker.active = True
+        DB.commit()
+
+        flash(
+            f"{worker.name} का Worker Registration Approve कर दिया गया है।",
+            "success"
+        )
+
+    return redirect(url_for("admin"))
 
 
 @app.post("/admin/login")
