@@ -237,9 +237,9 @@ def add():
         phone=vals[2],
         state=vals[3],
         district=vals[4],
-        service=vals[3],
-        address=vals[4],
-        details=vals[5]
+        service=vals[5],
+        address=vals[6],
+        details=vals[7]
     )
 
     DB.add(new_request)
