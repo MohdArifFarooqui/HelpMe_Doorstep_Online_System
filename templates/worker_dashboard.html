@@ -21,11 +21,10 @@
         header {
             background: #128c7e;
             color: white;
-            padding: 18px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
         }
 
         header h2 {
@@ -37,64 +36,63 @@
             background: white;
             color: #128c7e;
             border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
             font-weight: bold;
-            cursor: pointer;
+            font-size: 15px;
         }
 
         .container {
-            width: 95%;
+            width: 94%;
             max-width: 1100px;
             margin: 20px auto;
         }
 
-        .welcome {
+        .welcome,
+        .requests-box {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-radius: 18px;
+            padding: 22px;
             margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
         }
 
         .welcome h1 {
-            margin-top: 0;
-            font-size: 28px;
+            margin: 0 0 20px;
+            font-size: 30px;
         }
 
         .info {
-            line-height: 1.8;
+            font-size: 20px;
+            line-height: 1.9;
             color: #555;
         }
 
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            overflow-x: auto;
+        .info strong {
+            color: #444;
         }
 
-        .card h2 {
-            margin-top: 0;
+        .requests-box h2 {
+            margin: 0 0 20px;
+            font-size: 28px;
         }
 
-        table {
+        /* Desktop table */
+        .desktop-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 700px;
         }
 
-        th {
-            background: #e8f4f1;
-            color: #173f38;
-            padding: 12px;
+        .desktop-table th {
+            background: #e6f3f0;
+            padding: 13px;
             text-align: left;
         }
 
-        td {
-            padding: 12px;
+        .desktop-table td {
+            padding: 13px;
             border-bottom: 1px solid #ddd;
+            vertical-align: top;
         }
 
         .status {
@@ -121,31 +119,103 @@
             color: #d93025;
         }
 
+        /* Mobile cards hidden on desktop */
+        .mobile-cards {
+            display: none;
+        }
+
+        .request-card {
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 17px;
+            margin-bottom: 15px;
+            background: #fff;
+        }
+
+        .request-title {
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .request-row {
+            margin: 8px 0;
+            font-size: 17px;
+            color: #555;
+            word-wrap: break-word;
+        }
+
+        .request-row strong {
+            color: #333;
+        }
+
+        .call-btn {
+            display: inline-block;
+            margin-top: 12px;
+            background: #128c7e;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
         .empty {
             text-align: center;
             padding: 30px;
             color: #777;
+            font-size: 18px;
         }
 
-        @media (max-width: 600px) {
+        /* Mobile */
+        @media (max-width: 700px) {
+
             header {
-                padding: 14px;
+                padding: 13px 15px;
             }
 
             header h2 {
                 font-size: 18px;
             }
 
+            .logout {
+                padding: 9px 14px;
+                font-size: 14px;
+            }
+
             .container {
                 width: 94%;
+                margin: 15px auto;
+            }
+
+            .welcome,
+            .requests-box {
+                padding: 17px;
+                border-radius: 16px;
             }
 
             .welcome h1 {
-                font-size: 23px;
+                font-size: 25px;
+                margin-bottom: 15px;
             }
 
-            .card {
-                padding: 15px;
+            .info {
+                font-size: 17px;
+                line-height: 1.8;
+            }
+
+            .requests-box h2 {
+                font-size: 24px;
+            }
+
+            /* Mobile में table पूरी तरह बंद */
+            .desktop-table {
+                display: none;
+            }
+
+            /* Mobile cards दिखाई दें */
+            .mobile-cards {
+                display: block;
             }
         }
     </style>
@@ -165,10 +235,13 @@
 
 <div class="container">
 
+    <!-- Worker Information -->
     <div class="welcome">
+
         <h1>👷 Worker Dashboard</h1>
 
         <div class="info">
+
             <strong>नाम:</strong>
             {{ worker.name or "Worker" }}
             <br>
@@ -183,16 +256,25 @@
 
             <strong>Status:</strong>
             ✅ Active
+
         </div>
+
     </div>
 
-    <div class="card">
+
+    <!-- Service Requests -->
+    <div class="requests-box">
 
         <h2>📋 Service Requests</h2>
 
         {% if requests %}
 
-        <table>
+        <!-- ========================= -->
+        <!-- DESKTOP TABLE -->
+        <!-- ========================= -->
+
+        <table class="desktop-table">
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -210,27 +292,18 @@
             {% for r in requests %}
 
                 <tr>
+
                     <td>#{{ r.id }}</td>
 
-                    <td>
-                        {{ r.customer }}
-                    </td>
+                    <td>{{ r.customer }}</td>
 
-                    <td>
-                        {{ r.age }}
-                    </td>
+                    <td>{{ r.age }}</td>
 
-                    <td>
-                        {{ r.phone }}
-                    </td>
+                    <td>{{ r.phone }}</td>
 
-                    <td>
-                        {{ r.service }}
-                    </td>
+                    <td>{{ r.service }}</td>
 
-                    <td>
-                        {{ r.address }}
-                    </td>
+                    <td>{{ r.address }}</td>
 
                     <td class="status
                         {% if r.status == 'Pending' %}
@@ -247,12 +320,89 @@
                     ">
                         {{ r.status }}
                     </td>
+
                 </tr>
 
             {% endfor %}
 
             </tbody>
+
         </table>
+
+
+        <!-- ========================= -->
+        <!-- MOBILE CARDS -->
+        <!-- ========================= -->
+
+        <div class="mobile-cards">
+
+        {% for r in requests %}
+
+            <div class="request-card">
+
+                <div class="request-title">
+                    📋 Application #{{ r.id }}
+                </div>
+
+                <div class="request-row">
+                    <strong>👤 Customer:</strong>
+                    {{ r.customer }}
+                </div>
+
+                <div class="request-row">
+                    <strong>🎂 Age:</strong>
+                    {{ r.age }} वर्ष
+                </div>
+
+                <div class="request-row">
+                    <strong>📞 Phone:</strong>
+                    {{ r.phone }}
+                </div>
+
+                <div class="request-row">
+                    <strong>🛠️ Service:</strong>
+                    {{ r.service }}
+                </div>
+
+                <div class="request-row">
+                    <strong>📍 Address:</strong>
+                    {{ r.address }}
+                </div>
+
+                <div class="request-row">
+
+                    <strong>📊 Status:</strong>
+
+                    <span class="status
+                        {% if r.status == 'Pending' %}
+                            pending
+                        {% elif r.status == 'Assigned' %}
+                            assigned
+                        {% elif r.status == 'In Progress' %}
+                            progress
+                        {% elif r.status == 'Completed' %}
+                            completed
+                        {% elif r.status == 'Cancelled' %}
+                            cancelled
+                        {% endif %}
+                    ">
+                        {{ r.status }}
+                    </span>
+
+                </div>
+
+                <a
+                    class="call-btn"
+                    href="tel:{{ r.phone }}"
+                >
+                    📞 Call Customer
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+        </div>
 
         {% else %}
 
