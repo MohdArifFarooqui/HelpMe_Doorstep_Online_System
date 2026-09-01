@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Worker Dashboard - HelpMe Doorstep</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f8f6;
+            color: #173f38;
+        }
+
+        header {
+            background: #128c7e;
+            color: white;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .logout {
+            background: white;
+            color: #128c7e;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+
+        .welcome {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .welcome h1 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        .info {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th {
+            background: #e8f4f1;
+            color: #173f38;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #d28a00;
+        }
+
+        .assigned {
+            color: #1976d2;
+        }
+
+        .progress {
+            color: #8e44ad;
+        }
+
+        .completed {
+            color: #188038;
+        }
+
+        .cancelled {
+            color: #d93025;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 14px;
+            }
+
+            header h2 {
+                font-size: 18px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .welcome h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>🤝 HelpMe Doorstep</h2>
+
+    <form method="post" action="/worker/logout">
+        <button class="logout" type="submit">
+            Logout
+        </button>
+    </form>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <h1>👷 Worker Dashboard</h1>
+
+        <div class="info">
+            <strong>नाम:</strong>
+            {{ worker.name or "Worker" }}
+            <br>
+
+            <strong>मोबाइल:</strong>
+            {{ worker.mobile }}
+            <br>
+
+            <strong>Center:</strong>
+            {{ worker.center_name or "N/A" }}
+            <br>
+
+            <strong>Status:</strong>
+            ✅ Active
+        </div>
+    </div>
+
+    <div class="card">
+
+        <h2>📋 Service Requests</h2>
+
+        {% if requests %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Age</th>
+                    <th>Phone</th>
+                    <th>Service</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for r in requests %}
+
+                <tr>
+                    <td>#{{ r.id }}</td>
+
+                    <td>
+                        {{ r.customer }}
+                    </td>
+
+                    <td>
+                        {{ r.age }}
+                    </td>
+
+                    <td>
+                        {{ r.phone }}
+                    </td>
+
+                    <td>
+                        {{ r.service }}
+                    </td>
+
+                    <td>
+                        {{ r.address }}
+                    </td>
+
+                    <td class="status
+                        {% if r.status == 'Pending' %}
+                            pending
+                        {% elif r.status == 'Assigned' %}
+                            assigned
+                        {% elif r.status == 'In Progress' %}
+                            progress
+                        {% elif r.status == 'Completed' %}
+                            completed
+                        {% elif r.status == 'Cancelled' %}
+                            cancelled
+                        {% endif %}
+                    ">
+                        {{ r.status }}
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+        {% else %}
+
+        <div class="empty">
+            अभी कोई Service Request उपलब्ध नहीं है।
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
