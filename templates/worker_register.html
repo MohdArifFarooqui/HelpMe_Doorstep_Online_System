@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Worker Registration - HelpMe Doorstep</title>
+
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<header>
+
+<div class="brand">
+
+<div class="logo">🤝</div>
+
+<div>
+<b>HelpMe Doorstep</b>
+<small>Service Provider Registration</small>
+</div>
+
+</div>
+
+<a href="/">Home</a>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+<h1>👤 Service Provider Registration</h1>
+
+<p>
+सेवा प्रदान करने के लिए अपना Registration करें।
+</p>
+
+</section>
+
+
+<form class="card"
+method="post"
+action="/worker/register">
+
+
+{% for cat,msg in get_flashed_messages(with_categories=true) %}
+
+<div class="alert {{cat}}">
+{{msg}}
+</div>
+
+{% endfor %}
+
+
+<label>
+
+नाम
+
+<input
+name="name"
+type="text"
+maxlength="120"
+placeholder="अपना पूरा नाम"
+required>
+
+</label>
+
+
+<label>
+
+मोबाइल नंबर
+
+<input
+name="mobile"
+type="tel"
+inputmode="numeric"
+pattern="[0-9]{10}"
+maxlength="10"
+placeholder="10 अंकों का मोबाइल नंबर"
+required>
+
+</label>
+
+
+<label>
+
+पासवर्ड
+
+<input
+name="password"
+type="password"
+minlength="6"
+placeholder="कम से कम 6 अक्षर"
+required>
+
+</label>
+
+
+<label>
+
+CSC ID
+<span style="color:#71847e;">
+(यदि उपलब्ध हो)
+</span>
+
+<input
+name="csc_id"
+type="text"
+maxlength="50"
+placeholder="CSC ID">
+
+</label>
+
+
+<label>
+
+Center / Organization का नाम
+
+<input
+name="center_name"
+type="text"
+maxlength="150"
+placeholder="Center या संस्था का नाम">
+
+</label>
+
+
+<label>
+
+पता
+
+<textarea
+name="address"
+placeholder="पूरा पता"
+required></textarea>
+
+</label>
+
+
+<button type="submit">
+Registration करें
+</button>
+
+
+<p style="text-align:center;margin-top:18px;">
+
+पहले से Registration है?
+
+<a href="/worker/login">
+Worker Login
+</a>
+
+</p>
+
+
+</form>
+
+</main>
+
+</body>
+
+</html>
