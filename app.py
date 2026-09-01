@@ -347,6 +347,8 @@ def approve_worker(worker_id):
 
     return redirect(url_for("admin"))
 @app.post("/admin/assign/<int:rid>")
+def assign_request(rid):
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
