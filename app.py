@@ -40,6 +40,7 @@ ADMIN_HASH = os.environ.get(
 
 SERVICES = [
     "गर्भवती महिला सहायता",
+    "Serious Patient",
     "Senior Citizen Assistance",
     "दिव्यांगजन सहायता",
     "Digital & Citizen Services",
