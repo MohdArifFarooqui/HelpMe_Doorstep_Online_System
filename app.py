@@ -208,6 +208,8 @@ def add():
         d.get("customer", "").strip(),
         d.get("age", "").strip(),
         d.get("phone", "").strip(),
+        d.get("state", "").strip(),
+        d.get("district", "").strip(),
         d.get("service", "").strip(),
         d.get("address", "").strip(),
         d.get("details", "").strip()
@@ -233,6 +235,8 @@ def add():
         customer=vals[0],
         age=age,
         phone=vals[2],
+        state=vals[3],
+        district=vals[4],
         service=vals[3],
         address=vals[4],
         details=vals[5]
