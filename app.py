@@ -59,7 +59,8 @@ class RequestItem(Base):
     address = Column(Text, nullable=False)
     details = Column(Text, nullable=False)
     assigned_worker_id = Column(Integer, nullable=True)
-    
+    state = Column(String(100), nullable=True)
+    district = Column(String(100), nullable=True)
     status = Column(
         String(30),
         default="Pending",
@@ -151,6 +152,21 @@ if "assigned_worker_id" not in request_columns:
                 "ALTER TABLE requests ADD COLUMN assigned_worker_id INTEGER"
             )
         )
+
+# पुराने database में Request State/District columns जोड़ना
+request_location_columns = {
+    "state": "VARCHAR(100)",
+    "district": "VARCHAR(100)"
+}
+
+for column_name, column_type in request_location_columns.items():
+    if column_name not in request_columns:
+        with engine.begin() as conn:
+            conn.execute(
+                text(
+                    f"ALTER TABLE requests ADD COLUMN {column_name} {column_type}"
+                )
+            )
 # पुराने database में Admin hierarchy columns जोड़ना
 user_columns = {
     col["name"] for col in inspect(engine).get_columns("users")
