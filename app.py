@@ -135,7 +135,18 @@ if "password_hash" not in user_columns:
                     "ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"
                 )
             )
+# पुराने database में assigned_worker_id column जोड़ना
+request_columns = {
+    col["name"] for col in inspector.get_columns("requests")
+}
 
+if "assigned_worker_id" not in request_columns:
+    with engine.begin() as conn:
+        conn.execute(
+            text(
+                "ALTER TABLE requests ADD COLUMN assigned_worker_id INTEGER"
+            )
+        )
 
 @app.teardown_appcontext
 def close(e=None):
