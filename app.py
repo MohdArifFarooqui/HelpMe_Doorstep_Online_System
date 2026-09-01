@@ -348,24 +348,6 @@ def approve_worker(worker_id):
     return redirect(url_for("admin"))
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
-    
-    if not session.get("admin"):
-        return redirect(url_for("admin"))
-
-    worker = DB.get(User, worker_id)
-
-    if worker and worker.role == "worker":
-        worker.approved = True
-        worker.active = True
-        DB.commit()
-
-        flash(
-            f"{worker.name} का Worker Registration Approve कर दिया गया है।",
-            "success"
-        )
-
-    return redirect(url_for("admin"))
-def assign_request(rid):
 
     if not session.get("admin"):
         return redirect(url_for("admin"))
@@ -417,25 +399,30 @@ def assign_request(rid):
         "success"
     )
 
-    return redirect(url_for("admin"))    
-    
-    if not session.get("admin"):
-        return redirect(url_for("admin"))
+    return redirect(url_for("admin"))
 
-    worker = DB.get(User, worker_id)
 
-    if worker and worker.role == "worker":
-        worker.approved = True
-        worker.active = True
-        DB.commit()
+@app.post("/admin/login")
+def login():
+    username = request.form.get("username")
+    password = request.form.get("password", "")
 
+    if (
+        username == ADMIN_USER
+        and check_password_hash(
+            ADMIN_HASH,
+            password
+        )
+    ):
+        session["admin"] = True
+
+    else:
         flash(
-            f"{worker.name} का Worker Registration Approve कर दिया गया है।",
-            "success"
+            "Login failed",
+            "error"
         )
 
     return redirect(url_for("admin"))
-
 
 @app.post("/admin/login")
 def login():
