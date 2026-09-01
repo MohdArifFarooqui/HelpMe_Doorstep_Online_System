@@ -301,10 +301,39 @@ def admin():
         .all()
     )
 
+    workers = (
+        DB.query(User)
+        .filter(User.role == "worker")
+        .order_by(User.id.desc())
+        .all()
+    )
+
     return render_template(
         "admin.html",
-        requests=requests
+        requests=requests,
+        workers=workers
     )
+
+
+@app.post("/admin/worker/approve/<int:worker_id>")
+def approve_worker(worker_id):
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    worker = DB.get(User, worker_id)
+
+    if worker and worker.role == "worker":
+        worker.approved = True
+        worker.active = True
+        DB.commit()
+
+        flash(
+            f"{worker.name} का Worker Registration Approve कर दिया गया है।",
+            "success"
+        )
+
+    return redirect(url_for("admin"))
 
 
 @app.post("/admin/login")
