@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="hi">
 <head>
@@ -114,7 +113,6 @@ font-weight:bold;">
 
 <td>
 
-<!-- Status बदलने वाला विकल्प -->
 <form method="post"
 action="/admin/status/{{r.id}}">
 
@@ -144,14 +142,49 @@ value="{{s}}"
 
 <br>
 
-<!-- Status WhatsApp Button -->
+<!-- Status के अनुसार WhatsApp Message -->
+
+{% if r.status == "Pending" %}
 
 {% set message =
 "नमस्ते " ~ r.customer ~
 ", आपका Application ID #" ~ r.id ~
-" का वर्तमान Status " ~ r.status ~
-" है। - HelpMe Doorstep"
+" प्राप्त हो गया है। आपका आवेदन अभी Pending है। जल्द ही आगे की प्रक्रिया शुरू की जाएगी। - HelpMe Doorstep"
 %}
+
+{% elif r.status == "Assigned" %}
+
+{% set message =
+"नमस्ते " ~ r.customer ~
+", आपका Application ID #" ~ r.id ~
+" अब Assigned है। आपके आवेदन पर सहायता के लिए कार्य सौंप दिया गया है। - HelpMe Doorstep"
+%}
+
+{% elif r.status == "In Progress" %}
+
+{% set message =
+"नमस्ते " ~ r.customer ~
+", आपके Application ID #" ~ r.id ~
+" पर कार्य शुरू हो गया है। आपका आवेदन In Progress है। - HelpMe Doorstep"
+%}
+
+{% elif r.status == "Completed" %}
+
+{% set message =
+"नमस्ते " ~ r.customer ~
+", आपका Application ID #" ~ r.id ~
+" सफलतापूर्वक Completed हो गया है। सहायता लेने के लिए धन्यवाद। - HelpMe Doorstep"
+%}
+
+{% elif r.status == "Cancelled" %}
+
+{% set message =
+"नमस्ते " ~ r.customer ~
+", आपके Application ID #" ~ r.id ~
+" का आवेदन Cancelled कर दिया गया है। अधिक जानकारी के लिए HelpMe Doorstep से संपर्क करें। - HelpMe Doorstep"
+%}
+
+{% endif %}
 
 <a
 href="https://wa.me/91{{r.phone}}?text={{message|urlencode}}"
