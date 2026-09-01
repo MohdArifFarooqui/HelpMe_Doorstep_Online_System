@@ -5,33 +5,160 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HelpMe Doorstep Admin</title>
 <link rel="stylesheet" href="/static/style.css">
+
+<style>
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: #fff;
+    border: 1px solid #dce9e5;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 5px 18px #123c2a12;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+}
+
+.search-box {
+    background: #fff;
+    border: 1px solid #dce9e5;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.search-row {
+    display: flex;
+    gap: 10px;
+}
+
+.search-row input,
+.search-row select {
+    margin-top: 0;
+}
+
+@media (max-width: 700px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-row {
+        flex-direction: column;
+    }
+}
+</style>
+
 </head>
 
 <body>
 
 <header>
-  <div class="brand">
-    <div class="logo">🤝</div>
-    <div>
-      <b>HelpMe Doorstep</b>
-      <small>Admin Panel</small>
-    </div>
-  </div>
 
-  <form method="post" action="/admin/logout">
-    <button class="smallbtn">Logout</button>
-  </form>
+<div class="brand">
+
+<div class="logo">🤝</div>
+
+<div>
+<b>HelpMe Doorstep</b>
+<small>Admin Panel</small>
+</div>
+
+</div>
+
+<form method="post" action="/admin/logout">
+<button class="smallbtn">Logout</button>
+</form>
+
 </header>
+
 
 <main>
 
+
+<!-- Dashboard -->
+
+<div class="dashboard">
+
+<div class="stat">
+📋
+<span class="stat-number" id="totalCount">0</span>
+कुल आवेदन
+</div>
+
+<div class="stat">
+🟡
+<span class="stat-number" id="pendingCount">0</span>
+Pending
+</div>
+
+<div class="stat">
+🔵
+<span class="stat-number" id="progressCount">0</span>
+In Progress
+</div>
+
+<div class="stat">
+🟢
+<span class="stat-number" id="completedCount">0</span>
+Completed
+</div>
+
+</div>
+
+
+<!-- Search + Filter -->
+
+<section class="search-box">
+
+<h3>🔎 आवेदन खोजें</h3>
+
+<div class="search-row">
+
+<input
+type="search"
+id="searchInput"
+placeholder="नाम, मोबाइल या Application ID से खोजें">
+
+<select id="statusFilter">
+
+<option value="">सभी Status</option>
+<option value="Pending">Pending</option>
+<option value="Assigned">Assigned</option>
+<option value="In Progress">In Progress</option>
+<option value="Completed">Completed</option>
+<option value="Cancelled">Cancelled</option>
+
+</select>
+
+</div>
+
+</section>
+
+
 <section class="card">
+
 <h2>📋 Customer Requests</h2>
 
+
 <div class="table">
-<table>
+
+<table id="requestsTable">
+
+<thead>
 
 <tr>
+
 <th>ID</th>
 <th>Customer</th>
 <th>Age</th>
@@ -40,25 +167,44 @@
 <th>Details</th>
 <th>Created</th>
 <th>Status</th>
+
 </tr>
+
+</thead>
+
+
+<tbody>
+
 
 {% for r in requests %}
 
-<tr>
+<tr
+class="request-row"
+data-search="{{r.id}} {{r.customer}} {{r.phone}}"
+data-status="{{r.status}}"
+>
+
 
 <td>
 <b>#{{r.id}}</b>
 </td>
 
+
 <td>
-<b>{{r.customer}}</b><br>
+
+<b>{{r.customer}}</b>
+
+<br>
+
 📱 {{r.phone}}
 
 <br><br>
 
+
 <a
 href="tel:{{r.phone}}"
-style="display:inline-block;
+style="
+display:inline-block;
 padding:8px 14px;
 background:#16a085;
 color:white;
@@ -68,12 +214,15 @@ font-weight:bold;">
 📞 Call
 </a>
 
+
 <br><br>
+
 
 <a
 href="https://wa.me/91{{r.phone}}"
 target="_blank"
-style="display:inline-block;
+style="
+display:inline-block;
 padding:8px 14px;
 background:#25D366;
 color:white;
@@ -85,35 +234,47 @@ font-weight:bold;">
 
 </td>
 
+
 <td>
+
 {{r.age}} वर्ष
 
 {% if r.age >= 60 %}
+
 <br>
+
 <b>👴 Senior Citizen</b>
+
 {% endif %}
 
 </td>
+
 
 <td>
 {{r.service}}
 </td>
 
+
 <td>
 {{r.address}}
 </td>
+
 
 <td>
 {{r.details}}
 </td>
 
+
 <td>
 {{r.created_at.strftime("%d-%m-%Y %H:%M")}}
 </td>
 
+
 <td>
 
-<form method="post"
+
+<form
+method="post"
 action="/admin/status/{{r.id}}">
 
 <select
@@ -131,7 +292,9 @@ onchange="this.form.submit()">
 <option
 value="{{s}}"
 {% if r.status == s %}selected{% endif %}>
+
 {{s}}
+
 </option>
 
 {% endfor %}
@@ -140,9 +303,12 @@ value="{{s}}"
 
 </form>
 
+
 <br>
 
-<!-- Status के अनुसार WhatsApp Message -->
+
+<!-- Status-wise WhatsApp Message -->
+
 
 {% if r.status == "Pending" %}
 
@@ -152,6 +318,7 @@ value="{{s}}"
 " प्राप्त हो गया है। आपका आवेदन अभी Pending है। जल्द ही आगे की प्रक्रिया शुरू की जाएगी। - HelpMe Doorstep"
 %}
 
+
 {% elif r.status == "Assigned" %}
 
 {% set message =
@@ -159,6 +326,7 @@ value="{{s}}"
 ", आपका Application ID #" ~ r.id ~
 " अब Assigned है। आपके आवेदन पर सहायता के लिए कार्य सौंप दिया गया है। - HelpMe Doorstep"
 %}
+
 
 {% elif r.status == "In Progress" %}
 
@@ -168,6 +336,7 @@ value="{{s}}"
 " पर कार्य शुरू हो गया है। आपका आवेदन In Progress है। - HelpMe Doorstep"
 %}
 
+
 {% elif r.status == "Completed" %}
 
 {% set message =
@@ -175,6 +344,7 @@ value="{{s}}"
 ", आपका Application ID #" ~ r.id ~
 " सफलतापूर्वक Completed हो गया है। सहायता लेने के लिए धन्यवाद। - HelpMe Doorstep"
 %}
+
 
 {% elif r.status == "Cancelled" %}
 
@@ -186,10 +356,12 @@ value="{{s}}"
 
 {% endif %}
 
+
 <a
 href="https://wa.me/91{{r.phone}}?text={{message|urlencode}}"
 target="_blank"
-style="display:inline-block;
+style="
+display:inline-block;
 margin-top:6px;
 padding:8px 12px;
 background:#25D366;
@@ -198,29 +370,145 @@ text-decoration:none;
 border-radius:6px;
 font-weight:bold;
 font-size:13px;">
+
 💬 Status WhatsApp भेजें
+
 </a>
+
 
 </td>
 
 </tr>
+
 
 {% else %}
 
 <tr>
+
 <td colspan="8">
 अभी कोई request नहीं है।
 </td>
+
 </tr>
 
 {% endfor %}
 
+
+</tbody>
+
 </table>
+
 </div>
 
 </section>
 
+
 </main>
+
+
+<script>
+
+const rows = document.querySelectorAll(".request-row");
+
+const searchInput = document.getElementById("searchInput");
+
+const statusFilter = document.getElementById("statusFilter");
+
+
+function updateDashboard() {
+
+let total = rows.length;
+
+let pending = 0;
+
+let progress = 0;
+
+let completed = 0;
+
+
+rows.forEach(row => {
+
+let status = row.dataset.status;
+
+if (status === "Pending") {
+pending++;
+}
+
+if (status === "In Progress") {
+progress++;
+}
+
+if (status === "Completed") {
+completed++;
+}
+
+});
+
+
+document.getElementById("totalCount").textContent = total;
+
+document.getElementById("pendingCount").textContent = pending;
+
+document.getElementById("progressCount").textContent = progress;
+
+document.getElementById("completedCount").textContent = completed;
+
+}
+
+
+function filterRequests() {
+
+let search = searchInput.value.toLowerCase().trim();
+
+let status = statusFilter.value;
+
+
+rows.forEach(row => {
+
+let text = row.dataset.search.toLowerCase();
+
+let rowStatus = row.dataset.status;
+
+
+let searchMatch =
+text.includes(search);
+
+
+let statusMatch =
+!status || rowStatus === status;
+
+
+if (searchMatch && statusMatch) {
+
+row.style.display = "";
+
+} else {
+
+row.style.display = "none";
+
+}
+
+});
+
+}
+
+
+searchInput.addEventListener(
+"input",
+filterRequests
+);
+
+
+statusFilter.addEventListener(
+"change",
+filterRequests
+);
+
+
+updateDashboard();
+
+</script>
+
 
 </body>
 </html>
