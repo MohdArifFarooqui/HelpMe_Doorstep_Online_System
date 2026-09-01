@@ -413,6 +413,110 @@ def logout():
     session.clear()
     return redirect(url_for("admin"))
 
+# ==============================
+# WORKER LOGIN & DASHBOARD
+# ==============================
+
+@app.route("/worker/login", methods=["GET", "POST"])
+def worker_login():
+
+    if request.method == "GET":
+        return render_template("worker_login.html")
+
+    mobile = request.form.get("mobile", "").strip()
+    password = request.form.get("password", "")
+
+    if not mobile or not password:
+        flash(
+            "कृपया Mobile और Password भरें",
+            "error"
+        )
+        return redirect(url_for("worker_login"))
+
+    worker = (
+        DB.query(User)
+        .filter(User.mobile == mobile)
+        .filter(User.role == "worker")
+        .first()
+    )
+
+    if not worker:
+        flash(
+            "Worker account नहीं मिला",
+            "error"
+        )
+        return redirect(url_for("worker_login"))
+
+    if not worker.approved:
+        flash(
+            "आपका Registration अभी Admin approval के लिए Pending है",
+            "error"
+        )
+        return redirect(url_for("worker_login"))
+
+    if not worker.active:
+        flash(
+            "आपका Worker account अभी Active नहीं है",
+            "error"
+        )
+        return redirect(url_for("worker_login"))
+
+    if not worker.password_hash or not check_password_hash(
+        worker.password_hash,
+        password
+    ):
+        flash(
+            "Mobile या Password गलत है",
+            "error"
+        )
+        return redirect(url_for("worker_login"))
+
+    session.clear()
+
+    session["worker_id"] = worker.id
+    session["worker"] = True
+
+    flash(
+        "Worker Login सफल हुआ",
+        "success"
+    )
+
+    return redirect(url_for("worker_dashboard"))
+
+
+@app.get("/worker/dashboard")
+def worker_dashboard():
+
+    if not session.get("worker"):
+        return redirect(url_for("worker_login"))
+
+    worker_id = session.get("worker_id")
+
+    worker = DB.get(User, worker_id)
+
+    if not worker or worker.role != "worker":
+        session.clear()
+        return redirect(url_for("worker_login"))
+
+    requests = (
+        DB.query(RequestItem)
+        .order_by(RequestItem.id.desc())
+        .all()
+    )
+
+    return render_template(
+        "worker_dashboard.html",
+        worker=worker,
+        requests=requests
+    )
+
+
+@app.post("/worker/logout")
+def worker_logout():
+
+    session.clear()
+
+    return redirect(url_for("worker_login"))
 
 @app.get("/health")
 def health():
