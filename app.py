@@ -419,7 +419,7 @@ def admin():
             .all()
         )
 
-admins = (
+    admins = (
         DB.query(User)
         .filter(User.role == "admin")
         .order_by(User.id.desc())
