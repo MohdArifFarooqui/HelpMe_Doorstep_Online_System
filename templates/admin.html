@@ -182,7 +182,100 @@ placeholder="नाम, मोबाइल या Application ID से खो�
 </div>
 
 </section>
+<!-- State / District Admin List -->
 
+<section class="card" style="margin-bottom:20px;">
+
+<h2>📋 State / District Admin List</h2>
+
+{% if admins %}
+
+<div class="table">
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>नाम</th>
+<th>Mobile</th>
+<th>Admin Level</th>
+<th>State</th>
+<th>District</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for a in admins %}
+
+<tr>
+
+<td><b>#{{ a.id }}</b></td>
+
+<td><b>{{ a.name }}</b></td>
+
+<td>
+📱 {{ a.mobile }}
+
+<br><br>
+
+<a
+href="tel:{{ a.mobile }}"
+style="display:inline-block;padding:8px 14px;background:#16a085;color:white;text-decoration:none;border-radius:6px;font-weight:bold;">
+📞 Call
+</a>
+
+<br><br>
+
+<a
+href="https://wa.me/91{{ a.mobile }}"
+target="_blank"
+style="display:inline-block;padding:8px 14px;background:#25D366;color:white;text-decoration:none;border-radius:6px;font-weight:bold;">
+🟢 WhatsApp
+</a>
+</td>
+
+<td>
+{% if a.admin_level == "state" %}
+State Admin
+{% elif a.admin_level == "district" %}
+District Admin
+{% else %}
+{{ a.admin_level or "-" }}
+{% endif %}
+</td>
+
+<td>{{ a.state or "-" }}</td>
+
+<td>{{ a.district or "-" }}</td>
+
+<td>
+{% if a.active %}
+<span style="color:green;font-weight:bold;">🟢 Active</span>
+{% else %}
+<span style="color:red;font-weight:bold;">🔴 Inactive</span>
+{% endif %}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% else %}
+
+<p>अभी कोई State / District Admin नहीं बनाया गया है।</p>
+
+{% endif %}
+
+</section>
 <!-- Create State / District Admin -->
 
 <section class="card" style="margin-bottom:20px;">
