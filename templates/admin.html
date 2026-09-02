@@ -1370,7 +1370,7 @@ data-status="{{r.status}}"
 
 
 <td>
-<b>#{{r.id}}</b>
+<b>{{r.application_code}}</b>
 </td>
 
 
@@ -1538,7 +1538,7 @@ value="{{s}}"
 
 {% set message =
 "नमस्ते " ~ r.customer ~
-", आपका Application ID #" ~ r.id ~
+", आपका Application ID " ~ r.application_code ~
 " प्राप्त हो गया है। आपका आवेदन अभी Pending है। जल्द ही आगे की प्रक्रिया शुरू की जाएगी। - HelpMe Doorstep"
 %}
 
@@ -1547,7 +1547,7 @@ value="{{s}}"
 
 {% set message =
 "नमस्ते " ~ r.customer ~
-", आपका Application ID #" ~ r.id ~
+", आपका Application ID " ~ r.application_code ~
 " अब Assigned है। आपके आवेदन पर सहायता के लिए कार्य सौंप दिया गया है। - HelpMe Doorstep"
 %}
 
@@ -1556,7 +1556,7 @@ value="{{s}}"
 
 {% set message =
 "नमस्ते " ~ r.customer ~
-", आपके Application ID #" ~ r.id ~
+", आपके Application ID " ~ r.application_code ~
 " पर कार्य शुरू हो गया है। आपका आवेदन In Progress है। - HelpMe Doorstep"
 %}
 
@@ -1565,7 +1565,7 @@ value="{{s}}"
 
 {% set message =
 "नमस्ते " ~ r.customer ~
-", आपका Application ID #" ~ r.id ~
+", आपका Application ID " ~ r.application_code ~
 " सफलतापूर्वक Completed हो गया है। सहायता लेने के लिए धन्यवाद। - HelpMe Doorstep"
 %}
 
@@ -1574,7 +1574,7 @@ value="{{s}}"
 
 {% set message =
 "नमस्ते " ~ r.customer ~
-", आपके Application ID #" ~ r.id ~
+", आपके Application ID " ~ r.application_code ~
 " का आवेदन Cancelled कर दिया गया है। अधिक जानकारी के लिए HelpMe Doorstep से संपर्क करें। - HelpMe Doorstep"
 %}
 
