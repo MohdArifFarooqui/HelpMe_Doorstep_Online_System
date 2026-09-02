@@ -418,11 +418,17 @@ def admin():
             .order_by(User.id.desc())
             .all()
         )
-
+admins = (
+    DB.query(User)
+    .filter(User.role == "admin")
+    .order_by(User.id.desc())
+    .all()
+)
     return render_template(
         "admin.html",
         requests=requests,
-        workers=workers
+        workers=workers,
+        admins=admins
     )
                 
            
