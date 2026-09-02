@@ -423,7 +423,7 @@ admins = (
     .filter(User.role == "admin")
     .order_by(User.id.desc())
     .all()
-)
+    )
     return render_template(
         "admin.html",
         requests=requests,
