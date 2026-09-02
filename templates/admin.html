@@ -44,7 +44,8 @@
     }
 }
     
-<style>
+
+  <style>
 .dashboard {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -276,6 +277,7 @@ District Admin
 {% endif %}
 
 </section>
+
 <!-- Create State / District Admin -->
 
 <section class="card" style="margin-bottom:20px;">
@@ -296,7 +298,7 @@ required
 <input
 type="tel"
 name="mobile"
-placeholder="Mobile Number"
+placeholder="10 अंकों का Mobile Number"
 required
 >
 
@@ -307,7 +309,7 @@ placeholder="Login Password"
 required
 >
 
-<select name="admin_level" required>
+<select name="admin_level" id="adminLevel" required>
 
 <option value="">Admin Level चुनें</option>
 <option value="state">State Admin</option>
@@ -315,18 +317,17 @@ required
 
 </select>
 
-<input
-type="text"
-name="state"
-placeholder="State का नाम"
-required
->
+<select name="state" id="stateSelect" required>
 
-<input
-type="text"
-name="district"
-placeholder="District का नाम (District Admin के लिए)"
->
+<option value="">State चुनें</option>
+
+</select>
+
+<select name="district" id="districtSelect">
+
+<option value="">पहले State चुनें</option>
+
+</select>
 
 </div>
 
@@ -341,7 +342,992 @@ style="background:#128c7e;">
 
 </form>
 
-</section> 
+</section>
+
+
+<script>
+
+/* ==============================
+   INDIA STATES & DISTRICTS
+   ============================== */
+
+const indiaData = {
+
+"Andhra Pradesh": [
+"Alluri Sitharama Raju",
+"Anakapalli",
+"Anantapur",
+"Annamayya",
+"Bapatla",
+"Chittoor",
+"Dr. B. R. Ambedkar Konaseema",
+"East Godavari",
+"Eluru",
+"Guntur",
+"Kakinada",
+"Krishna",
+"Kurnool",
+"Nandyal",
+"NTR",
+"Palnadu",
+"Parvathipuram Manyam",
+"Prakasam",
+"Sri Potti Sriramulu Nellore",
+"Sri Sathya Sai",
+"Srikakulam",
+"Tirupati",
+"Visakhapatnam",
+"Vizianagaram",
+"West Godavari",
+"YSR Kadapa"
+],
+
+"Arunachal Pradesh": [
+"Anjaw",
+"Changlang",
+"Dibang Valley",
+"East Kameng",
+"East Siang",
+"Itanagar Capital Complex",
+"Kamle",
+"Kra Daadi",
+"Kurung Kumey",
+"Lepa Rada",
+"Lohit",
+"Longding",
+"Lower Dibang Valley",
+"Lower Siang",
+"Lower Subansiri",
+"Namsai",
+"Pakke Kessang",
+"Papum Pare",
+"Shi Yomi",
+"Siang",
+"Tawang",
+"Tirap",
+"Upper Siang",
+"Upper Subansiri",
+"West Kameng",
+"West Siang"
+],
+
+"Assam": [
+"Baksa",
+"Barpeta",
+"Biswanath",
+"Bongaigaon",
+"Charaideo",
+"Chirang",
+"Darrang",
+"Dhemaji",
+"Dhubri",
+"Dibrugarh",
+"Dima Hasao",
+"Goalpara",
+"Golaghat",
+"Hailakandi",
+"Hojai",
+"Jorhat",
+"Kamrup",
+"Kamrup Metropolitan",
+"Karbi Anglong",
+"Karimganj",
+"Kokrajhar",
+"Lakhimpur",
+"Majuli",
+"Morigaon",
+"Nagaon",
+"Nalbari",
+"Sivasagar",
+"Sonitpur",
+"South Salmara-Mankachar",
+"Tinsukia",
+"Tamulpur",
+"Udalguri",
+"West Karbi Anglong"
+],
+
+"Bihar": [
+"Araria",
+"Arwal",
+"Aurangabad",
+"Banka",
+"Begusarai",
+"Bhagalpur",
+"Bhojpur",
+"Buxar",
+"Darbhanga",
+"East Champaran",
+"Gaya",
+"Gopalganj",
+"Jamui",
+"Jehanabad",
+"Khagaria",
+"Kishanganj",
+"Lakhisarai",
+"Madhepura",
+"Madhubani",
+"Munger",
+"Muzaffarpur",
+"Nalanda",
+"Nawada",
+"Patna",
+"Purnia",
+"Rohtas",
+"Saharsa",
+"Samastipur",
+"Saran",
+"Sheikhpura",
+"Sheohar",
+"Sitamarhi",
+"Siwan",
+"Supaul",
+"Vaishali",
+"West Champaran"
+],
+
+"Chhattisgarh": [
+"Balod",
+"Baloda Bazar",
+"Balrampur-Ramanujganj",
+"Bastar",
+"Bemetara",
+"Bijapur",
+"Bilaspur",
+"Dantewada",
+"Dhamtari",
+"Durg",
+"Gariaband",
+"Gaurela-Pendra-Marwahi",
+"Janjgir-Champa",
+"Jashpur",
+"Kabirdham",
+"Kanker",
+"Khairagarh-Chhuikhadan-Gandai",
+"Kondagaon",
+"Korba",
+"Korea",
+"Mahasamund",
+"Manendragarh-Chirmiri-Bharatpur",
+"Mohla-Manpur-Ambagarh Chowki",
+"Mungeli",
+"Narayanpur",
+"Raigarh",
+"Raipur",
+"Rajnandgaon",
+"Sakti",
+"Sarangarh-Bilaigarh",
+"Sukma",
+"Surajpur",
+"Surguja"
+],
+
+"Goa": [
+"North Goa",
+"South Goa"
+],
+
+"Gujarat": [
+"Ahmedabad",
+"Amreli",
+"Anand",
+"Aravalli",
+"Banaskantha",
+"Botad",
+"Chhota Udaipur",
+"Dahod",
+"Devbhumi Dwarka",
+"Gandhinagar",
+"Gir Somnath",
+"Jamnagar",
+"Junagadh",
+"Kheda",
+"Kutch",
+"Mahisagar",
+"Mehsana",
+"Morbi",
+"Narmada",
+"Navsari",
+"Panchmahal",
+"Patan",
+"Porbandar",
+"Rajkot",
+"Sabarkantha",
+"Surat",
+"Surendranagar",
+"Tapi",
+"Vadodara",
+"Valsad"
+],
+
+"Haryana": [
+"Ambala",
+"Charkhi Dadri",
+"Faridabad",
+"Fatehabad",
+"Gurugram",
+"Hisar",
+"Jhajjar",
+"Jind",
+"Kaithal",
+"Karnal",
+"Kurukshetra",
+"Mahendragarh",
+"Nuh",
+"Palwal",
+"Panchkula",
+"Panipat",
+"Rewari",
+"Rohtak",
+"Sirsa",
+"Sonipat",
+"Yamunanagar"
+],
+
+"Himachal Pradesh": [
+"Bilaspur",
+"Chamba",
+"Hamirpur",
+"Kangra",
+"Kinnaur",
+"Kullu",
+"Lahaul and Spiti",
+"Mandi",
+"Shimla",
+"Sirmaur",
+"Solan",
+"Una"
+],
+
+"Jharkhand": [
+"Bokaro",
+"Chatra",
+"Deoghar",
+"Dhanbad",
+"Dumka",
+"East Singhbhum",
+"Garhwa",
+"Giridih",
+"Godda",
+"Gumla",
+"Hazaribagh",
+"Jamtara",
+"Khunti",
+"Koderma",
+"Latehar",
+"Lohardaga",
+"Pakur",
+"Palamu",
+"Ramgarh",
+"Ranchi",
+"Sahibganj",
+"Simdega",
+"West Singhbhum"
+],
+
+"Karnataka": [
+"Bagalkot",
+"Ballari",
+"Belagavi",
+"Bengaluru Rural",
+"Bengaluru Urban",
+"Bidar",
+"Chamarajanagar",
+"Chikkaballapur",
+"Chikkamagaluru",
+"Chitradurga",
+"Dakshina Kannada",
+"Davanagere",
+"Dharwad",
+"Gadag",
+"Kalaburagi",
+"Hassan",
+"Haveri",
+"Kodagu",
+"Kolar",
+"Koppal",
+"Mandya",
+"Mysuru",
+"Raichur",
+"Ramanagara",
+"Shivamogga",
+"Tumakuru",
+"Udupi",
+"Uttara Kannada",
+"Vijayapura",
+"Yadgir"
+],
+
+"Kerala": [
+"Alappuzha",
+"Ernakulam",
+"Idukki",
+"Kannur",
+"Kasaragod",
+"Kollam",
+"Kottayam",
+"Kozhikode",
+"Malappuram",
+"Palakkad",
+"Pathanamthitta",
+"Thiruvananthapuram",
+"Thrissur",
+"Wayanad"
+],
+
+"Madhya Pradesh": [
+"Agar Malwa",
+"Alirajpur",
+"Anuppur",
+"Ashoknagar",
+"Balaghat",
+"Barwani",
+"Betul",
+"Bhind",
+"Bhopal",
+"Burhanpur",
+"Chhatarpur",
+"Chhindwara",
+"Damoh",
+"Datia",
+"Dewas",
+"Dhar",
+"Dindori",
+"Guna",
+"Gwalior",
+"Harda",
+"Indore",
+"Jabalpur",
+"Jhabua",
+"Katni",
+"Khandwa",
+"Khargone",
+"Maihar",
+"Mandla",
+"Mandsaur",
+"Mauganj",
+"Morena",
+"Narmadapuram",
+"Narsinghpur",
+"Neemuch",
+"Niwas",
+"Panna",
+"Raisen",
+"Rajgarh",
+"Ratlam",
+"Rewa",
+"Sagar",
+"Satna",
+"Sehore",
+"Seoni",
+"Shahdol",
+"Shajapur",
+"Sheopur",
+"Shivpuri",
+"Sidhi",
+"Singrauli",
+"Tikamgarh",
+"Ujjain",
+"Umaria",
+"Vidisha"
+],
+
+"Maharashtra": [
+"Ahmednagar",
+"Akola",
+"Amravati",
+"Beed",
+"Bhandara",
+"Buldhana",
+"Chandrapur",
+"Chhatrapati Sambhajinagar",
+"Dharashiv",
+"Dhule",
+"Gadchiroli",
+"Gondia",
+"Hingoli",
+"Jalgaon",
+"Jalna",
+"Kolhapur",
+"Latur",
+"Nagpur",
+"Nanded",
+"Nandurbar",
+"Nashik",
+"Palghar",
+"Parbhani",
+"Pune",
+"Raigad",
+"Ratnagiri",
+"Sangli",
+"Satara",
+"Sindhudurg",
+"Solapur",
+"Thane",
+"Wardha",
+"Washim",
+"Yavatmal"
+],
+
+"Manipur": [
+"Bishnupur",
+"Chandel",
+"Churachandpur",
+"Imphal East",
+"Imphal West",
+"Jiribam",
+"Kakching",
+"Kamjong",
+"Kangpokpi",
+"Noney",
+"Pherzawl",
+"Senapati",
+"Tamenglong",
+"Thoubal",
+"Ukhrul"
+],
+
+"Meghalaya": [
+"East Garo Hills",
+"East Jaintia Hills",
+"East Khasi Hills",
+"North Garo Hills",
+"Ri Bhoi",
+"South Garo Hills",
+"South West Garo Hills",
+"South West Khasi Hills",
+"West Garo Hills",
+"West Jaintia Hills",
+"West Khasi Hills"
+],
+
+"Mizoram": [
+"Aizawl",
+"Champhai",
+"Hnahthial",
+"Khawzawl",
+"Kolasib",
+"Lawngtlai",
+"Lunglei",
+"Mamit",
+"Saitual",
+"Serchhip"
+],
+
+"Nagaland": [
+"Chumoukedima",
+"Dimapur",
+"Kiphire",
+"Kohima",
+"Longleng",
+"Mokokchung",
+"Mon",
+"Niuland",
+"Noklak",
+"Peren",
+"Phokhung",
+"Shamator",
+"Tuensang",
+"Tseminyu",
+"Wokha",
+"Zunheboto"
+],
+
+"Odisha": [
+"Angul",
+"Balangir",
+"Balasore",
+"Bargarh",
+"Bhadrak",
+"Boudh",
+"Cuttack",
+"Deogarh",
+"Dhenkanal",
+"Gajapati",
+"Ganjam",
+"Jagatsinghpur",
+"Jajpur",
+"Jharsuguda",
+"Kalahandi",
+"Kandhamal",
+"Kendrapara",
+"Kendujhar",
+"Khordha",
+"Koraput",
+"Malkangiri",
+"Mayurbhanj",
+"Nabarangpur",
+"Nayagarh",
+"Nuapada",
+"Puri",
+"Rayagada",
+"Sambalpur",
+"Subarnapur",
+"Sundargarh"
+],
+
+"Punjab": [
+"Amritsar",
+"Barnala",
+"Bathinda",
+"Faridkot",
+"Fatehgarh Sahib",
+"Fazilka",
+"Ferozepur",
+"Gurdaspur",
+"Hoshiarpur",
+"Jalandhar",
+"Kapurthala",
+"Ludhiana",
+"Malerkotla",
+"Mansa",
+"Moga",
+"Muktsar",
+"Nawanshahr",
+"Pathankot",
+"Patiala",
+"Rupnagar",
+"Sahibzada Ajit Singh Nagar",
+"Sangrur",
+"Tarn Taran"
+],
+
+"Rajasthan": [
+"Ajmer",
+"Alwar",
+"Anupgarh",
+"Balotra",
+"Banswara",
+"Baran",
+"Barmer",
+"Beawar",
+"Bharatpur",
+"Bhilwara",
+"Bikaner",
+"Bundi",
+"Chittorgarh",
+"Churu",
+"Dausa",
+"Deeg",
+"Dholpur",
+"DIDWANA-KUCHAMANN",
+"Dungarpur",
+"Hanumangarh",
+"Jaipur",
+"Jaisalmer",
+"Jalore",
+"Jhalawar",
+"Jhunjhunu",
+"Jodhpur",
+"Karauli",
+"Khairthal-Tijara",
+"Kota",
+"Nagaur",
+"Pali",
+"Phalodi",
+"Pratapgarh",
+"Rajsamand",
+"Salumbar",
+"Sawai Madhopur",
+"Sikar",
+"Sirohi",
+"Sri Ganganagar",
+"TonK",
+"Udaipur"
+],
+
+"Sikkim": [
+"East Sikkim",
+"North Sikkim",
+"South Sikkim",
+"West Sikkim"
+],
+
+"Tamil Nadu": [
+"Ariyalur",
+"Chengalpattu",
+"Chennai",
+"Coimbatore",
+"Cuddalore",
+"Dharmapuri",
+"Dindigul",
+"Erode",
+"Kallakurichi",
+"Kancheepuram",
+"Karur",
+"Krishnagiri",
+"Madurai",
+"Mayiladuthurai",
+"Nagapattinam",
+"Namakkal",
+"Nilgiris",
+"Perambalur",
+"Pudukkottai",
+"Ramanathapuram",
+"Ranipet",
+"Salem",
+"Sivaganga",
+"Tenkasi",
+"Thanjavur",
+"Theni",
+"Thoothukudi",
+"Tiruchirappalli",
+"Tirunelveli",
+"Tirupathur",
+"Tiruppur",
+"Tiruvallur",
+"Tiruvannamalai",
+"Tiruvarur",
+"Vellore",
+"Viluppuram",
+"Virudhunagar"
+],
+
+"Telangana": [
+"Adilabad",
+"Bhadradri Kothagudem",
+"Hanamkonda",
+"Hyderabad",
+"Jagtial",
+"Jangaon",
+"Jayashankar Bhupalpally",
+"Jogulamba Gadwal",
+"Kamareddy",
+"Karimnagar",
+"Khammam",
+"Komaram Bheem",
+"Mahabubabad",
+"Mahbubnagar",
+"Mancherial",
+"Medak",
+"Medchal-Malkajgiri",
+"Mulugu",
+"Nagarkurnool",
+"Nalgonda",
+"Narayanpet",
+"Nirmal",
+"Nizamabad",
+"Peddapalli",
+"Rajanna Sircilla",
+"Rangareddy",
+"Sangareddy",
+"Siddipet",
+"Suryapet",
+"Vikarabad",
+"Wanaparthy",
+"Warangal",
+"Yadadri Bhuvanagiri"
+],
+
+"Tripura": [
+"Dhalai",
+"Gomati",
+"Khowai",
+"North Tripura",
+"Sepahijala",
+"South Tripura",
+"Unakoti",
+"West Tripura"
+],
+
+"Uttar Pradesh": [
+"Agra",
+"Aligarh",
+"Ambedkar Nagar",
+"Amethi",
+"Amroha",
+"Auraiya",
+"Ayodhya",
+"Azamgarh",
+"Baghpat",
+"Bahraich",
+"Ballia",
+"Balrampur",
+"Banda",
+"Barabanki",
+"Bareilly",
+"Basti",
+"Bahraich",
+"Bhadohi",
+"Bijnor",
+"Budaun",
+"Bulandshahr",
+"Chandauli",
+"Chitrakoot",
+"Deoria",
+"Etah",
+"Etawah",
+"Farrukhabad",
+"Fatehpur",
+"Firozabad",
+"Gautam Buddha Nagar",
+"Ghaziabad",
+"Ghazipur",
+"Gonda",
+"Gorakhpur",
+"Hamirpur",
+"Hapur",
+"Hardoi",
+"Hathras",
+"Jalaun",
+"Jaunpur",
+"Jhansi",
+"Kannauj",
+"Kanpur Dehat",
+"Kanpur Nagar",
+"Kasganj",
+"Kaushambi",
+"Kushinagar",
+"Lakhimpur Kheri",
+"Lalitpur",
+"Lucknow",
+"Maharajganj",
+"Mahoba",
+"Mainpuri",
+"Mathura",
+"Mau",
+"Meerut",
+"Mirzapur",
+"Moradabad",
+"Muzaffarnagar",
+"Pilibhit",
+"Pratapgarh",
+"Prayagraj",
+"Raebareli",
+"Rampur",
+"Saharanpur",
+"Sambhal",
+"Sant Kabir Nagar",
+"Shahjahanpur",
+"Shamli",
+"Shravasti",
+"Siddharthnagar",
+"Sitapur",
+"Sonbhadra",
+"Sultanpur",
+"Unnao",
+"Varanasi"
+],
+
+"Uttarakhand": [
+"Almora",
+"Bageshwar",
+"Chamoli",
+"Champawat",
+"Dehradun",
+"Haridwar",
+"Nainital",
+"Pauri Garhwal",
+"Pithoragarh",
+"Rudraprayag",
+"Tehri Garhwal",
+"Udham Singh Nagar",
+"Uttarkashi"
+],
+
+"West Bengal": [
+"Alipurduar",
+"Bankura",
+"Paschim Bardhaman",
+"Purba Bardhaman",
+"Birbhum",
+"Cooch Behar",
+"Darjeeling",
+"Hooghly",
+"Howrah",
+"Jalpaiguri",
+"Jhargram",
+"Kalimpong",
+"Kolkata",
+"Malda",
+"Murshidabad",
+"Nadia",
+"North 24 Parganas",
+"South 24 Parganas",
+"Paschim Medinipur",
+"Purba Medinipur",
+"Uttar Dinajpur",
+"Dakshin Dinajpur"
+],
+
+/* UNION TERRITORIES */
+
+"Andaman and Nicobar Islands": [
+"Nicobar",
+"North and Middle Andaman",
+"South Andaman"
+],
+
+"Chandigarh": [
+"Chandigarh"
+],
+
+"Dadra and Nagar Haveli and Daman and Diu": [
+"Dadra and Nagar Haveli",
+"Daman",
+"Diu"
+],
+
+"Delhi": [
+"Central Delhi",
+"East Delhi",
+"New Delhi",
+"North Delhi",
+"North East Delhi",
+"North West Delhi",
+"Shahdara",
+"South Delhi",
+"South East Delhi",
+"South West Delhi",
+"West Delhi"
+],
+
+"Jammu and Kashmir": [
+"Anantnag",
+"Bandipora",
+"Baramulla",
+"Budgam",
+"Doda",
+"Ganderbal",
+"Jammu",
+"Kathua",
+"Kishtwar",
+"Kulgam",
+" Kupwara",
+"Rajouri",
+"Ramban",
+"Reasi",
+"Samba",
+"Shopian",
+"Srinagar",
+"Udhampur"
+],
+
+"Ladakh": [
+"Leh",
+"Kargil"
+],
+
+"Lakshadweep": [
+"Agatti",
+"Amini",
+"Andrott",
+"Bitra",
+"Chetlat",
+"Kadmat",
+"Kalpeni",
+"Kavaratti",
+"Kiltan",
+"Minicoy"
+],
+
+"Puducherry": [
+"Karaikal",
+"Mahe",
+"Puducherry",
+"Yanam"
+]
+
+};
+
+
+/* ==============================
+   STATE DROPDOWN
+   ============================== */
+
+const stateSelect =
+document.getElementById("stateSelect");
+
+const districtSelect =
+document.getElementById("districtSelect");
+
+const adminLevel =
+document.getElementById("adminLevel");
+
+
+Object.keys(indiaData)
+.sort()
+.forEach(function(state) {
+
+    const option =
+    document.createElement("option");
+
+    option.value = state;
+    option.textContent = state;
+
+    stateSelect.appendChild(option);
+
+});
+
+
+/* ==============================
+   STATE CHANGE
+   ============================== */
+
+stateSelect.addEventListener(
+"change",
+function() {
+
+    const state = this.value;
+
+    districtSelect.innerHTML =
+    '<option value="">District चुनें</option>';
+
+    if (!state) {
+        return;
+    }
+
+    indiaData[state]
+    .sort()
+    .forEach(function(district) {
+
+        const option =
+        document.createElement("option");
+
+        option.value = district;
+        option.textContent = district;
+
+        districtSelect.appendChild(option);
+
+    });
+
+});
+
+
+/* ==============================
+   ADMIN LEVEL CHANGE
+   ============================== */
+
+adminLevel.addEventListener(
+"change",
+function() {
+
+    if (this.value === "state") {
+
+        districtSelect.value = "";
+        districtSelect.disabled = true;
+        districtSelect.required = false;
+
+    }
+
+    else if (this.value === "district") {
+
+        districtSelect.disabled = false;
+        districtSelect.required = true;
+
+    }
+
+    else {
+
+        districtSelect.value = "";
+        districtSelect.disabled = false;
+        districtSelect.required = false;
+
+    }
+
+});
+
+</script>
 
 <section class="card">
 
