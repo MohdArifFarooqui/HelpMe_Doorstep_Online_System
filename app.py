@@ -500,6 +500,73 @@ def assign_request(rid):
 
     return redirect(url_for("admin"))
 
+@app.post("/admin/create-admin")
+def create_admin():
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    # Only Main Admin can create State/District Admin
+    if session.get("admin_user_id"):
+        flash(
+            "State/District Admin को नया Admin बनाने की अनुमति नहीं है।",
+            "error"
+        )
+        return redirect(url_for("admin"))
+
+    name = request.form.get("name", "").strip()
+    mobile = request.form.get("mobile", "").strip()
+    password = request.form.get("password", "")
+    admin_level = request.form.get("admin_level", "").strip()
+    state = request.form.get("state", "").strip()
+    district = request.form.get("district", "").strip()
+
+    if not name or not mobile or not password:
+        flash("Name, Mobile और Password जरूरी हैं।", "error")
+        return redirect(url_for("admin"))
+
+    if admin_level not in ("state", "district"):
+        flash("Invalid Admin Level", "error")
+        return redirect(url_for("admin"))
+
+    if admin_level == "state" and not state:
+        flash("State चुनना जरूरी है।", "error")
+        return redirect(url_for("admin"))
+
+    if admin_level == "district" and (not state or not district):
+        flash("State और District दोनों जरूरी हैं।", "error")
+        return redirect(url_for("admin"))
+
+    existing = (
+        DB.query(User)
+        .filter(User.mobile == mobile)
+        .first()
+    )
+
+    if existing:
+        flash("यह Mobile Number पहले से Registered है।", "error")
+        return redirect(url_for("admin"))
+
+    new_admin = User(
+        mobile=mobile,
+        password_hash=generate_password_hash(password),
+        role="admin",
+        name=name,
+        admin_level=admin_level,
+        state=state,
+        district=district if admin_level == "district" else None,
+        approved=True,
+        active=True
+    )
+
+    DB.add(new_admin)
+    DB.commit()
+
+    flash(
+        f"{name} का {admin_level.title()} Admin सफलतापूर्वक बनाया गया है।",
+        "success"
+    )
+
+    return redirect(url_for("admin"))
 
 @app.post("/admin/login")
 def login():
