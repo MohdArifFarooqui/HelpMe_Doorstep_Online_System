@@ -350,18 +350,66 @@ def admin():
     if not session.get("admin"):
         return render_template("login.html")
 
-    requests = (
-        DB.query(RequestItem)
-        .order_by(RequestItem.id.desc())
-        .all()
-    )
+# Admin hierarchy filtering
+    admin_user = None
 
-    workers = (
-        DB.query(User)
-        .filter(User.role == "worker")
-        .order_by(User.id.desc())
-        .all()
-    )
+    if session.get("admin_user_id"):
+        admin_user = DB.get(User, session.get("admin_user_id"))
+
+    if admin_user and admin_user.admin_level == "state":
+        requests = (
+            DB.query(RequestItem)
+            .filter(RequestItem.state == admin_user.state)
+            .order_by(RequestItem.id.desc())
+            .all()
+        )
+    elif admin_user and admin_user.admin_level == "district":
+        requests = (
+            DB.query(RequestItem)
+            .filter(
+                RequestItem.state == admin_user.state,
+                RequestItem.district == admin_user.district
+            )
+            .order_by(RequestItem.id.desc())
+            .all()
+        )
+    else:
+        requests = (
+            DB.query(RequestItem)
+            .order_by(RequestItem.id.desc())
+            .all()
+        )    
+
+   if admin_user and admin_user.admin_level == "state":
+        workers = (
+            DB.query(User)
+            .filter(
+                User.role == "worker",
+                User.state == admin_user.state
+            )
+            .order_by(User.id.desc())
+            .all()
+        )
+
+    elif admin_user and admin_user.admin_level == "district":
+        workers = (
+            DB.query(User)
+            .filter(
+                User.role == "worker",
+                User.state == admin_user.state,
+                User.district == admin_user.district
+            )
+            .order_by(User.id.desc())
+            .all()
+        )
+
+    else:
+        workers = (
+            DB.query(User)
+            .filter(User.role == "worker")
+            .order_by(User.id.desc())
+            .all()
+        ) 
 
     return render_template(
         "admin.html",
