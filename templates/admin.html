@@ -183,6 +183,72 @@ placeholder="नाम, मोबाइल या Application ID से खो�
 
 </section>
 
+<!-- Create State / District Admin -->
+
+<section class="card" style="margin-bottom:20px;">
+
+<h2>👤 नया State / District Admin बनाएं</h2>
+
+<form method="post" action="/admin/create-admin">
+
+<div class="search-row">
+
+<input
+type="text"
+name="name"
+placeholder="Admin का पूरा नाम"
+required
+>
+
+<input
+type="tel"
+name="mobile"
+placeholder="Mobile Number"
+required
+>
+
+<input
+type="password"
+name="password"
+placeholder="Login Password"
+required
+>
+
+<select name="admin_level" required>
+
+<option value="">Admin Level चुनें</option>
+<option value="state">State Admin</option>
+<option value="district">District Admin</option>
+
+</select>
+
+<input
+type="text"
+name="state"
+placeholder="State का नाम"
+required
+>
+
+<input
+type="text"
+name="district"
+placeholder="District का नाम (District Admin के लिए)"
+>
+
+</div>
+
+<br>
+
+<button
+type="submit"
+class="smallbtn"
+style="background:#128c7e;">
+➕ Admin बनाएं
+</button>
+
+</form>
+
+</section> 
 
 <section class="card">
 
