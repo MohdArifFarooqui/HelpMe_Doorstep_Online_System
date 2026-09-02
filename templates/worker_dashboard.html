@@ -159,7 +159,31 @@
             border-radius: 9px;
             font-weight: bold;
         }
+.status-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
 
+.status-btn {
+    border: none;
+    padding: 10px 14px;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.progress-btn {
+    background: #8e44ad;
+    color: white;
+}
+
+.completed-btn {
+    background: #188038;
+    color: white;
+}
         .empty {
             text-align: center;
             padding: 30px;
@@ -319,6 +343,23 @@
                         {% endif %}
                     ">
                         {{ r.status }}
+                        <div class="status-actions">
+
+    <form method="post" action="/worker/status/{{ r.id }}">
+        <input type="hidden" name="status" value="In Progress">
+        <button class="status-btn progress-btn" type="submit">
+            🟣 In Progress
+        </button>
+    </form>
+
+    <form method="post" action="/worker/status/{{ r.id }}">
+        <input type="hidden" name="status" value="Completed">
+        <button class="status-btn completed-btn" type="submit">
+            🟢 Completed
+        </button>
+    </form>
+
+</div>
                     </td>
 
                 </tr>
@@ -397,7 +438,23 @@
                 >
                     📞 Call Customer
                 </a>
+<div class="status-actions">
 
+    <form method="post" action="/worker/status/{{ r.id }}">
+        <input type="hidden" name="status" value="In Progress">
+        <button class="status-btn progress-btn" type="submit">
+            🟣 In Progress
+        </button>
+    </form>
+
+    <form method="post" action="/worker/status/{{ r.id }}">
+        <input type="hidden" name="status" value="Completed">
+        <button class="status-btn completed-btn" type="submit">
+            🟢 Completed
+        </button>
+    </form>
+
+</div>
             </div>
 
         {% endfor %}
