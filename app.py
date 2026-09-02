@@ -423,13 +423,13 @@ admins = (
     .filter(User.role == "admin")
     .order_by(User.id.desc())
     .all()
-    )
-    return render_template(
+)
+return render_template(
         "admin.html",
         requests=requests,
         workers=workers,
         admins=admins
-    )
+)
                 
            
 @app.post("/admin/worker/approve/<int:worker_id>")
