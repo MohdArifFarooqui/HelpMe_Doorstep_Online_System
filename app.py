@@ -75,6 +75,9 @@ class RequestItem(Base):
         nullable=False
     )
 
+    @property
+    def application_code(self):
+        return f"HM/DS{self.id:02d}"
 
 class User(Base):
     __tablename__ = "users"
