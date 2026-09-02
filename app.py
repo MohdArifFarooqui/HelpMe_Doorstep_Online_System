@@ -503,9 +503,10 @@ def assign_request(rid):
 
 @app.post("/admin/login")
 def login():
-    username = request.form.get("username")
+    username = request.form.get("username", "").strip()
     password = request.form.get("password", "")
 
+    # Main Admin login
     if (
         username == ADMIN_USER
         and check_password_hash(
@@ -513,16 +514,41 @@ def login():
             password
         )
     ):
+        session.clear()
         session["admin"] = True
+        return redirect(url_for("admin"))
 
-    else:
-        flash(
-            "Login failed",
-            "error"
+    # State / District Admin login
+    admin_user = (
+        DB.query(User)
+        .filter(
+            User.mobile == username,
+            User.role == "admin",
+            User.active == True,
+            User.approved == True
         )
+        .first()
+    )
+
+    if (
+        admin_user
+        and admin_user.password_hash
+        and check_password_hash(
+            admin_user.password_hash,
+            password
+        )
+    ):
+        session.clear()
+        session["admin"] = True
+        session["admin_user_id"] = admin_user.id
+        return redirect(url_for("admin"))
+
+    flash(
+        "Login failed",
+        "error"
+    )
 
     return redirect(url_for("admin"))
-
 @app.post("/admin/status/<int:rid>")
 def status(rid):
     if not session.get("admin"):
