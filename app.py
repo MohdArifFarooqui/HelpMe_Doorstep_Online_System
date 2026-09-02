@@ -571,7 +571,49 @@ def check_status():
         requests=requests
     )
 
+@app.post("/worker/status/<int:rid>")
+def worker_status(rid):
 
+    if not session.get("worker"):
+        return redirect(url_for("worker_login"))
+
+    worker_id = session.get("worker_id")
+    worker = DB.get(User, worker_id)
+
+    if not worker or worker.role != "worker":
+        session.clear()
+        return redirect(url_for("worker_login"))
+
+    request_item = DB.get(RequestItem, rid)
+
+    if not request_item:
+        flash("Application नहीं मिला", "error")
+        return redirect(url_for("worker_dashboard"))
+
+    if request_item.assigned_worker_id != worker.id:
+        flash("यह Application आपको Assign नहीं है", "error")
+        return redirect(url_for("worker_dashboard"))
+
+    new_status = request.form.get("status")
+
+    allowed_statuses = (
+        "In Progress",
+        "Completed"
+    )
+
+    if new_status not in allowed_statuses:
+        flash("Invalid Status", "error")
+        return redirect(url_for("worker_dashboard"))
+
+    request_item.status = new_status
+    DB.commit()
+
+    flash(
+        f"Application #{rid} का Status {new_status} कर दिया गया है।",
+        "success"
+    )
+
+    return redirect(url_for("worker_dashboard"))
 @app.post("/admin/logout")
 def logout():
     session.clear()
