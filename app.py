@@ -1,4 +1,4 @@
-import os
+ import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -61,11 +61,7 @@ class RequestItem(Base):
     assigned_worker_id = Column(Integer, nullable=True)
     state = Column(String(100), nullable=True)
     district = Column(String(100), nullable=True)
-    status = Column(
-        String(30),
-        default="Pending",
-        nullable=False
-    )
+    status = Column(String(30), default="Pending", nullable=False)
 
     created_at = Column(
         DateTime,
@@ -78,6 +74,7 @@ class RequestItem(Base):
     @property
     def application_code(self):
         return f"HM/DS{self.id:02d}"
+
 
 class User(Base):
     __tablename__ = "users"
@@ -93,22 +90,15 @@ class User(Base):
     address = Column(Text, nullable=True)
     latitude = Column(String(30), nullable=True)
     longitude = Column(String(30), nullable=True)
-# Admin hierarchy
+
+    # Admin hierarchy
     admin_level = Column(String(20), nullable=True)
     state = Column(String(100), nullable=True)
     district = Column(String(100), nullable=True)
     parent_admin_id = Column(Integer, nullable=True)
-    approved = Column(
-        Boolean,
-        default=False,
-        nullable=False
-    )
 
-    active = Column(
-        Boolean,
-        default=True,
-        nullable=False
-    )
+    approved = Column(Boolean, default=False, nullable=False)
+    active = Column(Boolean, default=True, nullable=False)
 
     created_at = Column(
         DateTime,
@@ -119,31 +109,28 @@ class User(Base):
     )
 
 
+# Create tables if they do not already exist
 Base.metadata.create_all(engine)
 
-# पुराने database में नए User columns जोड़ना
+# पुराने database में नए columns जोड़ना
 from sqlalchemy import inspect, text
 
 inspector = inspect(engine)
+
+# User columns
 user_columns = {
     col["name"] for col in inspector.get_columns("users")
 }
 
 if "password_hash" not in user_columns:
     with engine.begin() as conn:
-        if url.startswith("sqlite"):
-            conn.execute(
-                text(
-                    "ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"
-                )
+        conn.execute(
+            text(
+                "ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"
             )
-        else:
-            conn.execute(
-                text(
-                    "ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"
-                )
-            )
-# पुराने database में assigned_worker_id column जोड़ना
+        )
+
+# Request columns
 request_columns = {
     col["name"] for col in inspector.get_columns("requests")
 }
@@ -156,7 +143,6 @@ if "assigned_worker_id" not in request_columns:
             )
         )
 
-# पुराने database में Request State/District columns जोड़ना
 request_location_columns = {
     "state": "VARCHAR(100)",
     "district": "VARCHAR(100)"
@@ -170,7 +156,8 @@ for column_name, column_type in request_location_columns.items():
                     f"ALTER TABLE requests ADD COLUMN {column_name} {column_type}"
                 )
             )
-# पुराने database में Admin hierarchy columns जोड़ना
+
+# Admin hierarchy columns
 user_columns = {
     col["name"] for col in inspect(engine).get_columns("users")
 }
@@ -190,6 +177,8 @@ for column_name, column_type in admin_columns.items():
                     f"ALTER TABLE users ADD COLUMN {column_name} {column_type}"
                 )
             )
+
+
 @app.teardown_appcontext
 def close(e=None):
     DB.remove()
@@ -219,19 +208,13 @@ def add():
     ]
 
     if not all(vals):
-        flash(
-            "कृपया सभी जानकारी भरें",
-            "error"
-        )
+        flash("कृपया सभी जानकारी भरें", "error")
         return redirect(url_for("home"))
 
     try:
         age = int(vals[1])
     except ValueError:
-        flash(
-            "कृपया सही उम्र डालें",
-            "error"
-        )
+        flash("कृपया सही उम्र डालें", "error")
         return redirect(url_for("home"))
 
     new_request = RequestItem(
@@ -262,9 +245,9 @@ def add():
         )
     )
 
+
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
-
     if request.method == "GET":
         return render_template("worker_register.html")
 
@@ -276,24 +259,15 @@ def worker_register():
     address = request.form.get("address", "").strip()
 
     if not name or not mobile or not password or not address:
-        flash(
-            "कृपया सभी जरूरी जानकारी भरें",
-            "error"
-        )
+        flash("कृपया सभी जरूरी जानकारी भरें", "error")
         return redirect(url_for("worker_register"))
 
     if not mobile.isdigit() or len(mobile) != 10:
-        flash(
-            "कृपया सही 10 अंकों का मोबाइल नंबर डालें",
-            "error"
-        )
+        flash("कृपया सही 10 अंकों का मोबाइल नंबर डालें", "error")
         return redirect(url_for("worker_register"))
 
     if len(password) < 6:
-        flash(
-            "पासवर्ड कम से कम 6 अक्षर का होना चाहिए",
-            "error"
-        )
+        flash("पासवर्ड कम से कम 6 अक्षर का होना चाहिए", "error")
         return redirect(url_for("worker_register"))
 
     existing_mobile = (
@@ -303,10 +277,7 @@ def worker_register():
     )
 
     if existing_mobile:
-        flash(
-            "यह मोबाइल नंबर पहले से Registered है",
-            "error"
-        )
+        flash("यह मोबाइल नंबर पहले से Registered है", "error")
         return redirect(url_for("worker_register"))
 
     if csc_id:
@@ -317,10 +288,7 @@ def worker_register():
         )
 
         if existing_csc:
-            flash(
-                "यह CSC ID पहले से Registered है",
-                "error"
-            )
+            flash("यह CSC ID पहले से Registered है", "error")
             return redirect(url_for("worker_register"))
 
     worker = User(
@@ -335,10 +303,6 @@ def worker_register():
         active=True
     )
 
-    # Password अभी User model में रखने की जगह
-    # आगे dedicated password field जोड़ेंगे।
-    # इसलिए इस step में registration record save किया जा रहा है।
-
     DB.add(worker)
     DB.commit()
 
@@ -349,12 +313,12 @@ def worker_register():
 
     return redirect(url_for("worker_register"))
 
+
 @app.route("/admin", methods=["GET"])
 def admin():
     if not session.get("admin"):
         return render_template("login.html")
 
-    # Admin hierarchy filtering
     admin_user = None
 
     if session.get("admin_user_id"):
@@ -366,9 +330,7 @@ def admin():
     if admin_user and admin_user.admin_level == "state":
         requests = (
             DB.query(RequestItem)
-            .filter(
-                RequestItem.state == admin_user.state
-            )
+            .filter(RequestItem.state == admin_user.state)
             .order_by(RequestItem.id.desc())
             .all()
         )
@@ -435,11 +397,10 @@ def admin():
         workers=workers,
         admins=admins
     )
-                
-           
+
+
 @app.post("/admin/worker/approve/<int:worker_id>")
 def approve_worker(worker_id):
-
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -456,8 +417,9 @@ def approve_worker(worker_id):
         )
 
     return redirect(url_for("admin"))
-    
-   @app.post("/admin/worker/deactivate/<int:worker_id>")
+
+
+@app.post("/admin/worker/deactivate/<int:worker_id>")
 def deactivate_worker(worker_id):
     if not session.get("admin"):
         return redirect(url_for("admin"))
@@ -473,12 +435,11 @@ def deactivate_worker(worker_id):
             "success"
         )
 
-    return redirect(url_for("admin")) 
-
     return redirect(url_for("admin"))
+
+
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
-
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -531,12 +492,12 @@ def assign_request(rid):
 
     return redirect(url_for("admin"))
 
+
 @app.post("/admin/create-admin")
 def create_admin():
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
-    # Only Main Admin can create State/District Admin
     if session.get("admin_user_id"):
         flash(
             "State/District Admin को नया Admin बनाने की अनुमति नहीं है।",
@@ -599,6 +560,7 @@ def create_admin():
 
     return redirect(url_for("admin"))
 
+
 @app.post("/admin/login")
 def login():
     username = request.form.get("username", "").strip()
@@ -641,12 +603,11 @@ def login():
         session["admin_user_id"] = admin_user.id
         return redirect(url_for("admin"))
 
-    flash(
-        "Login failed",
-        "error"
-    )
+    flash("Login failed", "error")
 
     return redirect(url_for("admin"))
+
+
 @app.post("/admin/status/<int:rid>")
 def status(rid):
     if not session.get("admin"):
@@ -695,9 +656,9 @@ def check_status():
         requests=requests
     )
 
+
 @app.post("/worker/status/<int:rid>")
 def worker_status(rid):
-
     if not session.get("worker"):
         return redirect(url_for("worker_login"))
 
@@ -738,10 +699,13 @@ def worker_status(rid):
     )
 
     return redirect(url_for("worker_dashboard"))
+
+
 @app.post("/admin/logout")
 def logout():
     session.clear()
     return redirect(url_for("admin"))
+
 
 # ==============================
 # WORKER LOGIN & DASHBOARD
@@ -749,7 +713,6 @@ def logout():
 
 @app.route("/worker/login", methods=["GET", "POST"])
 def worker_login():
-
     if request.method == "GET":
         return render_template("worker_login.html")
 
@@ -757,10 +720,7 @@ def worker_login():
     password = request.form.get("password", "")
 
     if not mobile or not password:
-        flash(
-            "कृपया Mobile और Password भरें",
-            "error"
-        )
+        flash("कृपया Mobile और Password भरें", "error")
         return redirect(url_for("worker_login"))
 
     worker = (
@@ -771,10 +731,7 @@ def worker_login():
     )
 
     if not worker:
-        flash(
-            "Worker account नहीं मिला",
-            "error"
-        )
+        flash("Worker account नहीं मिला", "error")
         return redirect(url_for("worker_login"))
 
     if not worker.approved:
@@ -795,10 +752,7 @@ def worker_login():
         worker.password_hash,
         password
     ):
-        flash(
-            "Mobile या Password गलत है",
-            "error"
-        )
+        flash("Mobile या Password गलत है", "error")
         return redirect(url_for("worker_login"))
 
     session.clear()
@@ -816,12 +770,10 @@ def worker_login():
 
 @app.get("/worker/dashboard")
 def worker_dashboard():
-
     if not session.get("worker"):
         return redirect(url_for("worker_login"))
 
     worker_id = session.get("worker_id")
-
     worker = DB.get(User, worker_id)
 
     if not worker or worker.role != "worker":
@@ -829,11 +781,11 @@ def worker_dashboard():
         return redirect(url_for("worker_login"))
 
     requests = (
-    DB.query(RequestItem)
-    .filter(RequestItem.assigned_worker_id == worker.id)
-    .order_by(RequestItem.id.desc())
-    .all()
-)
+        DB.query(RequestItem)
+        .filter(RequestItem.assigned_worker_id == worker.id)
+        .order_by(RequestItem.id.desc())
+        .all()
+    )
 
     return render_template(
         "worker_dashboard.html",
@@ -844,10 +796,9 @@ def worker_dashboard():
 
 @app.post("/worker/logout")
 def worker_logout():
-
     session.clear()
-
     return redirect(url_for("worker_login"))
+
 
 @app.get("/health")
 def health():
