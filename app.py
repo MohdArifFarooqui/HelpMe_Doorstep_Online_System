@@ -421,7 +421,7 @@ def approve_worker(worker_id):
 
 @app.post("/admin/worker/deactivate/<int:worker_id>")
 def deactivate_worker(worker_id):
-    if not session.get("admin"):
+    if not session.get("admin") or session.get("admin_user_id"):
         return redirect(url_for("admin"))
 
     worker = DB.get(User, worker_id)
