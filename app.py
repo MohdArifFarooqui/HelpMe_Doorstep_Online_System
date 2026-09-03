@@ -436,24 +436,6 @@ def deactivate_worker(worker_id):
 
     return redirect(url_for("admin"))
 
-@app.post("/admin/worker/deactivate/<int:worker_id>")
-def deactivate_worker(worker_id):
-    if not session.get("admin") or session.get("admin_user_id"):
-        return redirect(url_for("admin"))
-
-    worker = DB.get(User, worker_id)
-
-    if worker and worker.role == "worker" and worker.approved:
-        worker.active = False
-        DB.commit()
-
-        flash(
-            f"{worker.name} का Service Provider / Worker account Deactivate कर दिया गया है।",
-            "success"
-        )
-
-    return redirect(url_for("admin"))
-    
 
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
