@@ -108,6 +108,18 @@ class User(Base):
         nullable=False
     )
 
+@property
+    def admin_code(self):
+        if self.role != "admin":
+            return ""
+
+        if self.admin_level == "state":
+            return f"HMDS/SA/{self.id:02d}"
+
+        if self.admin_level == "district":
+            return f"HMDS/DA{self.id:02d}"
+
+        return ""
 
 # Create tables if they do not already exist
 Base.metadata.create_all(engine)
