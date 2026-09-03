@@ -108,7 +108,7 @@ class User(Base):
         nullable=False
     )
 
-@property
+    @property
     def admin_code(self):
         if self.role != "admin":
             return ""
