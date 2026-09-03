@@ -93,13 +93,14 @@ class User(Base):
 
     # Admin hierarchy
     admin_level = Column(String(20), nullable=True)
+    admin_code = Column(String(50), nullable=True)
     state = Column(String(100), nullable=True)
     district = Column(String(100), nullable=True)
     parent_admin_id = Column(Integer, nullable=True)
 
     approved = Column(Boolean, default=False, nullable=False)
     active = Column(Boolean, default=True, nullable=False)
-
+    
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(
@@ -523,6 +524,8 @@ def create_admin():
     state = request.form.get("state", "").strip()
     district = request.form.get("district", "").strip()
 
+    admin_code = request.form.get("admin_code", "").strip()
+    
     if not name or not mobile or not password:
         flash("Name, Mobile और Password जरूरी हैं।", "error")
         return redirect(url_for("admin"))
@@ -554,6 +557,7 @@ def create_admin():
         password_hash=generate_password_hash(password),
         role="admin",
         name=name,
+        admin_code=admin_code,
         admin_level=admin_level,
         state=state,
         district=district if admin_level == "district" else None,
