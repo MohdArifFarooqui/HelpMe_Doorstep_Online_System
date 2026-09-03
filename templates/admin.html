@@ -1721,19 +1721,15 @@ font-weight:bold;">
 
 <td>
 
-{% if w.approved %}
-
-<span style="color:green;font-weight:bold;">
-🟢 Approved
-</span>
-
-{% else %}
-
-<span style="color:#d68910;font-weight:bold;">
-🟡 Pending Approval
-</span>
-
-{% endif %}
+   <form method="post" action="/admin/worker/toggle/{{ w.id }}">
+    <button type="submit">
+        {% if w.active %}
+            Deactivate
+        {% else %}
+            Activate
+        {% endif %}
+    </button>
+</form>
 
 </td>
 
