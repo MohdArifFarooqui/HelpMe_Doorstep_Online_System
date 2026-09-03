@@ -398,12 +398,43 @@ def admin():
         admins=admins
     )
 
-
 @app.post("/admin/worker/approve/<int:worker_id>")
 def approve_worker(worker_id):
     if not session.get("admin"):
-        
         return redirect(url_for("admin"))
+
+    worker = DB.get(User, worker_id)
+
+    if worker and worker.role == "worker":
+        worker.approved = True
+        worker.active = True
+        DB.commit()
+
+        flash(
+            f"{worker.name} का Service Provider / Worker account Approve कर दिया गया है।",
+            "success"
+        )
+
+    return redirect(url_for("admin"))
+
+
+@app.post("/admin/worker/deactivate/<int:worker_id>")
+def deactivate_worker(worker_id):
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    worker = DB.get(User, worker_id)
+
+    if worker and worker.role == "worker" and worker.approved:
+        worker.active = False
+        DB.commit()
+
+        flash(
+            f"{worker.name} का Service Provider / Worker account Deactivate कर दिया गया है।",
+            "success"
+        )
+
+    return redirect(url_for("admin"))
 
 @app.post("/admin/worker/deactivate/<int:worker_id>")
 def deactivate_worker(worker_id):
