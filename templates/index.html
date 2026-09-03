@@ -60,14 +60,9 @@
 <div class="alert {{cat}}">{{msg}}</div>
 {% endfor %}
 
-
-<!-- आवेदन की स्थिति -->
 <section class="card" style="text-align:center;">
   <h2>📋 अपने आवेदन की स्थिति देखें</h2>
-
-  <p>
-    मोबाइल नंबर डालकर अपने आवेदन का Status देखें।
-  </p>
+  <p>मोबाइल नंबर डालकर अपने आवेदन का Status देखें।</p>
 
   <a href="/status"
      style="
@@ -83,16 +78,11 @@
   </a>
 </section>
 
-
-<!-- नया आवेदन -->
 <form class="card" method="post" action="/request-service">
 
 <label>
   नाम
-  <input
-    name="customer"
-    required
-    placeholder="अपना नाम डालें">
+  <input name="customer" required placeholder="अपना नाम डालें">
 </label>
 
 <label>
@@ -118,10 +108,12 @@
     placeholder="10 अंकों का मोबाइल नंबर">
 </label>
 
-  <label>
+<label>
   राज्य
+
   <select name="state" id="state" required>
     <option value="">राज्य चुनें</option>
+
     <option value="Andhra Pradesh">Andhra Pradesh</option>
     <option value="Arunachal Pradesh">Arunachal Pradesh</option>
     <option value="Assam">Assam</option>
@@ -156,16 +148,21 @@
 
 <label>
   जिला
-  <input
+
+  <select
     name="district"
-    type="text"
-    maxlength="100"
-    placeholder="अपना जिला लिखें"
-    required>
+    id="district"
+    required
+    disabled>
+
+    <option value="">पहले State चुनें</option>
+
+  </select>
 </label>
 
-  <label>
+<label>
   सेवा
+
   <select name="service" required>
     <option value="">सेवा चुनें</option>
 
@@ -178,6 +175,7 @@
 
 <label>
   पता
+
   <textarea
     name="address"
     required
@@ -186,6 +184,7 @@
 
 <label>
   किस काम में सहायता चाहिए?
+
   <textarea
     name="details"
     required
@@ -198,11 +197,10 @@
 
 </form>
 
-
-<!-- संपर्क -->
 <section class="card contact">
 
   <span class="phone-icon">📞</span>
+
   <a href="tel:9219160465">
     9219160465
   </a>
@@ -215,7 +213,6 @@
     target="_blank"
     rel="noopener">
 
-    <!-- WhatsApp Icon -->
     <svg
       class="whatsapp-icon"
       viewBox="0 0 32 32"
@@ -228,15 +225,52 @@
 
       <path
         fill="#fff"
-        d="M22.45 18.73c-.35-.18-2.08-1.03-2.4-1.15-.32-.12-.55-.18-.78.18-.23.35-.9 1.15-1.1 1.38-.2.23-.4.26-.75.09-.35-.18-1.47-.54-2.8-1.72-1.03-.92-1.72-2.06-1.92-2.4-.2-.35-.02-.54.15-.72.16-.16.35-.4.52-.6.17-.2.23-.35.35-.58.12-.23.06-.43-.03-.6-.09-.18-.78-1.88-1.07-2.58-.28-.68-.57-.59-.78-.6h-.66c-.23 0-.6.09-.92.43-.32.35-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.46.56 1.96.72.82.26 1.56.22 2.15.13.66-.1 2.08-.85 2.37-1.67.29-.82.29-1.52.2-1.67-.08-.15-.32-.24-.66-.41z"/>
+        d="M22.45 18.73c-.35-.18-2.08-1.03-2.4-1.15-.32-.12-.55-.18-.78.18-.23.35-.9 1.15-1.1 1.38-.2.23-.4.26-.75.09-.35-.18-1.47-.54-2.8-1.72-1.03-.92-1.72-2.06-1.92-2.4-.2-.35-.02-.54.15-.72.16-.16.35-.4.52-.6.17-.2.23-.35.35-.58.12-.23.06-.43-.03-.6-.09-.18-.78-1.88-1.07-2.58-.28-.68-.57-.59-.78-.6h-.66c-.23 0-.6.09-.92.43-.32.35-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.46.56 1.96.72.66-.1 2.08-.85 2.37-1.67.29-.82.29-1.52.2-1.67-.08-.15-.32-.24-.66-.41z"/>
     </svg>
 
     WhatsApp
+
   </a>
 
 </section>
 
 </main>
+
+<script src="/static/india-data.js"></script>
+
+<script>
+const stateSelect = document.getElementById("state");
+const districtSelect = document.getElementById("district");
+
+stateSelect.addEventListener("change", function () {
+
+    const state = this.value;
+
+    districtSelect.innerHTML =
+        '<option value="">District चुनें</option>';
+
+    districtSelect.disabled = true;
+
+    if (!state || !indiaData[state]) {
+        return;
+    }
+
+    indiaData[state]
+        .slice()
+        .sort((a, b) => a.localeCompare(b))
+        .forEach(function (district) {
+
+            const option = document.createElement("option");
+
+            option.value = district;
+            option.textContent = district;
+
+            districtSelect.appendChild(option);
+        });
+
+    districtSelect.disabled = false;
+});
+</script>
 
 </body>
 </html>
