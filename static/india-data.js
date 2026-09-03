@@ -231,4 +231,7 @@ const indiaData = {
     "Birbhum","Cooch Behar","Dakshin Dinajpur","Darjeeling","Hooghly",
     "Howrah","Jalpaiguri","Jhargram","Kalimpong","Kolkata","Maldah",
     "Murshidabad","Nadia","North 24 Parganas","South 24 Parganas",
-    "Paschim Medinipur","Purba Medinipur","Uttar Dinajpur
+    "Paschim Medinipur","Purba Medinipur","Uttar Dinajpur"
+  ]
+};
+    
