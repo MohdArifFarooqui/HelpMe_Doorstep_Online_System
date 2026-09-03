@@ -1753,8 +1753,22 @@ style="background:#16a085;color:white;">
 </button>
 
 </form>
+{% if w.approved and w.active %}
+<form method="post"
+      action="/admin/worker/deactivate/{{ w.id }}"
+      style="display:inline;">
 
-{% else %}
+    <button type="submit"
+            class="smallbtn"
+            style="background:#dc3545;color:white;"
+            onclick="return confirm('क्या आप इस Worker को Deactivate करना चाहते हैं?');">
+        🚫 Deactivate
+    </button>
+
+</form>
+{% endif %}
+
+ {% else %}
 
 <span style="color:green;font-weight:bold;">
 ✓ Approved
