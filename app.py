@@ -431,21 +431,27 @@ def approve_worker(worker_id):
     return redirect(url_for("admin"))
 
 
-@app.post("/admin/worker/deactivate/<int:worker_id>")
-def deactivate_worker(worker_id):
+@app.post("/admin/worker/toggle/<int:worker_id>")
+def toggle_worker(worker_id):
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
     worker = DB.get(User, worker_id)
 
     if worker and worker.role == "worker" and worker.approved:
-        worker.active = False
+        worker.active = not worker.active
         DB.commit()
 
-        flash(
-            f"{worker.name} का Service Provider / Worker account Deactivate कर दिया गया है।",
-            "success"
-        )
+        if worker.active:
+            flash(
+                f"{worker.name} का Service Provider / Worker account Active कर दिया गया है",
+                "success"
+            )
+        else:
+            flash(
+                f"{worker.name} का Service Provider / Worker account Deactivate कर दिया गया है",
+                "success"
+            )
 
     return redirect(url_for("admin"))
 
