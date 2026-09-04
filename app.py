@@ -319,10 +319,9 @@ def worker_register():
     DB.commit()
 
     flash(
-        "Registration सफल हुआ। Admin approval के बाद आप Login कर सकेंगे।",
-        "success"
+    "Registration सफल हुआ। आपका account Active है। आप सीधे Login कर सकते हैं।",
+    "success"
     )
-
     return redirect(url_for("worker_register"))
 
 
