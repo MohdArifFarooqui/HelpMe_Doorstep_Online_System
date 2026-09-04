@@ -311,7 +311,7 @@ def worker_register():
         csc_id=csc_id,
         center_name=center_name,
         address=address,
-        approved=False,
+        approved=True,
         active=True
     )
 
@@ -753,13 +753,7 @@ def worker_login():
         flash("Worker account नहीं मिला", "error")
         return redirect(url_for("worker_login"))
 
-    if not worker.approved:
-        flash(
-            "आपका Registration अभी Admin approval के लिए Pending है",
-            "error"
-        )
-        return redirect(url_for("worker_login"))
-
+    
     if not worker.active:
         flash(
             "आपका Worker account अभी Active नहीं है",
