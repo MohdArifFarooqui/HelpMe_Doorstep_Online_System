@@ -1724,7 +1724,7 @@ font-weight:bold;">
    <form method="post" action="/admin/worker/toggle/{{ w.id }}">
     <button type="submit"
             class="smallbtn"
-            style="{% if w.active %}background:#16a085;color:white;{% else %}background:#dc3545;color:white;{% endif %}"
+            style="{% if w.active %}background:#dc3545;color:white;{% else %}background:#16a085;color:white;{% endif %}"
             onclick="{% if w.active %}return confirm('क्या आप इस Worker को Deactivate करना चाहते हैं?');{% else %}return confirm('क्या आप इस Worker को Activate करना चाहते हैं?');{% endif %}">
         {% if w.active %}
             Deactivate
