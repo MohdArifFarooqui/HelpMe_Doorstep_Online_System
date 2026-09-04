@@ -55,6 +55,51 @@ app.secret_key = os.environ.get(
     "change-this-secret-key"
 )
 
+# =========================
+# OTP API ROUTES
+# =========================
+
+@app.post("/api/send-otp")
+def send_otp():
+    mobile = request.form.get("mobile", "").strip()
+
+    if not mobile or not mobile.isdigit() or len(mobile) != 10:
+        return {"success": False, "message": "Valid 10 digit mobile number required"}, 400
+
+    otp = create_otp(mobile)
+
+    # अभी OTP testing के लिए server response में रखा गया है.
+    # MSG91 SMS integration अगले step में जोड़ा जाएगा.
+    return {
+        "success": True,
+        "message": "OTP generated successfully",
+        "mobile": mobile,
+        "otp": otp
+    }
+
+
+@app.post("/api/verify-otp")
+def verify_otp_api():
+    mobile = request.form.get("mobile", "").strip()
+    otp = request.form.get("otp", "").strip()
+
+    if not mobile or not otp:
+        return {
+            "success": False,
+            "message": "Mobile और OTP दोनों required हैं"
+        }, 400
+
+    if verify_otp(mobile, otp):
+        return {
+            "success": True,
+            "message": "OTP verified successfully"
+        }
+
+    return {
+        "success": False,
+        "message": "OTP गलत या expired है"
+    }, 401
+
 url = os.environ.get(
     "DATABASE_URL",
     "sqlite:///helpme_doorstep.db"
