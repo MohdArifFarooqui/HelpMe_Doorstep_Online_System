@@ -562,7 +562,6 @@ def create_admin():
         password_hash=generate_password_hash(password),
         role="admin",
         name=name,
-        admin_code=admin_code,
         admin_level=admin_level,
         state=state,
         district=district if admin_level == "district" else None,
