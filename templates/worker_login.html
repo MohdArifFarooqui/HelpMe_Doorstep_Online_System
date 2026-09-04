@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Worker Login - HelpMe Doorstep</title>
+<title>Worker OTP Login - HelpMe Doorstep</title>
 
 <link rel="stylesheet" href="/static/style.css">
 
@@ -47,7 +47,7 @@
 
 .login-card button {
     width: 100%;
-    margin-top: 25px;
+    margin-top: 20px;
     padding: 14px;
     border: 0;
     border-radius: 10px;
@@ -58,11 +58,35 @@
     cursor: pointer;
 }
 
-.login-card button:hover {
-    background: #12806a;
+.login-card button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-.register-link {
+.otp-box {
+    display: none;
+}
+
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success {
+    background: #e8f8f0;
+    color: #18794e;
+}
+
+.error {
+    background: #fdecec;
+    color: #b42318;
+}
+
+.register-link,
+.back-link {
     text-align: center;
     margin-top: 20px;
 }
@@ -71,11 +95,6 @@
     color: #16a085;
     font-weight: bold;
     text-decoration: none;
-}
-
-.back-link {
-    text-align: center;
-    margin-top: 15px;
 }
 
 .back-link a {
@@ -103,7 +122,6 @@
 
 </header>
 
-
 <main>
 
 <div class="login-card">
@@ -111,60 +129,52 @@
 <h1>👨‍🔧 Worker Login</h1>
 
 <p>
-अपने Registered Mobile Number और Password से Login करें।
+Registered Mobile Number डालें और OTP से Login करें।
 </p>
 
-
-{% with messages = get_flashed_messages(with_categories=true) %}
-
-{% if messages %}
-
-{% for category, message in messages %}
-
-<div class="flash {{ category }}">
-{{ message }}
-</div>
-
-{% endfor %}
-
-{% endif %}
-
-{% endwith %}
-
-
-<form method="post" action="/worker/login">
+<div id="mobile-box">
 
 <label>
 मोबाइल नंबर
 </label>
 
 <input
-type="tel"
-name="mobile"
-placeholder="10 अंकों का मोबाइल नंबर"
-maxlength="10"
-inputmode="numeric"
-required
+    type="tel"
+    id="mobile"
+    maxlength="10"
+    inputmode="numeric"
+    placeholder="10 अंकों का मोबाइल नंबर"
 >
 
+<button type="button" id="sendOtpBtn" onclick="sendOTP()">
+📩 OTP भेजें
+</button>
+
+</div>
+
+
+<div class="otp-box" id="otp-box">
 
 <label>
-पासवर्ड
+4 अंकों का OTP
 </label>
 
 <input
-type="password"
-name="password"
-placeholder="अपना Password डालें"
-required
+    type="tel"
+    id="otp"
+    maxlength="4"
+    inputmode="numeric"
+    placeholder="4 Digit OTP"
 >
 
-
-<button type="submit">
-🔐 Login करें
+<button type="button" id="verifyOtpBtn" onclick="verifyOTP()">
+🔐 OTP Verify करके Login करें
 </button>
 
-</form>
+</div>
+
+
+<div id="message"></div>
 
 
 <div class="register-link">
@@ -191,6 +201,162 @@ required
 </div>
 
 </main>
+
+
+<script>
+
+async function sendOTP() {
+
+    const mobile = document.getElementById("mobile").value.trim();
+    const button = document.getElementById("sendOtpBtn");
+    const message = document.getElementById("message");
+
+    message.className = "";
+    message.innerText = "";
+
+    if (!/^\d{10}$/.test(mobile)) {
+
+        message.className = "message error";
+        message.innerText =
+            "कृपया सही 10 अंकों का मोबाइल नंबर डालें।";
+
+        return;
+    }
+
+    button.disabled = true;
+    button.innerText = "OTP भेजा जा रहा है...";
+
+    try {
+
+        const formData = new FormData();
+
+        formData.append("mobile", mobile);
+
+        const response = await fetch(
+            "/api/send-otp",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            document.getElementById("otp-box").style.display = "block";
+
+            message.className = "message success";
+            message.innerText =
+                "OTP आपके मोबाइल नंबर पर भेज दिया गया है।";
+
+            document.getElementById("otp").focus();
+
+        } else {
+
+            message.className = "message error";
+            message.innerText =
+                result.message || "OTP भेजने में समस्या हुई।";
+
+        }
+
+    } catch (error) {
+
+        message.className = "message error";
+        message.innerText =
+            "Server से connection नहीं हो पाया।";
+
+    }
+
+    button.disabled = false;
+    button.innerText = "📩 OTP फिर से भेजें";
+}
+
+
+async function verifyOTP() {
+
+    const mobile = document.getElementById("mobile").value.trim();
+    const otp = document.getElementById("otp").value.trim();
+
+    const button = document.getElementById("verifyOtpBtn");
+    const message = document.getElementById("message");
+
+    message.className = "";
+    message.innerText = "";
+
+    if (!/^\d{10}$/.test(mobile)) {
+
+        message.className = "message error";
+        message.innerText =
+            "मोबाइल नंबर सही नहीं है।";
+
+        return;
+    }
+
+    if (!/^\d{4}$/.test(otp)) {
+
+        message.className = "message error";
+        message.innerText =
+            "कृपया 4 अंकों का OTP डालें।";
+
+        return;
+    }
+
+    button.disabled = true;
+    button.innerText = "Verify हो रहा है...";
+
+    try {
+
+        const formData = new FormData();
+
+        formData.append("mobile", mobile);
+        formData.append("otp", otp);
+
+        const response = await fetch(
+            "/api/verify-otp",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            message.className = "message success";
+            message.innerText =
+                "Login सफल हुआ। Dashboard खोला जा रहा है...";
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "/worker/dashboard";
+
+            }, 700);
+
+        } else {
+
+            message.className = "message error";
+            message.innerText =
+                result.message || "OTP गलत है।";
+
+        }
+
+    } catch (error) {
+
+        message.className = "message error";
+        message.innerText =
+            "Server से connection नहीं हो पाया।";
+
+    }
+
+    button.disabled = false;
+    button.innerText =
+        "🔐 OTP Verify करके Login करें";
+}
+
+</script>
 
 </body>
 </html>
