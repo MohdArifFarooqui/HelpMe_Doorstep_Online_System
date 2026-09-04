@@ -132,35 +132,6 @@ def send_otp():
         }, 500
 
 
-# ==============================
-# CUSTOMER OTP LOGIN
-# ==============================
-
-@app.route("/customer/login", methods=["GET"])
-def customer_login():
-    return render_template("customer_login.html")
-
-
-@app.route("/customer/dashboard")
-def customer_dashboard():
-
-    if not session.get("customer"):
-        return redirect(url_for("customer_login"))
-
-    customer_id = session.get("customer_id")
-
-    customer = DB.get(User, customer_id)
-
-    if not customer or customer.role != "customer":
-        session.clear()
-        return redirect(url_for("customer_login"))
-
-    return render_template(
-        "index.html",
-        services=SERVICES
-    )
-
-
 url = os.environ.get(
     "DATABASE_URL",
     "sqlite:///helpme_doorstep.db"
