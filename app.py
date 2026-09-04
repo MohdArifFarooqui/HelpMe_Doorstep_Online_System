@@ -93,7 +93,6 @@ class User(Base):
 
     # Admin hierarchy
     admin_level = Column(String(20), nullable=True)
-    admin_code = Column(String(50), nullable=True)
     state = Column(String(100), nullable=True)
     district = Column(String(100), nullable=True)
     parent_admin_id = Column(Integer, nullable=True)
