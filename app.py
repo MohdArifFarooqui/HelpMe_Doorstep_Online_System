@@ -7,6 +7,90 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker, scoped_session
 
+import random
+from datetime import timedelta
+
+OTP_LENGTH = 4
+OTP_EXPIRY_MINUTES = 5
+OTP_SENDER_ID = "HMDS91"
+
+otp_store = {}
+
+
+def generate_otp():
+    return f"{random.randint(0, 9999):04d}"
+
+
+def create_otp(mobile):
+    otp = generate_otp()
+
+    otp_store[mobile] = {
+        "otp": otp,
+        "expires": datetime.now() + timedelta(minutes=OTP_EXPIRY_MINUTES)
+    }
+
+    return otp
+
+
+def verify_otp(mobile, otp):
+    data = otp_store.get(mobile)
+
+    if not data:
+        return False
+
+    if datetime.now() > data["expires"]:
+        otp_store.pop(mobile, None)
+        return False
+
+    if data["otp"] != otp:
+        return False
+
+    otp_store.pop(mobile, None)
+    return True
+# =========================
+# OTP API ROUTES
+# =========================
+
+@app.post("/api/send-otp")
+def send_otp():
+    mobile = request.form.get("mobile", "").strip()
+
+    if not mobile or not mobile.isdigit() or len(mobile) != 10:
+        return {"success": False, "message": "Valid 10 digit mobile number required"}, 400
+
+    otp = create_otp(mobile)
+
+    # अभी OTP testing के लिए server response में रखा गया है.
+    # MSG91 SMS integration अगले step में जोड़ा जाएगा.
+    return {
+        "success": True,
+        "message": "OTP generated successfully",
+        "mobile": mobile,
+        "otp": otp
+    }
+
+
+@app.post("/api/verify-otp")
+def verify_otp_api():
+    mobile = request.form.get("mobile", "").strip()
+    otp = request.form.get("otp", "").strip()
+
+    if not mobile or not otp:
+        return {
+            "success": False,
+            "message": "Mobile और OTP दोनों required हैं"
+        }, 400
+
+    if verify_otp(mobile, otp):
+        return {
+            "success": True,
+            "message": "OTP verified successfully"
+        }
+
+    return {
+        "success": False,
+        "message": "OTP गलत या expired है"
+    }, 401
 
 app = Flask(__name__)
 
