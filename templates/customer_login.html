@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Customer Login - HelpMe Doorstep</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+.login-card {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border: 1px solid #dce9e5;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 20px #123c2a12;
+}
+
+.login-card h1 {
+    color: #164c3b;
+    margin-bottom: 10px;
+}
+
+.login-card p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.login-card label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 6px;
+}
+
+.login-card input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border: 1px solid #ccdcd7;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.login-card button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #16a085;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-card button:disabled {
+    opacity: 0.6;
+}
+
+.otp-box {
+    display: none;
+}
+
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success {
+    background: #e8f8f0;
+    color: #18794e;
+}
+
+.error {
+    background: #fdecec;
+    color: #b42318;
+}
+
+.register-link,
+.back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-link a {
+    color: #16a085;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-link a {
+    color: #555;
+    text-decoration: none;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="brand">
+
+<div class="logo">🤝</div>
+
+<div>
+<b>HelpMe Doorstep</b>
+<small>Customer Login</small>
+</div>
+
+</div>
+
+</header>
+
+<main>
+
+<div class="login-card">
+
+<h1>👤 Customer Login</h1>
+
+<p>
+अपने Registered Mobile Number से OTP द्वारा Login करें।
+</p>
+
+<div id="mobile-box">
+
+<label>
+मोबाइल नंबर
+</label>
+
+<input
+    type="tel"
+    id="mobile"
+    maxlength="10"
+    inputmode="numeric"
+    placeholder="10 अंकों का मोबाइल नंबर"
+>
+
+<button
+    type="button"
+    id="sendOtpBtn"
+    onclick="sendOTP()">
+📩 OTP भेजें
+</button>
+
+</div>
+
+
+<div class="otp-box" id="otp-box">
+
+<label>
+4 अंकों का OTP
+</label>
+
+<input
+    type="tel"
+    id="otp"
+    maxlength="4"
+    inputmode="numeric"
+    placeholder="4 Digit OTP"
+>
+
+<button
+    type="button"
+    id="verifyOtpBtn"
+    onclick="verifyOTP()">
+🔐 OTP Verify करके Login करें
+</button>
+
+</div>
+
+
+<div id="message"></div>
+
+
+<div class="register-link">
+
+नए Customer हैं?
+
+<br>
+
+<a href="/register">
+👉 Registration करें
+</a>
+
+</div>
+
+
+<div class="back-link">
+
+<a href="/">
+← Home पर वापस जाएँ
+</a>
+
+</div>
+
+</div>
+
+</main>
+
+
+<script>
+
+async function sendOTP() {
+
+    const mobile =
+        document.getElementById("mobile").value.trim();
+
+    const button =
+        document.getElementById("sendOtpBtn");
+
+    const message =
+        document.getElementById("message");
+
+    message.className = "";
+    message.innerText = "";
+
+    if (!/^\d{10}$/.test(mobile)) {
+
+        message.className = "message error";
+
+        message.innerText =
+            "कृपया सही 10 अंकों का मोबाइल नंबर डालें।";
+
+        return;
+    }
+
+    button.disabled = true;
+    button.innerText = "OTP भेजा जा रहा है...";
+
+    try {
+
+        const formData = new FormData();
+
+        formData.append("mobile", mobile);
+
+        const response = await fetch(
+            "/api/send-otp",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            document.getElementById("otp-box")
+                .style.display = "block";
+
+            message.className = "message success";
+
+            message.innerText =
+                "OTP आपके मोबाइल नंबर पर भेज दिया गया है।";
+
+            document.getElementById("otp").focus();
+
+        } else {
+
+            message.className = "message error";
+
+            message.innerText =
+                result.message ||
+                "OTP भेजने में समस्या हुई।";
+        }
+
+    } catch (error) {
+
+        message.className = "message error";
+
+        message.innerText =
+            "Server से connection नहीं हो पाया।";
+    }
+
+    button.disabled = false;
+
+    button.innerText =
+        "📩 OTP फिर से भेजें";
+}
+
+
+async function verifyOTP() {
+
+    const mobile =
+        document.getElementById("mobile").value.trim();
+
+    const otp =
+        document.getElementById("otp").value.trim();
+
+    const button =
+        document.getElementById("verifyOtpBtn");
+
+    const message =
+        document.getElementById("message");
+
+    message.className = "";
+    message.innerText = "";
+
+    if (!/^\d{10}$/.test(mobile)) {
+
+        message.className = "message error";
+
+        message.innerText =
+            "मोबाइल नंबर सही नहीं है।";
+
+        return;
+    }
+
+    if (!/^\d{4}$/.test(otp)) {
+
+        message.className = "message error";
+
+        message.innerText =
+            "कृपया 4 अंकों का OTP डालें।";
+
+        return;
+    }
+
+    button.disabled = true;
+
+    button.innerText =
+        "Verify हो रहा है...";
+
+    try {
+
+        const formData = new FormData();
+
+        formData.append("mobile", mobile);
+        formData.append("otp", otp);
+
+        const response = await fetch(
+            "/api/verify-otp",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            message.className = "message success";
+
+            message.innerText =
+                "Login सफल हुआ। Dashboard खोला जा रहा है...";
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "/customer/dashboard";
+
+            }, 700);
+
+        } else {
+
+            message.className = "message error";
+
+            message.innerText =
+                result.message ||
+                "OTP गलत है।";
+        }
+
+    } catch (error) {
+
+        message.className = "message error";
+
+        message.innerText =
+            "Server से connection नहीं हो पाया।";
+    }
+
+    button.disabled = false;
+
+    button.innerText =
+        "🔐 OTP Verify करके Login करें";
+}
+
+</script>
+
+</body>
+</html>
