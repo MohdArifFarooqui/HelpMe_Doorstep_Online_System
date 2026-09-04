@@ -376,6 +376,33 @@ for column_name, column_type in admin_columns.items():
 def close(e=None):
     DB.remove()
 
+# ==============================
+# CUSTOMER OTP LOGIN
+# ==============================
+
+@app.route("/customer/login", methods=["GET"])
+def customer_login():
+    return render_template("customer_login.html")
+
+
+@app.route("/customer/dashboard")
+def customer_dashboard():
+
+    if not session.get("customer"):
+        return redirect(url_for("customer_login"))
+
+    customer_id = session.get("customer_id")
+
+    customer = DB.get(User, customer_id)
+
+    if not customer or customer.role != "customer":
+        session.clear()
+        return redirect(url_for("customer_login"))
+
+    return render_template(
+        "index.html",
+        services=SERVICES
+    )
 
 @app.get("/")
 def home():
