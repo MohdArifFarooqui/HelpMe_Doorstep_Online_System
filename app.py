@@ -132,69 +132,34 @@ def send_otp():
         }, 500
 
 
-@app.post("/api/verify-otp")
-def verify_otp_api():
-    mobile = request.form.get("mobile", "").strip()
-    otp = request.form.get("otp", "").strip()
+# ==============================
+# CUSTOMER OTP LOGIN
+# ==============================
 
-    if not mobile.isdigit() or len(mobile) != 10:
-        return {
-            "success": False,
-            "message": "Valid 10 digit mobile number required"
-        }, 400
+@app.route("/customer/login", methods=["GET"])
+def customer_login():
+    return render_template("customer_login.html")
 
-    if not otp.isdigit() or len(otp) != 4:
-        return {
-            "success": False,
-            "message": "Valid 4 digit OTP required"
-        }, 400
 
-    authkey = os.environ.get("MSG91_AUTHKEY")
+@app.route("/customer/dashboard")
+def customer_dashboard():
 
-    if not authkey:
-        return {
-            "success": False,
-            "message": "MSG91 Authkey is not configured"
-        }, 500
+    if not session.get("customer"):
+        return redirect(url_for("customer_login"))
 
-    params = urllib.parse.urlencode({
-        "otp": otp,
-        "mobile": "91" + mobile
-    })
+    customer_id = session.get("customer_id")
 
-    url = "https://control.msg91.com/api/v5/otp/verify?" + params
+    customer = DB.get(User, customer_id)
 
-    try:
-        req = urllib.request.Request(
-            url,
-            method="GET",
-            headers={
-                "authkey": authkey
-            }
-        )
+    if not customer or customer.role != "customer":
+        session.clear()
+        return redirect(url_for("customer_login"))
 
-        with urllib.request.urlopen(req, timeout=15) as response:
-            result = json.loads(response.read().decode("utf-8"))
+    return render_template(
+        "index.html",
+        services=SERVICES
+    )
 
-        if result.get("type") == "success":
-            return {
-                "success": True,
-                "message": "OTP verified successfully"
-            }
-
-        return {
-            "success": False,
-            "message": result.get(
-                "message",
-                "OTP verification failed"
-            )
-        }, 401
-
-    except Exception:
-        return {
-            "success": False,
-            "message": "OTP verification failed"
-        }, 401
 
 url = os.environ.get(
     "DATABASE_URL",
