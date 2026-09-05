@@ -1,20 +1,41 @@
 package com.helpmedoorstep.app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.TextView
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var webView: WebView
+
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val title = TextView(this).apply {
-            text = "HelpMe Doorstep"
-            textSize = 28f
-            setPadding(40, 80, 40, 40)
-        }
+        webView = WebView(this)
 
-        setContentView(title)
+        webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
+        webView.settings.loadsImagesAutomatically = true
+        webView.settings.allowFileAccess = true
+
+        webView.webViewClient = WebViewClient()
+
+        webView.loadUrl(
+            "https://helpme-doorstep-online-system.onrender.com/customer/login"
+        )
+
+        setContentView(webView)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
