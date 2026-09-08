@@ -1650,6 +1650,8 @@ font-size:13px;">
 <th>Mobile</th>
 <th>CSC ID</th>
 <th>Center</th>
+<th>State</th>
+<th>District</th>
 <th>Address</th>
 <th>Status</th>
 <th>Action</th>
@@ -1714,10 +1716,39 @@ font-weight:bold;">
 <td>
 {{ w.center_name or "-" }}
 </td>
-
 <td>
 {{ w.address }}
 </td>
+
+<td>
+{{ w.state or "-" }}
+</td>
+
+<td>
+{{ w.district or "-" }}
+</td>
+
+<td>
+{% if w.latitude and w.longitude %}
+<a
+href="https://www.google.com/maps?q={{ w.latitude }},{{ w.longitude }}"
+target="_blank"
+style="
+display:inline-block;
+padding:8px 14px;
+background:#2980b9;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;">
+📍 View Location
+</a>
+{% else %}
+-
+{% endif %}
+</td>
+
+<td>
 
 <td>
 
