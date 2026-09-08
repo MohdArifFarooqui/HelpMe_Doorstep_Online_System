@@ -495,6 +495,26 @@
                 >
                     📞 Call Customer
                 </a>
+                
+                {% if r.latitude and r.longitude %}
+<a
+    class="call-btn"
+    href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
+    target="_blank"
+    rel="noopener"
+>
+    📍 Customer Location
+</a>
+{% endif %}
+
+<a
+    class="call-btn"
+    href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
+    target="_blank"
+    rel="noopener"
+>
+    💬 WhatsApp Customer
+</a>
 <div class="status-actions">
 
     <form method="post" action="/worker/status/{{ r.id }}">
