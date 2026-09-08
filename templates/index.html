@@ -78,8 +78,9 @@
   </a>
 </section>
 
-<form class="card" method="post" action="/request-service">
-
+<form class="card" method="post" action="/request-service" id="serviceForm">
+<input type="hidden" name="latitude" id="latitude">
+<input type="hidden" name="longitude" id="longitude"> 
 <label>
   नाम
   <input name="customer" required placeholder="अपना नाम डालें">
@@ -259,6 +260,59 @@ stateSelect.addEventListener("change", function () {
         });
 
     districtSelect.disabled = false;
+});
+</script>
+
+<script>
+const serviceForm = document.getElementById("serviceForm");
+const latitudeInput = document.getElementById("latitude");
+const longitudeInput = document.getElementById("longitude");
+
+serviceForm.addEventListener("submit", function(event) {
+
+    if (latitudeInput.value && longitudeInput.value) {
+        return;
+    }
+
+    event.preventDefault();
+
+    if (!navigator.geolocation) {
+        alert("आपके Browser में Location सुविधा उपलब्ध नहीं है।");
+        return;
+    }
+
+    const submitButton = serviceForm.querySelector("button[type='submit']");
+    submitButton.disabled = true;
+    submitButton.textContent = "📍 Location प्राप्त हो रही है...";
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            latitudeInput.value = position.coords.latitude;
+            longitudeInput.value = position.coords.longitude;
+
+            serviceForm.submit();
+        },
+
+        function(error) {
+
+            submitButton.disabled = false;
+            submitButton.textContent = "सेवा अनुरोध भेजें";
+
+            if (error.code === 1) {
+                alert("Location Permission Allow करें, फिर दोबारा आवेदन भेजें।");
+            } else {
+                alert("Location प्राप्त नहीं हो सकी। कृपया दोबारा प्रयास करें।");
+            }
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+    );
 });
 </script>
 
