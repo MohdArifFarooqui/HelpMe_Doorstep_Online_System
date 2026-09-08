@@ -371,8 +371,8 @@ def add():
     longitude = d.get("longitude", "").strip()
 
     if not latitude or not longitude:
-    flash("कृपया Location की अनुमति दें और फिर आवेदन भेजें", "error")
-    return redirect(url_for("home"))
+        flash("कृपया Location की अनुमति दें और फिर आवेदन भेजें", "error")
+        return redirect(url_for("home"))
     if not all(vals):
         flash("कृपया सभी जानकारी भरें", "error")
         return redirect(url_for("home"))
