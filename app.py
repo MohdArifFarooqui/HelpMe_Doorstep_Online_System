@@ -415,8 +415,10 @@ def worker_register():
     address = request.form.get("address", "").strip()
     state = request.form.get("state", "").strip()
     district = request.form.get("district", "").strip()
+    latitude = request.form.get("latitude", "").strip()
+    longitude = request.form.get("longitude", "").strip()
     
-    if not name or not mobile or not password or not address or not state or not district:
+    if not name or not mobile or not password or not address or not state or not district or not latitude or not longitude:
         flash("कृपया सभी जरूरी जानकारी भरें", "error")
         return redirect(url_for("worker_register"))
 
@@ -459,6 +461,8 @@ def worker_register():
         address=address,
         state=state,
         district=district,
+        latitude=latitude,
+        longitude=longitude,
         approved=True,
         active=True
     )
