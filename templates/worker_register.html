@@ -151,6 +151,45 @@ Dadra and Nagar Haveli and Daman and Diu
 
 </label>
 
+<!-- GPS LOCATION -->
+
+<label>
+📍 आपकी वर्तमान Location
+</label>
+
+<input
+type="hidden"
+name="latitude"
+id="latitude">
+
+<input
+type="hidden"
+name="longitude"
+id="longitude">
+
+<button
+type="button"
+id="locationBtn"
+onclick="getLocation()"
+style="background:#1976d2;margin-bottom:10px;">
+
+📍 मेरी Location लें
+
+</button>
+
+<div
+id="locationStatus"
+style="
+padding:10px;
+margin-bottom:15px;
+border-radius:8px;
+background:#f1f5f4;
+font-size:14px;
+">
+
+Location अभी प्राप्त नहीं हुई है।
+
+</div>
 
 <label>
 पता
@@ -291,6 +330,86 @@ stateSelect.addEventListener("change", function() {
 
 });
 
+    function getLocation() {
+
+    const status = document.getElementById("locationStatus");
+    const button = document.getElementById("locationBtn");
+
+    if (!navigator.geolocation) {
+
+        status.textContent =
+            "इस device/browser में Location सुविधा उपलब्ध नहीं है।";
+
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "📍 Location प्राप्त हो रही है...";
+
+    status.textContent =
+        "कृपया Location Permission को Allow करें...";
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            document.getElementById("latitude").value =
+                latitude;
+
+            document.getElementById("longitude").value =
+                longitude;
+
+            status.textContent =
+                "✅ Location सफलतापूर्वक प्राप्त हो गई।";
+
+            button.textContent =
+                "✅ Location मिल गई";
+
+            button.style.background =
+                "#168f68";
+
+        },
+
+        function(error) {
+
+            button.disabled = false;
+            button.textContent =
+                "📍 मेरी Location लें";
+
+            if (error.code === 1) {
+
+                status.textContent =
+                    "❌ Location Permission Denied है। कृपया Browser Settings में Location Allow करें।";
+
+            } else if (error.code === 2) {
+
+                status.textContent =
+                    "❌ Location उपलब्ध नहीं है। GPS/Location चालू करके दोबारा प्रयास करें।";
+
+            } else if (error.code === 3) {
+
+                status.textContent =
+                    "❌ Location प्राप्त करने में समय लग गया। दोबारा प्रयास करें।";
+
+            } else {
+
+                status.textContent =
+                    "❌ Location प्राप्त नहीं हो सकी। दोबारा प्रयास करें।";
+            }
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+
+    );
+}
 </script>
 
 </body>
