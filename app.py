@@ -178,6 +178,8 @@ class RequestItem(Base):
     assigned_worker_id = Column(Integer, nullable=True)
     state = Column(String(100), nullable=True)
     district = Column(String(100), nullable=True)
+    latitude = Column(String(30), nullable=True)
+    longitude = Column(String(30), nullable=True)
     status = Column(String(30), default="Pending", nullable=False)
 
     created_at = Column(
@@ -274,7 +276,9 @@ if "assigned_worker_id" not in request_columns:
 
 request_location_columns = {
     "state": "VARCHAR(100)",
-    "district": "VARCHAR(100)"
+    "district": "VARCHAR(100)",
+    "latitude": "VARCHAR(30)",
+    "longitude": "VARCHAR(30)"
 }
 
 for column_name, column_type in request_location_columns.items():
@@ -362,7 +366,13 @@ def add():
         d.get("address", "").strip(),
         d.get("details", "").strip()
     ]
+    
+    latitude = d.get("latitude", "").strip()
+    longitude = d.get("longitude", "").strip()
 
+    if not latitude or not longitude:
+    flash("कृपया Location की अनुमति दें और फिर आवेदन भेजें", "error")
+    return redirect(url_for("home"))
     if not all(vals):
         flash("कृपया सभी जानकारी भरें", "error")
         return redirect(url_for("home"))
@@ -379,6 +389,8 @@ def add():
         phone=vals[2],
         state=vals[3],
         district=vals[4],
+        latitude=latitude,
+        longitude=longitude,
         service=vals[5],
         address=vals[6],
         details=vals[7]
