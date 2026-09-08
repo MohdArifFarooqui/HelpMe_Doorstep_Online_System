@@ -646,6 +646,50 @@ def toggle_worker(worker_id):
 
     return redirect(url_for("admin"))
 
+# ==============================
+# 25 KM NEARBY WORKER MATCHING
+# ==============================
+
+def get_nearby_workers(request_item):
+    try:
+        customer_lat = float(request_item.latitude)
+        customer_lon = float(request_item.longitude)
+    except (TypeError, ValueError, AttributeError):
+        return []
+
+    workers = (
+        DB.query(User)
+        .filter(User.role == "worker")
+        .filter(User.approved == True)
+        .filter(User.active == True)
+        .all()
+    )
+
+    nearby_workers = []
+
+    for worker in workers:
+        try:
+            worker_lat = float(worker.latitude)
+            worker_lon = float(worker.longitude)
+        except (TypeError, ValueError):
+            continue
+
+        distance = calculate_distance(
+            customer_lat,
+            customer_lon,
+            worker_lat,
+            worker_lon
+        )
+
+        if distance is not None and distance <= 25:
+            nearby_workers.append({
+                "worker": worker,
+                "distance": round(distance, 2)
+            })
+
+    nearby_workers.sort(key=lambda x: x["distance"])
+
+    return nearby_workers
 
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
