@@ -599,18 +599,18 @@ def admin():
     # 25 KM NEARBY WORKERS
     # ==============================
 
-nearby_workers = {}
+    nearby_workers = {}
 
-for request_item in requests:
-    nearby_workers[request_item.id] = get_nearby_workers(request_item)
+    for request_item in requests:
+        nearby_workers[request_item.id] = get_nearby_workers(request_item)
 
-return render_template(
-    "admin.html",
-    requests=requests,
-    workers=workers,
-    admins=admins,
-    nearby_workers=nearby_workers
-)
+    return render_template(
+        "admin.html",
+        requests=requests,
+        workers=workers,
+        admins=admins,
+        nearby_workers=nearby_workers
+    )
 
 @app.post("/admin/worker/approve/<int:worker_id>")
 def approve_worker(worker_id):
