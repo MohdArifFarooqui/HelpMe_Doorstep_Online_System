@@ -413,8 +413,10 @@ def worker_register():
     csc_id = request.form.get("csc_id", "").strip() or None
     center_name = request.form.get("center_name", "").strip() or None
     address = request.form.get("address", "").strip()
-
-    if not name or not mobile or not password or not address:
+    state = request.form.get("state", "").strip()
+    district = request.form.get("district", "").strip()
+    
+    if not name or not mobile or not password or not address or not state or not district:
         flash("कृपया सभी जरूरी जानकारी भरें", "error")
         return redirect(url_for("worker_register"))
 
@@ -455,6 +457,8 @@ def worker_register():
         csc_id=csc_id,
         center_name=center_name,
         address=address,
+        state=state,
+        district=district,
         approved=True,
         active=True
     )
