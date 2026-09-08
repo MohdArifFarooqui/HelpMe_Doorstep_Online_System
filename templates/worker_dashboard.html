@@ -285,7 +285,64 @@
 
     </div>
 
+    <!-- ========================= -->
+    <!-- WORKER REQUEST SUMMARY -->
+    <!-- ========================= -->
 
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:12px;
+        margin-bottom:20px;
+    ">
+
+        <div style="
+            background:white;
+            border-radius:15px;
+            padding:18px 10px;
+            text-align:center;
+            box-shadow:0 3px 12px rgba(0,0,0,0.07);
+        ">
+            <div style="font-size:28px;font-weight:bold;">
+                {{ requests|length }}
+            </div>
+            <div style="font-size:14px;color:#666;font-weight:bold;">
+                📋 कुल आवेदन
+            </div>
+        </div>
+
+        <div style="
+            background:white;
+            border-radius:15px;
+            padding:18px 10px;
+            text-align:center;
+            box-shadow:0 3px 12px rgba(0,0,0,0.07);
+        ">
+            <div style="font-size:28px;font-weight:bold;color:#8e44ad;">
+                {{ requests|selectattr('status','equalto','In Progress')|list|length }}
+            </div>
+            <div style="font-size:14px;color:#666;font-weight:bold;">
+                🟣 In Progress
+            </div>
+        </div>
+
+        <div style="
+            background:white;
+            border-radius:15px;
+            padding:18px 10px;
+            text-align:center;
+            box-shadow:0 3px 12px rgba(0,0,0,0.07);
+        ">
+            <div style="font-size:28px;font-weight:bold;color:#188038;">
+                {{ requests|selectattr('status','equalto','Completed')|list|length }}
+            </div>
+            <div style="font-size:14px;color:#666;font-weight:bold;">
+                🟢 Completed
+            </div>
+        </div>
+
+    </div>
+   
     <!-- Service Requests -->
     <div class="requests-box">
 
