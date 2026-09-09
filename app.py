@@ -1017,20 +1017,8 @@ def status(rid):
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
-    x = DB.get(RequestItem, rid)
-
-    if not x:
-        flash("Application नहीं मिला", "error")
-        return redirect(url_for("admin"))
-
-    if not admin_can_access_request(x):
-        flash(
-            "आपको इस Application पर Access की अनुमति नहीं है।",
-            "error"
-        )
-        return redirect(url_for("admin"))
-
-    s = request.form.get("status")
+    request_item = DB.get(RequestItem, rid)
+    new_status = request.form.get("status")
 
     allowed_statuses = (
         "Pending",
@@ -1040,20 +1028,38 @@ def status(rid):
         "Cancelled"
     )
 
-    if s not in allowed_statuses:
+    if not request_item:
+        flash("Application नहीं मिला", "error")
+        return redirect(url_for("admin"))
+
+    if not admin_can_access_request(request_item):
+        flash("आपको इस Application पर Access की अनुमति नहीं है।", "error")
+        return redirect(url_for("admin"))
+
+    if new_status not in allowed_statuses:
         flash("Invalid Status", "error")
         return redirect(url_for("admin"))
 
-    x.status = s
+    old_status = request_item.status
+    request_item.status = new_status
+
+    # Customer Notification
+    if old_status != new_status:
+        create_customer_notification(
+            request_item.phone,
+            f"Application #{rid} का Status '{new_status}' कर दिया गया है।",
+            rid
+        )
+
     DB.commit()
 
     flash(
-        f"Application #{rid} का Status {s} कर दिया गया है।",
+        f"Application #{rid} का Status {new_status} कर दिया गया है।",
         "success"
     )
 
     return redirect(url_for("admin"))
-
+    
 
 @app.get("/status")
 def check_status():
