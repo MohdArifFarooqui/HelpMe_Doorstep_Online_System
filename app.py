@@ -799,6 +799,10 @@ def assign_request(rid):
     if not request_item:
         flash("Application नहीं मिला", "error")
         return redirect(url_for("admin"))
+        
+    if not admin_can_access_request(request_item):
+         flash("आपको इस Application पर Access की अनुमति नहीं है।", "error")
+         return redirect(url_for("admin"))
 
     if not worker_id:
         request_item.assigned_worker_id = None
