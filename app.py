@@ -1060,7 +1060,6 @@ def status(rid):
 
     return redirect(url_for("admin"))
     
-
 @app.get("/status")
 def check_status():
     phone = request.args.get(
@@ -1068,10 +1067,18 @@ def check_status():
         ""
     ).strip()
 
+    notifications = (
+        DB.query(Notification)
+        .filter(Notification.customer_phone == phone)
+        .order_by(Notification.id.desc())
+        .all()
+    ) if phone else []
+
     if not phone:
         return render_template(
             "status.html",
-            requests=[]
+            requests=[],
+            notifications=[]
         )
 
     requests = (
@@ -1083,7 +1090,8 @@ def check_status():
 
     return render_template(
         "status.html",
-        requests=requests
+        requests=requests,
+        notifications=notifications
     )
     
 @app.post("/worker/status/<int:rid>")
