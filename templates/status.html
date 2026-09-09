@@ -167,7 +167,27 @@ Status देखें
 📄 Application ID: {{r.application_code}}
 
 </div>
+  
+{% if r.status == "Pending" %}
+<div class="status-message">
+    ⏳ आपका आवेदन प्राप्त हो गया है। Worker Assign होने की प्रतीक्षा है।
+</div>
 
+{% elif r.status == "Assigned" %}
+<div class="status-message">
+    👷 आपका Worker Assign कर दिया गया है। जल्द ही आपसे संपर्क किया जाएगा।
+</div>
+
+{% elif r.status == "In Progress" %}
+<div class="status-message">
+    🔧 आपका काम अभी चल रहा है।
+</div>
+
+{% elif r.status == "Completed" %}
+<div class="status-message">
+    ✅ आपका काम सफलतापूर्वक पूरा हो गया है।
+</div>
+{% endif %}
 
 <div class="info-row">
 
