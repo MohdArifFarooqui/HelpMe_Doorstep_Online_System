@@ -319,6 +319,29 @@ Status देखें
 </p>
 
 </section>
+  
+{% if notifications %}
+
+<section class="card">
+
+<h2>🔔 Notifications</h2>
+
+{% for n in notifications %}
+
+<div class="status-box">
+
+<div class="info-row">
+<b>📢 सूचना:</b>
+{{ n.message }}
+</div>
+
+</div>
+
+{% endfor %}
+
+</section>
+
+{% endif %}
 
 
 {% endif %}
