@@ -1246,7 +1246,7 @@ def worker_dashboard():
     return render_template(
         "worker_dashboard.html",
         worker=worker,
-        requests=requests
+        requests=requests,
         
         request_distances=request_distances
     )
