@@ -711,16 +711,16 @@ def approve_worker(worker_id):
     return redirect(url_for("admin"))
 
 
-@app.post("/admin/worker/toggle/<int:worker_id>")
-def toggle_worker(worker_id):
+    @app.post("/admin/worker/toggle/<int:worker_id>")
+    def toggle_worker(worker_id):
     if not session.get("admin"):
-        return redirect(url_for("admin"))
+      return redirect(url_for("admin"))
        worker = DB.get(User, worker_id)
 
-if not worker or worker.role != "worker":
+    if not worker or worker.role != "worker":
         flash("Worker नहीं मिला", "error")
         return redirect(url_for("admin"))
-
+  
     if not admin_can_access_worker(worker):
         flash("आपको इस Worker पर Access की अनुमति नहीं है।", "error")
         return redirect(url_for("admin"))
