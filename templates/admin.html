@@ -1463,16 +1463,14 @@ action="/admin/assign/{{ r.id }}">
 
 <option value="">-- Worker चुनें --</option>
 
-{% for w in workers %}
-{% if w.approved and w.active %}
+{% for item in nearby_workers.get(r.id, []) %}
 
-<option
-value="{{ w.id }}"
-{% if r.assigned_worker_id == w.id %}selected{% endif %}>
-{{ w.name }} - {{ w.mobile }}
+{% set w = item.worker %}
+
+<option value="{{ w.id }}">
+    {{ w.name }} - {{ w.state }} / {{ w.district }} - {{ item.distance }} KM
 </option>
 
-{% endif %}
 {% endfor %}
 
 </select>
