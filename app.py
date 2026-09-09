@@ -222,7 +222,41 @@ class RequestItem(Base):
     @property
     def application_code(self):
         return f"HM/DS{self.id:02d}"
+        
+# ==============================
+# CUSTOMER NOTIFICATIONS
+# ==============================
 
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True)
+    customer_phone = Column(String(30), nullable=False)
+    request_id = Column(Integer, nullable=True)
+    message = Column(Text, nullable=False)
+    is_read = Column(Boolean, default=False, nullable=False)
+
+    created_at = Column(
+        DateTime,
+        default=lambda: datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).replace(tzinfo=None),
+        nullable=False
+    )
+
+
+def create_customer_notification(phone, message, request_id=None):
+    if not phone or not message:
+        return
+
+    notification = Notification(
+        customer_phone=phone,
+        request_id=request_id,
+        message=message,
+        is_read=False
+    )
+
+    DB.add(notification)
 
 class User(Base):
     __tablename__ = "users"
