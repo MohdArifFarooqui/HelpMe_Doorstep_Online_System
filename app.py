@@ -1085,8 +1085,7 @@ def check_status():
         "status.html",
         requests=requests
     )
-
-
+    
 @app.post("/worker/status/<int:rid>")
 def worker_status(rid):
     if not session.get("worker"):
@@ -1120,7 +1119,17 @@ def worker_status(rid):
         flash("Invalid Status", "error")
         return redirect(url_for("worker_dashboard"))
 
+    old_status = request_item.status
     request_item.status = new_status
+
+    # Customer Notification
+    if old_status != new_status:
+        create_customer_notification(
+            request_item.phone,
+            f"Application #{rid} का Status '{new_status}' कर दिया गया है।",
+            rid
+        )
+
     DB.commit()
 
     flash(
