@@ -977,14 +977,25 @@ def login():
     flash("Login failed", "error")
 
     return redirect(url_for("admin"))
-
-
+    
 @app.post("/admin/status/<int:rid>")
 def status(rid):
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
     x = DB.get(RequestItem, rid)
+
+    if not x:
+        flash("Application नहीं मिला", "error")
+        return redirect(url_for("admin"))
+
+    if not admin_can_access_request(x):
+        flash(
+            "आपको इस Application पर Access की अनुमति नहीं है।",
+            "error"
+        )
+        return redirect(url_for("admin"))
+
     s = request.form.get("status")
 
     allowed_statuses = (
@@ -995,9 +1006,17 @@ def status(rid):
         "Cancelled"
     )
 
-    if x and s in allowed_statuses:
-        x.status = s
-        DB.commit()
+    if s not in allowed_statuses:
+        flash("Invalid Status", "error")
+        return redirect(url_for("admin"))
+
+    x.status = s
+    DB.commit()
+
+    flash(
+        f"Application #{rid} का Status {s} कर दिया गया है।",
+        "success"
+    )
 
     return redirect(url_for("admin"))
 
