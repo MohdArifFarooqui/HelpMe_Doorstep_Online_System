@@ -346,6 +346,78 @@ def close(e=None):
     DB.remove()
 
 # ==============================
+# ADMIN ACCESS CONTROL
+# ==============================
+
+def get_logged_in_admin():
+    if not session.get("admin"):
+        return None
+
+    admin_user_id = session.get("admin_user_id")
+
+    if not admin_user_id:
+        # Main Admin
+        return None
+
+    admin_user = DB.get(User, admin_user_id)
+
+    if (
+        not admin_user
+        or admin_user.role != "admin"
+        or not admin_user.active
+        or not admin_user.approved
+    ):
+        return False
+
+    return admin_user
+
+
+def admin_can_access_worker(worker):
+    admin_user = get_logged_in_admin()
+
+    # Main Admin को पूरा access
+    if admin_user is None:
+        return True
+
+    # Invalid / inactive admin
+    if admin_user is False:
+        return False
+
+    if admin_user.admin_level == "state":
+        return worker.state == admin_user.state
+
+    if admin_user.admin_level == "district":
+        return (
+            worker.state == admin_user.state
+            and worker.district == admin_user.district
+        )
+
+    return False
+
+
+def admin_can_access_request(request_item):
+    admin_user = get_logged_in_admin()
+
+    # Main Admin को पूरा access
+    if admin_user is None:
+        return True
+
+    # Invalid / inactive admin
+    if admin_user is False:
+        return False
+
+    if admin_user.admin_level == "state":
+        return request_item.state == admin_user.state
+
+    if admin_user.admin_level == "district":
+        return (
+            request_item.state == admin_user.state
+            and request_item.district == admin_user.district
+        )
+
+    return False
+
+# ==============================
 # CUSTOMER OTP LOGIN
 # ==============================
 
