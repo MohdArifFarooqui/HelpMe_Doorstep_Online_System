@@ -488,6 +488,13 @@
                     <strong>📍 Address:</strong>
                     {{ r.address }}
                 </div>
+                
+{% if request_distances.get(r.id) is not none %}
+<div class="request-row">
+    <strong>📍 दूरी:</strong>
+    {{ request_distances.get(r.id) }} KM
+</div>
+{% endif %}
 
                 <div class="request-row">
 
