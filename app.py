@@ -715,10 +715,17 @@ def approve_worker(worker_id):
 def toggle_worker(worker_id):
     if not session.get("admin"):
         return redirect(url_for("admin"))
+       worker = DB.get(User, worker_id)
 
-    worker = DB.get(User, worker_id)
+if not worker or worker.role != "worker":
+        flash("Worker नहीं मिला", "error")
+        return redirect(url_for("admin"))
 
-    if worker and worker.role == "worker" and worker.approved:
+    if not admin_can_access_worker(worker):
+        flash("आपको इस Worker पर Access की अनुमति नहीं है।", "error")
+        return redirect(url_for("admin"))
+    
+ if worker and worker.role == "worker" and worker.approved:
         worker.active = not worker.active
         DB.commit()
 
