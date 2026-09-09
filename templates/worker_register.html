@@ -331,6 +331,11 @@ stateSelect.addEventListener("change", function() {
 
 });
 
+ // Page load par agar State already selected hai to District load karein
+if (stateSelect.value) {
+    stateSelect.dispatchEvent(new Event("change"));
+     }
+    
     function getLocation() {
 
     const status = document.getElementById("locationStatus");
