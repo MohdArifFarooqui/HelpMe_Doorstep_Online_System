@@ -841,12 +841,12 @@ def assign_request(rid):
         worker.longitude 
     )
 
-if distance is None or distance > 25:
-    flash("यह Worker Customer की 25 KM सीमा के बाहर है।", "error")
-    return redirect(url_for("admin"))
+    if distance is None or distance > 25:
+        flash("यह Worker Customer की 25 KM सीमा के बाहर है।", "error")
+        return redirect(url_for("admin"))
     
-    request_item.assigned_worker_id = worker.id
-    request_item.status = "Assigned"
+        request_item.assigned_worker_id = worker.id
+        request_item.status = "Assigned"
 
     DB.commit()
 
