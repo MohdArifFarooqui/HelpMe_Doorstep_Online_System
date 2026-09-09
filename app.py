@@ -834,6 +834,10 @@ def assign_request(rid):
         flash("Valid Active Worker नहीं मिला", "error")
         return redirect(url_for("admin"))
     
+    if not admin_can_access_worker(worker):
+         flash("आपको इस Worker पर Access की अनुमति नहीं है।", "error")
+         return redirect(url_for("admin"))
+    
     distance = calculate_distance(
         request_item.latitude,
         request_item.longitude,
