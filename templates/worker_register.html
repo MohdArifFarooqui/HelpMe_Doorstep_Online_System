@@ -314,10 +314,10 @@ stateSelect.addEventListener("change", function() {
     districtSelect.innerHTML =
         '<option value="">-- जिला चुनें --</option>';
 
-    if (districts[selectedState]) {
+    if (indiaData[selectedState]) {
 
-        districts[selectedState].forEach(function(district) {
-
+    indiaData[selectedState].forEach(function(district) {
+        
             const option = document.createElement("option");
 
             option.value = district;
