@@ -691,15 +691,22 @@ def approve_worker(worker_id):
 
     worker = DB.get(User, worker_id)
 
-    if worker and worker.role == "worker":
-        worker.approved = True
-        worker.active = True
-        DB.commit()
+    if not worker or worker.role != "worker":
+        flash("Worker नहीं मिला", "error")
+        return redirect(url_for("admin"))
 
-        flash(
-            f"{worker.name} का Service Provider / Worker account Approve कर दिया गया है।",
-            "success"
-        )
+    if not admin_can_access_worker(worker):
+        flash("आपको इस Worker पर Access की अनुमति नहीं है।", "error")
+        return redirect(url_for("admin"))
+
+    worker.approved = True
+    worker.active = True
+    DB.commit()
+
+    flash(
+        f"{worker.name} का Service Provider / Worker account Approve कर दिया गया है।",
+        "success"
+    )
 
     return redirect(url_for("admin"))
 
