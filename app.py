@@ -845,8 +845,8 @@ def assign_request(rid):
         flash("यह Worker Customer की 25 KM सीमा के बाहर है।", "error")
         return redirect(url_for("admin"))
     
-        request_item.assigned_worker_id = worker.id
-        request_item.status = "Assigned"
+    request_item.assigned_worker_id = worker.id
+    request_item.status = "Assigned"
 
     DB.commit()
 
