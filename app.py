@@ -833,7 +833,18 @@ def assign_request(rid):
     if not worker:
         flash("Valid Active Worker नहीं मिला", "error")
         return redirect(url_for("admin"))
+    
+    distance = calculate_distance(
+        request_item.latitude,
+        request_item.longitude,
+        worker.latitude,
+        worker.longitude 
+    )
 
+if distance is None or distance > 25:
+    flash("यह Worker Customer की 25 KM सीमा के बाहर है।", "error")
+    return redirect(url_for("admin"))
+    
     request_item.assigned_worker_id = worker.id
     request_item.status = "Assigned"
 
