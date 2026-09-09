@@ -1227,13 +1227,29 @@ def worker_dashboard():
         .order_by(RequestItem.id.desc())
         .all()
     )
+    
+    request_distances = {}
+
+    for r in requests:
+        distance = calculate_distance(
+            worker.latitude,
+            worker.longitude,
+            r.latitude,
+            r.longitude
+        )
+
+        if distance is not None:
+            request_distances[r.id] = round(distance, 2)
+        else:
+            request_distances[r.id] = None
 
     return render_template(
         "worker_dashboard.html",
         worker=worker,
         requests=requests
+        
+        request_distances=request_distances
     )
-
 
 @app.post("/worker/logout")
 def worker_logout():
