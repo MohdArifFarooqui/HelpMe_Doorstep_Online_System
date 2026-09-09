@@ -31,7 +31,46 @@
 
 .phone-icon {
   font-size: 21px;
+} 
+  .emergency-services {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
 }
+
+.emergency-button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 14px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.ambulance-button {
+  background: linear-gradient(90deg, #dc2626 0 50%, #16a34a 50% 100%);
+}
+
+.police-button {
+  background: #ec4899;
+}
+
+.fire-button {
+  background: #f97316;
+}
+
+.emergency-note {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
 </style>
 </head>
 
@@ -58,9 +97,36 @@
 
 {% for cat,msg in get_flashed_messages(with_categories=true) %}
 <div class="alert {{cat}}">{{msg}}</div>
-{% endfor %}
+{% endfor %} 
+  
+  <section class="card">
+  <h2 style="text-align:center;">🚨 Emergency Services</h2>
 
-<section class="card" style="text-align:center;">
+  <p class="emergency-note">
+    जरूरत पड़ने पर एक क्लिक में संबंधित सेवा को Call करें।
+  </p>
+
+  <div class="emergency-services">
+
+    <a class="emergency-button ambulance-button"
+       href="tel:102">
+      🚑 Ambulance Sewa — DIAL 102
+    </a>
+
+    <a class="emergency-button police-button"
+       href="tel:112">
+      👮 Police Sewa — DIAL 112
+    </a>
+
+    <a class="emergency-button fire-button"
+       href="tel:101">
+      🚒 Fire Sewa — DIAL 101
+    </a>
+
+  </div>
+</section>
+
+  <section class="card" style="text-align:center;">
   <h2>📋 अपने आवेदन की स्थिति देखें</h2>
   <p>मोबाइल नंबर डालकर अपने आवेदन का Status देखें।</p>
 
