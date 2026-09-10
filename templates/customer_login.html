@@ -437,22 +437,24 @@ async function verifyOTP() {
             console.log(
                 "OTP verified:",
                 data
-            );
-
-
-            const accessToken =
+            );  
+            
+            
+const accessToken =
     typeof data === "string"
         ? data
         : data && (
             data.accessToken ||
             data["access-token"] ||
             data.token ||
-            data.data ||
+            data.message ||
             data.data?.accessToken ||
             data.data?.["access-token"] ||
-            data.data?.token
-        );   
-            
+            data.data?.token ||
+            data.data?.message
+        );
+
+
             const finalAccessToken =
                 accessToken || window.msg91AccessToken;
 
