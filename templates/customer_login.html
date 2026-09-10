@@ -202,7 +202,16 @@ var configuration = {
 
     tokenAuth: "567634T523KiwEkd6aa25285P1",
 
-    exposeMethods: true,
+    exposeMethods: true,   
+    
+    success: function(data) {
+    console.log("MSG91 success:", data);
+},
+
+failure: function(error) {
+    console.log("MSG91 failure:", error);
+},
+
 };
 
 
