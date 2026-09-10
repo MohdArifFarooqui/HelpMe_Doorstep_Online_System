@@ -451,10 +451,13 @@ async function verifyOTP() {
             data.data?.accessToken ||
             data.data?.["access-token"] ||
             data.data?.token
-        );
+        );   
+            
+            const finalAccessToken =
+                accessToken || window.msg91AccessToken;
 
 
-            if (!accessToken) {
+            if (!finalAccessToken) {
 
                 showMessage(
                     "MSG91 access token नहीं मिला।",
@@ -482,7 +485,7 @@ async function verifyOTP() {
 
                 formData.append(
                     "access_token",
-                    accessToken
+                    finalAccessToken
                 );
 
 
