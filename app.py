@@ -518,31 +518,26 @@ def verify_widget_token():
         customer = DB.query(User).filter(
             User.mobile == mobile,
             User.role == "customer"
-        ).first()    
-        
-       if not customer:
-        customer = User(
-        mobile=mobile,
-        role="customer",
-        approved=True,
-        active=True
-    )
-
-    DB.add(customer)
-
-    try:
-        DB.commit()
-    except Exception:
-        DB.rollback()
-
-        customer = DB.query(User).filter(
-            User.mobile == mobile
         ).first()
-
-        if not customer:
-            raise
-
         
+        if not customer:
+            customer = User(
+                mobile=mobile,
+                role="customer",
+                approved=True,
+                active=True
+            )
+
+            DB.add(customer)
+            DB.commit()
+
+        if not customer.active:
+            return {
+                "success": False,
+                "message": "Customer account inactive"
+            }, 403    
+        
+       
         if not customer.active:
             return {
                 "success": False,
