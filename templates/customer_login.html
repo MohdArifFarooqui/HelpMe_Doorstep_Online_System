@@ -384,11 +384,17 @@ async function verifyOTP() {
 
 
             const accessToken =
-                data && (
-                    data.accessToken ||
-                    data["access-token"] ||
-                    data.token
-                );
+    typeof data === "string"
+        ? data
+        : data && (
+            data.accessToken ||
+            data["access-token"] ||
+            data.token ||
+            data.data ||
+            data.data?.accessToken ||
+            data.data?.["access-token"] ||
+            data.data?.token
+        );
 
 
             if (!accessToken) {
