@@ -207,9 +207,49 @@ var configuration = {
     exposeMethods: true,   
     
     success: function(data) {
-    console.log("MSG91 success:", data);
-},
 
+    console.log(
+        "MSG91 success:",
+        data
+    );
+
+    function findJwt(value) {
+
+        if (
+            typeof value === "string" &&
+            value.split(".").length === 3
+        ) {
+            return value;
+        }
+
+        if (
+            value &&
+            typeof value === "object"
+        ) {
+            for (const key in value) {
+
+                const found =
+                    findJwt(value[key]);
+
+                if (found) {
+                    return found;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    window.msg91AccessToken =
+        findJwt(data);
+
+    console.log(
+        "MSG91 access token:",
+        window.msg91AccessToken
+    );
+},
+    
+    
 failure: function(error) {
     console.log("MSG91 failure:", error);
 },
