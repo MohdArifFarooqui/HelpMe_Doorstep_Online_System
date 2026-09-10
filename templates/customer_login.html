@@ -1,7 +1,207 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>HelpMe Doorstep - Customer Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 18px;
+            padding: 30px 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 12px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 5px 0;
+            font-size: 25px;
+            color: #1565c0;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #1976d2;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #1976d2;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background: #9e9e9e;
+            cursor: not-allowed;
+        }
+
+        #otp-box {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .message {
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+
+        .message.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .message.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-card">
+
+    <img
+        class="logo"
+        src="/static/logo.png"
+        alt="HelpMe Doorstep"
+    >
+
+    <h1>HelpMe Doorstep</h1>
+
+    <div class="subtitle">
+        Customer Login
+    </div>
+
+    <label for="mobile">
+        मोबाइल नंबर
+    </label>
+
+    <input
+        type="tel"
+        id="mobile"
+        maxlength="10"
+        inputmode="numeric"
+        placeholder="10 अंकों का मोबाइल नंबर"
+    >
+
+    <button
+        id="sendOtpBtn"
+        type="button"
+        onclick="sendOTP()">
+        📩 OTP भेजें
+    </button>
+
+    <div id="otp-box">
+
+        <label for="otp">
+            OTP
+        </label>
+
+        <input
+            type="tel"
+            id="otp"
+            maxlength="4"
+            inputmode="numeric"
+            placeholder="4 अंकों का OTP"
+        >
+
+        <button
+            id="verifyOtpBtn"
+            type="button"
+            onclick="verifyOTP()">
+            🔐 OTP Verify करके Login करें
+        </button>
+
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div class="footer">
+        © HelpMe Doorstep
+    </div>
+
+</div>
+
+
 <script>
+
 var configuration = {
+
     widgetId: "36696a667454323039343333",
+
     tokenAuth: "567634AOKnnoHjjonw6a9aae9bP1",
+
     exposeMethods: true,
 
     success: function(data) {
@@ -10,33 +210,81 @@ var configuration = {
 
     failure: function(error) {
         console.log("MSG91 failure:", error);
-        showMessage("OTP verification failed.", "error");
+        showMessage(
+            "OTP verification failed.",
+            "error"
+        );
     }
 };
 
+
 function showMessage(text, type) {
-    const message = document.getElementById("message");
-    message.className = "message " + type;
+
+    const message =
+        document.getElementById("message");
+
+    message.className =
+        "message " + type;
+
     message.innerText = text;
 }
 
+
 function sendOTP() {
-    const mobile = document.getElementById("mobile").value.trim();
+
+    const mobile =
+        document.getElementById("mobile").value.trim();
 
     if (!/^\d{10}$/.test(mobile)) {
-        showMessage("कृपया सही 10 अंकों का मोबाइल नंबर डालें।", "error");
+
+        showMessage(
+            "कृपया सही 10 अंकों का मोबाइल नंबर डालें।",
+            "error"
+        );
+
         return;
     }
 
-    const button = document.getElementById("sendOtpBtn");
+    const button =
+        document.getElementById("sendOtpBtn");
+
     button.disabled = true;
-    button.innerText = "OTP भेजा जा रहा है...";
+    button.innerText =
+        "OTP भेजा जा रहा है...";
+
+
+    if (typeof window.sendOtp !== "function") {
+
+        showMessage(
+            "MSG91 OTP service अभी load नहीं हुई।",
+            "error"
+        );
+
+        button.disabled = false;
+        button.innerText = "📩 OTP भेजें";
+
+        return;
+    }
+
 
     window.sendOtp(
+
         "91" + mobile,
+
         function(data) {
-            document.getElementById("otp-box").style.display = "block";
-            document.getElementById("otp").focus();
+
+            console.log(
+                "OTP sent:",
+                data
+            );
+
+            document.getElementById(
+                "otp-box"
+            ).style.display = "block";
+
+            document.getElementById(
+                "otp"
+            ).focus();
 
             showMessage(
                 "OTP आपके मोबाइल नंबर पर भेज दिया गया है।",
@@ -44,10 +292,17 @@ function sendOTP() {
             );
 
             button.disabled = false;
-            button.innerText = "📩 OTP फिर से भेजें";
+
+            button.innerText =
+                "📩 OTP फिर से भेजें";
         },
+
         function(error) {
-            console.log(error);
+
+            console.log(
+                "OTP send error:",
+                error
+            );
 
             showMessage(
                 "OTP भेजने में समस्या हुई।",
@@ -55,33 +310,81 @@ function sendOTP() {
             );
 
             button.disabled = false;
-            button.innerText = "📩 OTP फिर से भेजें";
+
+            button.innerText =
+                "📩 OTP भेजें";
         }
     );
 }
 
-function verifyOTP() {
-    const mobile = document.getElementById("mobile").value.trim();
-    const otp = document.getElementById("otp").value.trim();
+
+async function verifyOTP() {
+
+    const mobile =
+        document.getElementById("mobile").value.trim();
+
+    const otp =
+        document.getElementById("otp").value.trim();
+
 
     if (!/^\d{10}$/.test(mobile)) {
-        showMessage("मोबाइल नंबर सही नहीं है।", "error");
+
+        showMessage(
+            "मोबाइल नंबर सही नहीं है।",
+            "error"
+        );
+
         return;
     }
+
 
     if (!/^\d{4}$/.test(otp)) {
-        showMessage("कृपया 4 अंकों का OTP डालें।", "error");
+
+        showMessage(
+            "कृपया 4 अंकों का OTP डालें।",
+            "error"
+        );
+
         return;
     }
 
-    const button = document.getElementById("verifyOtpBtn");
+
+    const button =
+        document.getElementById("verifyOtpBtn");
+
     button.disabled = true;
-    button.innerText = "Verify हो रहा है...";
+
+    button.innerText =
+        "Verify हो रहा है...";
+
+
+    if (typeof window.verifyOtp !== "function") {
+
+        showMessage(
+            "MSG91 OTP service अभी load नहीं हुई।",
+            "error"
+        );
+
+        button.disabled = false;
+
+        button.innerText =
+            "🔐 OTP Verify करके Login करें";
+
+        return;
+    }
+
 
     window.verifyOtp(
+
         otp,
+
         async function(data) {
-            console.log("OTP verified:", data);
+
+            console.log(
+                "OTP verified:",
+                data
+            );
+
 
             const accessToken =
                 data && (
@@ -90,51 +393,110 @@ function verifyOTP() {
                     data.token
                 );
 
+
             if (!accessToken) {
+
                 showMessage(
                     "MSG91 access token नहीं मिला।",
                     "error"
                 );
+
                 button.disabled = false;
-                button.innerText = "🔐 OTP Verify करके Login करें";
+
+                button.innerText =
+                    "🔐 OTP Verify करके Login करें";
+
                 return;
             }
 
-            const formData = new FormData();
-            formData.append("mobile", mobile);
-            formData.append("access_token", accessToken);
 
-            const response = await fetch(
-                "/api/verify-widget-token",
-                {
-                    method: "POST",
-                    body: formData
-                }
-            );
+            try {
 
-            const result = await response.json();
+                const formData =
+                    new FormData();
 
-            if (result.success) {
-                showMessage(
-                    "Login सफल हुआ। Dashboard खोला जा रहा है...",
-                    "success"
+                formData.append(
+                    "mobile",
+                    mobile
                 );
 
-                window.location.href =
-                    "/customer/dashboard";
-            } else {
+                formData.append(
+                    "access_token",
+                    accessToken
+                );
+
+
+                const response =
+                    await fetch(
+                        "/api/verify-widget-token",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                console.log(
+                    "Server result:",
+                    result
+                );
+
+
+                if (result.success) {
+
+                    showMessage(
+                        "Login सफल हुआ। Dashboard खोला जा रहा है...",
+                        "success"
+                    );
+
+
+                    window.location.href =
+                        "/customer/dashboard";
+
+                } else {
+
+                    showMessage(
+                        result.message ||
+                        "Login failed.",
+                        "error"
+                    );
+
+                    button.disabled = false;
+
+                    button.innerText =
+                        "🔐 OTP Verify करके Login करें";
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "Server error:",
+                    error
+                );
+
                 showMessage(
-                    result.message || "Login failed.",
+                    "Server से connection में समस्या हुई।",
                     "error"
                 );
 
                 button.disabled = false;
+
                 button.innerText =
                     "🔐 OTP Verify करके Login करें";
             }
         },
+
+
         function(error) {
-            console.log(error);
+
+            console.log(
+                "OTP verification error:",
+                error
+            );
 
             showMessage(
                 "OTP गलत है या expire हो गया है।",
@@ -142,15 +504,21 @@ function verifyOTP() {
             );
 
             button.disabled = false;
+
             button.innerText =
                 "🔐 OTP Verify करके Login करें";
         }
     );
 }
+
 </script>
+
 
 <script
     type="text/javascript"
     onload="initSendOTP(configuration)"
     src="https://verify.msg91.com/otp-provider.js">
 </script>
+
+</body>
+</html>
