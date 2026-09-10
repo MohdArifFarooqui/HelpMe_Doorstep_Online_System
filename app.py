@@ -457,7 +457,101 @@ def admin_can_access_request(request_item):
 
 @app.route("/customer/login", methods=["GET"])
 def customer_login():
-    return render_template("customer_login.html")
+    return render_template("customer_login.html")  
+    
+    
+@app.post("/api/verify-widget-token")
+def verify_widget_token():
+    mobile = request.form.get("mobile", "").strip()
+    access_token = request.form.get("access_token", "").strip()
+
+    if not mobile or not access_token:
+        return {
+            "success": False,
+            "message": "Mobile और access token required"
+        }, 400
+
+    if not mobile.isdigit() or len(mobile) != 10:
+        return {
+            "success": False,
+            "message": "Invalid mobile number"
+        }, 400
+
+    authkey = os.environ.get("MSG91_AUTHKEY")
+
+    if not authkey:
+        return {
+            "success": False,
+            "message": "MSG91 Authkey is not configured"
+        }, 500
+
+    try:
+        verify_url = (
+            "https://control.msg91.com/api/v5/widget/verifyAccessToken"
+        )
+
+        payload = json.dumps({
+            "authkey": authkey,
+            "access-token": access_token
+        }).encode("utf-8")
+
+        req = urllib.request.Request(
+            verify_url,
+            data=payload,
+            method="POST",
+            headers={
+                "Content-Type": "application/json"
+            }
+        )
+
+        with urllib.request.urlopen(req, timeout=15) as response:
+            result = json.loads(
+                response.read().decode("utf-8")
+            )
+
+        if result.get("type") != "success":
+            return {
+                "success": False,
+                "message": "MSG91 access token verification failed"
+            }, 401
+
+        customer = DB.query(User).filter(
+            User.mobile == mobile,
+            User.role == "customer"
+        ).first()
+
+        if not customer:
+            customer = User(
+                mobile=mobile,
+                role="customer",
+                approved=True,
+                active=True
+            )
+            DB.add(customer)
+            DB.commit()
+
+        if not customer.active:
+            return {
+                "success": False,
+                "message": "Customer account inactive"
+            }, 403
+
+        session.clear()
+        session["customer"] = True
+        session["customer_id"] = customer.id
+
+        return {
+            "success": True,
+            "message": "Customer login successful"
+        }
+
+    except Exception as e:
+        print("MSG91 verifyAccessToken error:", e)
+
+        return {
+            "success": False,
+            "message": "MSG91 verification failed"
+        }, 500
 
 
 @app.route("/customer/dashboard")
