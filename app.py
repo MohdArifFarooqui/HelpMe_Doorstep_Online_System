@@ -514,12 +514,11 @@ def verify_widget_token():
                 "success": False,
                 "message": "MSG91 access token verification failed"
             }, 401
-
+            
         customer = DB.query(User).filter(
-            User.mobile == mobile,
-            User.role == "customer"
+            User.mobile == mobile
         ).first()
-        
+
         if not customer:
             customer = User(
                 mobile=mobile,
@@ -527,7 +526,6 @@ def verify_widget_token():
                 approved=True,
                 active=True
             )
-
             DB.add(customer)
             DB.commit()
 
@@ -535,7 +533,18 @@ def verify_widget_token():
             return {
                 "success": False,
                 "message": "Customer account inactive"
-            }, 403    
+            }, 403
+
+        session.clear()
+        session["customer"] = True
+        session["customer_id"] = customer.id
+
+        return {
+            "success": True,
+            "message": "Customer login successful"
+        }
+
+        
         
        
         if not customer.active:
