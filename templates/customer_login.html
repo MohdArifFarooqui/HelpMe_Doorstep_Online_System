@@ -194,7 +194,9 @@
 </div>
 
 
-<script>
+<script>   
+
+let msg91ReqId = null;
 
 var configuration = {
 
@@ -266,18 +268,33 @@ function sendOTP() {
 
     window.sendOtp(
 
-        "91" + mobile,
-
+        "91" + mobile,   
+        
         function(data) {
 
-            console.log(
-                "OTP sent:",
-                data
-            );
+    console.log(
+        "OTP sent:",
+        data
+    );
 
-            document.getElementById(
-                "otp-box"
-            ).style.display = "block";
+    msg91ReqId =
+        data && (
+            data.message ||
+            data.reqId ||
+            data.reqID ||
+            data["req-id"]
+        );
+
+    console.log(
+        "MSG91 reqId:",
+        msg91ReqId
+    );
+
+    document.getElementById(
+        "otp-box"
+    ).style.display = "block";
+
+        
 
             document.getElementById(
                 "otp"
