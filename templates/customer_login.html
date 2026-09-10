@@ -211,7 +211,7 @@ var configuration = {
     failure: function(error) {
         console.log("MSG91 failure:", error);
         showMessage(
-            "OTP verification failed.",
+            "MSG91 Error: " + JSON.stringify(error),
             "error"
         );
     }
