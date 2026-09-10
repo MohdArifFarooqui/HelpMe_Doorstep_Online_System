@@ -520,8 +520,8 @@ def verify_widget_token():
             User.role == "customer"
         ).first()    
         
-        if not customer:
-    customer = User(
+       if not customer:
+        customer = User(
         mobile=mobile,
         role="customer",
         approved=True,
@@ -547,7 +547,7 @@ def verify_widget_token():
             return {
                 "success": False,
                 "message": "Customer account inactive"
-            }, 403
+        }, 403
 
         session.clear()
         session["customer"] = True
@@ -556,7 +556,7 @@ def verify_widget_token():
         return {
             "success": True,
             "message": "Customer login successful"
-        }
+         }
 
     except Exception as e:
         print("MSG91 verifyAccessToken error:", e)
