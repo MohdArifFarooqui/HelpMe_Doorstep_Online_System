@@ -796,22 +796,23 @@ def add():
         details=vals[7]
     )
 
-    DB.add(new_request)
-    DB.commit()
+   DB.add(new_request)
 
-    application_id = new_request.id
+# Application ID generate करने के लिए पहले save करें
+DB.flush()
 
-    flash(
-        f"आपका आवेदन सफलतापूर्वक भेज दिया गया है। Application ID: #{application_id}",
-        "success"
-    )
+application_id = new_request.id
 
-    return redirect(
-        url_for(
-            "check_status",
-            phone=vals[2]
-        )
-    )
+# Customer Notification
+create_customer_notification(
+    new_request.phone,
+    f"आपका आवेदन {new_request.application_code} सफलतापूर्वक जमा हो गया है। आपका आवेदन अभी Pending है।",
+    application_id
+)
+
+DB.commit()
+
+flash(
 
 
 @app.route("/worker/register", methods=["GET", "POST"])
