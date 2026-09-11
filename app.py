@@ -1300,6 +1300,36 @@ def login():
 
     return redirect(url_for("admin"))
 
+@app.post("/customer/notification/read/<int:nid>")
+def customer_notification_read(nid):
+
+    if not session.get("customer"):
+        return redirect(url_for("customer_login"))
+
+    customer_id = session.get("customer_id")
+
+    if not customer_id:
+        session.clear()
+        return redirect(url_for("customer_login"))
+
+    customer = DB.get(User, customer_id)
+
+    if not customer or customer.role != "customer":
+        session.clear()
+        return redirect(url_for("customer_login"))
+
+    notification = (
+        DB.query(Notification)
+        .filter(Notification.id == nid)
+        .filter(Notification.customer_phone == customer.mobile)
+        .first()
+    )
+
+    if notification:
+        notification.is_read = True
+        DB.commit()
+
+    return redirect(url_for("customer_dashboard"))
 
 @app.post("/admin/status/<int:rid>")
 def status(rid):
