@@ -1,16 +1,19 @@
 import os
-from datetime import datetime
+import json
+import urllib.request
+import urllib.parse
+import random
+
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from math import radians, sin, cos, sqrt, atan2
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean
-from sqlalchemy.orm import declarative_base, sessionmaker, scoped_session  
+from sqlalchemy.orm import declarative_base, sessionmaker, scoped_session
 from sqlalchemy.exc import IntegrityError
 
-import random
-from datetime import timedelta
 
 OTP_LENGTH = 4
 OTP_EXPIRY_MINUTES = 5
@@ -50,6 +53,7 @@ def verify_otp(mobile, otp):
     otp_store.pop(mobile, None)
     return True
 
+
 app = Flask(__name__)
 
 app.secret_key = os.environ.get(
@@ -58,14 +62,18 @@ app.secret_key = os.environ.get(
 )
 
 # =========================
-# MSG91 OTP API
+# SESSION CONFIGURATION
 # =========================
 
-import os
-import json
-import urllib.request
-import urllib.parse
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = True
+app.permanent_session_lifetime = timedelta(days=7)
 
+
+# =========================
+# MSG91 OTP API
+# =========================
 
 @app.post("/api/send-otp")
 def send_otp():
@@ -166,6 +174,7 @@ SERVICES = [
     "अन्य सहायता"
 ]
 
+
 # ==============================
 # 25 KM LOCATION MATCHING
 # ==============================
@@ -195,6 +204,7 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 
     return R * c
 
+
 class RequestItem(Base):
     __tablename__ = "requests"
 
@@ -223,7 +233,8 @@ class RequestItem(Base):
     @property
     def application_code(self):
         return f"HM/DS{self.id:02d}"
-        
+
+
 # ==============================
 # CUSTOMER NOTIFICATIONS
 # ==============================
@@ -259,6 +270,7 @@ def create_customer_notification(phone, message, request_id=None):
 
     DB.add(notification)
 
+
 class User(Base):
     __tablename__ = "users"
 
@@ -282,7 +294,7 @@ class User(Base):
 
     approved = Column(Boolean, default=False, nullable=False)
     active = Column(Boolean, default=True, nullable=False)
-    
+
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(
@@ -303,6 +315,7 @@ class User(Base):
             return f"HMDS/DA{self.id:02d}"
 
         return ""
+
 
 # Create tables if they do not already exist
 Base.metadata.create_all(engine)
@@ -380,6 +393,7 @@ for column_name, column_type in admin_columns.items():
 def close(e=None):
     DB.remove()
 
+
 # ==============================
 # ADMIN ACCESS CONTROL
 # ==============================
@@ -452,16 +466,19 @@ def admin_can_access_request(request_item):
 
     return False
 
+
 # ==============================
 # CUSTOMER OTP LOGIN
 # ==============================
 
 @app.route("/customer/login", methods=["GET"])
 def customer_login():
-    return render_template("customer_login.html")  
-    
+    return render_template("customer_login.html")
+
+
 @app.post("/api/verify-widget-token")
 def verify_widget_token():
+
     mobile = request.form.get("mobile", "").strip()
     access_token = request.form.get("access_token", "").strip()
 
@@ -486,6 +503,11 @@ def verify_widget_token():
         }, 500
 
     try:
+
+        # ==============================
+        # MSG91 ACCESS TOKEN VERIFY
+        # ==============================
+
         verify_url = (
             "https://control.msg91.com/api/v5/widget/verifyAccessToken"
         )
@@ -515,11 +537,46 @@ def verify_widget_token():
                 "message": "MSG91 access token verification failed"
             }, 401
 
-        customer = DB.query(User).filter(
-            User.mobile == mobile
-        ).first()
+        # ==============================
+        # FIND CUSTOMER
+        # ==============================
+
+        customer = (
+            DB.query(User)
+            .filter(
+                User.mobile == mobile,
+                User.role == "customer"
+            )
+            .first()
+        )
+
+        # ==============================
+        # IF MOBILE EXISTS WITH ANOTHER ROLE
+        # ==============================
 
         if not customer:
+
+            existing_user = (
+                DB.query(User)
+                .filter(User.mobile == mobile)
+                .first()
+            )
+
+            if existing_user:
+
+                return {
+                    "success": False,
+                    "message": (
+                        "यह Mobile Number पहले से दूसरे account role में "
+                        "Registered है। Customer login के लिए दूसरा "
+                        "Mobile Number इस्तेमाल करें।"
+                    )
+                }, 409
+
+            # ==============================
+            # CREATE NEW CUSTOMER
+            # ==============================
+
             customer = User(
                 mobile=mobile,
                 role="customer",
@@ -530,15 +587,30 @@ def verify_widget_token():
             DB.add(customer)
             DB.commit()
 
+        # ==============================
+        # CUSTOMER ACTIVE CHECK
+        # ==============================
+
         if not customer.active:
+
             return {
                 "success": False,
                 "message": "Customer account inactive"
             }, 403
 
+        # ==============================
+        # CUSTOMER SESSION
+        # ==============================
+
         session.clear()
+
+        session.permanent = True
+
         session["customer"] = True
         session["customer_id"] = customer.id
+        session["customer_mobile"] = customer.mobile
+
+        session.modified = True
 
         return {
             "success": True,
@@ -546,27 +618,45 @@ def verify_widget_token():
         }
 
     except IntegrityError:
+
         DB.rollback()
 
-        customer = DB.query(User).filter(
-            User.mobile == mobile
-        ).first()
+        customer = (
+            DB.query(User)
+            .filter(
+                User.mobile == mobile,
+                User.role == "customer"
+            )
+            .first()
+        )
 
         if not customer:
+
             return {
                 "success": False,
                 "message": "Customer account create नहीं हो पाया"
             }, 500
 
         if not customer.active:
+
             return {
                 "success": False,
                 "message": "Customer account inactive"
             }, 403
 
+        # ==============================
+        # CUSTOMER SESSION
+        # ==============================
+
         session.clear()
+
+        session.permanent = True
+
         session["customer"] = True
         session["customer_id"] = customer.id
+        session["customer_mobile"] = customer.mobile
+
+        session.modified = True
 
         return {
             "success": True,
@@ -574,8 +664,13 @@ def verify_widget_token():
         }
 
     except Exception as e:
+
         DB.rollback()
-        print("MSG91 verifyAccessToken error:", e)
+
+        print(
+            "MSG91 verifyAccessToken error:",
+            e
+        )
 
         return {
             "success": False,
@@ -586,21 +681,54 @@ def verify_widget_token():
 @app.route("/customer/dashboard")
 def customer_dashboard():
 
+    # ==============================
+    # CUSTOMER SESSION CHECK
+    # ==============================
+
     if not session.get("customer"):
-        return redirect(url_for("customer_login"))
+        return redirect(
+            url_for("customer_login")
+        )
 
     customer_id = session.get("customer_id")
 
-    customer = DB.get(User, customer_id)
-
-    if not customer or customer.role != "customer":
+    if not customer_id:
         session.clear()
-        return redirect(url_for("customer_login"))
+
+        return redirect(
+            url_for("customer_login")
+        )
+
+    customer = DB.get(
+        User,
+        customer_id
+    )
+
+    # ==============================
+    # CUSTOMER ACCOUNT CHECK
+    # ==============================
+
+    if (
+        not customer
+        or customer.role != "customer"
+        or not customer.active
+    ):
+
+        session.clear()
+
+        return redirect(
+            url_for("customer_login")
+        )
+
+    # ==============================
+    # CUSTOMER DASHBOARD
+    # ==============================
 
     return render_template(
         "index.html",
         services=SERVICES
     )
+
 
 @app.get("/")
 def home():
@@ -624,13 +752,14 @@ def add():
         d.get("address", "").strip(),
         d.get("details", "").strip()
     ]
-    
+
     latitude = d.get("latitude", "").strip()
     longitude = d.get("longitude", "").strip()
 
     if not latitude or not longitude:
         flash("कृपया Location की अनुमति दें और फिर आवेदन भेजें", "error")
         return redirect(url_for("home"))
+
     if not all(vals):
         flash("कृपया सभी जानकारी भरें", "error")
         return redirect(url_for("home"))
@@ -687,7 +816,7 @@ def worker_register():
     district = request.form.get("district", "").strip()
     latitude = request.form.get("latitude", "").strip()
     longitude = request.form.get("longitude", "").strip()
-    
+
     if not name or not mobile or not password or not address or not state or not district or not latitude or not longitude:
         flash("कृपया सभी जरूरी जानकारी भरें", "error")
         return redirect(url_for("worker_register"))
@@ -741,9 +870,10 @@ def worker_register():
     DB.commit()
 
     flash(
-    "Registration सफल हुआ। आपका account Active है। आप सीधे Login कर सकते हैं।",
-    "success"
+        "Registration सफल हुआ। आपका account Active है। आप सीधे Login कर सकते हैं।",
+        "success"
     )
+
     return redirect(url_for("worker_register"))
 
 
@@ -818,11 +948,11 @@ def admin():
         )
 
     admins = (
-    DB.query(User)
-    .filter(User.role == "admin")
-    .order_by(User.id.desc())
-    .all()
-)
+        DB.query(User)
+        .filter(User.role == "admin")
+        .order_by(User.id.desc())
+        .all()
+    )
 
     # ==============================
     # 25 KM NEARBY WORKERS
@@ -840,6 +970,7 @@ def admin():
         admins=admins,
         nearby_workers=nearby_workers
     )
+
 
 @app.post("/admin/worker/approve/<int:worker_id>")
 def approve_worker(worker_id):
@@ -866,6 +997,7 @@ def approve_worker(worker_id):
     )
 
     return redirect(url_for("admin"))
+
 
 @app.post("/admin/worker/toggle/<int:worker_id>")
 def toggle_worker(worker_id):
@@ -898,7 +1030,7 @@ def toggle_worker(worker_id):
             )
 
     return redirect(url_for("admin"))
-   
+
 
 # ==============================
 # 25 KM NEARBY WORKER MATCHING
@@ -945,6 +1077,7 @@ def get_nearby_workers(request_item):
 
     return nearby_workers
 
+
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
     if not session.get("admin"):
@@ -956,10 +1089,10 @@ def assign_request(rid):
     if not request_item:
         flash("Application नहीं मिला", "error")
         return redirect(url_for("admin"))
-        
+
     if not admin_can_access_request(request_item):
-         flash("आपको इस Application पर Access की अनुमति नहीं है।", "error")
-         return redirect(url_for("admin"))
+        flash("आपको इस Application पर Access की अनुमति नहीं है।", "error")
+        return redirect(url_for("admin"))
 
     if not worker_id:
         request_item.assigned_worker_id = None
@@ -990,22 +1123,22 @@ def assign_request(rid):
     if not worker:
         flash("Valid Active Worker नहीं मिला", "error")
         return redirect(url_for("admin"))
-    
+
     if not admin_can_access_worker(worker):
-         flash("आपको इस Worker पर Access की अनुमति नहीं है।", "error")
-         return redirect(url_for("admin"))
-    
+        flash("आपको इस Worker पर Access की अनुमति नहीं है।", "error")
+        return redirect(url_for("admin"))
+
     distance = calculate_distance(
         request_item.latitude,
         request_item.longitude,
         worker.latitude,
-        worker.longitude 
+        worker.longitude
     )
 
     if distance is None or distance > 25:
         flash("यह Worker Customer की 25 KM सीमा के बाहर है।", "error")
         return redirect(url_for("admin"))
-    
+
     request_item.assigned_worker_id = worker.id
     request_item.status = "Assigned"
 
@@ -1039,7 +1172,7 @@ def create_admin():
     district = request.form.get("district", "").strip()
 
     admin_code = request.form.get("admin_code", "").strip()
-    
+
     if not name or not mobile or not password:
         flash("Name, Mobile और Password जरूरी हैं।", "error")
         return redirect(url_for("admin"))
@@ -1103,6 +1236,7 @@ def login():
         )
     ):
         session.clear()
+        session.permanent = True
         session["admin"] = True
         return redirect(url_for("admin"))
 
@@ -1127,6 +1261,7 @@ def login():
         )
     ):
         session.clear()
+        session.permanent = True
         session["admin"] = True
         session["admin_user_id"] = admin_user.id
         return redirect(url_for("admin"))
@@ -1134,7 +1269,8 @@ def login():
     flash("Login failed", "error")
 
     return redirect(url_for("admin"))
-    
+
+
 @app.post("/admin/status/<int:rid>")
 def status(rid):
     if not session.get("admin"):
@@ -1182,7 +1318,8 @@ def status(rid):
     )
 
     return redirect(url_for("admin"))
-    
+
+
 @app.get("/status")
 def check_status():
     phone = request.args.get(
@@ -1216,7 +1353,8 @@ def check_status():
         requests=requests,
         notifications=notifications
     )
-    
+
+
 @app.post("/worker/status/<int:rid>")
 def worker_status(rid):
     if not session.get("worker"):
@@ -1304,7 +1442,6 @@ def worker_login():
         flash("Worker account नहीं मिला", "error")
         return redirect(url_for("worker_login"))
 
-    
     if not worker.active:
         flash(
             "आपका Worker account अभी Active नहीं है",
@@ -1320,6 +1457,8 @@ def worker_login():
         return redirect(url_for("worker_login"))
 
     session.clear()
+
+    session.permanent = True
 
     session["worker_id"] = worker.id
     session["worker"] = True
@@ -1350,7 +1489,7 @@ def worker_dashboard():
         .order_by(RequestItem.id.desc())
         .all()
     )
-    
+
     request_distances = {}
 
     for r in requests:
@@ -1370,9 +1509,9 @@ def worker_dashboard():
         "worker_dashboard.html",
         worker=worker,
         requests=requests,
-        
         request_distances=request_distances
     )
+
 
 @app.post("/worker/logout")
 def worker_logout():
