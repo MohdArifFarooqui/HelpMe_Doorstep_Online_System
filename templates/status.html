@@ -12,73 +12,95 @@
 <style>
 
 .status-box {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 14px;
-  background: #f8faf9;
-  border: 1px solid #e1e8e5;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 14px;
+    background: #f8faf9;
+    border: 1px solid #e1e8e5;
 }
 
 .application-id {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 18px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+.status-message {
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: #eef7f4;
+    font-weight: bold;
+    line-height: 1.6;
 }
 
 .status-badge {
-  display: inline-block;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  margin-top: 5px;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 .status-pending {
-  background: #fff3cd;
-  color: #856404;
+    background: #fff3cd;
+    color: #856404;
 }
 
 .status-assigned {
-  background: #dbeafe;
-  color: #1e40af;
+    background: #dbeafe;
+    color: #1e40af;
 }
 
 .status-progress {
-  background: #d1fae5;
-  color: #065f46;
+    background: #d1fae5;
+    color: #065f46;
 }
 
 .status-completed {
-  background: #dcfce7;
-  color: #166534;
+    background: #dcfce7;
+    color: #166534;
 }
 
 .status-cancelled {
-  background: #fee2e2;
-  color: #991b1b;
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 .info-row {
-  margin: 12px 0;
-  line-height: 1.5;
+    margin: 12px 0;
+    line-height: 1.6;
 }
 
 .contact {
-  text-align: center;
-  font-size: 18px;
+    text-align: center;
+    font-size: 18px;
 }
 
 .whatsapp-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  text-decoration: none;
-  font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .whatsapp-icon {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.notification-box {
+    margin-top: 12px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #fffbea;
+    border: 1px solid #f1df9b;
+}
+
+.notification-message {
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 </style>
@@ -153,7 +175,7 @@ Status देखें
 
 <section class="card">
 
-<h2>आपके आवेदन</h2>
+<h2>📋 आपके आवेदन</h2>
 
 
 {% for r in requests %}
@@ -164,47 +186,67 @@ Status देखें
 
 <div class="application-id">
 
-📄 Application ID: {{r.application_code}}
+📄 Application ID: {{ r.application_code }}
 
 </div>
-  
+
+
+<!-- Status Message -->
+
 {% if r.status == "Pending" %}
+
 <div class="status-message">
-    ⏳ आपका आवेदन प्राप्त हो गया है। Worker Assign होने की प्रतीक्षा है।
+⏳ आपका आवेदन प्राप्त हो गया है। Worker Assign होने की प्रतीक्षा है।
 </div>
+
 
 {% elif r.status == "Assigned" %}
+
 <div class="status-message">
-    👷 आपका Worker Assign कर दिया गया है। जल्द ही आपसे संपर्क किया जाएगा।
+👷 आपका Worker Assign कर दिया गया है। जल्द ही आपसे संपर्क किया जाएगा।
 </div>
+
 
 {% elif r.status == "In Progress" %}
+
 <div class="status-message">
-    🔧 आपका काम अभी चल रहा है।
+🔧 आपका काम अभी चल रहा है।
 </div>
+
 
 {% elif r.status == "Completed" %}
+
 <div class="status-message">
-    ✅ आपका काम सफलतापूर्वक पूरा हो गया है।
+✅ आपका काम सफलतापूर्वक पूरा हो गया है।
 </div>
+
+
+{% elif r.status == "Cancelled" %}
+
+<div class="status-message">
+❌ आपका आवेदन Cancelled कर दिया गया है। अधिक जानकारी के लिए HelpMe Doorstep से संपर्क करें।
+</div>
+
 {% endif %}
 
+
 <div class="info-row">
 
-<b>नाम:</b>
-{{r.customer}}
+<b>👤 नाम:</b>
+{{ r.customer }}
 
 </div>
 
 
 <div class="info-row">
 
-<b>उम्र:</b>
-{{r.age}} वर्ष
+<b>🎂 उम्र:</b>
+{{ r.age }} वर्ष
 
 {% if r.age >= 60 %}
 
 <br>
+
 <b>👴 Senior Citizen</b>
 
 {% endif %}
@@ -214,31 +256,31 @@ Status देखें
 
 <div class="info-row">
 
-<b>सेवा:</b>
-{{r.service}}
+<b>🛠️ सेवा:</b>
+{{ r.service }}
 
 </div>
 
 
 <div class="info-row">
 
-<b>पता:</b>
-{{r.address}}
+<b>📍 पता:</b>
+{{ r.address }}
 
 </div>
 
 
 <div class="info-row">
 
-<b>विवरण:</b>
-{{r.details}}
+<b>📝 विवरण:</b>
+{{ r.details }}
 
 </div>
 
 
 <div class="info-row">
 
-<b>आवेदन की स्थिति:</b>
+<b>📊 आवेदन की स्थिति:</b>
 
 <br>
 
@@ -253,7 +295,7 @@ Status देखें
 {% elif r.status == "Assigned" %}
 
 <span class="status-badge status-assigned">
-👤 Assigned
+👷 Assigned
 </span>
 
 
@@ -281,7 +323,7 @@ Status देखें
 {% else %}
 
 <span class="status-badge">
-{{r.status}}
+{{ r.status }}
 </span>
 
 {% endif %}
@@ -293,7 +335,7 @@ Status देखें
 
 <b>📅 आवेदन दिनांक:</b>
 
-{{r.created_at.strftime("%d-%m-%Y %H:%M")}}
+{{ r.created_at.strftime("%d-%m-%Y %H:%M") }}
 
 </div>
 
@@ -319,7 +361,14 @@ Status देखें
 </p>
 
 </section>
-  
+
+{% endif %}
+
+
+<!-- ========================= -->
+<!-- NOTIFICATIONS -->
+<!-- ========================= -->
+
 {% if notifications %}
 
 <section class="card">
@@ -328,11 +377,13 @@ Status देखें
 
 {% for n in notifications %}
 
-<div class="status-box">
+<div class="notification-box">
 
-<div class="info-row">
+<div class="notification-message">
+
 <b>📢 सूचना:</b>
 {{ n.message }}
+
 </div>
 
 </div>
@@ -344,14 +395,12 @@ Status देखें
 {% endif %}
 
 
-{% endif %}
-
-
 <!-- संपर्क -->
 
 <section class="card contact">
 
 📞
+
 <a href="tel:9219160465">
 9219160465
 </a>
@@ -363,7 +412,8 @@ Status देखें
 class="whatsapp-link"
 href="https://wa.me/919219160465"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 
 <svg
@@ -377,7 +427,7 @@ d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.44 1.75 6.34L3.08 29l6.84-1.64A12.93 12.9
 
 <path
 fill="#fff"
-d="M22.45 18.73c-.35-.18-2.08-1.03-2.4-1.15-.32-.12-.55-.18-.78.18-.23.35-.9 1.15-1.1 1.38-.2.23-.4.26-.75.09-.35-.18-1.47-.54-2.8-1.72-1.03-.92-1.72-2.06-1.92-2.4-.2-.35-.02-.54.15-.72.16-.16.35-.4.52-.6.17-.2.23-.35.35-.58.12-.23.06-.43-.03-.6-.09-.18-.78-1.88-1.07-2.58-.28-.68-.57-.59-.78-.6h-.66c-.23 0-.6.09-.92.43-.32.35-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.46.56 1.96.72.82.26 1.56.22 2.15.13.66-.1 2.08-.85 2.37-1.67.29-.82.29-1.52.2-1.67-.08-.15-.32-.24-.66-.41z"/>
+d="M22.45 18.73c-.35-.18-2.08-1.03-2.4-1.15-.32-.12-.55-.18-.78.18-.23.35-.9 1.15-1.1 1.38-.2.23-.4.26-.75.09-.35-.18-1.47-.54-2.8-1.72-1.03-.92-1.72-2.06-1.92-2.4-.2-.35-.02-.54.15-.72.16-.16.35-.4.52-.6.17-.2.23-.35.35-.58.12-.23.06-.43-.03-.6-.09-.18-.78-1.88-1.07-2.58-.28-.68-.57-.59-.78-.6h-.66c-.23 0-.6.09-.92.43-.32.35-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.56.22 2.15.13.66-.1 2.08-.85 2.37-1.67.29-.82.29-1.52.2-1.67-.08-.15-.32-.24-.66-.41z"/>
 
 </svg>
 
