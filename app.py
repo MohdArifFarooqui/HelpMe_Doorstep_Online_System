@@ -1121,9 +1121,9 @@ def assign_request(rid):
 
     DB.commit()
         
-       flash(
-          f"Application #{rid} का Worker Assignment हटा दिया गया है।",
-          "success"
+    flash(
+        f"Application #{rid} का Worker Assignment हटा दिया गया है।",
+        "success"
         )
         return redirect(url_for("admin"))
 
