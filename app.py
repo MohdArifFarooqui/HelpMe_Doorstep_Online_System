@@ -1113,28 +1113,15 @@ def assign_request(rid):
         return redirect(url_for("admin"))
 
     if not admin_can_access_request(request_item):
-        flash("आपको इस Application पर Access की अनुमति नहीं है।", "error")
+        flash(
+            "आपको इस Application पर Access की अनुमति नहीं है।",
+            "error"
+        )
         return redirect(url_for("admin"))
 
     if not worker_id:
-        request_item.assigned_worker_id = worker.id
-        request_item.status = "Assigned"
-
-    # Customer Notification
-    create_customer_notification(
-        request_item.phone,
-        f"आपका आवेदन {request_item.application_code} अब Worker {worker.name} को Assign कर दिया गया है।",
-        request_item.id
-    )
-
-
-    DB.commit()
-
-    flash(
-        f"Application #{rid} का Worker Assignment हटा दिया गया है।",
-        "success"
-        )
-    return redirect(url_for("admin"))
+        flash("Worker चुनना जरूरी है।", "error")
+        return redirect(url_for("admin"))
 
     try:
         worker_id = int(worker_id)
@@ -1156,7 +1143,10 @@ def assign_request(rid):
         return redirect(url_for("admin"))
 
     if not admin_can_access_worker(worker):
-        flash("आपको इस Worker पर Access की अनुमति नहीं है।", "error")
+        flash(
+            "आपको इस Worker पर Access की अनुमति नहीं है।",
+            "error"
+        )
         return redirect(url_for("admin"))
 
     distance = calculate_distance(
@@ -1167,11 +1157,21 @@ def assign_request(rid):
     )
 
     if distance is None or distance > 25:
-        flash("यह Worker Customer की 25 KM सीमा के बाहर है।", "error")
+        flash(
+            "यह Worker Customer की 25 KM सीमा के बाहर है।",
+            "error"
+        )
         return redirect(url_for("admin"))
 
     request_item.assigned_worker_id = worker.id
     request_item.status = "Assigned"
+
+    # Customer Notification
+    create_customer_notification(
+        request_item.phone,
+        f"आपका आवेदन {request_item.application_code} अब Worker {worker.name} को Assign कर दिया गया है।",
+        request_item.id
+    )
 
     DB.commit()
 
@@ -1181,7 +1181,6 @@ def assign_request(rid):
     )
 
     return redirect(url_for("admin"))
-
 
 @app.post("/admin/create-admin")
 def create_admin():
