@@ -388,6 +388,18 @@ for column_name, column_type in admin_columns.items():
                 )
             )
 
+# Notification columns
+notification_columns = {
+    col["name"] for col in inspect(engine).get_columns("notifications")
+}
+
+if "is_read" not in notification_columns:
+    with engine.begin() as conn:
+        conn.execute(
+            text(
+                "ALTER TABLE notifications ADD COLUMN is_read BOOLEAN DEFAULT FALSE"
+            )
+        )
 
 @app.teardown_appcontext
 def close(e=None):
