@@ -488,6 +488,19 @@ def customer_login():
     return render_template("customer_login.html")
 
 
+@app.post("/customer/logout")
+def customer_logout():
+
+    session.clear()
+
+    flash(
+        "आप सफलतापूर्वक Logout हो गए हैं।",
+        "success"
+    )
+
+    return redirect(url_for("customer_login"))
+
+
 @app.post("/api/verify-widget-token")
 def verify_widget_token():
 
