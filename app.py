@@ -515,66 +515,6 @@ def verify_widget_token():
                 "success": False,
                 "message": "MSG91 access token verification failed"
             }, 401
-            
-        customer = DB.query(User).filter(
-            User.mobile == mobile
-        ).first()
-        
-        if not customer:
-           try:
-            customer = User(
-            mobile=mobile,
-            role="customer",
-            approved=True,
-            active=True
-        )
-
-        DB.add(customer)
-        DB.commit()
-
-    except IntegrityError:
-        DB.rollback()
-
-        customer = DB.query(User).filter(
-            User.mobile == mobile
-        ).first()
-
-        if not customer:
-            return {
-                "success": False,
-                "message": "Customer account create नहीं हो पाया"
-            }, 500
-
-        if not customer.active:
-            return {
-                "success": False,
-                "message": "Customer account inactive"
-            }, 403
-
-        session.clear()
-        session["customer"] = True
-        session["customer_id"] = customer.id
-
-        return {
-            "success": True,
-            "message": "Customer login successful"
-        }
-
-        
-        if not customer.active:
-            return {
-                "success": False,
-                "message": "Customer account inactive"
-        }, 403
-
-        session.clear()
-        session["customer"] = True
-        session["customer_id"] = customer.id
-
-        return {
-            "success": True,
-            "message": "Customer login successful"
-         }
 
     except Exception as e:
         print("MSG91 verifyAccessToken error:", e)
@@ -584,6 +524,49 @@ def verify_widget_token():
             "message": "MSG91 verification failed"
         }, 500
 
+    customer = DB.query(User).filter(
+        User.mobile == mobile
+    ).first()
+
+    if not customer:
+        try:
+            customer = User(
+                mobile=mobile,
+                role="customer",
+                approved=True,
+                active=True
+            )
+
+            DB.add(customer)
+            DB.commit()
+
+        except IntegrityError:
+            DB.rollback()
+
+            customer = DB.query(User).filter(
+                User.mobile == mobile
+            ).first()
+
+            if not customer:
+                return {
+                    "success": False,
+                    "message": "Customer account create नहीं हो पाया"
+                }, 500
+
+    if not customer.active:
+        return {
+            "success": False,
+            "message": "Customer account inactive"
+        }, 403
+
+    session.clear()
+    session["customer"] = True
+    session["customer_id"] = customer.id
+
+    return {
+        "success": True,
+        "message": "Customer login successful"
+    }
 
 @app.route("/customer/dashboard")
 def customer_dashboard():
