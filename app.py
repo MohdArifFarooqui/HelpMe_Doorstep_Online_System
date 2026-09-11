@@ -516,20 +516,15 @@ def verify_widget_token():
                 "message": "MSG91 access token verification failed"
             }, 401
 
-    except Exception as e:
-        print("MSG91 verifyAccessToken error:", e)
+        # Customer खोजें
+        customer = (
+            DB.query(User)
+            .filter(User.mobile == mobile)
+            .first()
+        )
 
-        return {
-            "success": False,
-            "message": "MSG91 verification failed"
-        }, 500
-
-    customer = DB.query(User).filter(
-        User.mobile == mobile
-    ).first()
-
-    if not customer:
-        try:
+        # Customer मौजूद नहीं है तो नया account बनाएं
+        if not customer:
             customer = User(
                 mobile=mobile,
                 role="customer",
@@ -539,34 +534,64 @@ def verify_widget_token():
 
             DB.add(customer)
             DB.commit()
+            DB.refresh(customer)
 
-        except IntegrityError:
-            DB.rollback()
+        # Customer inactive है तो login रोकें
+        if not customer.active:
+            return {
+                "success": False,
+                "message": "Customer account inactive"
+            }, 403
 
-            customer = DB.query(User).filter(
-                User.mobile == mobile
-            ).first()
+        # Customer session बनाएं
+        session.clear()
+        session["customer"] = True
+        session["customer_id"] = customer.id
 
-            if not customer:
-                return {
-                    "success": False,
-                    "message": "Customer account create नहीं हो पाया"
-                }, 500
+        return {
+            "success": True,
+            "message": "Customer login successful"
+        }, 200
 
-    if not customer.active:
+    except IntegrityError:
+        DB.rollback()
+
+        customer = (
+            DB.query(User)
+            .filter(User.mobile == mobile)
+            .first()
+        )
+
+        if not customer:
+            return {
+                "success": False,
+                "message": "Customer account create नहीं हो पाया"
+            }, 500
+
+        if not customer.active:
+            return {
+                "success": False,
+                "message": "Customer account inactive"
+            }, 403
+
+        session.clear()
+        session["customer"] = True
+        session["customer_id"] = customer.id
+
+        return {
+            "success": True,
+            "message": "Customer login successful"
+        }, 200
+
+    except Exception as e:
+        DB.rollback()
+
+        print("MSG91 verifyAccessToken error:", e)
+
         return {
             "success": False,
-            "message": "Customer account inactive"
-        }, 403
-
-    session.clear()
-    session["customer"] = True
-    session["customer_id"] = customer.id
-
-    return {
-        "success": True,
-        "message": "Customer login successful"
-    }
+            "message": "MSG91 verification failed"
+        }, 500
 
 @app.route("/customer/dashboard")
 def customer_dashboard():
