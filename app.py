@@ -686,49 +686,62 @@ def customer_dashboard():
     # ==============================
 
     if not session.get("customer"):
-        return redirect(
-            url_for("customer_login")
-        )
+        return redirect(url_for("customer_login"))
 
     customer_id = session.get("customer_id")
 
     if not customer_id:
         session.clear()
-
-        return redirect(
-            url_for("customer_login")
-        )
-
-    customer = DB.get(
-        User,
-        customer_id
-    )
+        return redirect(url_for("customer_login"))
 
     # ==============================
-    # CUSTOMER ACCOUNT CHECK
+    # FIND CUSTOMER
     # ==============================
+
+    customer = DB.get(User, customer_id)
 
     if (
         not customer
         or customer.role != "customer"
         or not customer.active
     ):
-
         session.clear()
+        return redirect(url_for("customer_login"))
 
-        return redirect(
-            url_for("customer_login")
+    # ==============================
+    # CUSTOMER REQUESTS
+    # ==============================
+
+    requests = (
+        DB.query(RequestItem)
+        .filter(RequestItem.phone == customer.mobile)
+        .order_by(RequestItem.created_at.desc())
+        .all()
+    )
+
+    # ==============================
+    # CUSTOMER NOTIFICATIONS
+    # ==============================
+
+    notifications = (
+        DB.query(Notification)
+        .filter(
+            Notification.customer_phone == customer.mobile
         )
+        .order_by(Notification.created_at.desc())
+        .all()
+    )
 
     # ==============================
     # CUSTOMER DASHBOARD
     # ==============================
 
     return render_template(
-        "index.html",
-        services=SERVICES
+        "customer_dashboard.html",
+        customer=customer,
+        requests=requests,
+        notifications=notifications
     )
-
 
 @app.get("/")
 def home():
