@@ -1110,7 +1110,7 @@ def assign_request(rid):
 
     if not worker_id:
         request_item.assigned_worker_id = worker.id
-        request_item.status = "Assigned"
+request_item.status = "Assigned"
 
 # Customer Notification
 create_customer_notification(
@@ -1120,6 +1120,7 @@ create_customer_notification(
 )
 
 DB.commit()
+        
         flash(
             f"Application #{rid} का Worker Assignment हटा दिया गया है।",
             "success"
