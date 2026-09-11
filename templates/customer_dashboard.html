@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Dashboard - HelpMe Doorstep</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f8f6;
+            color: #173f38;
+        }
+
+        header {
+            background: #128c7e;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .logout {
+            background: white;
+            color: #128c7e;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 9px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .welcome h1 {
+            margin: 0 0 12px;
+            font-size: 29px;
+        }
+
+        .welcome p {
+            color: #666;
+            font-size: 17px;
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        .mobile {
+            font-weight: bold;
+            color: #128c7e;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            background: white;
+            border-radius: 15px;
+            padding: 18px 10px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+        }
+
+        .summary-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .summary-label {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .section-title {
+            margin: 0 0 18px;
+            font-size: 25px;
+        }
+
+        .request-card {
+            border: 1px solid #dfe8e4;
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: #fbfdfc;
+        }
+
+        .application-id {
+            font-size: 20px;
+            font-weight: bold;
+            color: #128c7e;
+            margin-bottom: 12px;
+        }
+
+        .row {
+            margin: 9px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .row strong {
+            color: #333;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .assigned {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .progress {
+            background: #ede9fe;
+            color: #6b21a8;
+        }
+
+        .completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .message {
+            margin-bottom: 14px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background: #eef7f4;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+
+        .notification {
+            border: 1px solid #f0df9c;
+            background: #fffbea;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .notification-date {
+            color: #777;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-call {
+            background: #128c7e;
+            color: white;
+        }
+
+        .btn-status {
+            background: #1976d2;
+            color: white;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px 10px;
+            color: #777;
+            font-size: 17px;
+        }
+
+        .contact {
+            text-align: center;
+            line-height: 2;
+        }
+
+        .contact a {
+            color: #128c7e;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 13px 15px;
+            }
+
+            header h2 {
+                font-size: 17px;
+            }
+
+            .logout {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 15px auto;
+            }
+
+            .card {
+                padding: 17px;
+                border-radius: 15px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .summary {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 7px;
+            }
+
+            .summary-box {
+                padding: 14px 5px;
+            }
+
+            .summary-number {
+                font-size: 23px;
+            }
+
+            .summary-label {
+                font-size: 12px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .request-card {
+                padding: 15px;
+            }
+
+            .application-id {
+                font-size: 18px;
+            }
+
+            .actions {
+                display: block;
+            }
+
+            .btn {
+                display: block;
+                text-align: center;
+                margin-top: 8px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h2>🤝 HelpMe Doorstep</h2>
+
+    <form method="post" action="/customer/logout">
+        <button class="logout" type="submit">
+            Logout
+        </button>
+    </form>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- CUSTOMER WELCOME -->
+
+    <div class="card welcome">
+
+        <h1>
+            👋 Customer Dashboard
+        </h1>
+
+        <p>
+            HelpMe Doorstep में आपका स्वागत है।
+        </p>
+
+        <p>
+            📱 Registered Mobile:
+            <span class="mobile">
+                {{ customer.mobile }}
+            </span>
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+        <div class="summary-box">
+
+            <div class="summary-number">
+                {{ requests|length }}
+            </div>
+
+            <div class="summary-label">
+                📋 कुल आवेदन
+            </div>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <div class="summary-number" style="color:#8e44ad;">
+                {{ requests|selectattr('status','equalto','In Progress')|list|length }}
+            </div>
+
+            <div class="summary-label">
+                🔄 In Progress
+            </div>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <div class="summary-number" style="color:#188038;">
+                {{ requests|selectattr('status','equalto','Completed')|list|length }}
+            </div>
+
+            <div class="summary-label">
+                ✅ Completed
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NOTIFICATIONS -->
+
+    {% if notifications %}
+
+    <div class="card">
+
+        <h2 class="section-title">
+            🔔 Notifications
+        </h2>
+
+
+        {% for n in notifications %}
+
+        <div class="notification">
+
+            <div>
+                📢 <strong>सूचना:</strong>
+                {{ n.message }}
+            </div>
+
+            {% if n.created_at %}
+
+            <div class="notification-date">
+                {{ n.created_at.strftime("%d-%m-%Y %H:%M") }}
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- APPLICATIONS -->
+
+    <div class="card">
+
+        <h2 class="section-title">
+            📋 मेरे Service Requests
+        </h2>
+
+
+        {% if requests %}
+
+
+        {% for r in requests %}
+
+        <div class="request-card">
+
+
+            <div class="application-id">
+
+                📄 {{ r.application_code }}
+
+            </div>
+
+
+            <!-- STATUS MESSAGE -->
+
+            {% if r.status == "Pending" %}
+
+            <div class="message">
+                ⏳ आपका आवेदन प्राप्त हो गया है।
+                Worker Assign होने की प्रतीक्षा है।
+            </div>
+
+
+            {% elif r.status == "Assigned" %}
+
+            <div class="message">
+                👷 आपका Worker Assign कर दिया गया है।
+                जल्द ही आपसे संपर्क किया जाएगा।
+            </div>
+
+
+            {% elif r.status == "In Progress" %}
+
+            <div class="message">
+                🔧 आपका काम अभी चल रहा है।
+            </div>
+
+
+            {% elif r.status == "Completed" %}
+
+            <div class="message">
+                ✅ आपका काम सफलतापूर्वक पूरा हो गया है।
+            </div>
+
+
+            {% elif r.status == "Cancelled" %}
+
+            <div class="message">
+                ❌ आपका आवेदन Cancelled कर दिया गया है।
+            </div>
+
+            {% endif %}
+
+
+            <div class="row">
+
+                <strong>👤 नाम:</strong>
+                {{ r.customer }}
+
+            </div>
+
+
+            <div class="row">
+
+                <strong>🎂 उम्र:</strong>
+                {{ r.age }} वर्ष
+
+                {% if r.age >= 60 %}
+
+                <br>
+                👴 Senior Citizen
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="row">
+
+                <strong>🛠️ सेवा:</strong>
+                {{ r.service }}
+
+            </div>
+
+
+            <div class="row">
+
+                <strong>📍 पता:</strong>
+                {{ r.address }}
+
+            </div>
+
+
+            {% if r.state %}
+
+            <div class="row">
+
+                <strong>🗺️ State:</strong>
+                {{ r.state }}
+
+                {% if r.district %}
+                — {{ r.district }}
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
+
+            {% if r.details %}
+
+            <div class="row">
+
+                <strong>📝 विवरण:</strong>
+                {{ r.details }}
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="row">
+
+                <strong>📊 Status:</strong>
+
+                <br>
+
+
+                {% if r.status == "Pending" %}
+
+                <span class="status pending">
+                    ⏳ Pending
+                </span>
+
+
+                {% elif r.status == "Assigned" %}
+
+                <span class="status assigned">
+                    👷 Assigned
+                </span>
+
+
+                {% elif r.status == "In Progress" %}
+
+                <span class="status progress">
+                    🔄 In Progress
+                </span>
+
+
+                {% elif r.status == "Completed" %}
+
+                <span class="status completed">
+                    ✅ Completed
+                </span>
+
+
+                {% elif r.status == "Cancelled" %}
+
+                <span class="status cancelled">
+                    ❌ Cancelled
+                </span>
+
+
+                {% else %}
+
+                <span class="status">
+                    {{ r.status }}
+                </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="row">
+
+                <strong>📅 आवेदन दिनांक:</strong>
+
+                {{ r.created_at.strftime("%d-%m-%Y %H:%M") }}
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <a
+                    class="btn btn-status"
+                    href="/status?phone={{ customer.mobile }}"
+                >
+                    📊 पूरा Status देखें
+                </a>
+
+
+                {% if r.phone %}
+
+                <a
+                    class="btn btn-call"
+                    href="tel:{{ r.phone }}"
+                >
+                    📞 Contact
+                </a>
+
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+
+
+        {% else %}
+
+
+        <div class="empty">
+
+            📭 अभी तक आपने कोई Service Request नहीं भेजी है।
+
+            <br><br>
+
+            <a
+                class="btn btn-status"
+                href="/"
+            >
+                ➕ Service Request भेजें
+            </a>
+
+        </div>
+
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- CONTACT -->
+
+    <div class="card contact">
+
+        <strong>📞 HelpMe Doorstep सहायता</strong>
+
+        <br>
+
+        <a href="tel:9219160465">
+            9219160465
+        </a>
+
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+
+        <a
+            href="https://wa.me/919219160465"
+            target="_blank"
+            rel="noopener"
+        >
+            💬 WhatsApp
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
