@@ -812,9 +812,6 @@ create_customer_notification(
 
 DB.commit()
 
-flash(
-
-
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
     if request.method == "GET":
