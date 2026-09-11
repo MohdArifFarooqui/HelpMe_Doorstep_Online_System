@@ -795,22 +795,24 @@ def add():
         address=vals[6],
         details=vals[7]
     )
+    
+    DB.add(new_request)
 
-   DB.add(new_request)
+    # Application ID generate करने के लिए पहले save करें
+    DB.flush()
 
-   # Application ID generate करने के लिए पहले save करें
-   DB.flush()
+    application_id = new_request.id
 
-   application_id = new_request.id
+    # Customer Notification
+    create_customer_notification(
+        new_request.phone,
+        f"आपका आवेदन {new_request.application_code} सफलतापूर्वक जमा हो गया है। आपका आवेदन अभी Pending है",
+        application_id
+    )
 
-   # Customer Notification
-   create_customer_notification(
-    new_request.phone,
-    f"आपका आवेदन {new_request.application_code} सफलतापूर्वक जमा हो गया है। आपका आवेदन अभी Pending है।",
-    application_id
-)
+    DB.commit()
 
-DB.commit()
+   
 
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
