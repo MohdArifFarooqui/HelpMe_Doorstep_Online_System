@@ -460,7 +460,6 @@ def admin_can_access_request(request_item):
 def customer_login():
     return render_template("customer_login.html")  
     
-    
 @app.post("/api/verify-widget-token")
 def verify_widget_token():
     mobile = request.form.get("mobile", "").strip()
@@ -516,14 +515,10 @@ def verify_widget_token():
                 "message": "MSG91 access token verification failed"
             }, 401
 
-        # Customer खोजें
-        customer = (
-            DB.query(User)
-            .filter(User.mobile == mobile)
-            .first()
-        )
+        customer = DB.query(User).filter(
+            User.mobile == mobile
+        ).first()
 
-        # Customer मौजूद नहीं है तो नया account बनाएं
         if not customer:
             customer = User(
                 mobile=mobile,
@@ -534,16 +529,13 @@ def verify_widget_token():
 
             DB.add(customer)
             DB.commit()
-            DB.refresh(customer)
 
-        # Customer inactive है तो login रोकें
         if not customer.active:
             return {
                 "success": False,
                 "message": "Customer account inactive"
             }, 403
 
-        # Customer session बनाएं
         session.clear()
         session["customer"] = True
         session["customer_id"] = customer.id
@@ -551,16 +543,14 @@ def verify_widget_token():
         return {
             "success": True,
             "message": "Customer login successful"
-        }, 200
+        }
 
     except IntegrityError:
         DB.rollback()
 
-        customer = (
-            DB.query(User)
-            .filter(User.mobile == mobile)
-            .first()
-        )
+        customer = DB.query(User).filter(
+            User.mobile == mobile
+        ).first()
 
         if not customer:
             return {
@@ -581,17 +571,17 @@ def verify_widget_token():
         return {
             "success": True,
             "message": "Customer login successful"
-        }, 200
+        }
 
     except Exception as e:
         DB.rollback()
-
         print("MSG91 verifyAccessToken error:", e)
 
         return {
             "success": False,
             "message": "MSG91 verification failed"
         }, 500
+
 
 @app.route("/customer/dashboard")
 def customer_dashboard():
