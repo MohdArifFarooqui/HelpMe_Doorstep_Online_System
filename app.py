@@ -1110,14 +1110,15 @@ def assign_request(rid):
 
     if not worker_id:
         request_item.assigned_worker_id = worker.id
-request_item.status = "Assigned"
+        request_item.status = "Assigned"
 
-# Customer Notification
-create_customer_notification(
-    request_item.phone,
-    f"आपका आवेदन {request_item.application_code} अब Worker {worker.name} को Assign कर दिया गया है।",
-    request_item.id
-)
+    # Customer Notification
+    create_customer_notification(
+        request_item.phone,
+        f"आपका आवेदन {request_item.application_code} अब Worker {worker.name} को Assign कर दिया गया है।",
+        request_item.id
+    )
+
 
 DB.commit()
         
