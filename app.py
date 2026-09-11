@@ -1125,7 +1125,7 @@ def assign_request(rid):
         f"Application #{rid} का Worker Assignment हटा दिया गया है।",
         "success"
         )
-        return redirect(url_for("admin"))
+    return redirect(url_for("admin"))
 
     try:
         worker_id = int(worker_id)
