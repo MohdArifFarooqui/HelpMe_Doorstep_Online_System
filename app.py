@@ -750,7 +750,6 @@ def home():
         services=SERVICES
     )
 
-
 @app.post("/request-service")
 def add():
     d = request.form
@@ -795,7 +794,7 @@ def add():
         address=vals[6],
         details=vals[7]
     )
-    
+
     DB.add(new_request)
 
     # Application ID generate करने के लिए पहले save करें
@@ -812,7 +811,17 @@ def add():
 
     DB.commit()
 
-   
+    flash(
+        f"आपका आवेदन सफलतापूर्वक भेज दिया गया है। Application ID: #{application_id}",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "check_status",
+            phone=vals[2]
+        )
+    )
 
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
@@ -1120,7 +1129,7 @@ def assign_request(rid):
 
 
     DB.commit()
-        
+
     flash(
         f"Application #{rid} का Worker Assignment हटा दिया गया है।",
         "success"
