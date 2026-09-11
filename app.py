@@ -521,8 +521,8 @@ def verify_widget_token():
         ).first()
         
         if not customer:
-    try:
-        customer = User(
+           try:
+            customer = User(
             mobile=mobile,
             role="customer",
             approved=True,
