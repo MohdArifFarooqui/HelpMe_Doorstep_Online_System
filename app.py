@@ -1607,7 +1607,7 @@ def worker_logout():
 # TEMPORARY USER REGISTRATION RESET
 # ==============================
 
-@app.post("/admin/reset-registrations")
+@app.route("/admin/reset-registrations", methods=["GET", "POST"])
 def reset_registrations():
 
     if not session.get("admin"):
@@ -1621,6 +1621,56 @@ def reset_registrations():
         )
         return redirect(url_for("admin"))
 
+    # GET पर पहले confirmation दिखाएं
+    if request.method == "GET":
+        return """
+        <!doctype html>
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Registration Reset</title>
+        </head>
+        <body style="font-family:Arial; text-align:center; padding:40px;">
+
+            <h2>⚠️ Registration Reset</h2>
+
+            <p>
+                Customer, Worker और State/District Admin
+                registrations हटाए जाएंगे।
+            </p>
+
+            <p>
+                Main Admin सुरक्षित रहेगा।
+            </p>
+
+            <form method="post">
+                <button
+                    type="submit"
+                    style="
+                        background:#dc2626;
+                        color:white;
+                        border:0;
+                        padding:15px 25px;
+                        border-radius:8px;
+                        font-size:18px;
+                        font-weight:bold;
+                    "
+                >
+                    CONFIRM RESET
+                </button>
+            </form>
+
+            <br>
+
+            <a href="/admin">
+                Cancel / वापस Admin Dashboard
+            </a>
+
+        </body>
+        </html>
+        """
+
+    # केवल Customer, Worker और State/District Admin हटेंगे
     DB.query(User).filter(
         User.role.in_(["customer", "worker", "admin"])
     ).delete(
