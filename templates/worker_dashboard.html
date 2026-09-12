@@ -40,11 +40,12 @@
             border-radius: 10px;
             font-weight: bold;
             font-size: 15px;
+            cursor: pointer;
         }
 
         .container {
             width: 94%;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 20px auto;
         }
 
@@ -77,22 +78,69 @@
             font-size: 28px;
         }
 
+        /* Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 15px;
+            padding: 18px 10px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+        }
+
+        .summary-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
         /* Desktop table */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         .desktop-table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 1050px;
         }
 
         .desktop-table th {
             background: #e6f3f0;
             padding: 13px;
             text-align: left;
+            white-space: nowrap;
         }
 
         .desktop-table td {
             padding: 13px;
             border-bottom: 1px solid #ddd;
             vertical-align: top;
+        }
+
+        .application-id {
+            font-weight: bold;
+            color: #128c7e;
+            white-space: nowrap;
+        }
+
+        .distance {
+            font-weight: bold;
+            color: #444;
+            white-space: nowrap;
         }
 
         .status {
@@ -119,6 +167,72 @@
             color: #d93025;
         }
 
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            min-width: 190px;
+        }
+
+        .action-btn {
+            display: inline-block;
+            border: none;
+            text-decoration: none;
+            padding: 9px 11px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            color: white;
+            text-align: center;
+        }
+
+        .call-action {
+            background: #128c7e;
+        }
+
+        .location-action {
+            background: #1976d2;
+        }
+
+        .whatsapp-action {
+            background: #25d366;
+        }
+
+        .progress-action {
+            background: #8e44ad;
+        }
+
+        .completed-action {
+            background: #188038;
+        }
+
+        .status-actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .status-btn {
+            border: none;
+            padding: 9px 11px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            color: white;
+        }
+
+        .progress-btn {
+            background: #8e44ad;
+        }
+
+        .completed-btn {
+            background: #188038;
+        }
+
         /* Mobile cards hidden on desktop */
         .mobile-cards {
             display: none;
@@ -135,7 +249,8 @@
         .request-title {
             font-size: 21px;
             font-weight: bold;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            color: #128c7e;
         }
 
         .request-row {
@@ -149,41 +264,46 @@
             color: #333;
         }
 
-        .call-btn {
-            display: inline-block;
-            margin-top: 12px;
-            background: #128c7e;
-            color: white;
+        .mobile-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .mobile-action-btn {
+            display: block;
             text-decoration: none;
-            padding: 11px 18px;
+            color: white;
+            text-align: center;
+            padding: 11px 8px;
             border-radius: 9px;
             font-weight: bold;
+            font-size: 14px;
         }
-.status-actions {
-    margin-top: 12px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
 
-.status-btn {
-    border: none;
-    padding: 10px 14px;
-    border-radius: 9px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 14px;
-}
+        .mobile-call {
+            background: #128c7e;
+        }
 
-.progress-btn {
-    background: #8e44ad;
-    color: white;
-}
+        .mobile-location {
+            background: #1976d2;
+        }
 
-.completed-btn {
-    background: #188038;
-    color: white;
-}
+        .mobile-whatsapp {
+            background: #25d366;
+        }
+
+        .mobile-status {
+            margin-top: 10px;
+        }
+
+        .mobile-status .status-btn {
+            width: 100%;
+            padding: 11px;
+            font-size: 14px;
+        }
+
         .empty {
             text-align: center;
             padding: 30px;
@@ -232,14 +352,51 @@
                 font-size: 24px;
             }
 
-            /* Mobile में table पूरी तरह बंद */
+            .summary-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 7px;
+            }
+
+            .summary-card {
+                padding: 14px 5px;
+                border-radius: 12px;
+            }
+
+            .summary-number {
+                font-size: 23px;
+            }
+
+            .summary-label {
+                font-size: 11px;
+            }
+
+            /* Mobile में desktop table बंद */
             .desktop-table {
+                display: none;
+            }
+
+            .table-wrapper {
                 display: none;
             }
 
             /* Mobile cards दिखाई दें */
             .mobile-cards {
                 display: block;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            .mobile-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-number {
+                font-size: 21px;
+            }
+
+            .summary-label {
+                font-size: 10px;
             }
         }
     </style>
@@ -277,7 +434,7 @@
             <strong>Center:</strong>
             {{ worker.center_name or "N/A" }}
             <br>
-            
+
             <strong>State:</strong>
             {{ worker.state or "N/A" }}
             <br>
@@ -293,64 +450,41 @@
 
     </div>
 
-    <!-- ========================= -->
-    <!-- WORKER REQUEST SUMMARY -->
-    <!-- ========================= -->
+    <!-- Worker Request Summary -->
+    <div class="summary-grid">
 
-    <div style="
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-        gap:12px;
-        margin-bottom:20px;
-    ">
-
-        <div style="
-            background:white;
-            border-radius:15px;
-            padding:18px 10px;
-            text-align:center;
-            box-shadow:0 3px 12px rgba(0,0,0,0.07);
-        ">
-            <div style="font-size:28px;font-weight:bold;">
+        <div class="summary-card">
+            <div class="summary-number">
                 {{ requests|length }}
             </div>
-            <div style="font-size:14px;color:#666;font-weight:bold;">
+
+            <div class="summary-label">
                 📋 कुल आवेदन
             </div>
         </div>
 
-        <div style="
-            background:white;
-            border-radius:15px;
-            padding:18px 10px;
-            text-align:center;
-            box-shadow:0 3px 12px rgba(0,0,0,0.07);
-        ">
-            <div style="font-size:28px;font-weight:bold;color:#8e44ad;">
+        <div class="summary-card">
+            <div class="summary-number" style="color:#8e44ad;">
                 {{ requests|selectattr('status','equalto','In Progress')|list|length }}
             </div>
-            <div style="font-size:14px;color:#666;font-weight:bold;">
+
+            <div class="summary-label">
                 🟣 In Progress
             </div>
         </div>
 
-        <div style="
-            background:white;
-            border-radius:15px;
-            padding:18px 10px;
-            text-align:center;
-            box-shadow:0 3px 12px rgba(0,0,0,0.07);
-        ">
-            <div style="font-size:28px;font-weight:bold;color:#188038;">
+        <div class="summary-card">
+            <div class="summary-number" style="color:#188038;">
                 {{ requests|selectattr('status','equalto','Completed')|list|length }}
             </div>
-            <div style="font-size:14px;color:#666;font-weight:bold;">
+
+            <div class="summary-label">
                 🟢 Completed
             </div>
         </div>
 
     </div>
-   
+
     <!-- Service Requests -->
     <div class="requests-box">
 
@@ -362,87 +496,196 @@
         <!-- DESKTOP TABLE -->
         <!-- ========================= -->
 
-        <table class="desktop-table">
+        <div class="table-wrapper">
 
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Customer</th>
-                    <th>Age</th>
-                    <th>Phone</th>
-                    <th>Service</th>
-                    <th>Address</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+            <table class="desktop-table">
 
-            <tbody>
+                <thead>
+                    <tr>
+                        <th>Application ID</th>
+                        <th>Customer</th>
+                        <th>Age</th>
+                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Address</th>
+                        <th>Distance</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-            {% for r in requests %}
+                <tbody>
 
-                <tr>
+                {% for r in requests %}
 
-                    <td>#{{ r.id }}</td>
+                    <tr>
 
-                    <td>{{ r.customer }}</td>
+                        <!-- Application ID -->
+                        <td>
+                            <span class="application-id">
+                                {{ r.application_code }}
+                            </span>
+                        </td>
 
-                    <td>{{ r.age }}</td>
+                        <!-- Customer -->
+                        <td>
+                            {{ r.customer }}
+                        </td>
 
-                    <td>{{ r.phone }}</td>
+                        <!-- Age -->
+                        <td>
+                            {{ r.age }}
+                        </td>
 
-                    <td>{{ r.service }}</td>
+                        <!-- Phone -->
+                        <td>
+                            {{ r.phone }}
+                        </td>
 
-                    <td>{{ r.address }}</td>
+                        <!-- Service -->
+                        <td>
+                            {{ r.service }}
+                        </td>
 
-                    <td class="status
-                        {% if r.status == 'Pending' %}
-                            pending
-                        {% elif r.status == 'Assigned' %}
-                            assigned
-                        {% elif r.status == 'In Progress' %}
-                            progress
-                        {% elif r.status == 'Completed' %}
-                            completed
-                        {% elif r.status == 'Cancelled' %}
-                            cancelled
-                        {% endif %}
-                    ">
-                        {{ r.status }}
-                        {% if r.status == "Assigned" %}
-                   
-                        <div class="status-actions">
+                        <!-- Address -->
+                        <td>
+                            {{ r.address }}
+                        </td>
 
-    <form method="post" action="/worker/status/{{ r.id }}">
-        <input type="hidden" name="status" value="In Progress">
-        <button class="status-btn progress-btn" type="submit">
-            🟣 In Progress
-        </button>
-    </form>
+                        <!-- Distance -->
+                        <td class="distance">
 
-</div>
+                            {% if request_distances.get(r.id) is not none %}
+                                📍 {{ request_distances.get(r.id) }} KM
+                            {% else %}
+                                —
+                            {% endif %}
 
-{% elif r.status == "In Progress" %}
-<div class="status-actions">
+                        </td>
 
-    <form method="post" action="/worker/status/{{ r.id }}">
-        <input type="hidden" name="status" value="Completed">
-        <button class="status-btn completed-btn" type="submit">
-            🟢 Completed
-        </button>
-    </form>
+                        <!-- Status -->
+                        <td>
 
-</div>
-{% endif %}
-                    </td>
+                            <div class="status
+                                {% if r.status == 'Pending' %}
+                                    pending
+                                {% elif r.status == 'Assigned' %}
+                                    assigned
+                                {% elif r.status == 'In Progress' %}
+                                    progress
+                                {% elif r.status == 'Completed' %}
+                                    completed
+                                {% elif r.status == 'Cancelled' %}
+                                    cancelled
+                                {% endif %}
+                            ">
+                                {{ r.status }}
+                            </div>
 
-                </tr>
+                        </td>
 
-            {% endfor %}
+                        <!-- Actions -->
+                        <td>
 
-            </tbody>
+                            <div class="action-buttons">
 
-        </table>
+                                <!-- Call -->
+                                <a
+                                    class="action-btn call-action"
+                                    href="tel:{{ r.phone }}"
+                                >
+                                    📞 Call
+                                </a>
+
+                                <!-- Location -->
+                                {% if r.latitude and r.longitude %}
+
+                                <a
+                                    class="action-btn location-action"
+                                    href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    📍 Maps
+                                </a>
+
+                                {% endif %}
+
+                                <!-- WhatsApp -->
+                                <a
+                                    class="action-btn whatsapp-action"
+                                    href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    💬 WhatsApp
+                                </a>
+
+                            </div>
+
+                            <!-- Status Actions -->
+
+                            {% if r.status == "Assigned" %}
+
+                            <div class="status-actions">
+
+                                <form
+                                    method="post"
+                                    action="/worker/status/{{ r.id }}"
+                                >
+                                    <input
+                                        type="hidden"
+                                        name="status"
+                                        value="In Progress"
+                                    >
+
+                                    <button
+                                        class="status-btn progress-btn"
+                                        type="submit"
+                                    >
+                                        🟣 In Progress
+                                    </button>
+                                </form>
+
+                            </div>
+
+                            {% elif r.status == "In Progress" %}
+
+                            <div class="status-actions">
+
+                                <form
+                                    method="post"
+                                    action="/worker/status/{{ r.id }}"
+                                >
+                                    <input
+                                        type="hidden"
+                                        name="status"
+                                        value="Completed"
+                                    >
+
+                                    <button
+                                        class="status-btn completed-btn"
+                                        type="submit"
+                                    >
+                                        🟢 Completed
+                                    </button>
+                                </form>
+
+                            </div>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
 
 
         <!-- ========================= -->
@@ -455,47 +698,60 @@
 
             <div class="request-card">
 
+                <!-- Application ID -->
                 <div class="request-title">
-                    📋 Application #{{ r.id }}
+                    📋 {{ r.application_code }}
                 </div>
 
+                <!-- Customer -->
                 <div class="request-row">
                     <strong>👤 Customer:</strong>
                     {{ r.customer }}
                 </div>
 
+                <!-- Age -->
                 <div class="request-row">
                     <strong>🎂 Age:</strong>
                     {{ r.age }} वर्ष
                 </div>
 
+                <!-- Phone -->
                 <div class="request-row">
                     <strong>📞 Phone:</strong>
                     {{ r.phone }}
                 </div>
 
+                <!-- Service -->
                 <div class="request-row">
                     <strong>🛠️ Service:</strong>
                     {{ r.service }}
                 </div>
-                
+
+                <!-- Details -->
                 <div class="request-row">
-                      <strong>📝 विवरण:</strong>
+                    <strong>📝 विवरण:</strong>
                     {{ r.details }}
-                </div>              
-                
+                </div>
+
+                <!-- Address -->
                 <div class="request-row">
                     <strong>📍 Address:</strong>
                     {{ r.address }}
                 </div>
-                
-{% if request_distances.get(r.id) is not none %}
-<div class="request-row">
-    <strong>📍 दूरी:</strong>
-    {{ request_distances.get(r.id) }} KM
-</div>
-{% endif %}
 
+                <!-- Distance -->
+                {% if request_distances.get(r.id) is not none %}
+
+                <div class="request-row">
+                    <strong>📍 दूरी:</strong>
+                    <span class="distance">
+                        {{ request_distances.get(r.id) }} KM
+                    </span>
+                </div>
+
+                {% endif %}
+
+                <!-- Status -->
                 <div class="request-row">
 
                     <strong>📊 Status:</strong>
@@ -518,58 +774,95 @@
 
                 </div>
 
-                <a
-                    class="call-btn"
-                    href="tel:{{ r.phone }}"
-                >
-                    📞 Call Customer
-                </a>
-                
-                {% if r.latitude and r.longitude %}
-<a
-    class="call-btn"
-    href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
-    target="_blank"
-    rel="noopener"
->
-    📍 Customer Location
-</a>
-{% endif %}
+                <!-- Operational Actions -->
+                <div class="mobile-actions">
 
-<a
-    class="call-btn"
-    href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
-    target="_blank"
-    rel="noopener"
->
-    💬 WhatsApp Customer
-</a>
-{% if r.status == "Assigned" %}
-                
-<div class="status-actions">
+                    <!-- Call -->
+                    <a
+                        class="mobile-action-btn mobile-call"
+                        href="tel:{{ r.phone }}"
+                    >
+                        📞 Call Customer
+                    </a>
 
-    <form method="post" action="/worker/status/{{ r.id }}">
-        <input type="hidden" name="status" value="In Progress">
-        <button class="status-btn progress-btn" type="submit">
-            🟣 In Progress
-        </button>
-    </form>
+                    <!-- Location -->
+                    {% if r.latitude and r.longitude %}
 
-</div>
+                    <a
+                        class="mobile-action-btn mobile-location"
+                        href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        📍 Customer Location
+                    </a>
 
-{% elif r.status == "In Progress" %}
-<div class="status-actions">
+                    {% endif %}
 
-    <form method="post" action="/worker/status/{{ r.id }}">
-        <input type="hidden" name="status" value="Completed">
-        <button class="status-btn completed-btn" type="submit">
-            🟢 Completed
-        </button>
-    </form>
+                    <!-- WhatsApp -->
+                    <a
+                        class="mobile-action-btn mobile-whatsapp"
+                        href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        💬 WhatsApp Customer
+                    </a>
 
-</div>
-                
-{% endif %}
+                </div>
+
+                <!-- Mobile Status Action -->
+
+                {% if r.status == "Assigned" %}
+
+                <div class="mobile-status">
+
+                    <form
+                        method="post"
+                        action="/worker/status/{{ r.id }}"
+                    >
+                        <input
+                            type="hidden"
+                            name="status"
+                            value="In Progress"
+                        >
+
+                        <button
+                            class="status-btn progress-btn"
+                            type="submit"
+                        >
+                            🟣 In Progress
+                        </button>
+                    </form>
+
+                </div>
+
+                {% elif r.status == "In Progress" %}
+
+                <div class="mobile-status">
+
+                    <form
+                        method="post"
+                        action="/worker/status/{{ r.id }}"
+                    >
+                        <input
+                            type="hidden"
+                            name="status"
+                            value="Completed"
+                        >
+
+                        <button
+                            class="status-btn completed-btn"
+                            type="submit"
+                        >
+                            🟢 Completed
+                        </button>
+                    </form>
+
+                </div>
+
+                {% endif %}
+
             </div>
 
         {% endfor %}
