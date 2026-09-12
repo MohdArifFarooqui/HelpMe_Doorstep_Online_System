@@ -1603,6 +1603,40 @@ def worker_logout():
     session.clear()
     return redirect(url_for("worker_login"))
 
+# ==============================
+# TEMPORARY USER REGISTRATION RESET
+# ==============================
+
+@app.post("/admin/reset-registrations")
+def reset_registrations():
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    # केवल Main Admin ही reset कर सकता है
+    if session.get("admin_user_id"):
+        flash(
+            "यह action केवल Main Admin के लिए है।",
+            "error"
+        )
+        return redirect(url_for("admin"))
+
+    DB.query(User).filter(
+        User.role.in_(["customer", "worker", "admin"])
+    ).delete(
+        synchronize_session=False
+    )
+
+    DB.commit()
+
+    session.pop("admin_user_id", None)
+
+    flash(
+        "Customer, Worker और State/District Admin registrations सफलतापूर्वक reset कर दिए गए हैं।",
+        "success"
+    )
+
+    return redirect(url_for("admin"))
 
 @app.get("/health")
 def health():
