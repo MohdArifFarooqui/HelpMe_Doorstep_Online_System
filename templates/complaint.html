@@ -1,0 +1,355 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f8f6;
+    color: #173c33;
+}
+
+/* ==============================
+   HEADER
+   ============================== */
+
+header {
+    width: 100%;
+    background: #ffffff;
+    padding: 16px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #dce9e5;
+    overflow: hidden;
+}
+
+.brand {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    min-width: 0;
+}
+
+.brand-logo {
+    width: 360px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.brand b {
+    display: block;
+    font-size: 22px;
+}
+
+.brand small {
+    display: block;
+    color: #71847e;
+}
+
+.logo {
+    background: #168b62;
+    color: #ffffff;
+    border-radius: 13px;
+    padding: 12px;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+/* ==============================
+   LINKS
+   ============================== */
+
+a {
+    color: #0870b9;
+    font-weight: bold;
+}
+
+/* ==============================
+   MAIN
+   ============================== */
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 18px;
+}
+
+/* ==============================
+   CARD
+   ============================== */
+
+.card {
+    width: 100%;
+    max-width: 100%;
+    background: #ffffff;
+    border: 1px solid #dce9e5;
+    border-radius: 20px;
+    padding: 24px;
+    margin: 18px auto;
+    box-shadow: 0 7px 22px #123c2a12;
+}
+
+/* ==============================
+   TABLE
+   ============================== */
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e4ece8;
+    vertical-align: top;
+}
+
+th {
+    background: #f1f6f4;
+    font-weight: bold;
+}
+
+td select {
+    width: auto;
+    margin: 0;
+    padding: 7px 10px;
+}
+
+/* ==============================
+   FORM ELEMENTS
+   ============================== */
+
+input,
+select,
+textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 13px;
+    margin-top: 7px;
+    border: 1px solid #cbdcd6;
+    border-radius: 11px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    max-width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 11px;
+    background: #168b62;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.smallbtn {
+    width: auto;
+    padding: 9px 16px;
+}
+
+/* ==============================
+   CONTACT
+   ============================== */
+
+.contact {
+    text-align: center;
+}
+
+/* ==============================
+   ALERTS
+   ============================== */
+
+.alert {
+    padding: 13px;
+    border-radius: 10px;
+}
+
+.success {
+    background: #e8f7ef;
+}
+
+.error {
+    background: #fdecec;
+}
+
+/* ==============================
+   CENTER
+   ============================== */
+
+.center {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* ==============================
+   CALL / WHATSAPP BUTTONS
+   ============================== */
+
+td a {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* ==============================
+   MOBILE SCREEN
+   ============================== */
+
+@media (max-width: 600px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    header {
+        width: 100%;
+        padding: 10px 4%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        overflow: hidden;
+    }
+
+    .brand {
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+        min-width: 0;
+    }
+
+    .brand-logo {
+        width: 280px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .brand b {
+        font-size: 18px;
+    }
+
+    .brand small {
+        font-size: 12px;
+    }
+
+    .logo {
+        padding: 9px;
+        font-size: 20px;
+    }
+
+    main {
+        width: 100%;
+        max-width: 100%;
+        margin: 15px auto;
+        padding: 0 8px;
+        overflow-x: hidden;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+        padding: 14px;
+        margin: 14px auto;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    h1 {
+        font-size: 26px;
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 20px;
+        max-width: 100%;
+    }
+
+    h3 {
+        font-size: 18px;
+        max-width: 100%;
+    }
+
+    p {
+        max-width: 100%;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    button {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    table {
+        min-width: 950px;
+    }
+
+    th,
+    td {
+        padding: 9px;
+        font-size: 14px;
+    }
+}
+
+/* ==============================
+   VERY SMALL MOBILE SCREEN
+   ============================== */
+
+@media (max-width: 400px) {
+
+    header {
+        padding: 8px 3%;
+    }
+
+    .brand-logo {
+        width: 245px;
+        max-width: 100%;
+    }
+
+    main {
+        padding: 0 6px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
