@@ -71,6 +71,349 @@
   color: #555;
 }
 
+/* =========================================
+   HELP ME DOORSTEP - PROFESSIONAL FORM UI
+   ========================================= */
+
+#serviceForm {
+    position: relative;
+    padding: 24px 20px 22px;
+    margin-top: 20px;
+    border-radius: 22px;
+    background: #ffffff;
+    border: 1px solid #dce9e5;
+    box-shadow: 0 8px 25px rgba(22, 91, 72, 0.10);
+}
+
+/* Form Heading */
+#serviceForm::before {
+    content: "📋  सेवा अनुरोध फॉर्म";
+    display: block;
+    text-align: center;
+    font-size: 27px;
+    font-weight: 800;
+    color: #126b57;
+    margin-bottom: 5px;
+    letter-spacing: .2px;
+}
+
+#serviceForm::after {
+    content: "कृपया नीचे सभी आवश्यक जानकारी सही-सही भरें";
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #66756f;
+    margin-bottom: 24px;
+}
+
+
+/* =========================================
+   FORM LABELS
+   ========================================= */
+
+#serviceForm label {
+    display: block;
+    position: relative;
+    margin: 18px 0 7px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #173c33;
+}
+
+/* Required star */
+#serviceForm label::after {
+    content: " *";
+    color: #e53935;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   INPUT / SELECT / TEXTAREA
+   ========================================= */
+
+#serviceForm input:not([type="hidden"]),
+#serviceForm select,
+#serviceForm textarea {
+    width: 100%;
+    margin-top: 8px;
+    padding: 15px 16px;
+    border: 2px solid #d5e1de;
+    border-radius: 14px;
+    background: #fbfdfc;
+    color: #173c33;
+    font-size: 17px;
+    font-family: inherit;
+    outline: none;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+/* Placeholder */
+#serviceForm input::placeholder,
+#serviceForm textarea::placeholder {
+    color: #8b9491;
+    opacity: 1;
+}
+
+/* Focus effect */
+#serviceForm input:not([type="hidden"]):focus,
+#serviceForm select:focus,
+#serviceForm textarea:focus {
+    border-color: #16a085;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.12);
+}
+
+/* Disabled district */
+#serviceForm select:disabled {
+    background: #f1f3f3;
+    color: #a1a7a5;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   TEXT AREAS
+   ========================================= */
+
+#serviceForm textarea {
+    min-height: 125px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FIELD ICONS
+   ========================================= */
+
+#serviceForm label:nth-of-type(1)::before {
+    content: "👤";
+    margin-right: 8px;
+}
+
+#serviceForm label:nth-of-type(2)::before {
+    content: "🎂";
+    margin-right: 8px;
+}
+
+#serviceForm label:nth-of-type(3)::before {
+    content: "📱";
+    margin-right: 8px;
+}
+
+#serviceForm label:nth-of-type(4)::before {
+    content: "📍";
+    margin-right: 8px;
+}
+
+#serviceForm label:nth-of-type(5)::before {
+    content: "🏙️";
+    margin-right: 8px;
+}
+
+#serviceForm label:nth-of-type(6)::before {
+    content: "🛠️";
+    margin-right: 8px;
+}
+
+#serviceForm label:nth-of-type(7)::before {
+    content: "🏠";
+    margin-right: 8px;
+}
+
+#serviceForm label:nth-of-type(8)::before {
+    content: "💬";
+    margin-right: 8px;
+}
+
+
+/* =========================================
+   SUBMIT BUTTON
+   ========================================= */
+
+#serviceForm button[type="submit"] {
+    width: 100%;
+    margin-top: 22px;
+    padding: 16px 18px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(
+        135deg,
+        #11966f,
+        #087f60
+    );
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(8, 127, 96, 0.22);
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        opacity .15s ease;
+}
+
+#serviceForm button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(8, 127, 96, 0.28);
+}
+
+#serviceForm button[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+#serviceForm button[type="submit"]:disabled {
+    opacity: .7;
+    cursor: wait;
+}
+
+
+/* =========================================
+   HELP LINE / CONTACT CARD
+   ========================================= */
+
+.contact {
+    margin-top: 22px !important;
+    padding: 22px 18px !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    border: 1px solid #dce9e5 !important;
+    box-shadow: 0 8px 25px rgba(22, 91, 72, 0.10);
+    text-align: center;
+}
+
+.contact::before {
+    content: "🎧  Help Me Door Step";
+    display: block;
+    padding: 12px;
+    margin: -22px -18px 18px;
+    border-radius: 22px 22px 0 0;
+    background: #126b57;
+    color: white;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.contact strong {
+    display: block;
+    font-size: 17px;
+    color: #173c33;
+    margin-bottom: 5px;
+}
+
+.contact a {
+    display: inline-block;
+    color: #0878bd;
+    font-size: 21px;
+    font-weight: 800;
+    text-decoration: none;
+    margin: 3px 0;
+}
+
+.contact .whatsapp-link {
+    color: #159447;
+}
+
+.contact a:hover {
+    text-decoration: underline;
+}
+
+.whatsapp-icon {
+    width: 27px;
+    height: 27px;
+    vertical-align: middle;
+}
+
+
+/* =========================================
+   MOBILE PROFESSIONAL DESIGN
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    #serviceForm {
+        padding: 20px 14px 18px;
+        border-radius: 18px;
+    }
+
+    #serviceForm::before {
+        font-size: 23px;
+    }
+
+    #serviceForm::after {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    #serviceForm label {
+        font-size: 17px;
+        margin-top: 17px;
+    }
+
+    #serviceForm input:not([type="hidden"]),
+    #serviceForm select,
+    #serviceForm textarea {
+        padding: 14px 14px;
+        font-size: 16px;
+        border-radius: 13px;
+    }
+
+    #serviceForm textarea {
+        min-height: 120px;
+    }
+
+    #serviceForm button[type="submit"] {
+        font-size: 18px;
+        padding: 15px;
+        border-radius: 13px;
+    }
+
+    .contact {
+        padding: 20px 14px !important;
+        border-radius: 18px !important;
+    }
+
+    .contact::before {
+        margin: -20px -14px 17px;
+        border-radius: 18px 18px 0 0;
+        font-size: 20px;
+    }
+
+    .contact a {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    #serviceForm {
+        padding: 18px 12px 16px;
+    }
+
+    #serviceForm::before {
+        font-size: 21px;
+    }
+
+    #serviceForm label {
+        font-size: 16px;
+    }
+
+    #serviceForm input:not([type="hidden"]),
+    #serviceForm select,
+    #serviceForm textarea {
+        font-size: 15px;
+    }
+
+    #serviceForm button[type="submit"] {
+        font-size: 17px;
+    }
+}
+  
 </style>
 </head>
 
