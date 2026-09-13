@@ -522,6 +522,14 @@ def verify_widget_token():
 
     mobile = request.form.get("mobile", "").strip()
     access_token = request.form.get("access_token", "").strip()
+    
+    terms_accepted = request.form.get("terms_accepted", "").strip()
+
+    if terms_accepted != "yes":
+        return {
+            "success": False,
+            "message": "Terms & Conditions और Privacy Policy स्वीकार करना जरूरी है।"
+        }, 400
 
     if not mobile or not access_token:
         return {
