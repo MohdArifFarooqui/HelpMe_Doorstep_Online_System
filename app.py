@@ -520,6 +520,260 @@ def admin_can_access_request(request_item):
 
     return False
 
+# ==============================
+# CUSTOMER FEEDBACK
+# ==============================
+
+@app.route("/feedback", methods=["GET", "POST"])
+def feedback():
+
+    if request.method == "GET":
+        return render_template("feedback.html")
+
+
+    application_code = (
+        request.form.get(
+            "application_code",
+            ""
+        ).strip().upper()
+    )
+
+    phone = (
+        request.form.get(
+            "phone",
+            ""
+        ).strip()
+    )
+
+    rating = request.form.get(
+        "rating",
+        ""
+    ).strip()
+
+    experience = (
+        request.form.get(
+            "experience",
+            ""
+        ).strip()
+    )
+
+    comment = (
+        request.form.get(
+            "comment",
+            ""
+        ).strip()
+    )
+
+
+    # ==============================
+    # BASIC VALIDATION
+    # ==============================
+
+    if not application_code:
+        flash(
+            "Application ID डालना जरूरी है।",
+            "error"
+        )
+        return redirect(url_for("feedback"))
+
+
+    if (
+        not phone.isdigit()
+        or len(phone) != 10
+    ):
+        flash(
+            "कृपया सही 10 अंकों का Mobile Number डालें।",
+            "error"
+        )
+        return redirect(url_for("feedback"))
+
+
+    try:
+
+        rating = int(rating)
+
+    except (TypeError, ValueError):
+
+        flash(
+            "कृपया 1 से 5 Star Rating चुनें।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    if rating < 1 or rating > 5:
+
+        flash(
+            "Rating 1 से 5 के बीच होनी चाहिए।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    if not experience:
+
+        flash(
+            "कृपया अपना Service Experience चुनें।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    if not comment:
+
+        flash(
+            "कृपया अपना Feedback लिखें।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    if len(comment) > 1000:
+
+        flash(
+            "Feedback अधिकतम 1000 characters का हो सकता है।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    # ==============================
+    # APPLICATION ID CHECK
+    # ==============================
+
+    if not application_code.startswith("HM/DS"):
+
+        flash(
+            "Invalid Application ID।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    try:
+
+        request_id = int(
+            application_code.replace(
+                "HM/DS",
+                ""
+            )
+        )
+
+    except ValueError:
+
+        flash(
+            "Invalid Application ID।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    request_item = DB.get(
+        RequestItem,
+        request_id
+    )
+
+
+    if not request_item:
+
+        flash(
+            "यह Application ID नहीं मिली।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    # ==============================
+    # MOBILE NUMBER MATCH
+    # ==============================
+
+    if request_item.phone != phone:
+
+        flash(
+            "Application ID और Mobile Number match नहीं कर रहे हैं।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    # ==============================
+    # ONLY COMPLETED REQUEST
+    # ==============================
+
+    if request_item.status != "Completed":
+
+        flash(
+            "Feedback केवल Completed Service के बाद दिया जा सकता है।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    # ==============================
+    # PREVENT DUPLICATE FEEDBACK
+    # ==============================
+
+    existing_feedback = (
+        DB.query(Feedback)
+        .filter(
+            Feedback.request_id == request_id
+        )
+        .first()
+    )
+
+
+    if existing_feedback:
+
+        flash(
+            "इस Application का Feedback पहले ही submit किया जा चुका है।",
+            "error"
+        )
+
+        return redirect(url_for("feedback"))
+
+
+    # ==============================
+    # SAVE FEEDBACK
+    # ==============================
+
+    new_feedback = Feedback(
+
+        request_id=request_id,
+
+        customer_phone=phone,
+
+        rating=rating,
+
+        experience=experience,
+
+        comment=comment
+    )
+
+
+    DB.add(new_feedback)
+
+    DB.commit()
+
+
+    flash(
+        "⭐ आपका Feedback सफलतापूर्वक Submit हो गया। धन्यवाद!",
+        "success"
+    )
+
+
+    return redirect(
+        url_for("feedback")
+    )
 
 # ==============================
 # CUSTOMER OTP LOGIN
