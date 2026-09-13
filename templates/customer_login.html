@@ -311,6 +311,19 @@ function sendOTP() {
 
     const mobile =
         document.getElementById("mobile").value.trim();
+    
+    const termsAccepted =
+        document.getElementById("termsAccepted");
+
+    if (!termsAccepted.checked) {
+
+        showMessage(
+            "कृपया पहले Terms & Conditions और Privacy Policy स्वीकार करें।",
+            "error"
+        );
+
+        return;
+    }
 
     if (!/^\d{10}$/.test(mobile)) {
 
