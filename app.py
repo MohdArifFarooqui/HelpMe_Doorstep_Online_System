@@ -491,6 +491,14 @@ def admin_can_access_request(request_item):
 def terms():
     return render_template("terms.html")
 
+# ==============================
+# PRIVACY POLICY
+# ==============================
+
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
 @app.route("/customer/login", methods=["GET"])
 def customer_login():
     return render_template("customer_login.html")
