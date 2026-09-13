@@ -359,6 +359,64 @@ class Feedback(Base):
         nullable=False
     )
 
+# ==============================
+# CUSTOMER COMPLAINT
+# ==============================
+
+class Complaint(Base):
+
+    __tablename__ = "complaints"
+
+    id = Column(
+        Integer,
+        primary_key=True
+    )
+
+    request_id = Column(
+        Integer,
+        nullable=False
+    )
+
+    customer_phone = Column(
+        String(30),
+        nullable=False
+    )
+
+    category = Column(
+        String(100),
+        nullable=False
+    )
+
+    details = Column(
+        Text,
+        nullable=False
+    )
+
+    status = Column(
+        String(30),
+        default="Pending",
+        nullable=False
+    )
+
+    created_at = Column(
+        DateTime,
+        default=lambda: datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).replace(tzinfo=None),
+        nullable=False
+    )
+
+    updated_at = Column(
+        DateTime,
+        default=lambda: datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).replace(tzinfo=None),
+        onupdate=lambda: datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).replace(tzinfo=None),
+        nullable=False
+    )
+
 # Create tables if they do not already exist
 Base.metadata.create_all(engine)
 
