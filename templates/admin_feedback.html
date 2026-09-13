@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
+<title>Customer Feedback - Admin</title>
+
+<link rel="stylesheet"
+      href="/static/style.css">
+
+<style>
+
+body {
+    margin: 0;
+    background: #f5f7fb;
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+    color: #1f2937;
+}
+
+.container {
+    width: min(1200px, 94%);
+    margin: auto;
+    padding: 20px 0 40px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    background: #2563eb;
+    color: white;
+}
+
+.btn-home {
+    background: #64748b;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    text-align: center;
+}
+
+.summary-card .number {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.feedback-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.rating {
+    font-size: 22px;
+    color: #f5b301;
+    letter-spacing: 2px;
+}
+
+.info {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.comment {
+    margin-top: 12px;
+    padding: 13px;
+    background: #f8fafc;
+    border-radius: 10px;
+    line-height: 1.6;
+}
+
+.empty {
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+@media (max-width: 700px) {
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar h1 {
+        font-size: 22px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<div class="topbar">
+
+<div>
+
+<h1>
+⭐ Customer Feedback
+</h1>
+
+<p>
+Customer Service Ratings और Feedback
+</p>
+
+</div>
+
+
+<div>
+
+<a class="btn btn-home"
+   href="/admin">
+← Admin Dashboard
+</a>
+
+</div>
+
+</div>
+
+
+<div class="summary">
+
+
+<div class="summary-card">
+
+<div>
+Total Feedback
+</div>
+
+<div class="number">
+{{ feedbacks|length }}
+</div>
+
+</div>
+
+
+<div class="summary-card">
+
+<div>
+Average Rating
+</div>
+
+<div class="number">
+
+{% if feedbacks %}
+
+{{ "%.1f"|format(
+    feedbacks
+    |map(attribute="rating")
+    |sum
+    / feedbacks|length
+) }}
+
+⭐
+
+{% else %}
+
+0
+
+{% endif %}
+
+</div>
+
+</div>
+
+
+<div class="summary-card">
+
+<div>
+5 Star Feedback
+</div>
+
+<div class="number">
+
+{{ feedbacks
+   |selectattr("rating", "equalto", 5)
+   |list
+   |length }}
+
+</div>
+
+</div>
+
+
+</div>
+
+
+{% if feedbacks %}
+
+
+{% for f in feedbacks %}
+
+<div class="feedback-card">
+
+
+<div class="feedback-header">
+
+<div>
+
+<b>
+📋 Application ID:
+</b>
+
+HM/DS{{ "%02d"|format(f.request_id) }}
+
+</div>
+
+
+<div class="rating">
+
+{% if f.rating >= 1 %}★{% endif %}
+{% if f.rating >= 2 %}★{% endif %}
+{% if f.rating >= 3 %}★{% endif %}
+{% if f.rating >= 4 %}★{% endif %}
+{% if f.rating >= 5 %}★{% endif %}
+
+</div>
+
+</div>
+
+
+<div class="info">
+
+<b>📱 Mobile:</b>
+
+{{ f.customer_phone }}
+
+</div>
+
+
+<div class="info">
+
+<b>⭐ Rating:</b>
+
+{{ f.rating }} / 5
+
+</div>
+
+
+<div class="info">
+
+<b>😊 Experience:</b>
+
+{{ f.experience }}
+
+</div>
+
+
+<div class="info">
+
+<b>📅 Date:</b>
+
+{{ f.created_at.strftime("%d-%m-%Y %H:%M") }}
+
+</div>
+
+
+<div class="comment">
+
+<b>📝 Customer Feedback:</b>
+
+<br><br>
+
+{{ f.comment }}
+
+</div>
+
+
+</div>
+
+{% endfor %}
+
+
+{% else %}
+
+
+<div class="empty">
+
+<h2>
+📭 अभी कोई Feedback नहीं है।
+</h2>
+
+<p>
+Customer द्वारा Feedback Submit करने के बाद यहाँ दिखाई देगा।
+</p>
+
+</div>
+
+
+{% endif %}
+
+
+</div>
+
+</body>
+
+</html>
