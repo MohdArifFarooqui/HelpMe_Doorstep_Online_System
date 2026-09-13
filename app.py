@@ -1975,6 +1975,121 @@ def customer_query():
         url_for("customer_query")
     )
 
+# ==============================
+# ADMIN CUSTOMER QUERIES
+# ==============================
+
+@app.route("/admin/queries")
+def admin_queries():
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    queries = (
+        DB.query(CustomerQuery)
+        .order_by(
+            CustomerQuery.created_at.desc()
+        )
+        .all()
+    )
+
+    return render_template(
+        "admin_queries.html",
+        queries=queries
+    )
+
+
+# ==============================
+# ADMIN QUERY STATUS UPDATE
+# ==============================
+
+@app.route(
+    "/admin/query/<int:query_id>/status",
+    methods=["POST"]
+)
+def update_query_status(query_id):
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    status = (
+        request.form.get(
+            "status",
+            ""
+        ).strip()
+    )
+
+    allowed_statuses = [
+        "Pending",
+        "In Progress",
+        "Resolved"
+    ]
+
+    if status not in allowed_statuses:
+
+        flash(
+            "Invalid Query Status।",
+            "error"
+        )
+
+        return redirect(
+            url_for("admin_queries")
+        )
+
+
+    query = DB.get(
+        CustomerQuery,
+        query_id
+    )
+
+    if not query:
+
+        flash(
+            "Query नहीं मिली।",
+            "error"
+        )
+
+        return redirect(
+            url_for("admin_queries")
+        )
+
+
+    old_status = query.status
+
+    query.status = status
+
+    DB.commit()
+
+
+    # ==============================
+    # CUSTOMER NOTIFICATION
+    # ==============================
+
+    if old_status != status:
+
+        create_customer_notification(
+
+            query.customer_phone,
+
+            f"आपकी Query #{query.id} का Status "
+            f"'{status}' कर दिया गया है।",
+
+            query.request_id
+
+        )
+
+
+    flash(
+        f"Query #{query.id} का Status "
+        f"'{status}' कर दिया गया है।",
+        "success"
+    )
+
+
+    return redirect(
+        url_for("admin_queries")
+    )
+
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
     if request.method == "GET":
