@@ -1778,6 +1778,203 @@ def update_complaint_status(complaint_id):
         url_for("admin_complaints")
     )
 
+# ==============================
+# CUSTOMER ANY QUERY
+# ==============================
+
+@app.route("/query", methods=["GET", "POST"])
+def customer_query():
+
+    if request.method == "GET":
+        return render_template("query.html")
+
+    application_code = (
+        request.form.get(
+            "application_code",
+            ""
+        ).strip().upper()
+    )
+
+    phone = (
+        request.form.get(
+            "phone",
+            ""
+        ).strip()
+    )
+
+    category = (
+        request.form.get(
+            "category",
+            ""
+        ).strip()
+    )
+
+    details = (
+        request.form.get(
+            "details",
+            ""
+        ).strip()
+    )
+
+    # ==============================
+    # BASIC VALIDATION
+    # ==============================
+
+    if not application_code:
+        flash(
+            "Application ID डालना जरूरी है।",
+            "error"
+        )
+        return redirect(url_for("customer_query"))
+
+    if (
+        not phone.isdigit()
+        or len(phone) != 10
+    ):
+        flash(
+            "कृपया सही 10 अंकों का Mobile Number डालें।",
+            "error"
+        )
+        return redirect(url_for("customer_query"))
+
+    if not category:
+        flash(
+            "कृपया Query Category चुनें।",
+            "error"
+        )
+        return redirect(url_for("customer_query"))
+
+    if not details:
+        flash(
+            "कृपया Query Details लिखें।",
+            "error"
+        )
+        return redirect(url_for("customer_query"))
+
+    if len(details) > 2000:
+        flash(
+            "Query अधिकतम 2000 characters की हो सकती है।",
+            "error"
+        )
+        return redirect(url_for("customer_query"))
+
+    # ==============================
+    # APPLICATION ID CHECK
+    # ==============================
+
+    if not application_code.startswith("HM/DS"):
+        flash(
+            "Invalid Application ID।",
+            "error"
+        )
+        return redirect(url_for("customer_query"))
+
+    try:
+
+        request_id = int(
+            application_code.replace(
+                "HM/DS",
+                ""
+            )
+        )
+
+    except ValueError:
+
+        flash(
+            "Invalid Application ID।",
+            "error"
+        )
+
+        return redirect(
+            url_for("customer_query")
+        )
+
+    # ==============================
+    # FIND APPLICATION
+    # ==============================
+
+    request_item = DB.get(
+        RequestItem,
+        request_id
+    )
+
+    if not request_item:
+
+        flash(
+            "यह Application ID नहीं मिली।",
+            "error"
+        )
+
+        return redirect(
+            url_for("customer_query")
+        )
+
+    # ==============================
+    # MOBILE NUMBER MATCH
+    # ==============================
+
+    if request_item.phone != phone:
+
+        flash(
+            "Application ID और Mobile Number match नहीं कर रहे हैं।",
+            "error"
+        )
+
+        return redirect(
+            url_for("customer_query")
+        )
+
+    # ==============================
+    # SAVE QUERY
+    # ==============================
+
+    new_query = CustomerQuery(
+
+        request_id=request_id,
+
+        customer_phone=phone,
+
+        category=category,
+
+        details=details,
+
+        status="Pending"
+
+    )
+
+    DB.add(new_query)
+
+    DB.commit()
+
+    # ==============================
+    # CUSTOMER NOTIFICATION
+    # ==============================
+
+    create_customer_notification(
+
+        phone,
+
+        f"आपकी Query सफलतापूर्वक दर्ज हो गई है। "
+        f"Query ID: #{new_query.id}. "
+        f"Status: Pending",
+
+        request_id
+
+    )
+
+    flash(
+
+        f"आपकी Query सफलतापूर्वक दर्ज हो गई है। "
+        f"Query ID: #{new_query.id}",
+
+        "success"
+
+    )
+
+    return redirect(
+        url_for("customer_query")
+    )
+
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
     if request.method == "GET":
