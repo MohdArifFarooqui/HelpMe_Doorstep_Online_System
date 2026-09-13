@@ -487,6 +487,147 @@ def admin_can_access_request(request_item):
 # TERMS & CONDITIONS
 # ==============================
 
+# ==============================
+# AI SUPPORT
+# ==============================
+
+@app.route("/ai-support")
+def ai_support():
+    return render_template("ai_support.html")
+
+
+@app.post("/api/ai-support")
+def api_ai_support():
+
+    data = request.get_json(silent=True) or {}
+
+    question = (
+        data.get("question", "")
+        .strip()
+        .lower()
+    )
+
+    if not question:
+        return {
+            "success": False,
+            "message": "कृपया अपना सवाल लिखें।"
+        }, 400
+
+
+    # ==============================
+    # STATUS
+    # ==============================
+
+    if (
+        "status" in question
+        or "स्टेटस" in question
+        or "स्थिति" in question
+        or "आवेदन" in question
+    ):
+
+        answer = (
+            "आप अपने आवेदन का Status देखने के लिए "
+            "HelpMe Doorstep के Home page पर "
+            "'आवेदन की स्थिति देखें' विकल्प का उपयोग कर सकते हैं।"
+        )
+
+
+    # ==============================
+    # CUSTOMER LOGIN
+    # ==============================
+
+    elif (
+        "customer login" in question
+        or "customer" in question
+        or "कस्टमर" in question
+        or "ग्राहक" in question
+    ):
+
+        answer = (
+            "Customer Login के लिए Customer Login page खोलें, "
+            "अपना 10 digit Mobile Number डालें और OTP verify करें।"
+        )
+
+
+    # ==============================
+    # WORKER / EMPLOYEE
+    # ==============================
+
+    elif (
+        "worker" in question
+        or "employee" in question
+        or "वर्कर" in question
+        or "कर्मचारी" in question
+        or "registration" in question
+        or "register" in question
+        or "रजिस्टर" in question
+    ):
+
+        answer = (
+            "Worker/Employee के लिए Worker Registration या "
+            "Worker Login विकल्प का उपयोग करें। "
+            "Registration के दौरान मांगी गई जानकारी सही-सही भरें।"
+        )
+
+
+    # ==============================
+    # HELP LINE
+    # ==============================
+
+    elif (
+        "help line" in question
+        or "helpline" in question
+        or "फोन" in question
+        or "number" in question
+        or "नंबर" in question
+        or "संपर्क" in question
+    ):
+
+        answer = (
+            "HelpMe Doorstep Help Line: 8887410600\n"
+            "Contact Number: 9219160465"
+        )
+
+
+    # ==============================
+    # COMPLAINT
+    # ==============================
+
+    elif (
+        "complaint" in question
+        or "शिकायत" in question
+    ):
+
+        answer = (
+            "Complaint सुविधा को HelpMe Doorstep में "
+            "अलग से व्यवस्थित किया जा रहा है। "
+            "फिलहाल सहायता के लिए Help Line 8887410600 "
+            "पर संपर्क कर सकते हैं।"
+        )
+
+
+    # ==============================
+    # GENERAL
+    # ==============================
+
+    else:
+
+        answer = (
+            "मैं HelpMe Doorstep की सामान्य सहायता में आपकी मदद कर सकता हूँ।\n\n"
+            "आप मुझसे इन विषयों के बारे में पूछ सकते हैं:\n"
+            "• Application Status\n"
+            "• Customer Login\n"
+            "• Worker Registration\n"
+            "• Help Line\n"
+            "• Complaint"
+        )
+
+
+    return {
+        "success": True,
+        "answer": answer
+    }
+
 @app.route("/terms")
 def terms():
     return render_template("terms.html")
