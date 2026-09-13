@@ -316,6 +316,48 @@ class User(Base):
 
         return ""
 
+# ==============================
+# CUSTOMER FEEDBACK
+# ==============================
+
+class Feedback(Base):
+
+    __tablename__ = "feedback"
+
+    id = Column(Integer, primary_key=True)
+
+    request_id = Column(
+        Integer,
+        nullable=False
+    )
+
+    customer_phone = Column(
+        String(30),
+        nullable=False
+    )
+
+    rating = Column(
+        Integer,
+        nullable=False
+    )
+
+    experience = Column(
+        String(50),
+        nullable=False
+    )
+
+    comment = Column(
+        Text,
+        nullable=False
+    )
+
+    created_at = Column(
+        DateTime,
+        default=lambda: datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).replace(tzinfo=None),
+        nullable=False
+    )
 
 # Create tables if they do not already exist
 Base.metadata.create_all(engine)
