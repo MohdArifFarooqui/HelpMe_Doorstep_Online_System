@@ -1314,6 +1314,15 @@ def create_admin():
 def login():
     username = request.form.get("username", "").strip()
     password = request.form.get("password", "")
+    
+    terms_accepted = request.form.get("terms_accepted", "").strip()
+
+    if terms_accepted != "yes":
+        flash(
+            "Login से पहले Terms & Conditions और Privacy Policy स्वीकार करना जरूरी है।",
+            "error"
+        )
+        return redirect(url_for("admin"))
 
     # Main Admin login
     if (
