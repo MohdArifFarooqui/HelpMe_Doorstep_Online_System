@@ -103,6 +103,293 @@
     line-height: 1.6;
 }
 
+/* =====================================
+   HELP ME DOORSTEP STATUS - PROFESSIONAL
+   ===================================== */
+
+body {
+    background: #f3f9f7;
+}
+
+/* Header */
+header {
+    background: #ffffff !important;
+    padding: 14px 5% !important;
+    border-bottom: 1px solid #dce9e5;
+    box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+header .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+header .brand .logo {
+    display: none !important;
+}
+
+/* Real Logo */
+header .brand::before {
+    content: "";
+    display: block;
+    width: 72px;
+    height: 72px;
+    flex: 0 0 72px;
+    background-image: url("/static/helpme-doorstep-logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+header .brand div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+header .brand b {
+    font-size: 25px;
+    color: #126b57;
+}
+
+header .brand small {
+    font-size: 15px;
+    color: #687873;
+}
+
+header > a {
+    padding: 10px 18px;
+    border-radius: 10px;
+    background: #eef7f4;
+    color: #126b57 !important;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 24px 10px 12px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    color: #123f35;
+    margin-bottom: 8px;
+}
+
+.hero p {
+    font-size: 17px;
+    color: #63756f;
+}
+
+/* All Cards */
+.card {
+    border-radius: 20px !important;
+    border: 1px solid #dce9e5 !important;
+    box-shadow: 0 7px 22px rgba(22,91,72,.09) !important;
+}
+
+/* Search Form */
+form.card {
+    padding: 22px !important;
+    background: #ffffff;
+}
+
+form.card label {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #173c33;
+}
+
+form.card input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 9px;
+    padding: 16px;
+    border: 2px solid #d5e1de;
+    border-radius: 14px;
+    background: #fbfdfc;
+    font-size: 17px;
+    outline: none;
+}
+
+form.card input:focus {
+    border-color: #16a085;
+    box-shadow: 0 0 0 4px rgba(22,160,133,.12);
+}
+
+form.card button {
+    width: 100%;
+    margin-top: 16px;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#11966f,#087f60);
+    color: white;
+    font-size: 19px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(8,127,96,.22);
+}
+
+/* Application Section */
+.status-box {
+    background: #ffffff !important;
+    border: 1px solid #d9e8e3 !important;
+    border-radius: 18px !important;
+    padding: 20px !important;
+    margin-top: 16px !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,.05);
+}
+
+.application-id {
+    color: #126b57;
+    font-size: 20px !important;
+}
+
+/* Status Messages */
+.status-message {
+    border-radius: 12px !important;
+    padding: 14px 16px !important;
+    margin: 14px 0 !important;
+    font-size: 16px;
+}
+
+.status-badge {
+    padding: 9px 17px !important;
+    border-radius: 30px !important;
+    font-size: 15px;
+}
+
+/* Information rows */
+.info-row {
+    padding: 8px 0;
+    color: #40554e;
+}
+
+/* Notifications */
+.notification-box {
+    border-radius: 14px !important;
+    padding: 16px !important;
+    background: #fffdf3 !important;
+    border: 1px solid #f0df9c !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,.04);
+}
+
+/* Contact */
+.contact {
+    margin-top: 20px !important;
+    padding: 20px !important;
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    text-align: center;
+    box-shadow: 0 7px 22px rgba(22,91,72,.09);
+}
+
+.contact a {
+    color: #0878bd;
+    font-size: 20px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.contact .whatsapp-link {
+    color: #159447;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    header {
+        padding: 10px 4% !important;
+        flex-wrap: wrap;
+        justify-content: center !important;
+        gap: 8px;
+    }
+
+    header .brand {
+        width: 100%;
+        justify-content: center;
+    }
+
+    header .brand::before {
+        width: 62px;
+        height: 62px;
+        flex-basis: 62px;
+    }
+
+    header .brand b {
+        font-size: 21px;
+    }
+
+    header .brand small {
+        font-size: 13px;
+    }
+
+    header > a {
+        font-size: 16px;
+        padding: 8px 18px;
+    }
+
+    .hero {
+        padding: 20px 8px 8px;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    form.card {
+        padding: 16px !important;
+    }
+
+    form.card input {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    form.card button {
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    .status-box {
+        padding: 16px !important;
+    }
+
+    .application-id {
+        font-size: 18px !important;
+    }
+
+    .contact a {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    header .brand::before {
+        width: 55px;
+        height: 55px;
+        flex-basis: 55px;
+    }
+
+    header .brand b {
+        font-size: 19px;
+    }
+
+    .hero h1 {
+        font-size: 23px;
+    }
+}
+    
 </style>
 
 </head>
