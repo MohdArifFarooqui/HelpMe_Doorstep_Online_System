@@ -311,6 +311,81 @@
 
 </section>
 
+  <!-- ==============================
+     CUSTOMER FORM VOICE SUPPORT
+     ============================== -->
+
+<script>
+(function () {
+
+    const voiceMessages = {
+        customer:
+            "कृपया अपना पूरा नाम लिखें।",
+
+        age:
+            "कृपया अपनी उम्र वर्षों में लिखें।",
+
+        phone:
+            "कृपया अपना दस अंकों का मोबाइल नंबर लिखें।",
+
+        state:
+            "कृपया अपना राज्य चुनें।",
+
+        district:
+            "कृपया अपना जिला चुनें।",
+
+        service:
+            "कृपया जिस सेवा की आवश्यकता है, वह सेवा चुनें।",
+
+        address:
+            "कृपया अपना पूरा पता लिखें, ताकि हमारी टीम सही स्थान पर सेवा दे सके।",
+
+        details:
+            "कृपया बताएं कि आपको किस काम में सहायता चाहिए।"
+    };
+
+
+    function speakMessage(message) {
+
+        if (!("speechSynthesis" in window)) {
+            return;
+        }
+
+        window.speechSynthesis.cancel();
+
+        const speech = new SpeechSynthesisUtterance(message);
+
+        speech.lang = "hi-IN";
+        speech.rate = 0.9;
+        speech.pitch = 1;
+
+        window.speechSynthesis.speak(speech);
+    }
+
+
+    Object.keys(voiceMessages).forEach(function (fieldName) {
+
+        const field = document.querySelector(
+            '[name="' + fieldName + '"]'
+        );
+
+        if (!field) {
+            return;
+        }
+
+        field.addEventListener("focus", function () {
+
+            speakMessage(
+                voiceMessages[fieldName]
+            );
+
+        });
+
+    });
+
+})();
+</script>
+
 </main>
 
 <script src="/static/india-data.js"></script>
