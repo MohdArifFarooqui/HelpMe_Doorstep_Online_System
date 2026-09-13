@@ -1309,6 +1309,29 @@ def add():
         )
     )
 
+# ==============================
+# ADMIN CUSTOMER FEEDBACK
+# ==============================
+
+@app.route("/admin/feedback")
+def admin_feedback():
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    feedbacks = (
+        DB.query(Feedback)
+        .order_by(
+            Feedback.created_at.desc()
+        )
+        .all()
+    )
+
+    return render_template(
+        "admin_feedback.html",
+        feedbacks=feedbacks
+    )
+
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
     if request.method == "GET":
