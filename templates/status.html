@@ -389,7 +389,467 @@ form.card button {
         font-size: 23px;
     }
 }
-    
+ /* =========================================
+   HELP ME DOORSTEP STATUS - FINAL UI
+   ========================================= */
+
+body {
+    background: #f2f9f7 !important;
+    color: #173c33;
+}
+
+/* ================= HEADER ================= */
+
+header {
+    background: #ffffff !important;
+    padding: 12px 5% !important;
+    min-height: 90px;
+    border-bottom: 1px solid #dce9e5 !important;
+    box-shadow: 0 3px 15px rgba(0,0,0,.06);
+}
+
+header .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Logo */
+header .brand::before {
+    width: 82px !important;
+    height: 82px !important;
+    flex: 0 0 82px !important;
+    background-image: url("/static/helpme-doorstep-logo.png.jpeg") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+header .brand .logo {
+    display: none !important;
+}
+
+header .brand b {
+    font-size: 27px !important;
+    color: #126b57 !important;
+    font-weight: 800;
+}
+
+header .brand small {
+    display: block;
+    margin-top: 4px;
+    font-size: 15px !important;
+    color: #687873 !important;
+}
+
+header > a {
+    padding: 11px 22px !important;
+    border-radius: 12px !important;
+    background: #eaf7f3 !important;
+    color: #126b57 !important;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+/* ================= NAVIGATION ================= */
+
+.status-nav {
+    width: calc(100% - 24px);
+    max-width: 1100px;
+    margin: 12px auto 0;
+    padding: 10px 8px;
+    background: #ffffff;
+    border: 1px solid #dce9e5;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(22,91,72,.07);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-nav a {
+    flex: 1;
+    text-align: center;
+    padding: 9px 6px;
+    color: #315b51;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.status-nav a:hover,
+.status-nav a.active {
+    background: #eaf7f3;
+    color: #087f60;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 28px 12px 16px !important;
+}
+
+.hero h1 {
+    font-size: 34px !important;
+    color: #123f35 !important;
+    margin-bottom: 8px !important;
+    font-weight: 800;
+}
+
+.hero p {
+    font-size: 18px !important;
+    color: #63756f !important;
+}
+
+/* ================= SEARCH CARD ================= */
+
+form.card {
+    position: relative;
+    max-width: 720px;
+    margin: 12px auto 22px !important;
+    padding: 24px !important;
+    background: #ffffff !important;
+    border: 1px solid #dce9e5 !important;
+    border-radius: 22px !important;
+    box-shadow: 0 8px 26px rgba(22,91,72,.10) !important;
+}
+
+/* Information strip */
+form.card::before {
+    content: "ⓘ  कृपया वही मोबाइल नंबर दर्ज करें, जिससे आपने आवेदन किया है।";
+    display: block;
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #eaf7f3;
+    color: #176653;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 700;
+}
+
+form.card label {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #173c33 !important;
+}
+
+form.card input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 9px;
+    padding: 16px 17px !important;
+    border: 2px solid #d5e1de !important;
+    border-radius: 14px !important;
+    background: #fbfdfc !important;
+    color: #173c33;
+    font-size: 17px !important;
+    outline: none;
+}
+
+form.card input:focus {
+    border-color: #16a085 !important;
+    box-shadow: 0 0 0 4px rgba(22,160,133,.12) !important;
+}
+
+/* Status button */
+form.card button {
+    position: relative;
+    width: 100%;
+    margin-top: 17px !important;
+    padding: 16px 18px !important;
+    border: none !important;
+    border-radius: 14px !important;
+
+    background: linear-gradient(
+        135deg,
+        #11966f,
+        #087f60
+    ) !important;
+
+    color: #ffffff !important;
+    font-size: 19px !important;
+    font-weight: 800 !important;
+
+    box-shadow: 0 7px 17px rgba(8,127,96,.22) !important;
+}
+
+form.card button::before {
+    content: "🔎 ";
+}
+
+/* ================= APPLICATION CARD ================= */
+
+main > section.card {
+    max-width: 1000px;
+    margin: 20px auto !important;
+    padding: 22px !important;
+    background: #ffffff !important;
+    border-radius: 22px !important;
+    border: 1px solid #dce9e5 !important;
+    box-shadow: 0 8px 26px rgba(22,91,72,.08) !important;
+}
+
+main > section.card > h2 {
+    text-align: center;
+    color: #126b57;
+    font-size: 25px;
+    margin-bottom: 18px;
+}
+
+/* Individual application */
+.status-box {
+    background: #ffffff !important;
+    border: 1px solid #d7e6e1 !important;
+    border-radius: 18px !important;
+    padding: 20px !important;
+    margin: 16px 0 !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,.05) !important;
+}
+
+.application-id {
+    color: #126b57 !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+}
+
+.status-message {
+    border-radius: 13px !important;
+    padding: 14px 16px !important;
+    font-size: 16px !important;
+}
+
+.info-row {
+    padding: 9px 0 !important;
+    line-height: 1.6 !important;
+    color: #40554e !important;
+}
+
+/* ================= CONTACT CARD ================= */
+
+.contact {
+    max-width: 900px;
+    margin: 22px auto !important;
+    padding: 22px !important;
+    background: #ffffff !important;
+    border: 1px solid #dce9e5 !important;
+    border-radius: 22px !important;
+    box-shadow: 0 8px 24px rgba(22,91,72,.09) !important;
+    text-align: center !important;
+}
+
+.contact a {
+    color: #0878bd !important;
+    font-size: 21px !important;
+    font-weight: 800 !important;
+    text-decoration: none;
+}
+
+.contact .whatsapp-link {
+    color: #159447 !important;
+}
+
+/* ================= FEATURES ================= */
+
+.status-features {
+    max-width: 1000px;
+    margin: 22px auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #ffffff;
+    border: 1px solid #dce9e5;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(22,91,72,.07);
+}
+
+.status-feature {
+    text-align: center;
+    padding: 20px 10px;
+    border-right: 1px solid #e1ebe8;
+}
+
+.status-feature:last-child {
+    border-right: none;
+}
+
+.status-feature .icon {
+    display: block;
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.status-feature strong {
+    display: block;
+    color: #126b57;
+    font-size: 16px;
+}
+
+.status-feature span {
+    display: block;
+    margin-top: 4px;
+    color: #71807b;
+    font-size: 13px;
+}
+
+/* ================= FOOTER ================= */
+
+.status-footer {
+    margin-top: 30px;
+    padding: 28px 15px;
+    background: #087f60;
+    color: #ffffff;
+    text-align: center;
+}
+
+.status-footer strong {
+    font-size: 18px;
+}
+
+.status-footer p {
+    margin: 7px 0 0;
+    font-size: 14px;
+    opacity: .95;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 10px 4% !important;
+        min-height: auto;
+        flex-wrap: wrap;
+        justify-content: center !important;
+    }
+
+    header .brand {
+        width: 100%;
+        justify-content: center;
+    }
+
+    header .brand::before {
+        width: 70px !important;
+        height: 70px !important;
+        flex-basis: 70px !important;
+    }
+
+    header .brand b {
+        font-size: 22px !important;
+    }
+
+    header .brand small {
+        font-size: 13px !important;
+    }
+
+    header > a {
+        margin-top: 5px;
+        padding: 9px 22px !important;
+    }
+
+    .status-nav {
+        margin-top: 10px;
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+
+    .status-nav a {
+        min-width: 78px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .hero {
+        padding: 22px 8px 12px !important;
+    }
+
+    .hero h1 {
+        font-size: 27px !important;
+    }
+
+    .hero p {
+        font-size: 15px !important;
+    }
+
+    form.card {
+        width: calc(100% - 20px);
+        padding: 17px !important;
+        border-radius: 18px !important;
+    }
+
+    form.card::before {
+        font-size: 13px;
+    }
+
+    form.card input {
+        padding: 14px !important;
+        font-size: 16px !important;
+    }
+
+    form.card button {
+        font-size: 18px !important;
+        padding: 15px !important;
+    }
+
+    main > section.card {
+        width: calc(100% - 20px);
+        padding: 16px !important;
+    }
+
+    .status-box {
+        padding: 16px !important;
+    }
+
+    .application-id {
+        font-size: 18px !important;
+    }
+
+    .status-features {
+        width: calc(100% - 20px);
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .status-feature:nth-child(2) {
+        border-right: none;
+    }
+
+    .status-feature:nth-child(1),
+    .status-feature:nth-child(2) {
+        border-bottom: 1px solid #e1ebe8;
+    }
+
+    .contact {
+        width: calc(100% - 20px);
+        padding: 18px !important;
+    }
+
+    .contact a {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 400px) {
+
+    header .brand::before {
+        width: 62px !important;
+        height: 62px !important;
+        flex-basis: 62px !important;
+    }
+
+    header .brand b {
+        font-size: 20px !important;
+    }
+
+    .hero h1 {
+        font-size: 24px !important;
+    }
+}   
 </style>
 
 </head>
@@ -415,10 +875,60 @@ form.card button {
 
 </header>
 
+<nav class="status-nav">
 
+    <a href="/" class="active">
+        🏠 होम
+    </a>
+
+    <a href="/">
+        ℹ️ हमारे बारे में
+    </a>
+
+    <a href="/">
+        📄 सेवाएँ
+    </a>
+
+    <a href="tel:8887410600">
+        📞 संपर्क करें
+    </a>
+
+</nav>
+    
 <main>
 
+<!-- ==============================
+     STATUS PAGE FEATURES
+     ============================== -->
 
+<section class="status-features">
+
+    <div class="status-feature">
+        <span class="icon">🛡️</span>
+        <strong>सुरक्षित</strong>
+        <span>आपका डेटा सुरक्षित है</span>
+    </div>
+
+    <div class="status-feature">
+        <span class="icon">⚡</span>
+        <strong>तेज़ सेवा</strong>
+        <span>तुरंत जानकारी पाएं</span>
+    </div>
+
+    <div class="status-feature">
+        <span class="icon">👍</span>
+        <strong>सरल प्रक्रिया</strong>
+        <span>उपयोग में आसान</span>
+    </div>
+
+    <div class="status-feature">
+        <span class="icon">👥</span>
+        <strong>आपके साथ</strong>
+        <span>हम हमेशा आपके साथ हैं</span>
+    </div>
+
+</section>
+    
 <section class="hero">
 
 <h1>📋 आवेदन की स्थिति</h1>
@@ -727,6 +1237,16 @@ WhatsApp
 
 </main>
 
+<footer class="status-footer">
+
+    <strong>Help Me Door Step</strong>
+
+    <p>
+        © 2026 Help Me Door Step | सभी अधिकार सुरक्षित
+    </p>
+
+</footer>
+    
 </body>
 
 </html>
