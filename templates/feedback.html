@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
+<title>Customer Feedback - HelpMe Doorstep</title>
+
+<link rel="stylesheet"
+      href="/static/style.css">
+
+<style>
+
+.feedback-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 15px;
+}
+
+.feedback-card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.10);
+}
+
+.feedback-title {
+    text-align: center;
+    color: #1565c0;
+    margin-bottom: 8px;
+}
+
+.feedback-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.rating-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 15px 0 25px;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 42px;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #f5b301;
+}
+
+.rating input:checked ~ label {
+    color: #ccc;
+}
+
+.rating label:has(~ input:checked),
+.rating input:checked + label {
+    color: #f5b301;
+}
+
+.feedback-card label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.feedback-card input,
+.feedback-card textarea,
+.feedback-card select {
+    width: 100%;
+    padding: 13px;
+    margin-top: 7px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.feedback-card textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.feedback-submit {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #16a085;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.feedback-submit:hover {
+    background: #12876f;
+}
+
+.success-message {
+    padding: 12px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.error-message {
+    padding: 12px;
+    background: #ffebee;
+    color: #c62828;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.note {
+    margin-top: 18px;
+    padding: 12px;
+    background: #fff8e1;
+    border-radius: 10px;
+    font-size: 13px;
+    color: #6d5200;
+}
+
+.home-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.home-link a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #1565c0;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="brand">
+
+<div class="logo">🤝</div>
+
+<div>
+
+<b>HelpMe Doorstep</b>
+
+<small>आपकी सेवा, आपके द्वार</small>
+
+</div>
+
+</div>
+
+<a href="/">
+Home
+</a>
+
+</header>
+
+
+<main>
+
+<div class="feedback-container">
+
+<div class="feedback-card">
+
+<h1 class="feedback-title">
+⭐ Customer Feedback
+</h1>
+
+<p class="feedback-subtitle">
+आपका Feedback हमारे लिए बहुत महत्वपूर्ण है।
+</p>
+
+
+{% for cat, msg in get_flashed_messages(with_categories=true) %}
+
+{% if cat == "success" %}
+
+<div class="success-message">
+{{ msg }}
+</div>
+
+{% else %}
+
+<div class="error-message">
+{{ msg }}
+</div>
+
+{% endif %}
+
+{% endfor %}
+
+
+<form method="post"
+      action="/feedback">
+
+
+<label>
+📋 Application ID
+
+<input
+    name="application_code"
+    placeholder="जैसे HM/DS01"
+    required>
+</label>
+
+
+<label>
+📱 Mobile Number
+
+<input
+    name="phone"
+    type="tel"
+    inputmode="numeric"
+    pattern="[0-9]{10}"
+    maxlength="10"
+    placeholder="10 अंकों का मोबाइल नंबर"
+    required>
+</label>
+
+
+<div class="rating-title">
+⭐ Service को 1 से 5 Star में Rate करें
+</div>
+
+
+<div class="rating">
+
+<input
+    type="radio"
+    id="star5"
+    name="rating"
+    value="5"
+    required>
+
+<label for="star5">★</label>
+
+
+<input
+    type="radio"
+    id="star4"
+    name="rating"
+    value="4">
+
+<label for="star4">★</label>
+
+
+<input
+    type="radio"
+    id="star3"
+    name="rating"
+    value="3">
+
+<label for="star3">★</label>
+
+
+<input
+    type="radio"
+    id="star2"
+    name="rating"
+    value="2">
+
+<label for="star2">★</label>
+
+
+<input
+    type="radio"
+    id="star1"
+    name="rating"
+    value="1">
+
+<label for="star1">★</label>
+
+</div>
+
+
+<label>
+😊 Service के बारे में आपका अनुभव
+</label>
+
+<select name="experience" required>
+
+<option value="">
+अनुभव चुनें
+</option>
+
+<option value="बहुत अच्छा">
+बहुत अच्छा
+</option>
+
+<option value="अच्छा">
+अच्छा
+</option>
+
+<option value="सामान्य">
+सामान्य
+</option>
+
+<option value="खराब">
+खराब
+</option>
+
+<option value="बहुत खराब">
+बहुत खराब
+</option>
+
+</select>
+
+
+<label>
+📝 आपका Feedback
+</label>
+
+<textarea
+    name="comment"
+    maxlength="1000"
+    placeholder="अपना सुझाव या Feedback यहाँ लिखें..."
+    required></textarea>
+
+
+<button
+    type="submit"
+    class="feedback-submit">
+
+⭐ Feedback Submit करें
+
+</button>
+
+
+</form>
+
+
+<div class="note">
+
+🔒 कृपया Feedback में OTP, Password या कोई
+अन्य confidential जानकारी न लिखें।
+
+</div>
+
+
+<div class="home-link">
+
+<a href="/">
+← Home Page पर वापस जाएँ
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</main>
+
+
+</body>
+
+</html>
