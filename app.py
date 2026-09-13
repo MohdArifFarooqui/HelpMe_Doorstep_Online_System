@@ -879,6 +879,15 @@ def worker_register():
     district = request.form.get("district", "").strip()
     latitude = request.form.get("latitude", "").strip()
     longitude = request.form.get("longitude", "").strip()
+    
+    terms_accepted = request.form.get("terms_accepted", "").strip()
+
+    if terms_accepted != "yes":
+        flash(
+            "Registration से पहले Terms & Conditions और Privacy Policy स्वीकार करना जरूरी है।",
+            "error"
+        )
+        return redirect(url_for("worker_register"))
 
     if not name or not mobile or not password or not address or not state or not district or not latitude or not longitude:
         flash("कृपया सभी जरूरी जानकारी भरें", "error")
