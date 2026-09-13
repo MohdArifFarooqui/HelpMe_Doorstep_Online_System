@@ -483,6 +483,14 @@ def admin_can_access_request(request_item):
 # CUSTOMER OTP LOGIN
 # ==============================
 
+# ==============================
+# TERMS & CONDITIONS
+# ==============================
+
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+
 @app.route("/customer/login", methods=["GET"])
 def customer_login():
     return render_template("customer_login.html")
