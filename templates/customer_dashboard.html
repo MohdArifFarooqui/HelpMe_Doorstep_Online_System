@@ -401,22 +401,39 @@
 
     <div class="card">
 
-        <h2 class="section-title">
-            🔔 Notifications
+       <h2 class="section-title">
+           🔔 Customer Message Alerts
 
-            {% if unread_count > 0 %}
-            <span style="
-                background:#e53935;
-                color:white;
-                padding:4px 9px;
-                border-radius:20px;
-                font-size:13px;
-            ">
-                {{ unread_count }} New
-            </span>
-            {% endif %}
-        </h2>
+           {% if unread_count > 0 %}
+           <span style="
+               display:inline-block;
+               background:#e53935;
+               color:white;
+               padding:5px 10px;
+               border-radius:20px;
+               font-size:13px;
+               margin-left:6px;
+               vertical-align:middle;
+               animation:pulseAlert 1.5s infinite;
+          ">
+           🔴 {{ unread_count }} New Alert
+           </span>
+           {% endif %}
+</h2>
 
+{% if unread_count > 0 %}
+<div style="
+    margin-bottom:15px;
+    padding:12px 14px;
+    background:#fff3cd;
+    border:1px solid #ffe08a;
+    border-radius:10px;
+    font-weight:bold;
+    color:#856404;
+">
+    🔔 आपके लिए नई सूचना उपलब्ध है। कृपया नीचे Notification देखें।
+</div>
+{% endif %}
 
         {% for n in notifications %}
 
