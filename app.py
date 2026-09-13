@@ -1220,7 +1220,7 @@ def verify_widget_token():
         None
         )
 
-        return {`
+        return {
             "success": True,
             "message": "Customer login successful"
         }
