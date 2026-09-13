@@ -1389,6 +1389,220 @@ def admin_feedback():
         "admin_feedback.html",
         feedbacks=feedbacks
     )
+    
+# ==============================
+# CUSTOMER COMPLAINT
+# ==============================
+
+@app.route("/complaint", methods=["GET", "POST"])
+def complaint():
+
+    if request.method == "GET":
+        return render_template("complaint.html")
+
+
+    application_code = (
+        request.form.get(
+            "application_code",
+            ""
+        ).strip().upper()
+    )
+
+    phone = (
+        request.form.get(
+            "phone",
+            ""
+        ).strip()
+    )
+
+    category = (
+        request.form.get(
+            "category",
+            ""
+        ).strip()
+    )
+
+    details = (
+        request.form.get(
+            "details",
+            ""
+        ).strip()
+    )
+
+
+    # ==============================
+    # BASIC VALIDATION
+    # ==============================
+
+    if not application_code:
+        flash(
+            "Application ID डालना जरूरी है।",
+            "error"
+        )
+        return redirect(url_for("complaint"))
+
+
+    if (
+        not phone.isdigit()
+        or len(phone) != 10
+    ):
+        flash(
+            "कृपया सही 10 अंकों का Mobile Number डालें।",
+            "error"
+        )
+        return redirect(url_for("complaint"))
+
+
+    if not category:
+        flash(
+            "कृपया Complaint Category चुनें।",
+            "error"
+        )
+        return redirect(url_for("complaint"))
+
+
+    if not details:
+        flash(
+            "कृपया Complaint Details लिखें।",
+            "error"
+        )
+        return redirect(url_for("complaint"))
+
+
+    if len(details) > 2000:
+        flash(
+            "Complaint अधिकतम 2000 characters की हो सकती है।",
+            "error"
+        )
+        return redirect(url_for("complaint"))
+
+
+    # ==============================
+    # APPLICATION ID CHECK
+    # ==============================
+
+    if not application_code.startswith("HM/DS"):
+        flash(
+            "Invalid Application ID।",
+            "error"
+        )
+        return redirect(url_for("complaint"))
+
+
+    try:
+
+        request_id = int(
+            application_code.replace(
+                "HM/DS",
+                ""
+            )
+        )
+
+    except ValueError:
+
+        flash(
+            "Invalid Application ID।",
+            "error"
+        )
+
+        return redirect(
+            url_for("complaint")
+        )
+
+
+    # ==============================
+    # FIND APPLICATION
+    # ==============================
+
+    request_item = DB.get(
+        RequestItem,
+        request_id
+    )
+
+
+    if not request_item:
+
+        flash(
+            "यह Application ID नहीं मिली।",
+            "error"
+        )
+
+        return redirect(
+            url_for("complaint")
+        )
+
+
+    # ==============================
+    # MOBILE NUMBER MATCH
+    # ==============================
+
+    if request_item.phone != phone:
+
+        flash(
+            "Application ID और Mobile Number match नहीं कर रहे हैं।",
+            "error"
+        )
+
+        return redirect(
+            url_for("complaint")
+        )
+
+
+    # ==============================
+    # SAVE COMPLAINT
+    # ==============================
+
+    new_complaint = Complaint(
+
+        request_id=request_id,
+
+        customer_phone=phone,
+
+        category=category,
+
+        details=details,
+
+        status="Pending"
+
+    )
+
+
+    DB.add(new_complaint)
+
+    DB.commit()
+
+
+    # ==============================
+    # CUSTOMER NOTIFICATION
+    # ==============================
+
+    create_customer_notification(
+
+        phone,
+
+        f"आपकी Complaint सफलतापूर्वक दर्ज हो गई है। "
+        f"Complaint ID: #{new_complaint.id}. "
+        f"Status: Pending",
+
+        request_id
+
+    )
+
+
+    flash(
+
+        f"आपकी Complaint सफलतापूर्वक दर्ज हो गई है। "
+        f"Complaint ID: #{new_complaint.id}",
+
+        "success"
+
+    )
+
+
+    return redirect(
+        url_for("complaint")
+    )
+
 
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
