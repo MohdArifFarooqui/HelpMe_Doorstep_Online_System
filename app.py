@@ -1603,6 +1603,122 @@ def complaint():
         url_for("complaint")
     )
 
+# ==============================
+# ADMIN CUSTOMER COMPLAINTS
+# ==============================
+
+@app.route("/admin/complaints")
+def admin_complaints():
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    complaints = (
+        DB.query(Complaint)
+        .order_by(
+            Complaint.created_at.desc()
+        )
+        .all()
+    )
+
+    return render_template(
+        "admin_complaints.html",
+        complaints=complaints
+    )
+
+
+# ==============================
+# ADMIN COMPLAINT STATUS UPDATE
+# ==============================
+
+@app.route(
+    "/admin/complaint/<int:complaint_id>/status",
+    methods=["POST"]
+)
+def update_complaint_status(complaint_id):
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    status = (
+        request.form.get(
+            "status",
+            ""
+        ).strip()
+    )
+
+    allowed_statuses = [
+        "Pending",
+        "In Progress",
+        "Resolved"
+    ]
+
+    if status not in allowed_statuses:
+
+        flash(
+            "Invalid Complaint Status।",
+            "error"
+        )
+
+        return redirect(
+            url_for("admin_complaints")
+        )
+
+
+    complaint = DB.get(
+        Complaint,
+        complaint_id
+    )
+
+
+    if not complaint:
+
+        flash(
+            "Complaint नहीं मिली।",
+            "error"
+        )
+
+        return redirect(
+            url_for("admin_complaints")
+        )
+
+
+    old_status = complaint.status
+
+    complaint.status = status
+
+
+    DB.commit()
+
+
+    # ==============================
+    # CUSTOMER NOTIFICATION
+    # ==============================
+
+    if old_status != status:
+
+        create_customer_notification(
+
+            complaint.customer_phone,
+
+            f"आपकी Complaint #{complaint.id} का Status "
+            f"'{status}' कर दिया गया है।",
+
+            complaint.request_id
+
+        )
+
+
+    flash(
+        f"Complaint #{complaint.id} का Status "
+        f"'{status}' कर दिया गया है।",
+        "success"
+    )
+
+
+    return redirect(
+        url_for("admin_complaints")
+    )
 
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
