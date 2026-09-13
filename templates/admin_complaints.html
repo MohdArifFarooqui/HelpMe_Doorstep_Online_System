@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Complaints - HelpMe Doorstep</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .complaints-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .complaints-header h1 {
+            margin: 0;
+        }
+
+        .dashboard-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #0870b9;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 9px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: #ffffff;
+            border: 1px solid #dce9e5;
+            border-radius: 15px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .summary-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .complaint-card {
+            background: #ffffff;
+            border: 1px solid #dce9e5;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .complaint-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .complaint-id {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .complaint-date {
+            color: #71847e;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .complaint-info {
+            margin-top: 15px;
+            line-height: 1.7;
+        }
+
+        .complaint-details {
+            margin-top: 12px;
+            padding: 14px;
+            background: #f5f8f7;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .status-form {
+            margin-top: 16px;
+            padding-top: 15px;
+            border-top: 1px solid #e4ece8;
+        }
+
+        .status-form select {
+            max-width: 300px;
+        }
+
+        .update-btn {
+            width: auto;
+            padding: 10px 18px;
+            margin-top: 10px;
+            background: #168b62;
+        }
+
+        .empty-box {
+            text-align: center;
+            padding: 40px 20px;
+            background: #ffffff;
+            border: 1px solid #dce9e5;
+            border-radius: 16px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .complaints-header {
+                align-items: stretch;
+            }
+
+            .complaints-header h1 {
+                font-size: 24px;
+            }
+
+            .dashboard-btn {
+                text-align: center;
+                width: 100%;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .complaint-card {
+                padding: 15px;
+            }
+
+            .complaint-top {
+                display: block;
+            }
+
+            .complaint-id {
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+
+            .status-badge {
+                margin-top: 10px;
+            }
+
+            .status-form select {
+                max-width: 100%;
+            }
+
+            .update-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="brand">
+
+        <img
+            class="brand-logo"
+            src="/static/WhatsApp%20Image%202026-09-13%20at%2012.32.28.jpeg"
+            alt="HelpMe Doorstep Logo">
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+    <div class="card">
+
+
+        <div class="complaints-header">
+
+            <h1>
+                📝 Customer Complaints
+            </h1>
+
+            <a
+                href="/admin"
+                class="dashboard-btn">
+
+                ← Admin Dashboard
+
+            </a>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+
+        <div class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div>
+                    Total Complaints
+                </div>
+
+                <div class="summary-number">
+                    {{ complaints|length }}
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div>
+                    Pending
+                </div>
+
+                <div class="summary-number">
+
+                    {{
+                        complaints
+                        |selectattr("status", "equalto", "Pending")
+                        |list
+                        |length
+                    }}
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div>
+                    Resolved
+                </div>
+
+                <div class="summary-number">
+
+                    {{
+                        complaints
+                        |selectattr("status", "equalto", "Resolved")
+                        |list
+                        |length
+                    }}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- COMPLAINT LIST -->
+
+
+        {% if complaints %}
+
+
+            {% for complaint in complaints %}
+
+
+                <div class="complaint-card">
+
+
+                    <div class="complaint-top">
+
+
+                        <div>
+
+                            <div class="complaint-id">
+
+                                Complaint #{{ complaint.id }}
+
+                            </div>
+
+                            <div class="complaint-date">
+
+                                {{ complaint.created_at }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="status-badge">
+
+                                {{ complaint.status }}
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="complaint-info">
+
+                        <strong>
+                            Application ID:
+                        </strong>
+
+                        HM/DS{{ "%02d"|format(complaint.request_id) }}
+
+                        <br>
+
+
+                        <strong>
+                            Customer Mobile:
+                        </strong>
+
+                        {{ complaint.customer_phone }}
+
+                        <br>
+
+
+                        <strong>
+                            Category:
+                        </strong>
+
+                        {{ complaint.category }}
+
+                    </div>
+
+
+                    <div class="complaint-details">
+
+                        <strong>
+                            Complaint Details:
+                        </strong>
+
+                        <br>
+
+                        {{ complaint.details }}
+
+                    </div>
+
+
+                    <!-- STATUS UPDATE -->
+
+
+                    <form
+                        method="post"
+                        action="/admin/complaint/{{ complaint.id }}/status"
+                        class="status-form">
+
+
+                        <label
+                            for="status-{{ complaint.id }}">
+
+                            <strong>
+                                Complaint Status बदलें
+                            </strong>
+
+                        </label>
+
+
+                        <select
+                            id="status-{{ complaint.id }}"
+                            name="status"
+                            required>
+
+
+                            <option
+                                value="Pending"
+                                {% if complaint.status == "Pending" %}
+                                selected
+                                {% endif %}>
+
+                                Pending
+
+                            </option>
+
+
+                            <option
+                                value="In Progress"
+                                {% if complaint.status == "In Progress" %}
+                                selected
+                                {% endif %}>
+
+                                In Progress
+
+                            </option>
+
+
+                            <option
+                                value="Resolved"
+                                {% if complaint.status == "Resolved" %}
+                                selected
+                                {% endif %}>
+
+                                Resolved
+
+                            </option>
+
+
+                        </select>
+
+
+                        <br>
+
+
+                        <button
+                            type="submit"
+                            class="update-btn">
+
+                            🔄 Update Status
+
+                        </button>
+
+
+                    </form>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty-box">
+
+                <h2>
+                    📭 कोई Complaint नहीं है
+                </h2>
+
+                <p>
+                    अभी तक किसी Customer ने Complaint Submit नहीं की है।
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
