@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1">
+
+    <title>HelpMe Doorstep - AI Support</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+        }
+
+        header {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+
+        header a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #1565c0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 25px auto;
+            padding: 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.10);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1565c0;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        #chatBox {
+            height: 430px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            background: #f8fafc;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 12px 14px;
+            border-radius: 12px;
+            max-width: 85%;
+            line-height: 1.5;
+        }
+
+        .user {
+            margin-left: auto;
+            background: #1976d2;
+            color: white;
+        }
+
+        .bot {
+            margin-right: auto;
+            background: #e8f5e9;
+            color: #222;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        #question {
+            flex: 1;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #sendBtn {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            background: #1976d2;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #sendBtn:disabled {
+            background: #999;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .quick-buttons button {
+            border: 1px solid #1976d2;
+            background: white;
+            color: #1976d2;
+            border-radius: 20px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .notice {
+            margin-top: 15px;
+            padding: 10px;
+            background: #fff8e1;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #6d5200;
+        }
+
+        @media (max-width: 600px) {
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            #sendBtn {
+                width: 100%;
+            }
+
+            #chatBox {
+                height: 380px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <strong>
+        🤖 HelpMe Doorstep
+    </strong>
+
+    <a href="/">
+        Home
+    </a>
+
+</header>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            🤖 AI Support
+        </h1>
+
+        <div class="subtitle">
+            HelpMe Doorstep सहायता केंद्र
+        </div>
+
+
+        <div id="chatBox">
+
+            <div class="message bot">
+                नमस्ते! 👋<br><br>
+
+                मैं HelpMe Doorstep Support Assistant हूँ।
+                आप मुझसे सेवा, आवेदन, Status, Worker, Customer
+                या किसी सामान्य सहायता के बारे में पूछ सकते हैं।
+            </div>
+
+        </div>
+
+
+        <div class="quick-buttons">
+
+            <button onclick="askQuestion('मेरा आवेदन Status कैसे देखें?')">
+                📋 Status
+            </button>
+
+            <button onclick="askQuestion('Customer Login कैसे करें?')">
+                👤 Customer Login
+            </button>
+
+            <button onclick="askQuestion('Worker कैसे Register करें?')">
+                👨‍💼 Worker Registration
+            </button>
+
+            <button onclick="askQuestion('Help Line Number क्या है?')">
+                📞 Help Line
+            </button>
+
+            <button onclick="askQuestion('Complaint कैसे करें?')">
+                📝 Complaint
+            </button>
+
+        </div>
+
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="question"
+                placeholder="अपना सवाल यहाँ लिखें..."
+                onkeydown="handleEnter(event)"
+            >
+
+            <button
+                id="sendBtn"
+                onclick="sendQuestion()">
+                भेजें
+            </button>
+
+        </div>
+
+
+        <div class="notice">
+            ⚠️ AI Support सामान्य सहायता के लिए है।
+            OTP, Password या अन्य confidential जानकारी यहाँ साझा न करें।
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function addMessage(text, type) {
+
+    const chatBox =
+        document.getElementById("chatBox");
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+    message.innerHTML =
+        text;
+
+    chatBox.appendChild(message);
+
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
+}
+
+
+function askQuestion(question) {
+
+    document.getElementById("question").value =
+        question;
+
+    sendQuestion();
+}
+
+
+function handleEnter(event) {
+
+    if (event.key === "Enter") {
+        sendQuestion();
+    }
+
+}
+
+
+async function sendQuestion() {
+
+    const input =
+        document.getElementById("question");
+
+    const button =
+        document.getElementById("sendBtn");
+
+    const question =
+        input.value.trim();
+
+    if (!question) {
+        return;
+    }
+
+
+    addMessage(
+        question,
+        "user"
+    );
+
+    input.value = "";
+
+    button.disabled = true;
+
+    button.innerText =
+        "सोच रहा हूँ...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/ai-support",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        question: question
+                    })
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (result.success) {
+
+            addMessage(
+                result.answer,
+                "bot"
+            );
+
+        } else {
+
+            addMessage(
+                result.message ||
+                "अभी सहायता उपलब्ध नहीं है।",
+                "bot"
+            );
+
+        }
+
+
+    } catch (error) {
+
+        addMessage(
+            "Server से connection में समस्या हुई। कृपया कुछ देर बाद फिर प्रयास करें।",
+            "bot"
+        );
+
+    }
+
+
+    button.disabled = false;
+
+    button.innerText =
+        "भेजें";
+
+}
+
+</script>
+
+</body>
+
+</html>
