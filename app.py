@@ -1218,7 +1218,7 @@ def verify_widget_token():
         customer.mobile,
         "🔐 Security Alert: आपके HelpMe Doorstep Customer Account में नया Login हुआ है। यदि यह Login आपने नहीं किया है, तो तुरंत Help Line से संपर्क करें।",
         None
-    )
+        )
 
         return {`
             "success": True,
