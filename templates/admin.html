@@ -44,14 +44,44 @@ body {
     margin-bottom: 30px;
 }
 
-.topbar h1 {
-    margin: 0;
-    font-size: 32px;
-    line-height: 1.25;
-    font-weight: 800;
-    color: #075e54;
+.topbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+    margin-bottom: 30px;
 }
 
+.admin-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+}
+
+.admin-brand img {
+    width: 210px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.admin-brand span {
+    font-size: 34px;
+    font-weight: 800;
+    color: #075e54;
+    white-space: nowrap;
+}
+
+.topbar p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #64746f;
+}
+    
 .topbar p {
     margin: 10px 0 0;
     font-size: 18px;
@@ -440,6 +470,24 @@ button:hover,
     .topbar {
         gap: 16px;
         margin-bottom: 25px;
+    }
+  
+    .admin-brand {
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+
+    .admin-brand img {
+        width: 125px;
+    }
+
+    .admin-brand span {
+        font-size: 25px;
+        white-space: nowrap;
+    }
+
+    .topbar p {
+        font-size: 16px;
     }
 
     .topbar h1 {
