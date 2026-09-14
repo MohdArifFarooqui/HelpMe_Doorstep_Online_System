@@ -1365,8 +1365,8 @@ def home():
         services=SERVICES
     )
 
-@app.get("/services")
-def services():
+@app.get("/service")
+def service():
     return render_template("service.html")
 @app.post("/request-service")
 def add():
