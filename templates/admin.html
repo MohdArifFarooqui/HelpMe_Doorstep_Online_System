@@ -62,10 +62,13 @@ body {
 }
 
 .admin-brand img {
-    width: 210px;
-    height: auto;
-    display: block;
+    width: 190px !important;
+    max-width: 190px !important;
+    height: auto !important;
+    max-height: 90px !important;
+    display: block !important;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
 .admin-brand span {
@@ -478,7 +481,12 @@ button:hover,
     }
 
     .admin-brand img {
-        width: 125px;
+    width: 125px !important;
+    max-width: 125px !important;
+    max-height: 70px !important;
+    height: auto !important;
+    object-fit: contain;
+    display: block;
     }
 
     .admin-brand span {
