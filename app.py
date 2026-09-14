@@ -1365,6 +1365,10 @@ def home():
         services=SERVICES
     )
 
+@app.get("/services")
+def services():
+    return render_template("services.html")
+
 @app.post("/request-service")
 def add():
     d = request.form
