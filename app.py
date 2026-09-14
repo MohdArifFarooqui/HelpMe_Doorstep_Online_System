@@ -1051,7 +1051,9 @@ def terms():
 @app.route("/privacy")
 def privacy():
     return render_template("privacy.html")
-
+@app.route("/about")
+def about():
+    return render_template("about.html")
 @app.route("/customer/login", methods=["GET"])
 def customer_login():
     return render_template("customer_login.html")
