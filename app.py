@@ -2723,7 +2723,7 @@ def worker_verify_widget_token():
         "api/v5/widget/verifyAccessToken"
     )
 
-   payload = json.dumps({
+    payload = json.dumps({
         "authkey": authkey,
         "access-token": access_token
     }).encode("utf-8")
