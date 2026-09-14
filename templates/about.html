@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>हमारे बारे में - HelpMe Doorstep</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Noto Sans Devanagari", sans-serif;
+            background: #f3f8f6;
+            color: #173c33;
+        }
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        header {
+            background: #ffffff;
+            padding: 18px 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #dce9e5;
+        }
+
+        .logo {
+            width: 300px;
+            max-width: 88%;
+            height: auto;
+            display: block;
+            margin: 0 auto 12px;
+        }
+
+        header h1 {
+            margin: 5px 0 7px;
+            color: #075e54;
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        header p {
+            margin: 0;
+            color: #64746f;
+            font-size: 17px;
+        }
+
+        /* =========================
+           MAIN
+           ========================= */
+
+        main {
+            width: min(1000px, 92%);
+            margin: 28px auto 45px;
+        }
+
+        /* =========================
+           CARD
+           ========================= */
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #dce9e5;
+            border-radius: 20px;
+            padding: 26px;
+            margin-bottom: 22px;
+            box-shadow: 0 7px 22px rgba(22, 91, 72, .08);
+        }
+
+        .card h2 {
+            margin: 0 0 16px;
+            color: #075e54;
+            font-size: 25px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #52635e;
+        }
+
+        /* =========================
+           INTRODUCTION
+           ========================= */
+
+        .intro {
+            text-align: center;
+        }
+
+        .intro h2 {
+            font-size: 27px;
+        }
+
+        .intro strong {
+            color: #075e54;
+        }
+
+        /* =========================
+           MISSION
+           ========================= */
+
+        .mission {
+            background: linear-gradient(
+                135deg,
+                #075e54,
+                #11966f
+            );
+
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .mission h2,
+        .mission p {
+            color: #ffffff;
+        }
+
+        /* =========================
+           FEATURES
+           ========================= */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .feature {
+            background: #f6faf8;
+            border: 1px solid #dce9e5;
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        .feature .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .feature h3 {
+            margin: 5px 0 8px;
+            color: #075e54;
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .feature p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           CONTACT
+           ========================= */
+
+        .contact {
+            text-align: center;
+        }
+
+        .contact-number {
+            display: block;
+            margin: 12px auto;
+            width: fit-content;
+            color: #0878bd;
+            font-size: 21px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .contact-number:hover {
+            text-decoration: underline;
+        }
+
+        .contact-info {
+            margin-top: 22px;
+            padding-top: 20px;
+            border-top: 1px solid #dce9e5;
+        }
+
+        .contact-info p {
+            margin: 14px 0 7px;
+            color: #173c33;
+            font-size: 17px;
+        }
+
+        .contact-info a {
+            display: block;
+            margin: 7px 0;
+            color: #0878bd;
+            font-size: 17px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           BUTTONS
+           ========================= */
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 190px;
+            padding: 13px 22px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-home {
+            background: #075e54;
+            color: #ffffff;
+        }
+
+        .btn-status {
+            background: #168b62;
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            background: #e8efed;
+            color: #173c33;
+        }
+
+        /* =========================
+           FOOTER
+           ========================= */
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            background: #075e54;
+            color: #ffffff;
+        }
+
+        footer strong {
+            font-size: 19px;
+        }
+
+        footer p {
+            margin: 7px 0 0;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px 10px 18px;
+            }
+
+            .logo {
+                width: 260px;
+                max-width: 90%;
+            }
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            header p {
+                font-size: 15px;
+            }
+
+            main {
+                width: 92%;
+                margin-top: 20px;
+            }
+
+            .card {
+                padding: 21px 16px;
+                border-radius: 17px;
+                margin-bottom: 17px;
+            }
+
+            .card h2 {
+                font-size: 22px;
+            }
+
+            .card p {
+                font-size: 16px;
+                line-height: 1.7;
+            }
+
+            .intro h2 {
+                font-size: 23px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .feature {
+                padding: 18px 14px;
+            }
+
+            .feature .icon {
+                font-size: 32px;
+            }
+
+            .feature h3 {
+                font-size: 18px;
+            }
+
+            .contact-number {
+                font-size: 19px;
+            }
+
+            .contact-info a {
+                font-size: 16px;
+                word-break: break-word;
+            }
+
+            .actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+         ========================= -->
+
+    <header>
+
+        <img
+            class="logo"
+            src="/static/helpme-doorstep-logo.png.jpeg"
+            alt="HelpMe Doorstep Logo">
+
+        <h1>ℹ️ हमारे बारे में</h1>
+
+        <p>
+            HelpMe Doorstep — आपकी सेवा, आपके घर
+        </p>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+
+    <main>
+
+
+        <!-- INTRODUCTION -->
+
+        <section class="card intro">
+
+            <h2>
+                🏠 HelpMe Doorstep क्या है?
+            </h2>
+
+            <p>
+                <strong>HelpMe Doorstep</strong> एक doorstep
+                service platform है, जिसका उद्देश्य लोगों को
+                आवश्यक सेवाओं की जानकारी और सहायता उनके घर
+                तक पहुँचाने की प्रक्रिया को आसान बनाना है।
+            </p>
+
+            <br>
+
+            <p>
+                ग्राहक अपनी आवश्यकता के अनुसार सेवा अनुरोध
+                भेज सकते हैं। हमारी टीम अनुरोध की जानकारी
+                देखकर आवश्यक प्रक्रिया में ग्राहक की सहायता
+                करती है।
+            </p>
+
+        </section>
+
+
+        <!-- MISSION -->
+
+        <section class="card mission">
+
+            <h2>
+                🎯 हमारा उद्देश्य
+            </h2>
+
+            <p>
+                लोगों को घर बैठे सरल, सुविधाजनक और पारदर्शी
+                तरीके से आवश्यक सेवा सहायता उपलब्ध कराना।
+            </p>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section class="card">
+
+            <h2>
+                🛠️ हमारी प्रमुख सुविधाएँ
+            </h2>
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="icon">🏠</div>
+
+                    <h3>
+                        Doorstep Service
+                    </h3>
+
+                    <p>
+                        घर बैठे सेवा अनुरोध भेजने की सुविधा।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">📋</div>
+
+                    <h3>
+                        Application Status
+                    </h3>
+
+                    <p>
+                        अपने आवेदन की स्थिति ऑनलाइन देखने
+                        की सुविधा।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">🤖</div>
+
+                    <h3>
+                        AI Support
+                    </h3>
+
+                    <p>
+                        सामान्य सवालों के लिए तुरंत सहायता।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">🔔</div>
+
+                    <h3>
+                        Customer Alerts
+                    </h3>
+
+                    <p>
+                        आवेदन और सेवा से संबंधित महत्वपूर्ण
+                        जानकारी प्राप्त करें।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">⭐</div>
+
+                    <h3>
+                        Customer Feedback
+                    </h3>
+
+                    <p>
+                        सेवा के अनुभव और सुझाव साझा करने
+                        की सुविधा।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">📞</div>
+
+                    <h3>
+                        Customer Support
+                    </h3>
+
+                    <p>
+                        सहायता और समस्या समाधान के लिए
+                        Customer Care सुविधा।
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+
+        <section class="card">
+
+            <h2>
+                📌 सेवा कैसे काम करती है?
+            </h2>
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="icon">1️⃣</div>
+
+                    <h3>
+                        Request भेजें
+                    </h3>
+
+                    <p>
+                        अपनी आवश्यकता और आवश्यक जानकारी
+                        भरकर सेवा अनुरोध भेजें।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">2️⃣</div>
+
+                    <h3>
+                        Request की जाँच
+                    </h3>
+
+                    <p>
+                        हमारी टीम आपके अनुरोध की जानकारी
+                        देखती है।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">3️⃣</div>
+
+                    <h3>
+                        Service Process
+                    </h3>
+
+                    <p>
+                        आवश्यक प्रक्रिया के अनुसार संबंधित
+                        कर्मचारी या सेवा सहायता उपलब्ध कराई
+                        जाती है।
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">4️⃣</div>
+
+                    <h3>
+                        Status देखें
+                    </h3>
+
+                    <p>
+                        ग्राहक अपने आवेदन की स्थिति
+                        ऑनलाइन देख सकता है।
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- SECURITY -->
+
+        <section class="card">
+
+            <h2>
+                🔐 सुरक्षा और गोपनीयता
+            </h2>
+
+            <p>
+                हम ग्राहक की जानकारी की सुरक्षा और गोपनीयता
+                को महत्वपूर्ण मानते हैं। ग्राहक की जानकारी
+                का उपयोग सेवा प्रक्रिया और संबंधित सहायता
+                के लिए किया जाता है।
+            </p>
+
+        </section>
+
+
+        <!-- CONTACT -->
+
+        <section class="card contact">
+
+            <h2>
+                📞 HelpMe Doorstep Help Line
+            </h2>
+
+            <p>
+                किसी सहायता, शिकायत या अन्य जानकारी के लिए
+                हमारे Help Line से संपर्क करें।
+            </p>
+
+
+            <a
+                class="contact-number"
+                href="tel:+918887410600">
+
+                📞 +91 8887410600
+
+            </a>
+
+
+            <a
+                class="contact-number"
+                href="tel:+919219160465">
+
+                📞 +91 9219160465
+
+            </a>
+
+
+            <div class="contact-info">
+
+
+                <p>
+                    📧 <strong>Mail ID</strong>
+                </p>
+
+
+                <a href="mailto:support@helpmedoorstep.in">
+
+                    support@helpmedoorstep.in
+
+                </a>
+
+
+                <a href="mailto:info@helpmedoorstep.in">
+
+                    info@helpmedoorstep.in
+
+                </a>
+
+
+                <p>
+                    🌐 <strong>Website</strong>
+                </p>
+
+
+                <a
+                    href="https://www.helpmedoorstep.in"
+                    target="_blank"
+                    rel="noopener">
+
+                    www.helpmedoorstep.in
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="actions">
+
+
+            <a
+                class="btn btn-home"
+                href="/">
+
+                🏠 Home
+
+            </a>
+
+
+            <a
+                class="btn btn-status"
+                href="/status">
+
+                📋 आवेदन की स्थिति
+
+            </a>
+
+
+            <a
+                class="btn btn-secondary"
+                href="/privacy">
+
+                🔐 Privacy Policy
+
+            </a>
+
+
+            <a
+                class="btn btn-secondary"
+                href="/terms">
+
+                📄 Terms & Conditions
+
+            </a>
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+         ========================= -->
+
+    <footer>
+
+        <strong>
+            Help Me Door Step
+        </strong>
+
+        <p>
+            © 2026 Help Me Door Step | सभी अधिकार सुरक्षित
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>
