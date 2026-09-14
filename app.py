@@ -2675,6 +2675,149 @@ def status(rid):
 
     return redirect(url_for("admin"))
 
+# ==============================
+# WORKER MSG91 WIDGET TOKEN LOGIN
+# ==============================
+
+@app.post("/api/worker/verify-widget-token")
+def worker_verify_widget_token():
+
+    mobile = request.form.get(
+        "mobile",
+        ""
+    ).strip()
+
+    access_token = request.form.get(
+        "access_token",
+        ""
+    ).strip()
+
+    if not mobile or not access_token:
+        return {
+            "success": False,
+            "message": "Mobile और Access Token जरूरी हैं।"
+        }, 400
+
+    if not mobile.isdigit() or len(mobile) != 10:
+        return {
+            "success": False,
+            "message": "Invalid mobile number।"
+        }, 400
+
+    authkey = os.environ.get(
+        "MSG91_AUTHKEY"
+    )
+
+    if not authkey:
+        return {
+            "success": False,
+            "message": "MSG91 Authkey server पर configured नहीं है।"
+        }, 500
+
+    # ==============================
+    # MSG91 ACCESS TOKEN VERIFY
+    # ==============================
+
+    verify_url = (
+        "https://control.msg91.com/"
+        "api/v5/widget/verifyAccessToken"
+    )
+
+    params = urllib.parse.urlencode({
+        "authkey": authkey,
+        "access-token": access_token
+    }).encode("utf-8")
+
+    try:
+
+        req = urllib.request.Request(
+            verify_url,
+            data=params,
+            method="POST",
+            headers={
+                "Content-Type":
+                    "application/x-www-form-urlencoded"
+            }
+        )
+
+        with urllib.request.urlopen(
+            req,
+            timeout=15
+        ) as response:
+
+            result = json.loads(
+                response.read().decode("utf-8")
+            )
+
+    except Exception as error:
+
+        print(
+            "MSG91 Worker Token Verify Error:",
+            error
+        )
+
+        return {
+            "success": False,
+            "message":
+                "MSG91 Access Token verify नहीं हो सका।"
+        }, 401
+
+    # ==============================
+    # TOKEN VERIFIED
+    # ==============================
+
+    if str(result.get("type", "")).lower() != "success":
+
+        print(
+            "MSG91 Worker Token Response:",
+            result
+        )
+
+        return {
+            "success": False,
+            "message":
+                "MSG91 Access Token invalid या expired है।"
+        }, 401
+
+    # ==============================
+    # FIND WORKER
+    # ==============================
+
+    worker = (
+        DB.query(User)
+        .filter(
+            User.mobile == mobile,
+            User.role == "worker",
+            User.active == True,
+            User.approved == True
+        )
+        .first()
+    )
+
+    if not worker:
+
+        return {
+            "success": False,
+            "message":
+                "यह Mobile Number किसी Active और Approved Worker का नहीं है।"
+        }, 403
+
+    # ==============================
+    # CREATE WORKER SESSION
+    # ==============================
+
+    session.clear()
+
+    session.permanent = True
+
+    session["worker_id"] = worker.id
+
+    session["worker"] = True
+
+    return {
+        "success": True,
+        "message": "Worker Login सफल हुआ।"
+    }
 
 @app.get("/status")
 def check_status():
