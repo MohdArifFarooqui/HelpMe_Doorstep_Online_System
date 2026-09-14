@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>हमारी सेवाएँ - HelpMe Doorstep</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+    background: #f3f9f7;
+    color: #173c33;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+header {
+    background: #ffffff;
+    padding: 18px 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid #dce9e5;
+    box-shadow: 0 3px 15px rgba(20,80,65,.07);
+}
+
+.logo {
+    width: 300px;
+    max-width: 88%;
+    height: auto;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+header h1 {
+    margin: 5px 0 7px;
+    color: #075e54;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+header p {
+    margin: 0;
+    color: #64746f;
+    font-size: 17px;
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+nav {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 12px;
+    background: #eef7f4;
+    justify-content: center;
+}
+
+nav a {
+    flex: 0 0 auto;
+    padding: 11px 18px;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #17463b;
+    text-decoration: none;
+    font-weight: 700;
+    border: 1px solid #dce9e5;
+}
+
+nav a.active {
+    background: #e1f3ed;
+    color: #075e54;
+}
+
+/* =========================
+   MAIN
+   ========================= */
+
+main {
+    width: min(1000px, 92%);
+    margin: 28px auto 45px;
+}
+
+/* =========================
+   INTRO CARD
+   ========================= */
+
+.intro {
+    background: #ffffff;
+    border: 1px solid #dce9e5;
+    border-radius: 22px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(22,91,72,.08);
+    margin-bottom: 22px;
+}
+
+.intro h2 {
+    margin: 0 0 12px;
+    color: #075e54;
+    font-size: 27px;
+}
+
+.intro p {
+    margin: 0;
+    color: #61716c;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+/* =========================
+   SERVICES GRID
+   ========================= */
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.service-card {
+    background: #ffffff;
+    border: 1px solid #dce9e5;
+    border-radius: 20px;
+    padding: 24px 18px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(22,91,72,.08);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(22,91,72,.12);
+}
+
+.service-icon {
+    font-size: 43px;
+    margin-bottom: 10px;
+}
+
+.service-card h3 {
+    margin: 5px 0 10px;
+    color: #075e54;
+    font-size: 20px;
+}
+
+.service-card p {
+    margin: 0;
+    color: #63736e;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* =========================
+   BUTTON
+   ========================= */
+
+.service-button {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: #11966f;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.service-button:hover {
+    background: #087f60;
+}
+
+/* =========================
+   BOTTOM CARD
+   ========================= */
+
+.action-card {
+    margin-top: 22px;
+    background: linear-gradient(
+        135deg,
+        #075e54,
+        #11966f
+    );
+    color: #ffffff;
+    border-radius: 22px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(22,91,72,.12);
+}
+
+.action-card h2 {
+    margin: 0 0 10px;
+    font-size: 25px;
+}
+
+.action-card p {
+    margin: 0 0 20px;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.action-button {
+    display: inline-block;
+    padding: 14px 25px;
+    border-radius: 13px;
+    background: #ffffff;
+    color: #075e54;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 17px;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+    text-align: center;
+    padding: 25px 15px;
+    background: #075e54;
+    color: #ffffff;
+}
+
+footer strong {
+    font-size: 19px;
+}
+
+footer p {
+    margin: 7px 0 0;
+    font-size: 14px;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 15px 10px 18px;
+    }
+
+    .logo {
+        width: 260px;
+        max-width: 90%;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    header p {
+        font-size: 15px;
+    }
+
+    nav {
+        justify-content: flex-start;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    main {
+        width: 92%;
+        margin-top: 20px;
+    }
+
+    .intro {
+        padding: 21px 16px;
+        border-radius: 18px;
+    }
+
+    .intro h2 {
+        font-size: 23px;
+    }
+
+    .intro p {
+        font-size: 16px;
+    }
+
+    .services {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .service-card {
+        padding: 21px 16px;
+        border-radius: 18px;
+    }
+
+    .service-icon {
+        font-size: 38px;
+    }
+
+    .service-card h3 {
+        font-size: 19px;
+    }
+
+    .action-card {
+        border-radius: 18px;
+        padding: 24px 16px;
+    }
+
+    .action-card h2 {
+        font-size: 22px;
+    }
+
+    .action-button {
+        width: 100%;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+    <img
+        class="logo"
+        src="/static/helpme-doorstep-logo.png.jpeg"
+        alt="HelpMe Doorstep Logo">
+
+    <h1>🛠️ हमारी सेवाएँ</h1>
+
+    <p>
+        आपकी आवश्यकता के अनुसार सेवा सहायता
+    </p>
+
+</header>
+
+
+<nav>
+
+    <a href="/">
+        🏠 होम
+    </a>
+
+    <a href="/about">
+        ℹ️ हमारे बारे में
+    </a>
+
+    <a href="/services" class="active">
+        📄 सेवाएँ
+    </a>
+
+    <a href="tel:8887410600">
+        📞 संपर्क करें
+    </a>
+
+</nav>
+
+
+<main>
+
+<section class="intro">
+
+    <h2>
+        🏠 HelpMe Doorstep Services
+    </h2>
+
+    <p>
+        अपनी आवश्यकता के अनुसार नीचे दी गई सेवा चुनें।
+        आप घर बैठे अपना सेवा अनुरोध भेज सकते हैं।
+    </p>
+
+</section>
+
+
+<section class="services">
+
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            🤰
+        </div>
+
+        <h3>
+            गर्भवती महिला सहायता
+        </h3>
+
+        <p>
+            गर्भवती महिलाओं को आवश्यक सेवा और
+            सहायता प्राप्त करने की प्रक्रिया में मदद।
+        </p>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            🏥
+        </div>
+
+        <h3>
+            Serious Patient
+        </h3>
+
+        <p>
+            गंभीर मरीजों के लिए आवश्यक सहायता और
+            सेवा प्रक्रिया की जानकारी।
+        </p>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            👴
+        </div>
+
+        <h3>
+            Senior Citizen Assistance
+        </h3>
+
+        <p>
+            वरिष्ठ नागरिकों के लिए आवश्यक सहायता
+            और doorstep service support।
+        </p>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            ♿
+        </div>
+
+        <h3>
+            दिव्यांगजन सहायता
+        </h3>
+
+        <p>
+            दिव्यांगजनों के लिए आवश्यक सेवा सहायता
+            और सुविधा प्राप्त करने में मदद।
+        </p>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            💻
+        </div>
+
+        <h3>
+            Digital & Citizen Services
+        </h3>
+
+        <p>
+            Digital और Citizen Services से संबंधित
+            आवश्यक सहायता।
+        </p>
+
+    </div>
+
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            🤝
+        </div>
+
+        <h3>
+            अन्य सहायता
+        </h3>
+
+        <p>
+            ऐसी अन्य आवश्यकता जिसके लिए आपको
+            सहायता की जरूरत हो।
+        </p>
+
+    </div>
+
+
+</section>
+
+
+<section class="action-card">
+
+    <h2>
+        📋 सेवा का अनुरोध भेजें
+    </h2>
+
+    <p>
+        यदि आपको ऊपर दी गई किसी सेवा की आवश्यकता है,
+        तो घर बैठे अपना सेवा अनुरोध भेजें।
+    </p>
+
+    <a
+        class="action-button"
+        href="/#serviceForm">
+        🏠 सेवा अनुरोध भेजें
+    </a>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <strong>
+        HelpMe Doorstep
+    </strong>
+
+    <p>
+        © 2026 HelpMe Doorstep | सभी अधिकार सुरक्षित
+    </p>
+
+</footer>
+
+</body>
+</html>
