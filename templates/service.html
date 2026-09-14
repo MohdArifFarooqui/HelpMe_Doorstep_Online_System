@@ -8,13 +8,19 @@
 <title>हमारी सेवाएँ - HelpMe Doorstep</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
 
-body {
+html, body {
+    width: 100%;
+    max-width: 100%;
     margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
     font-family: Arial, "Noto Sans Devanagari", sans-serif;
     background: #f3f9f7;
     color: #173c33;
@@ -25,6 +31,7 @@ body {
    ========================= */
 
 header {
+    width: 100%;
     background: #ffffff;
     padding: 18px 15px 20px;
     text-align: center;
@@ -57,27 +64,38 @@ header p {
    NAVIGATION
    ========================= */
 
-nav {
+.home-nav {
+    width: 100%;
+    max-width: 1100px;
+    margin: 16px auto;
+    padding: 8px;
     display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 12px;
-    background: #eef7f4;
+    gap: 8px;
     justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    background: #ffffff;
+    border: 1px solid #dce9e5;
+    border-radius: 18px;
+    box-shadow: 0 5px 18px rgba(22,91,72,.08);
 }
 
-nav a {
-    flex: 0 0 auto;
-    padding: 11px 18px;
-    border-radius: 14px;
-    background: #ffffff;
+.home-nav a {
+    flex: 1 1 180px;
+    min-width: 150px;
+    padding: 13px 15px;
+    border-radius: 13px;
+    background: #eef7f4;
     color: #17463b;
     text-decoration: none;
     font-weight: 700;
+    text-align: center;
     border: 1px solid #dce9e5;
+    font-size: 16px;
 }
 
-nav a.active {
+.home-nav a:hover,
+.home-nav a.active {
     background: #e1f3ed;
     color: #075e54;
 }
@@ -87,7 +105,7 @@ nav a.active {
    ========================= */
 
 main {
-    width: min(1000px, 92%);
+    width: min(1100px, 94%);
     margin: 28px auto 45px;
 }
 
@@ -96,6 +114,7 @@ main {
    ========================= */
 
 .intro {
+    width: 100%;
     background: #ffffff;
     border: 1px solid #dce9e5;
     border-radius: 22px;
@@ -123,12 +142,15 @@ main {
    ========================= */
 
 .services {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
 }
 
 .service-card {
+    width: 100%;
+    min-width: 0;
     background: #ffffff;
     border: 1px solid #dce9e5;
     border-radius: 20px;
@@ -152,6 +174,7 @@ main {
     margin: 5px 0 10px;
     color: #075e54;
     font-size: 20px;
+    line-height: 1.35;
 }
 
 .service-card p {
@@ -162,36 +185,13 @@ main {
 }
 
 /* =========================
-   BUTTON
-   ========================= */
-
-.service-button {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 12px 20px;
-    border-radius: 12px;
-    background: #11966f;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 16px;
-}
-
-.service-button:hover {
-    background: #087f60;
-}
-
-/* =========================
    BOTTOM CARD
    ========================= */
 
 .action-card {
+    width: 100%;
     margin-top: 22px;
-    background: linear-gradient(
-        135deg,
-        #075e54,
-        #11966f
-    );
+    background: linear-gradient(135deg, #075e54, #11966f);
     color: #ffffff;
     border-radius: 22px;
     padding: 28px 20px;
@@ -226,6 +226,8 @@ main {
    ========================= */
 
 footer {
+    width: 100%;
+    margin: 0;
     text-align: center;
     padding: 25px 15px;
     background: #075e54;
@@ -239,6 +241,22 @@ footer strong {
 footer p {
     margin: 7px 0 0;
     font-size: 14px;
+}
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+
+    main {
+        width: 94%;
+    }
+
+    .services {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+    }
 }
 
 /* =========================
@@ -264,17 +282,27 @@ footer p {
         font-size: 15px;
     }
 
-    nav {
+    .home-nav {
+        width: calc(100% - 20px);
+        margin: 12px auto;
         justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 6px;
+        padding: 7px;
+        -webkit-overflow-scrolling: touch;
     }
 
-    nav a {
+    .home-nav a {
+        flex: 0 0 auto;
+        min-width: 125px;
+        padding: 11px 12px;
         font-size: 14px;
-        padding: 10px 14px;
+        white-space: nowrap;
     }
 
     main {
-        width: 92%;
+        width: 94%;
         margin-top: 20px;
     }
 
@@ -323,9 +351,23 @@ footer p {
     }
 }
 
+/* =========================
+   VERY SMALL MOBILE
+   ========================= */
+
+@media (max-width: 380px) {
+
+    .home-nav a {
+        min-width: 115px;
+        font-size: 13px;
+    }
+
+    .service-card {
+        padding: 20px 14px;
+    }
+}
 </style>
 </head>
-
 
 <body>
 
@@ -344,25 +386,23 @@ footer p {
 
 </header>
 
+<nav class="home-nav" aria-label="मुख्य मेनू">
 
-<nav>
+    <a href="/">🏠 होम</a>
 
-  <nav class="home-nav" aria-label="मुख्य मेनू">
-  <a href="/">🏠 होम</a>
+    <a href="/about">
+        ℹ️ हमारे बारे में
+    </a>
 
-  <a href="/about">
-    ℹ️ हमारे बारे में
-  </a>
+    <a href="/service" class="active">
+        📄 सेवाएँ
+    </a>
 
-  <a href="/service">
-    📄 सेवाएँ
-  </a>
+    <a href="/contact">
+        📞 संपर्क करें
+    </a>
 
-  <a href="/contact">
-    📞 संपर्क करें
-  </a>
 </nav>
-
 
 <main>
 
@@ -379,9 +419,7 @@ footer p {
 
 </section>
 
-
 <section class="services">
-
 
     <div class="service-card">
 
@@ -400,7 +438,6 @@ footer p {
 
     </div>
 
-
     <div class="service-card">
 
         <div class="service-icon">
@@ -417,7 +454,6 @@ footer p {
         </p>
 
     </div>
-
 
     <div class="service-card">
 
@@ -436,7 +472,6 @@ footer p {
 
     </div>
 
-
     <div class="service-card">
 
         <div class="service-icon">
@@ -453,7 +488,6 @@ footer p {
         </p>
 
     </div>
-
 
     <div class="service-card">
 
@@ -472,7 +506,6 @@ footer p {
 
     </div>
 
-
     <div class="service-card">
 
         <div class="service-icon">
@@ -490,9 +523,7 @@ footer p {
 
     </div>
 
-
 </section>
-
 
 <section class="action-card">
 
@@ -514,7 +545,6 @@ footer p {
 </section>
 
 </main>
-
 
 <footer>
 
