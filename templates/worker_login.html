@@ -308,66 +308,56 @@ loadMSG91Widget();
 async function sendOTP() {
 
     const mobile =
-        document
-        .getElementById("mobile")
-        .value
-        .trim();
+        document.getElementById("mobile").value.trim();
 
     const button =
-        document
-        .getElementById("sendOtpBtn");
+        document.getElementById("sendOtpBtn");
 
     const message =
-        document
-        .getElementById("message");
-
+        document.getElementById("message");
 
     message.className = "";
     message.innerText = "";
 
-
     if (!/^\d{10}$/.test(mobile)) {
 
-        message.className =
-            "message error";
+        message.className = "message error";
 
         message.innerText =
             "कृपया सही 10 अंकों का मोबाइल नंबर डालें।";
 
         return;
-
     }
 
+    if (
+        typeof window.sendOtp !== "function"
+    ) {
 
-    if (!widgetReady) {
-
-        message.className =
-            "message error";
+        message.className = "message error";
 
         message.innerText =
-            "OTP service अभी load हो रही है। कुछ सेकंड बाद फिर कोशिश करें।";
+            "OTP Service अभी तैयार नहीं है। कृपया कुछ सेकंड बाद फिर प्रयास करें।";
 
         return;
-
     }
-
 
     button.disabled = true;
 
     button.innerText =
         "OTP भेजा जा रहा है...";
 
+    const identifier =
+        "91" + mobile;
 
     try {
 
         window.sendOtp(
+            identifier,
 
-            "91" + mobile,
-
-            function(data) {
+            function (data) {
 
                 console.log(
-                    "OTP Sent:",
+                    "MSG91 OTP SUCCESS:",
                     data
                 );
 
@@ -385,17 +375,16 @@ async function sendOTP() {
                     .getElementById("otp")
                     .focus();
 
-                button.disabled = false;
-
                 button.innerText =
                     "📩 OTP फिर से भेजें";
 
+                button.disabled = false;
             },
 
-            function(error) {
+            function (error) {
 
                 console.error(
-                    "OTP Send Error:",
+                    "MSG91 OTP ERROR:",
                     error
                 );
 
@@ -405,19 +394,17 @@ async function sendOTP() {
                 message.innerText =
                     "OTP भेजने में समस्या हुई। कृपया फिर प्रयास करें।";
 
-                button.disabled = false;
-
                 button.innerText =
                     "📩 OTP फिर से भेजें";
 
+                button.disabled = false;
             }
-
         );
 
     } catch (error) {
 
         console.error(
-            "OTP Exception:",
+            "MSG91 OTP EXCEPTION:",
             error
         );
 
@@ -425,17 +412,14 @@ async function sendOTP() {
             "message error";
 
         message.innerText =
-            "OTP service में समस्या हुई।";
-
-        button.disabled = false;
+            "OTP Service में समस्या हुई। कृपया फिर प्रयास करें।";
 
         button.innerText =
             "📩 OTP फिर से भेजें";
 
+        button.disabled = false;
     }
-
 }
-
 
 async function verifyOTP() {
 
