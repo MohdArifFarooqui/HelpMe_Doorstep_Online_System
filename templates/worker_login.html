@@ -511,42 +511,40 @@ async function verifyOTP() {
 
                 let accessToken = "";
 
+function findJwt(value) {
 
-                if (
-                    data &&
-                    data.access_token
-                ) {
+    if (
+        typeof value === "string" &&
+        value.split(".").length === 3
+    ) {
+        return value;
+    }
 
-                    accessToken =
-                        data.access_token;
+    if (
+        value &&
+        typeof value === "object"
+    ) {
+        for (const key in value) {
 
-                }
+            const found =
+                findJwt(value[key]);
 
+            if (found) {
+                return found;
+            }
+        }
+    }
 
-                if (
-                    data &&
-                    data.accessToken
-                ) {
+    return null;
+}
 
-                    accessToken =
-                        data.accessToken;
+accessToken = findJwt(data);
 
-                }
-
-
-                if (
-                    !accessToken &&
-                    data &&
-                    data.message &&
-                    data.message.access_token
-                ) {
-
-                    accessToken =
-                        data.message.access_token;
-
-                }
-
-
+console.log(
+    "MSG91 Access Token:",
+    accessToken
+);
+                
                 if (!accessToken) {
 
                     message.className =
