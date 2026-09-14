@@ -2724,22 +2724,19 @@ def worker_verify_widget_token():
     )
 
    payload = json.dumps({
-    "authkey": authkey,
-    "access-token": access_token
-}).encode("utf-8")
+        "authkey": authkey,
+        "access-token": access_token
+    }).encode("utf-8")
 
-try:
-
-    req = urllib.request.Request(
-        verify_url,
-        data=payload,
-        method="POST",
-        headers={
-            "Content-Type":
-                "application/json"
-        }
-    )
-
+    try:
+        req = urllib.request.Request(
+            verify_url,
+            data=payload,
+            method="POST",
+            headers={
+                "Content-Type": "application/json"
+            }
+        )
         with urllib.request.urlopen(
             req,
             timeout=15
