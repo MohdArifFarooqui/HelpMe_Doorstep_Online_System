@@ -97,17 +97,6 @@
     letter-spacing: .2px;
 }
 
-#serviceForm::before {
-    content: "📋  सेवा अनुरोध फॉर्म";
-    display: block;
-    text-align: center;
-    font-size: 27px;
-    font-weight: 800;
-    color: #126b57;
-    margin-bottom: 5px;
-    letter-spacing: .2px;
-}
-
 #serviceForm .form-note {
     display: block;
     text-align: center;
@@ -517,6 +506,7 @@
 
 </section>
 <form class="card" method="post" action="/request-service" id="serviceForm">
+<p class="form-note">कृपया नीचे सभी आवश्यक जानकारी सही-सही भरें</p>  
 <input type="hidden" name="latitude" id="latitude">
 <input type="hidden" name="longitude" id="longitude"> 
 <label>
