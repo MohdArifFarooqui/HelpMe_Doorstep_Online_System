@@ -2723,22 +2723,22 @@ def worker_verify_widget_token():
         "api/v5/widget/verifyAccessToken"
     )
 
-    params = urllib.parse.urlencode({
-        "authkey": authkey,
-        "access-token": access_token
-    }).encode("utf-8")
+   payload = json.dumps({
+    "authkey": authkey,
+    "access-token": access_token
+}).encode("utf-8")
 
-    try:
+try:
 
-        req = urllib.request.Request(
-            verify_url,
-            data=params,
-            method="POST",
-            headers={
-                "Content-Type":
-                    "application/x-www-form-urlencoded"
-            }
-        )
+    req = urllib.request.Request(
+        verify_url,
+        data=payload,
+        method="POST",
+        headers={
+            "Content-Type":
+                "application/json"
+        }
+    )
 
         with urllib.request.urlopen(
             req,
