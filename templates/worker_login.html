@@ -226,12 +226,14 @@ Registered Mobile Number डालें और OTP से Login करें।
 <script type="text/javascript">
 
 let widgetReady = false;
+    
+let msg91ReqId = null;
 
 let widgetConfiguration = {
 
     widgetId: "36696a667454323039343333",
 
-    tokenAuth: "567634T523KiwEkd6aa25285P",
+    tokenAuth: "567634T523KiwEkd6aa25285P1",
 
     exposeMethods: true,
 
@@ -241,6 +243,19 @@ let widgetConfiguration = {
             "MSG91 Widget Success:",
             data
         );
+        
+        msg91ReqId =
+        data && (
+        data.message ||
+        data.reqId ||
+        data.reqID ||
+        data["req-id"]
+    );
+
+console.log(
+    "MSG91 reqId:",
+    msg91ReqId
+);
 
     },
 
@@ -634,7 +649,9 @@ async function verifyOTP() {
                 button.innerText =
                     "🔐 OTP Verify करके Login करें";
 
-            }
+            },
+            
+            msg91ReqId
 
         );
 
