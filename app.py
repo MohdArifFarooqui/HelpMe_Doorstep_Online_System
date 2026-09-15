@@ -2164,12 +2164,44 @@ def admin_queries():
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
-    queries = (
-        DB.query(CustomerQuery)
-        .order_by(
-            CustomerQuery.created_at.desc()
+    admin_user = get_logged_in_admin()
+
+    if admin_user is False:
+        return redirect(url_for("admin"))
+
+    # Main Admin = सभी queries
+    if admin_user is None:
+
+        queries = (
+            DB.query(CustomerQuery)
+            .order_by(
+                CustomerQuery.created_at.desc()
+            )
+            .all()
         )
-        .all()
+
+    # State/District Admin = केवल अपने क्षेत्र की queries
+    else:
+
+        queries = (
+            DB.query(CustomerQuery)
+            .join(
+                RequestItem,
+                CustomerQuery.request_id == RequestItem.id
+            )
+            .filter(
+                RequestItem.state == admin_user.state,
+                RequestItem.district == admin_user.district
+            )
+            .order_by(
+                CustomerQuery.created_at.desc()
+            )
+            .all()
+        )
+
+    return render_template(
+        "admin_queries.html",
+        queries=queries
     )
 
     return render_template(
