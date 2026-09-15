@@ -317,6 +317,77 @@ class User(Base):
         return ""
 
 # ==============================
+# DISTRICT ADMIN DASHBOARD
+# ==============================
+@app.route("/district-admin")
+def district_admin_dashboard():
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    admin_user = get_logged_in_admin()
+
+    # Main Admin को District Admin dashboard पर जाने की अनुमति नहीं
+    if admin_user is None or admin_user is False:
+        return redirect(url_for("admin"))
+
+    # केवल District Admin
+    if admin_user.admin_level != "district":
+        return redirect(url_for("admin"))
+
+    # केवल उसी State + District की requests
+    requests = (
+        DB.query(RequestItem)
+        .filter(
+            RequestItem.state == admin_user.state,
+            RequestItem.district == admin_user.district
+        )
+        .order_by(RequestItem.created_at.desc())
+        .all()
+    )
+
+    # केवल उसी State + District के active/approved workers
+    workers = (
+        DB.query(User)
+        .filter(
+            User.role == "worker",
+            User.state == admin_user.state,
+            User.district == admin_user.district,
+            User.active == True,
+            User.approved == True
+        )
+        .order_by(User.name.asc())
+        .all()
+    )
+
+    pending_count = sum(
+        1 for r in requests if r.status == "Pending"
+    )
+
+    assigned_count = sum(
+        1 for r in requests if r.status == "Assigned"
+    )
+
+    progress_count = sum(
+        1 for r in requests if r.status == "In Progress"
+    )
+
+    completed_count = sum(
+        1 for r in requests if r.status == "Completed"
+    )
+
+    return render_template(
+        "district_admin.html",
+        admin=admin_user,
+        requests=requests,
+        workers=workers,
+        pending_count=pending_count,
+        assigned_count=assigned_count,
+        progress_count=progress_count,
+        completed_count=completed_count
+    )
+
+# ==============================
 # CUSTOMER FEEDBACK
 # ==============================
 
