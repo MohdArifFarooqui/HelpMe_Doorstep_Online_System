@@ -1890,6 +1890,34 @@ def update_complaint_status(complaint_id):
         return redirect(
             url_for("admin_complaints")
         )
+        
+        admin_user = get_logged_in_admin()
+
+    if admin_user is False:
+        return redirect(url_for("admin"))
+
+    request_item = DB.get(
+        RequestItem,
+        complaint.request_id
+    )
+
+    if not request_item:
+        flash(
+            "इस Complaint की Application नहीं मिली।",
+            "error"
+        )
+        return redirect(
+            url_for("admin_complaints")
+        )
+
+    if not admin_can_access_request(request_item):
+        flash(
+            "आपको इस Complaint का Status बदलने की अनुमति नहीं है।",
+            "error"
+        )
+        return redirect(
+            url_for("admin_complaints")
+        )
 
 
     old_status = complaint.status
