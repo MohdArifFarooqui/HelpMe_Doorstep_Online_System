@@ -399,6 +399,246 @@
                 font-size: 10px;
             }
         }
+/* ==========================================================
+   HELP ME DOORSTEP — WORKER DASHBOARD
+   PROFESSIONAL MOBILE UI PATCH
+   ========================================================== */
+
+@media (max-width: 700px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    header {
+        width: 100%;
+        padding: 12px 14px !important;
+        gap: 10px;
+        border-radius: 0 0 16px 16px;
+    }
+
+    header h2 {
+        font-size: 19px !important;
+        line-height: 1.2;
+    }
+
+    .logout {
+        min-height: 42px;
+        padding: 9px 15px !important;
+        border-radius: 10px;
+    }
+
+    .container {
+        width: 94% !important;
+        max-width: 620px;
+        margin: 14px auto !important;
+    }
+
+    /* Worker profile card */
+    .welcome {
+        padding: 18px !important;
+        border-radius: 18px !important;
+        margin-bottom: 14px !important;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07) !important;
+    }
+
+    .welcome h1 {
+        font-size: 25px !important;
+        line-height: 1.25;
+        margin-bottom: 14px !important;
+    }
+
+    .info {
+        font-size: 16px !important;
+        line-height: 1.8 !important;
+    }
+
+    /* Summary cards */
+    .summary-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
+        margin-bottom: 14px !important;
+    }
+
+    .summary-card {
+        min-width: 0;
+        padding: 14px 5px !important;
+        border-radius: 14px !important;
+    }
+
+    .summary-number {
+        font-size: 24px !important;
+        line-height: 1.1;
+    }
+
+    .summary-label {
+        font-size: 10.5px !important;
+        line-height: 1.3;
+        margin-top: 6px !important;
+    }
+
+    /* Request section */
+    .requests-box {
+        padding: 15px !important;
+        border-radius: 18px !important;
+        margin-bottom: 18px !important;
+    }
+
+    .requests-box h2 {
+        font-size: 22px !important;
+        line-height: 1.25;
+        margin-bottom: 14px !important;
+    }
+
+    /* Mobile request card */
+    .mobile-cards {
+        width: 100%;
+    }
+
+    .request-card {
+        width: 100%;
+        padding: 15px !important;
+        margin-bottom: 12px !important;
+        border-radius: 16px !important;
+        border: 1px solid #dce9e5 !important;
+        box-shadow: 0 4px 15px rgba(22,91,72,.07);
+    }
+
+    .request-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 19px !important;
+        line-height: 1.3;
+        padding-bottom: 11px;
+        margin-bottom: 4px !important;
+        border-bottom: 1px solid #e5ece9;
+    }
+
+    .request-row {
+        display: grid;
+        grid-template-columns: 39% 61%;
+        gap: 4px;
+        margin: 0 !important;
+        padding: 9px 0;
+        border-bottom: 1px solid #edf2f0;
+        font-size: 14px !important;
+        line-height: 1.45;
+        color: #445a55;
+    }
+
+    .request-row:last-of-type {
+        border-bottom: 0;
+    }
+
+    .request-row strong {
+        color: #46635b !important;
+    }
+
+    .request-row .status {
+        justify-self: start;
+    }
+
+    /* Action buttons: never allow WhatsApp text to wrap */
+    .mobile-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin-top: 13px !important;
+    }
+
+    .mobile-action-btn {
+        min-width: 0 !important;
+        width: 100% !important;
+        min-height: 44px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 10px 6px !important;
+        border-radius: 10px !important;
+        font-size: 12.5px !important;
+        line-height: 1.15 !important;
+    }
+
+    /* WhatsApp gets a full row */
+    .mobile-whatsapp {
+        grid-column: 1 / -1;
+        font-size: 14px !important;
+    }
+
+    .mobile-status {
+        margin-top: 9px !important;
+    }
+
+    .mobile-status form {
+        width: 100%;
+    }
+
+    .mobile-status .status-btn {
+        width: 100% !important;
+        min-height: 44px;
+        border-radius: 10px;
+    }
+
+    .empty {
+        padding: 25px 12px !important;
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .container {
+        width: 95% !important;
+    }
+
+    .welcome,
+    .requests-box {
+        padding: 13px !important;
+    }
+
+    .summary-grid {
+        gap: 6px !important;
+    }
+
+    .summary-card {
+        padding: 12px 3px !important;
+    }
+
+    .summary-number {
+        font-size: 21px !important;
+    }
+
+    .summary-label {
+        font-size: 9.5px !important;
+    }
+
+    .request-card {
+        padding: 13px !important;
+    }
+
+    .request-row {
+        grid-template-columns: 37% 63%;
+        font-size: 13px !important;
+    }
+
+    .mobile-action-btn {
+        font-size: 11.5px !important;
+    }
+
+    .mobile-whatsapp {
+        font-size: 13px !important;
+    }
+}
+
+        
     </style>
 </head>
 
