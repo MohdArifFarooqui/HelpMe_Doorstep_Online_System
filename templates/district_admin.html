@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>District Admin Dashboard - HelpMe Doorstep</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f8f6;color:#173c33}
+.topbar{background:#fff;border-bottom:1px solid #dce9e5;padding:14px 4%;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand img{width:68px;height:68px;object-fit:contain;border-radius:50%}
+.brand h1{margin:0;font-size:24px;line-height:1.15}.brand p{margin:4px 0 0;color:#657c75;font-size:13px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:10px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.btn-home{background:#eaf3f0;color:#17624f}.btn-status{background:#e9f1fb;color:#1764a0}.btn-danger{background:#d93025;color:#fff}
+.container{width:94%;max-width:1200px;margin:18px auto 40px}
+.scope{background:linear-gradient(135deg,#128c7e,#0d7569);color:#fff;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 7px 22px rgba(18,140,126,.16)}
+.scope h2{margin:0 0 7px;font-size:23px}.scope p{margin:4px 0;opacity:.94}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.stat{background:#fff;border:1px solid #dce9e5;border-radius:15px;padding:15px;text-align:center;box-shadow:0 4px 15px rgba(22,91,72,.06)}
+.stat .n{font-size:28px;font-weight:800}.stat .l{font-size:12px;color:#61766f;font-weight:700;margin-top:4px}
+.section{background:#fff;border:1px solid #dce9e5;border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 5px 18px rgba(22,91,72,.06)}
+.section h2{margin:0 0 14px;font-size:21px}.hint{font-size:13px;color:#6a7c76;margin:-7px 0 13px}
+.table-wrap{overflow-x:auto}.table{width:100%;border-collapse:collapse;min-width:900px}.table th{background:#f0f6f4;text-align:left;font-size:13px;padding:11px}.table td{padding:11px;border-bottom:1px solid #e7eeeb;font-size:13px;vertical-align:top}
+.code{font-weight:800;color:#128c7e;white-space:nowrap}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#eef5f2;font-weight:700;font-size:12px}
+.form-row{display:flex;gap:6px;align-items:center}select{padding:9px;border:1px solid #cbdcd6;border-radius:9px;background:#fff;font-size:13px}
+.form-row select{min-width:180px}.assign{background:#128c7e;color:#fff;border:0;border-radius:9px;padding:9px 12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.empty{text-align:center;padding:28px;color:#6d7e78}
+@media(max-width:800px){.stats{grid-template-columns:repeat(3,1fr)}.topbar{align-items:flex-start}.nav{width:100%}.nav .btn,.nav form{flex:1}.nav form button{width:100%}}
+@media(max-width:600px){
+.container{width:94%;margin-top:12px}.brand img{width:58px;height:58px}.brand h1{font-size:21px}.brand p{font-size:12px}
+.nav{display:grid;grid-template-columns:1fr 1fr;gap:7px}.nav .btn,.nav form{width:100%}
+.stats{grid-template-columns:1fr 1fr;gap:8px}.stat{padding:13px 8px}.stat .n{font-size:25px}.stat .l{font-size:10px}
+.scope{padding:16px;border-radius:15px}.scope h2{font-size:20px}.section{padding:14px;border-radius:16px}.section h2{font-size:19px}
+.table-wrap{overflow:visible}.table{display:block;min-width:0}.table thead{display:none}.table tbody,.table tr{display:block;width:100%}
+.table tr{border:1px solid #e1ebe7;border-radius:14px;margin-bottom:10px;padding:8px;box-shadow:0 3px 12px rgba(22,91,72,.05)}
+.table td{display:grid;grid-template-columns:37% 63%;width:100%;min-width:0;padding:8px 3px;overflow-wrap:anywhere}
+.table td::before{font-weight:700;color:#587069;padding-right:6px}
+.table td:nth-child(1)::before{content:"Application"}.table td:nth-child(2)::before{content:"Customer"}.table td:nth-child(3)::before{content:"Age"}
+.table td:nth-child(4)::before{content:"Mobile"}.table td:nth-child(5)::before{content:"Service"}.table td:nth-child(6)::before{content:"Address"}
+.table td:nth-child(7)::before{content:"Status"}.table td:nth-child(8)::before{content:"Worker"}.table td:last-child{border-bottom:0}
+.form-row{display:grid;grid-template-columns:1fr auto;width:100%}.form-row select{min-width:0;width:100%}.assign{padding:9px 10px}
+.worker-table .table td:nth-child(1)::before{content:"Name"}.worker-table .table td:nth-child(2)::before{content:"Mobile"}.worker-table .table td:nth-child(3)::before{content:"Center"}
+.worker-table .table td:nth-child(4)::before{content:"Status"}.worker-table .table td:nth-child(5)::before{content:"Approval"}
+}
+@media(max-width:380px){.nav{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.table td{grid-template-columns:34% 66%;font-size:12.5px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<div class="brand"><img src="/static/helpme-doorstep-logo.png.jpeg" alt="HelpMe Doorstep Logo"><div><h1>District Admin Dashboard</h1><p>District level Customer Requests & Worker Management</p></div></div>
+<div class="nav"><a class="btn btn-home" href="/">🏠 Home</a><a class="btn btn-status" href="/status">📋 Customer Status</a><form method="post" action="/admin/logout" style="margin:0"><button class="btn btn-danger" type="submit">🚪 Logout</button></form></div>
+</header>
+<main class="container">
+<section class="scope"><h2>📍 {{ admin.district or "District" }}, {{ admin.state or "State" }}</h2><p><strong>Admin Code:</strong> {{ admin.admin_code }}</p><p><strong>Access:</strong> केवल आपके District के Customer Requests और Workers</p></section>
+<section class="stats">
+<div class="stat"><div class="n">{{ requests|length }}</div><div class="l">Total Requests</div></div>
+<div class="stat"><div class="n">{{ pending_count }}</div><div class="l">Pending</div></div>
+<div class="stat"><div class="n">{{ assigned_count }}</div><div class="l">Assigned</div></div>
+<div class="stat"><div class="n">{{ progress_count }}</div><div class="l">In Progress</div></div>
+<div class="stat"><div class="n">{{ completed_count }}</div><div class="l">Completed</div></div>
+</section>
+<section class="section"><h2>📋 District Customer Requests</h2><p class="hint">इस सूची में केवल आपके State और District के applications दिखाई देंगे।</p>
+{% if requests %}<div class="table-wrap"><table class="table"><thead><tr><th>Application</th><th>Customer</th><th>Age</th><th>Mobile</th><th>Service</th><th>Address</th><th>Status</th><th>Worker</th><th>Action</th></tr></thead><tbody>
+{% for r in requests %}<tr><td><span class="code">{{ r.application_code }}</span></td><td>{{ r.customer }}</td><td>{{ r.age }}</td><td>{{ r.phone }}</td><td>{{ r.service }}</td><td>{{ r.address }}</td><td><span class="pill">{{ r.status }}</span></td><td>{% if r.assigned_worker_id %}Assigned{% else %}Not Assigned{% endif %}</td><td><div class="form-row"><form method="post" action="/admin/assign/{{ r.id }}" style="display:flex;gap:6px;width:100%"><select name="worker_id" required><option value="">Worker Select</option>{% for w in workers %}<option value="{{ w.id }}" {% if r.assigned_worker_id == w.id %}selected{% endif %}>{{ w.name or w.mobile }}</option>{% endfor %}</select><button class="assign" type="submit">Assign</button></form></div></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty">इस District में अभी कोई Customer Request नहीं है।</div>{% endif %}</section>
+<section class="section worker-table"><h2>👷 District Workers</h2><p class="hint">केवल आपके District के active/approved workers।</p>
+{% if workers %}<div class="table-wrap"><table class="table"><thead><tr><th>Name</th><th>Mobile</th><th>Center</th><th>Status</th><th>Approval</th></tr></thead><tbody>{% for w in workers %}<tr><td>{{ w.name or "—" }}</td><td>{{ w.mobile }}</td><td>{{ w.center_name or "—" }}</td><td><span class="pill">{% if w.active %}Active{% else %}Inactive{% endif %}</span></td><td>{% if w.approved %}Approved{% else %}Pending{% endif %}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty">इस District में कोई Worker उपलब्ध नहीं है।</div>{% endif %}</section>
+</main>
+</body>
+</html>
