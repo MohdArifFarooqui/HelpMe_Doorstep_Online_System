@@ -1051,6 +1051,14 @@ def feedback():
     )
 
 # ==============================
+# CENTRAL LOGIN PORTAL
+# ==============================
+
+@app.route("/login")
+def login_portal():
+    return render_template("login_portal.html")
+
+# ==============================
 # CUSTOMER OTP LOGIN
 # ==============================
 
