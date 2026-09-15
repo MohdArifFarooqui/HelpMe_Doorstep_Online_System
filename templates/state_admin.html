@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>State Admin Dashboard | Help Me Door Step</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .topbar {
+            background: linear-gradient(135deg, #123c69, #1d5d9b);
+            color: white;
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand img {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: white;
+            padding: 3px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .brand p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            opacity: .9;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-light {
+            background: white;
+            color: #123c69;
+        }
+
+        .btn-secondary {
+            background: #e8eef7;
+            color: #123c69;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .scope-box {
+            background: white;
+            border-left: 5px solid #1d5d9b;
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+
+        .scope-box h2 {
+            margin: 0 0 6px;
+            font-size: 20px;
+        }
+
+        .scope-box p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stat {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 9px rgba(0,0,0,.07);
+        }
+
+        .stat-title {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 9px rgba(0,0,0,.07);
+        }
+
+        .section h2 {
+            margin: 0 0 15px;
+            font-size: 20px;
+            color: #123c69;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th,
+        td {
+            padding: 11px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: #374151;
+        }
+
+        tr:hover td {
+            background: #fafcff;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            background: #eef2ff;
+        }
+
+        .assign-form {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            background: white;
+            min-width: 150px;
+        }
+
+        .btn-assign {
+            background: #123c69;
+            color: white;
+        }
+
+        .mobile-cards {
+            display: none;
+        }
+
+        .card {
+            border: 1px solid #e5e7eb;
+            border-radius: 11px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: #123c69;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 13px;
+        }
+
+        .row:last-child {
+            border-bottom: 0;
+        }
+
+        .label {
+            font-weight: 700;
+            color: #6b7280;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .topbar {
+                padding: 14px;
+            }
+
+            .brand h1 {
+                font-size: 19px;
+            }
+
+            .brand img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .top-actions {
+                width: 100%;
+            }
+
+            .top-actions .btn,
+            .top-actions form {
+                flex: 1;
+            }
+
+            .top-actions form button {
+                width: 100%;
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .stat {
+                padding: 14px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .table-wrapper {
+                display: none;
+            }
+
+            .mobile-cards {
+                display: block;
+            }
+
+            .section {
+                padding: 14px;
+            }
+
+            .scope-box h2 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .brand {
+                width: 100%;
+            }
+
+            .top-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .top-actions form {
+                width: 100%;
+            }
+
+            .top-actions form button {
+                width: 100%;
+            }
+
+            .row {
+                grid-template-columns: 95px 1fr;
+            }
+
+            select {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .assign-form {
+                display: block;
+            }
+
+            .assign-form select,
+            .assign-form button {
+                width: 100%;
+                margin-top: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <img
+            src="/static/helpme-doorstep-logo.png.jpeg"
+            alt="Help Me Door Step Logo"
+        >
+
+        <div>
+            <h1>State Admin Dashboard</h1>
+            <p>State Level Management & Monitoring</p>
+        </div>
+    </div>
+
+    <div class="top-actions">
+
+        <a href="/" class="btn btn-light">
+            Home
+        </a>
+
+        <a href="/status" class="btn btn-secondary">
+            Customer Status
+        </a>
+
+        <form method="post" action="/admin/logout" style="display:inline;">
+            <button type="submit" class="btn btn-danger">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- STATE SCOPE -->
+
+    <div class="scope-box">
+
+        <h2>
+            🏛️ State:
+            {{ admin.state }}
+        </h2>
+
+        <p>
+            <strong>Admin Code:</strong>
+            {{ admin.admin_code }}
+        </p>
+
+        <p>
+            यह Dashboard केवल आपके assigned State के data को दिखाता है।
+        </p>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-title">
+                Total Requests
+            </div>
+
+            <div class="stat-number">
+                {{ requests|length }}
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="stat-title">
+                Pending
+            </div>
+
+            <div class="stat-number">
+                {{ pending_count }}
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="stat-title">
+                Assigned
+            </div>
+
+            <div class="stat-number">
+                {{ assigned_count }}
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="stat-title">
+                In Progress
+            </div>
+
+            <div class="stat-number">
+                {{ progress_count }}
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="stat-title">
+                Completed
+            </div>
+
+            <div class="stat-number">
+                {{ completed_count }}
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- REQUESTS -->
+
+    <section class="section">
+
+        <h2>
+            📋 State Customer Requests
+        </h2>
+
+
+        <!-- Desktop -->
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Application</th>
+                        <th>Customer</th>
+                        <th>Age</th>
+                        <th>Mobile</th>
+                        <th>Service</th>
+                        <th>District</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Worker Assignment</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for r in requests %}
+
+                    <tr>
+
+                        <td>
+                            {{ r.application_code }}
+                        </td>
+
+                        <td>
+                            {{ r.customer }}
+                        </td>
+
+                        <td>
+                            {{ r.age }}
+                        </td>
+
+                        <td>
+                            {{ r.phone }}
+                        </td>
+
+                        <td>
+                            {{ r.service }}
+                        </td>
+
+                        <td>
+                            {{ r.district }}
+                        </td>
+
+                        <td>
+                            {{ r.address }}
+                        </td>
+
+                        <td>
+                            <span class="status">
+                                {{ r.status }}
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <form
+                                method="post"
+                                action="/admin/assign/{{ r.id }}"
+                                class="assign-form"
+                            >
+
+                                <select name="worker_id" required>
+
+                                    <option value="">
+                                        Select Worker
+                                    </option>
+
+                                    {% for w in workers %}
+
+                                        <option
+                                            value="{{ w.id }}"
+                                            {% if r.assigned_worker_id == w.id %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            {{ w.name }} - {{ w.center_name }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-assign"
+                                >
+                                    Assign
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="9" style="text-align:center;">
+                            इस State में अभी कोई Customer Request नहीं है।
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Mobile -->
+
+        <div class="mobile-cards">
+
+        {% for r in requests %}
+
+            <div class="card">
+
+                <div class="card-title">
+                    {{ r.application_code }}
+                </div>
+
+                <div class="row">
+                    <div class="label">Customer</div>
+                    <div>{{ r.customer }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Age</div>
+                    <div>{{ r.age }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Mobile</div>
+                    <div>{{ r.phone }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Service</div>
+                    <div>{{ r.service }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">District</div>
+                    <div>{{ r.district }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Address</div>
+                    <div>{{ r.address }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Status</div>
+                    <div>
+                        <span class="status">
+                            {{ r.status }}
+                        </span>
+                    </div>
+                </div>
+
+                <form
+                    method="post"
+                    action="/admin/assign/{{ r.id }}"
+                    class="assign-form"
+                    style="margin-top:10px;"
+                >
+
+                    <select name="worker_id" required>
+
+                        <option value="">
+                            Select Worker
+                        </option>
+
+                        {% for w in workers %}
+
+                            <option
+                                value="{{ w.id }}"
+                                {% if r.assigned_worker_id == w.id %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ w.name }} - {{ w.center_name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                    <button
+                        type="submit"
+                        class="btn btn-assign"
+                    >
+                        Assign Worker
+                    </button>
+
+                </form>
+
+            </div>
+
+        {% else %}
+
+            <div class="card">
+                इस State में अभी कोई Customer Request नहीं है।
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- WORKERS -->
+
+    <section class="section">
+
+        <h2>
+            👷 State Workers / CSCs
+        </h2>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>CSC ID</th>
+                        <th>Center</th>
+                        <th>District</th>
+                        <th>Approval</th>
+                        <th>Active</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for w in workers %}
+
+                    <tr>
+
+                        <td>
+                            {{ w.name }}
+                        </td>
+
+                        <td>
+                            {{ w.mobile }}
+                        </td>
+
+                        <td>
+                            {{ w.csc_id or "-" }}
+                        </td>
+
+                        <td>
+                            {{ w.center_name or "-" }}
+                        </td>
+
+                        <td>
+                            {{ w.district or "-" }}
+                        </td>
+
+                        <td>
+                            {% if w.approved %}
+                                <span class="status">Approved</span>
+                            {% else %}
+                                <span class="status">Pending</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if w.active %}
+                                <span class="status">Active</span>
+                            {% else %}
+                                <span class="status">Inactive</span>
+                            {% endif %}
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="7" style="text-align:center;">
+                            इस State में कोई approved Worker नहीं मिला।
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="mobile-cards">
+
+        {% for w in workers %}
+
+            <div class="card">
+
+                <div class="card-title">
+                    👷 {{ w.name }}
+                </div>
+
+                <div class="row">
+                    <div class="label">Mobile</div>
+                    <div>{{ w.mobile }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">CSC ID</div>
+                    <div>{{ w.csc_id or "-" }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Center</div>
+                    <div>{{ w.center_name or "-" }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">District</div>
+                    <div>{{ w.district or "-" }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Approval</div>
+                    <div>
+                        {% if w.approved %}
+                            Approved
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Status</div>
+                    <div>
+                        {% if w.active %}
+                            Active
+                        {% else %}
+                            Inactive
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+        {% else %}
+
+            <div class="card">
+                इस State में कोई approved Worker नहीं मिला।
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <strong>Help Me Door Step</strong>
+
+        <div>
+            © 2026 Help Me Door Step | सभी अधिकार सुरक्षित
+        </div>
+
+    </footer>
+
+</main>
+
+</body>
+</html>
