@@ -2204,11 +2204,6 @@ def admin_queries():
         queries=queries
     )
 
-    return render_template(
-        "admin_queries.html",
-        queries=queries
-    )
-
 
 # ==============================
 # ADMIN QUERY STATUS UPDATE
@@ -2218,9 +2213,15 @@ def admin_queries():
     "/admin/query/<int:query_id>/status",
     methods=["POST"]
 )
+
 def update_query_status(query_id):
 
     if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    admin_user = get_logged_in_admin()
+
+    if admin_user is False:
         return redirect(url_for("admin"))
 
     status = (
@@ -2247,7 +2248,6 @@ def update_query_status(query_id):
             url_for("admin_queries")
         )
 
-
     query = DB.get(
         CustomerQuery,
         query_id
@@ -2264,17 +2264,36 @@ def update_query_status(query_id):
             url_for("admin_queries")
         )
 
+    request_item = DB.get(
+        RequestItem,
+        query.request_id
+    )
+
+    if not request_item:
+
+        flash(
+            "इस Query की Application नहीं मिली।",
+            "error"
+        )
+
+        return redirect(
+            url_for("admin_queries")
+        )
+
+    if not admin_can_access_request(request_item):
+
+        flash(
+            "आपको इस Query पर Status Update करने की अनुमति नहीं है।",
+            "error"
+        )
+
+        return redirect(
+            url_for("admin_queries")
+        )
 
     old_status = query.status
 
     query.status = status
-
-    DB.commit()
-
-
-    # ==============================
-    # CUSTOMER NOTIFICATION
-    # ==============================
 
     if old_status != status:
 
@@ -2289,6 +2308,7 @@ def update_query_status(query_id):
 
         )
 
+    DB.commit()
 
     flash(
         f"Query #{query.id} का Status "
@@ -2296,11 +2316,9 @@ def update_query_status(query_id):
         "success"
     )
 
-
     return redirect(
         url_for("admin_queries")
     )
-
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
     if request.method == "GET":
