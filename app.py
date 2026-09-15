@@ -388,6 +388,94 @@ def district_admin_dashboard():
     )
 
 # ==============================
+# STATE ADMIN DASHBOARD
+# ==============================
+
+@app.route("/state-admin")
+def state_admin_dashboard():
+
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    admin_user = get_logged_in_admin()
+
+    # Invalid / Main Admin को State Admin Dashboard से रोकें
+    if admin_user is None or admin_user is False:
+        return redirect(url_for("admin"))
+
+    # केवल State Admin
+    if admin_user.admin_level != "state":
+        return redirect(url_for("admin"))
+
+    # ==============================
+    # ONLY SAME STATE REQUESTS
+    # ==============================
+
+    requests = (
+        DB.query(RequestItem)
+        .filter(
+            RequestItem.state == admin_user.state
+        )
+        .order_by(RequestItem.created_at.desc())
+        .all()
+    )
+
+    # ==============================
+    # ONLY SAME STATE ACTIVE APPROVED WORKERS
+    # ==============================
+
+    workers = (
+        DB.query(User)
+        .filter(
+            User.role == "worker",
+            User.state == admin_user.state,
+            User.active == True,
+            User.approved == True
+        )
+        .order_by(User.name.asc())
+        .all()
+    )
+
+    # ==============================
+    # REQUEST STATUS COUNTS
+    # ==============================
+
+    pending_count = sum(
+        1 for r in requests
+        if r.status == "Pending"
+    )
+
+    assigned_count = sum(
+        1 for r in requests
+        if r.status == "Assigned"
+    )
+
+    progress_count = sum(
+        1 for r in requests
+        if r.status == "In Progress"
+    )
+
+    completed_count = sum(
+        1 for r in requests
+        if r.status == "Completed"
+    )
+
+    # ==============================
+    # STATE ADMIN DASHBOARD
+    # ==============================
+
+    return render_template(
+        "state_admin.html",
+        admin=admin_user,
+        requests=requests,
+        workers=workers,
+        pending_count=pending_count,
+        assigned_count=assigned_count,
+        progress_count=progress_count,
+        completed_count=completed_count
+    )
+
+# ==============================
 # CUSTOMER FEEDBACK
 # ==============================
 
