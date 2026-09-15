@@ -2604,84 +2604,113 @@ def get_nearby_workers(request_item):
 
     return nearby_workers
 
+# ==============================
+# ADMIN ASSIGN WORKER
+# ==============================
 
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
+
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
+    admin_user = get_logged_in_admin()
+
+    # Invalid / inactive admin
+    if admin_user is False:
+        return redirect(url_for("admin"))
+
+    # Request निकालें
     request_item = DB.get(RequestItem, rid)
-    worker_id = request.form.get("worker_id", "").strip()
 
     if not request_item:
-        flash("Application नहीं मिला", "error")
+        flash("Request नहीं मिली।", "error")
         return redirect(url_for("admin"))
+
+    # ==============================
+    # ADMIN REQUEST ACCESS CHECK
+    # ==============================
 
     if not admin_can_access_request(request_item):
         flash(
-            "आपको इस Application पर Access की अनुमति नहीं है।",
+            "आपको इस Request का access नहीं है।",
             "error"
         )
         return redirect(url_for("admin"))
 
-    if not worker_id:
-        flash("Worker चुनना जरूरी है।", "error")
+    # Worker ID
+    worker_id = request.form.get(
+        "worker_id",
+        ""
+    ).strip()
+
+    if not worker_id.isdigit():
+        flash(
+            "कृपया Valid Worker चुनें।",
+            "error"
+        )
         return redirect(url_for("admin"))
 
-    try:
-        worker_id = int(worker_id)
-    except ValueError:
-        flash("Invalid Worker", "error")
-        return redirect(url_for("admin"))
-
-    worker = (
-        DB.query(User)
-        .filter(User.id == worker_id)
-        .filter(User.role == "worker")
-        .filter(User.approved == True)
-        .filter(User.active == True)
-        .first()
+    worker = DB.get(
+        User,
+        int(worker_id)
     )
 
+    # ==============================
+    # WORKER VALIDATION
+    # ==============================
+
     if not worker:
-        flash("Valid Active Worker नहीं मिला", "error")
+        flash(
+            "Worker नहीं मिला।",
+            "error"
+        )
         return redirect(url_for("admin"))
+
+    if worker.role != "worker":
+        flash(
+            "Invalid Worker account।",
+            "error"
+        )
+        return redirect(url_for("admin"))
+
+    if not worker.active:
+        flash(
+            "यह Worker inactive है।",
+            "error"
+        )
+        return redirect(url_for("admin"))
+
+    if not worker.approved:
+        flash(
+            "यह Worker अभी approved नहीं है।",
+            "error"
+        )
+        return redirect(url_for("admin"))
+
+    # ==============================
+    # ADMIN WORKER ACCESS CHECK
+    # ==============================
 
     if not admin_can_access_worker(worker):
         flash(
-            "आपको इस Worker पर Access की अनुमति नहीं है।",
+            "आप इस Worker को assign नहीं कर सकते।",
             "error"
         )
         return redirect(url_for("admin"))
 
-    distance = calculate_distance(
-        request_item.latitude,
-        request_item.longitude,
-        worker.latitude,
-        worker.longitude
-    )
-
-    if distance is None or distance > 25:
-        flash(
-            "यह Worker Customer की 25 KM सीमा के बाहर है।",
-            "error"
-        )
-        return redirect(url_for("admin"))
+    # ==============================
+    # ASSIGN WORKER
+    # ==============================
 
     request_item.assigned_worker_id = worker.id
     request_item.status = "Assigned"
 
-    # Customer Notification
-    create_customer_notification(
-        request_item.phone,
-        f"आपका आवेदन {request_item.application_code} अब Worker {worker.name} को Assign कर दिया गया है।",
-        request_item.id
-    )
-
     DB.commit()
 
     flash(
-        f"Application #{rid} {worker.name} को Assign कर दिया गया है।",
+        f"Request {request_item.application_code} "
+        f"successfully Worker को assign कर दी गई।",
         "success"
     )
 
@@ -2845,53 +2874,132 @@ def customer_notification_read(nid):
 
     return redirect(url_for("customer_dashboard"))
 
+# ==============================
+# ADMIN REQUEST STATUS UPDATE
+# ==============================
+
 @app.post("/admin/status/<int:rid>")
 def status(rid):
+
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
-    request_item = DB.get(RequestItem, rid)
-    new_status = request.form.get("status")
+    admin_user = get_logged_in_admin()
 
-    allowed_statuses = (
-        "Pending",
-        "Assigned",
-        "In Progress",
-        "Completed",
-        "Cancelled"
+    # Invalid / inactive admin
+    if admin_user is False:
+        return redirect(url_for("admin"))
+
+    # Request निकालें
+    request_item = DB.get(
+        RequestItem,
+        rid
     )
 
     if not request_item:
-        flash("Application नहीं मिला", "error")
+        flash(
+            "Request नहीं मिली।",
+            "error"
+        )
         return redirect(url_for("admin"))
+
+    # ==============================
+    # ADMIN REQUEST ACCESS CHECK
+    # ==============================
 
     if not admin_can_access_request(request_item):
-        flash("आपको इस Application पर Access की अनुमति नहीं है।", "error")
+        flash(
+            "आपको इस Request का access नहीं है।",
+            "error"
+        )
         return redirect(url_for("admin"))
 
+    # ==============================
+    # STATUS
+    # ==============================
+
+    new_status = request.form.get(
+        "status",
+        ""
+    ).strip()
+
+    allowed_statuses = [
+        "Pending",
+        "Assigned",
+        "In Progress",
+        "Completed"
+    ]
+
     if new_status not in allowed_statuses:
-        flash("Invalid Status", "error")
+        flash(
+            "Invalid Request Status!",
+            "error"
+        )
         return redirect(url_for("admin"))
 
     old_status = request_item.status
-    request_item.status = new_status
 
-    # Customer Notification
-    if old_status != new_status:
-        create_customer_notification(
-            request_item.phone,
-            f"Application #{rid} का Status '{new_status}' कर दिया गया है।",
-            rid
-        )
+    request_item.status = new_status
 
     DB.commit()
 
+    # ==============================
+    # CUSTOMER NOTIFICATION
+    # ==============================
+
+    if old_status != new_status:
+
+        if new_status == "Pending":
+            message = (
+                f"आपके Application "
+                f"{request_item.application_code} का Status "
+                f"Pending है।"
+            )
+
+        elif new_status == "Assigned":
+            message = (
+                f"आपके Application "
+                f"{request_item.application_code} को "
+                f"Worker को Assign कर दिया गया है।"
+            )
+
+        elif new_status == "In Progress":
+            message = (
+                f"आपके Application "
+                f"{request_item.application_code} पर "
+                f"काम शुरू हो गया है।"
+            )
+
+        elif new_status == "Completed":
+            message = (
+                f"आपके Application "
+                f"{request_item.application_code} की Service "
+                f"Completed हो गई है।"
+            )
+
+        else:
+            message = (
+                f"आपके Application "
+                f"{request_item.application_code} का Status "
+                f"{new_status} कर दिया गया है।"
+            )
+
+        create_customer_notification(
+            request_item.phone,
+            message,
+            request_item.id
+        )
+
+        DB.commit()
+
     flash(
-        f"Application #{rid} का Status {new_status} कर दिया गया है।",
+        "Request Status successfully update हो गया।",
         "success"
     )
 
-    return redirect(url_for("admin"))
+    return redirect(
+        url_for("admin")
+    )
 
 # ==============================
 # WORKER MSG91 WIDGET TOKEN LOGIN
