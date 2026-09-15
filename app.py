@@ -1780,6 +1780,7 @@ def complaint():
         url_for("complaint")
     )
 
+
 # ==============================
 # ADMIN CUSTOMER COMPLAINTS
 # ==============================
@@ -1790,8 +1791,40 @@ def admin_complaints():
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
-    complaints = (
+    admin_user = get_logged_in_admin()
+
+    if admin_user is False:
+        return redirect(url_for("admin"))
+
+    complaints_query = (
         DB.query(Complaint)
+        .join(
+            RequestItem,
+            Complaint.request_id == RequestItem.id
+        )
+    )
+
+    # Main Admin = सभी Complaints
+    # State Admin = केवल अपने State की Complaints
+    # District Admin = केवल अपने District की Complaints
+    if admin_user is not None:
+
+        if admin_user.admin_level == "state":
+            complaints_query = complaints_query.filter(
+                RequestItem.state == admin_user.state
+            )
+
+        elif admin_user.admin_level == "district":
+            complaints_query = complaints_query.filter(
+                RequestItem.state == admin_user.state,
+                RequestItem.district == admin_user.district
+            )
+
+        else:
+            return redirect(url_for("admin"))
+
+    complaints = (
+        complaints_query
         .order_by(
             Complaint.created_at.desc()
         )
@@ -1802,7 +1835,6 @@ def admin_complaints():
         "admin_complaints.html",
         complaints=complaints
     )
-
 
 # ==============================
 # ADMIN COMPLAINT STATUS UPDATE
