@@ -7,919 +7,58 @@
 <link rel="stylesheet" href="/static/style.css">
 
 <style>
-.contact {
-  text-align: center;
-  font-size: 18px;
-}
-
-.contact a {
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.whatsapp-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.whatsapp-icon {
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
-
-.phone-icon {
-  font-size: 21px;
-} 
-  .emergency-services {
-  display: grid;
-  gap: 12px;
-  margin: 18px 0;
-}
-
-.emergency-button {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 15px 14px;
-  border-radius: 10px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 18px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-.ambulance-button {
-  background: linear-gradient(90deg, #dc2626 0 50%, #16a34a 50% 100%);
-}
-
-.police-button {
-  background: #ec4899;
-}
-
-.fire-button {
-  background: #f97316;
-}
-
-.emergency-note {
-  margin: 8px 0 0;
-  text-align: center;
-  font-size: 14px;
-  color: #555;
-}
-
-/* =========================================
-   HELP ME DOORSTEP - PROFESSIONAL FORM UI
-   ========================================= */
-
-#serviceForm {
-    position: relative;
-    padding: 24px 20px 22px;
-    margin-top: 20px;
-    border-radius: 22px;
-    background: #ffffff;
-    border: 1px solid #dce9e5;
-    box-shadow: 0 8px 25px rgba(22, 91, 72, 0.10);
-}
-
-/* Form Heading */
-#serviceForm::before {
-    content: "📋  सेवा अनुरोध फॉर्म";
-    display: block;
-    text-align: center;
-    font-size: 27px;
-    font-weight: 800;
-    color: #126b57;
-    margin-bottom: 5px;
-    letter-spacing: .2px;
-}
-
-#serviceForm .form-note {
-    display: block;
-    text-align: center;
-    font-size: 14px;
-    color: #66756f;
-    margin: 0 0 24px;
-}
-
-/* =========================================
-   FORM LABELS
-   ========================================= */
-
-#serviceForm label {
-    display: block;
-    position: relative;
-    margin: 18px 0 7px;
-    font-size: 17px;
-    font-weight: 700;
-    color: #173c33;
-}
-
-/* Required star */
-#serviceForm label::after {
-    content: " *";
-    color: #e53935;
-    font-weight: 800;
-}
-
-
-/* =========================================
-   INPUT / SELECT / TEXTAREA
-   ========================================= */
-
-#serviceForm input:not([type="hidden"]),
-#serviceForm select,
-#serviceForm textarea {
-    width: 100%;
-    margin-top: 8px;
-    padding: 15px 16px;
-    border: 2px solid #d5e1de;
-    border-radius: 14px;
-    background: #fbfdfc;
-    color: #173c33;
-    font-size: 17px;
-    font-family: inherit;
-    outline: none;
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
-
-/* Placeholder */
-#serviceForm input::placeholder,
-#serviceForm textarea::placeholder {
-    color: #8b9491;
-    opacity: 1;
-}
-
-/* Focus effect */
-#serviceForm input:not([type="hidden"]):focus,
-#serviceForm select:focus,
-#serviceForm textarea:focus {
-    border-color: #16a085;
-    background: #ffffff;
-    box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.12);
-}
-
-/* Disabled district */
-#serviceForm select:disabled {
-    background: #f1f3f3;
-    color: #a1a7a5;
-    cursor: not-allowed;
-}
-
-
-/* =========================================
-   TEXT AREAS
-   ========================================= */
-
-#serviceForm textarea {
-    min-height: 125px;
-    resize: vertical;
-    line-height: 1.5;
-}
-
-
-/* =========================================
-   FIELD ICONS
-   ========================================= */
-
-#serviceForm label:nth-of-type(1)::before {
-    content: "👤";
-    margin-right: 8px;
-}
-
-#serviceForm label:nth-of-type(2)::before {
-    content: "🎂";
-    margin-right: 8px;
-}
-
-#serviceForm label:nth-of-type(3)::before {
-    content: "📱";
-    margin-right: 8px;
-}
-
-#serviceForm label:nth-of-type(4)::before {
-    content: "📍";
-    margin-right: 8px;
-}
-
-#serviceForm label:nth-of-type(5)::before {
-    content: "🏙️";
-    margin-right: 8px;
-}
-
-#serviceForm label:nth-of-type(6)::before {
-    content: "🛠️";
-    margin-right: 8px;
-}
-
-#serviceForm label:nth-of-type(7)::before {
-    content: "🏠";
-    margin-right: 8px;
-}
-
-#serviceForm label:nth-of-type(8)::before {
-    content: "💬";
-    margin-right: 8px;
-}
-
-
-/* =========================================
-   SUBMIT BUTTON
-   ========================================= */
-
-#serviceForm button[type="submit"] {
-    width: 100%;
-    margin-top: 22px;
-    padding: 16px 18px;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(
-        135deg,
-        #11966f,
-        #087f60
-    );
-    color: #ffffff;
-    font-size: 19px;
-    font-weight: 800;
-    font-family: inherit;
-    cursor: pointer;
-    box-shadow: 0 6px 15px rgba(8, 127, 96, 0.22);
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease,
-        opacity .15s ease;
-}
-
-#serviceForm button[type="submit"]:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 18px rgba(8, 127, 96, 0.28);
-}
-
-#serviceForm button[type="submit"]:active {
-    transform: translateY(1px);
-}
-
-#serviceForm button[type="submit"]:disabled {
-    opacity: .7;
-    cursor: wait;
-}
-
-
-/* =========================================
-   HELP LINE / CONTACT CARD
-   ========================================= */
-
-.contact {
-    margin-top: 22px !important;
-    padding: 22px 18px !important;
-    border-radius: 22px !important;
-    background: #ffffff !important;
-    border: 1px solid #dce9e5 !important;
-    box-shadow: 0 8px 25px rgba(22, 91, 72, 0.10);
-    text-align: center;
-}
-
-.contact::before {
-    content: "🎧  Help Me Door Step";
-    display: block;
-    padding: 12px;
-    margin: -22px -18px 18px;
-    border-radius: 22px 22px 0 0;
-    background: #126b57;
-    color: white;
-    font-size: 22px;
-    font-weight: 800;
-}
-
-.contact strong {
-    display: block;
-    font-size: 17px;
-    color: #173c33;
-    margin-bottom: 5px;
-}
-
-.contact a {
-    display: inline-block;
-    color: #0878bd;
-    font-size: 21px;
-    font-weight: 800;
-    text-decoration: none;
-    margin: 3px 0;
-}
-
-.contact .whatsapp-link {
-    color: #159447;
-}
-
-.contact a:hover {
-    text-decoration: underline;
-}
-
-.whatsapp-icon {
-    width: 27px;
-    height: 27px;
-    vertical-align: middle;
-}
-
-
-/* =========================================
-   MOBILE PROFESSIONAL DESIGN
-   ========================================= */
-
-@media (max-width: 600px) {
-
-    #serviceForm {
-        padding: 20px 14px 18px;
-        border-radius: 18px;
-    }
-
-    #serviceForm::before {
-        font-size: 23px;
-    }
-
-    #serviceForm::after {
-        font-size: 13px;
-        margin-bottom: 20px;
-    }
-
-    #serviceForm label {
-        font-size: 17px;
-        margin-top: 17px;
-    }
-
-    #serviceForm input:not([type="hidden"]),
-    #serviceForm select,
-    #serviceForm textarea {
-        padding: 14px 14px;
-        font-size: 16px;
-        border-radius: 13px;
-    }
-
-    #serviceForm textarea {
-        min-height: 120px;
-    }
-
-    #serviceForm button[type="submit"] {
-        font-size: 18px;
-        padding: 15px;
-        border-radius: 13px;
-    }
-
-    .contact {
-        padding: 20px 14px !important;
-        border-radius: 18px !important;
-    }
-
-    .contact::before {
-        margin: -20px -14px 17px;
-        border-radius: 18px 18px 0 0;
-        font-size: 20px;
-    }
-
-    .contact a {
-        font-size: 19px;
-    }
-}
-
-@media (max-width: 400px) {
-
-    #serviceForm {
-        padding: 18px 12px 16px;
-    }
-
-    #serviceForm::before {
-        font-size: 21px;
-    }
-
-    #serviceForm label {
-        font-size: 16px;
-    }
-
-    #serviceForm input:not([type="hidden"]),
-    #serviceForm select,
-    #serviceForm textarea {
-        font-size: 15px;
-    }
-
-    #serviceForm button[type="submit"] {
-        font-size: 17px;
-    }
-}
-
-/* ==========================================
-   CUSTOMER SUPPORT - PROFESSIONAL DESIGN
-========================================== */
-
-.contact {
-    width: 100%;
-    padding: 0 !important;
-    margin-top: 25px;
-    overflow: hidden;
-    background: #ffffff;
-    border-radius: 24px;
-    border: 1px solid #dceee9;
-    box-shadow: 0 8px 28px rgba(0, 90, 80, 0.12);
-}
-
-
-/* ==========================================
-   HEADER
-========================================== */
-
-.contact-header {
-    width: 100%;
-    background: linear-gradient(135deg, #00695c, #008f78);
-    color: #ffffff;
-
-    padding: 22px 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 15px;
-
-    text-align: center;
-}
-
-.contact-header h2 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 28px;
-    font-weight: 800;
-}
-
-.contact-header p {
-    margin: 5px 0 0;
-    color: #eafff9;
-    font-size: 17px;
-    letter-spacing: 2px;
-}
-
-.support-icon {
-    font-size: 42px;
-    line-height: 1;
-}
-
-
-/* ==========================================
-   TITLE
-========================================== */
-
-.contact-heading {
-    text-align: center;
-    padding: 22px 15px 15px;
-}
-
-.contact-heading h3 {
-    margin: 0;
-    color: #12463f;
-    font-size: 24px;
-    font-weight: 800;
-}
-
-.contact-heading p {
-    margin: 7px 0 0;
-    color: #657874;
-    font-size: 16px;
-}
-
-
-/* ==========================================
-   CONTACT ITEMS
-========================================== */
-
-.support-item {
-
-    width: calc(100% - 36px);
-
-    margin: 12px 18px;
-
-    padding: 16px;
-
-    border-radius: 18px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 15px;
-
-    background: #f7fbfa;
-
-    border: 1px solid #dcece8;
-
-    box-shadow:
-        0 3px 10px rgba(0, 80, 70, 0.04);
-}
-
-
-/* ==========================================
-   ICON CIRCLE
-========================================== */
-
-.support-icon-box {
-
-    width: 62px;
-    height: 62px;
-
-    min-width: 62px;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 30px;
-
-    background: #e9f3ff;
-}
-
-
-/* ==========================================
-   PHONE
-========================================== */
-
-.phone-item {
-    background: #f5faff;
-}
-
-.phone-item .support-icon-box {
-    background: #0968d8;
-}
-
-
-/* ==========================================
-   WHATSAPP
-========================================== */
-
-.whatsapp-item {
-    background: #f1fcf5;
-}
-
-.whatsapp-logo {
-    background: #08b95b;
-
-    padding: 13px;
-}
-
-.whatsapp-logo svg {
-
-    width: 36px;
-    height: 36px;
-
-    fill: #ffffff;
-}
-
-
-/* ==========================================
-   EMAIL
-========================================== */
-
-.email-item {
-    background: #fff5f6;
-}
-
-.email-item .support-icon-box {
-    background: #ef3048;
-}
-
-
-/* ==========================================
-   CONTACT DETAILS
-========================================== */
-
-.support-details {
-    min-width: 0;
-    flex: 1;
-}
-
-.support-details span {
-
-    display: block;
-
-    color: #52706a;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    margin-bottom: 3px;
-}
-
-.support-details a {
-
-    display: block;
-
-    color: #0874bd;
-
-    font-size: 23px;
-
-    font-weight: 800;
-
-    text-decoration: none;
-
-    word-break: break-word;
-}
-
-
-/* WhatsApp number */
-
-.whatsapp-item .support-details a {
-    color: #087a4a;
-}
-
-
-/* Email */
-
-.email-item .support-details a {
-
-    color: #b01835;
-
-    font-size: 20px;
-}
-
-.support-details small {
-
-    display: block;
-
-    margin-top: 5px;
-
-    color: #6b7c79;
-
-    font-size: 13px;
-}
-
-
-/* ==========================================
-   WORKING HOURS
-========================================== */
-
-.working-hours {
-
-    width: calc(100% - 36px);
-
-    margin: 17px 18px;
-
-    padding: 17px;
-
-    border-radius: 18px;
-
-    background: #edf7ff;
-
-    color: #084d82;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 12px;
-
-    text-align: center;
-}
-
-.clock-icon {
-    font-size: 32px;
-}
-
-.working-hours strong {
-
-    display: block;
-
-    font-size: 19px;
-}
-
-.working-hours span {
-
-    display: block;
-
-    margin-top: 3px;
-
-    font-size: 21px;
-
-    font-weight: 800;
-}
-
-
-/* ==========================================
-   FOOTER
-========================================== */
-
-.support-footer {
-
-    width: calc(100% - 36px);
-
-    margin: 12px 18px 18px;
-
-    padding: 17px 12px;
-
-    border-radius: 18px;
-
-    background: #def4ed;
-
-    color: #086452;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 25px;
-
-    flex-wrap: wrap;
-
-    text-align: center;
-
-    font-size: 15px;
-
-    font-weight: 700;
-}
-
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media (max-width: 600px) {
-
-    .contact {
-        margin-top: 20px;
-        border-radius: 20px;
-    }
-
-
-    .contact-header {
-
-        padding: 20px 12px;
-
-        gap: 10px;
-    }
-
-
-    .contact-header h2 {
-
-        font-size: 24px;
-    }
-
-
-    .contact-header p {
-
-        font-size: 14px;
-
-        letter-spacing: 1.5px;
-    }
-
-
-    .support-icon {
-
-        font-size: 34px;
-    }
-
-
-    .contact-heading {
-
-        padding: 20px 12px 12px;
-    }
-
-
-    .contact-heading h3 {
-
-        font-size: 20px;
-
-        line-height: 1.35;
-    }
-
-
-    .contact-heading p {
-
-        font-size: 14px;
-    }
-
-
-    .support-item {
-
-        width: calc(100% - 24px);
-
-        margin: 10px 12px;
-
-        padding: 13px;
-
-        gap: 12px;
-
-        border-radius: 16px;
-    }
-
-
-    .support-icon-box {
-
-        width: 55px;
-        height: 55px;
-
-        min-width: 55px;
-
-        font-size: 25px;
-    }
-
-
-    .whatsapp-logo svg {
-
-        width: 31px;
-        height: 31px;
-    }
-
-
-    .support-details a {
-
-        font-size: 20px;
-    }
-
-
-    .email-item .support-details a {
-
-        font-size: 17px;
-    }
-
-
-    .support-details small {
-
-        font-size: 12px;
-    }
-
-
-    .working-hours {
-
-        width: calc(100% - 24px);
-
-        margin: 12px;
-
-        padding: 14px;
-
-        border-radius: 16px;
-    }
-
-
-    .working-hours strong {
-
-        font-size: 19px;
-    }
-
-
-    .working-hours span {
-
-        font-size: 19px;
-    }
-
-
-    .support-footer {
-
-        width: calc(100% - 24px);
-
-        margin: 10px 12px 14px;
-
-        padding: 16px 10px;
-
-        gap: 10px;
-
-        font-size: 13px;
-
-        border-radius: 16px;
-    }
-
-}
-
-
-/* ==========================================
-   VERY SMALL MOBILE
-========================================== */
-
-@media (max-width: 380px) {
-
-    .contact-header h2 {
-        font-size: 21px;
-    }
-
-    .contact-header p {
-        font-size: 13px;
-    }
-
-    .support-details a {
-        font-size: 18px;
-    }
-
-    .email-item .support-details a {
-        font-size: 15px;
-    }
-
-}
-  
+/* ===================== EMERGENCY ===================== */
+.emergency-services{display:grid;gap:12px;margin:18px 0}
+.emergency-button{display:block;width:100%;box-sizing:border-box;padding:15px 14px;border-radius:10px;color:#fff;text-decoration:none;font-weight:700;font-size:18px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.ambulance-button{background:linear-gradient(90deg,#dc2626 0 50%,#16a34a 50% 100%)}
+.police-button{background:#ec4899}.fire-button{background:#f97316}
+.emergency-note{margin:8px 0 0;text-align:center;font-size:14px;color:#555}
+
+/* ===================== SERVICE FORM ===================== */
+#serviceForm{position:relative;padding:24px 20px 22px;margin-top:20px;border-radius:22px;background:#fff;border:1px solid #dce9e5;box-shadow:0 8px 25px rgba(22,91,72,.10)}
+#serviceForm::before{content:"📋  सेवा अनुरोध फॉर्म";display:block;text-align:center;font-size:27px;font-weight:800;color:#126b57;margin-bottom:5px}
+#serviceForm .form-note{display:block;text-align:center;font-size:14px;color:#66756f;margin:0 0 24px}
+#serviceForm label{display:block;position:relative;margin:18px 0 7px;font-size:17px;font-weight:700;color:#173c33}
+#serviceForm label::after{content:" *";color:#e53935;font-weight:800}
+#serviceForm input:not([type="hidden"]),#serviceForm select,#serviceForm textarea{width:100%;margin-top:8px;padding:15px 16px;border:2px solid #d5e1de;border-radius:14px;background:#fbfdfc;color:#173c33;font-size:17px;font-family:inherit;outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+#serviceForm input::placeholder,#serviceForm textarea::placeholder{color:#8b9491;opacity:1}
+#serviceForm input:not([type="hidden"]):focus,#serviceForm select:focus,#serviceForm textarea:focus{border-color:#16a085;background:#fff;box-shadow:0 0 0 4px rgba(22,160,133,.12)}
+#serviceForm select:disabled{background:#f1f3f3;color:#a1a7a5;cursor:not-allowed}
+#serviceForm textarea{min-height:125px;resize:vertical;line-height:1.5}
+#serviceForm label:nth-of-type(1)::before{content:"👤";margin-right:8px}
+#serviceForm label:nth-of-type(2)::before{content:"🎂";margin-right:8px}
+#serviceForm label:nth-of-type(3)::before{content:"📱";margin-right:8px}
+#serviceForm label:nth-of-type(4)::before{content:"📍";margin-right:8px}
+#serviceForm label:nth-of-type(5)::before{content:"🏙️";margin-right:8px}
+#serviceForm label:nth-of-type(6)::before{content:"🛠️";margin-right:8px}
+#serviceForm label:nth-of-type(7)::before{content:"🏠";margin-right:8px}
+#serviceForm label:nth-of-type(8)::before{content:"💬";margin-right:8px}
+#serviceForm button[type="submit"]{width:100%;margin-top:22px;padding:16px 18px;border:0;border-radius:14px;background:linear-gradient(135deg,#11966f,#087f60);color:#fff;font-size:19px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 6px 15px rgba(8,127,96,.22);transition:transform .15s,box-shadow .15s,opacity .15s}
+#serviceForm button[type="submit"]:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(8,127,96,.28)}
+#serviceForm button[type="submit"]:active{transform:translateY(1px)}
+#serviceForm button[type="submit"]:disabled{opacity:.7;cursor:wait}
+
+/* ===================== CUSTOMER SUPPORT =====================
+   IMPORTANT: OLD .contact::before RULE REMOVED.
+   This prevents the Help Me Door Step header from appearing twice.
+*/
+.contact{width:100%;padding:0!important;margin-top:25px!important;overflow:hidden;background:#fff!important;border-radius:24px!important;border:1px solid #dceee9!important;box-shadow:0 8px 28px rgba(0,90,80,.12);text-align:center}
+.contact-header{width:100%;background:linear-gradient(135deg,#00695c,#008f78);color:#fff;padding:22px 18px;display:flex;align-items:center;justify-content:center;gap:15px;text-align:center}
+.contact-header h2{margin:0;color:#fff;font-size:28px;font-weight:800}.contact-header p{margin:5px 0 0;color:#eafff9;font-size:17px;letter-spacing:2px}.support-icon{font-size:42px;line-height:1}
+.contact-heading{text-align:center;padding:22px 15px 15px}.contact-heading h3{margin:0;color:#12463f;font-size:24px;font-weight:800}.contact-heading p{margin:7px 0 0;color:#657874;font-size:16px}
+.support-item{width:calc(100% - 36px);margin:12px 18px;padding:16px;border-radius:18px;display:flex;align-items:center;gap:15px;background:#f7fbfa;border:1px solid #dcece8;box-shadow:0 3px 10px rgba(0,80,70,.04)}
+.support-icon-box{width:62px;height:62px;min-width:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;background:#e9f3ff}
+.phone-item{background:#f5faff}.phone-item .support-icon-box{background:#0968d8}.whatsapp-item{background:#f1fcf5}.whatsapp-logo{background:#08b95b;padding:13px}.whatsapp-logo svg{width:36px;height:36px;fill:#fff}
+.email-item{background:#fff5f6}.email-item .support-icon-box{background:#ef3048}
+.support-details{min-width:0;flex:1}.support-details span{display:block;color:#52706a;font-size:15px;font-weight:700;margin-bottom:3px}.support-details a{display:block;color:#0874bd;font-size:23px;font-weight:800;text-decoration:none;word-break:break-word}.whatsapp-item .support-details a{color:#087a4a}.email-item .support-details a{color:#b01835;font-size:20px}.support-details small{display:block;margin-top:5px;color:#6b7c79;font-size:13px}
+.working-hours{width:calc(100% - 36px);margin:17px 18px;padding:17px;border-radius:18px;background:#edf7ff;color:#084d82;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center}.clock-icon{font-size:32px}.working-hours strong{display:block;font-size:19px}.working-hours span{display:block;margin-top:3px;font-size:21px;font-weight:800}
+.support-footer{width:calc(100% - 36px);margin:12px 18px 18px;padding:17px 12px;border-radius:18px;background:#def4ed;color:#086452;display:flex;justify-content:center;align-items:center;gap:25px;flex-wrap:wrap;text-align:center;font-size:15px;font-weight:700}
+
+@media(max-width:600px){
+#serviceForm{padding:20px 14px 18px;border-radius:18px}#serviceForm::before{font-size:23px}#serviceForm label{font-size:17px;margin-top:17px}#serviceForm input:not([type="hidden"]),#serviceForm select,#serviceForm textarea{padding:14px;font-size:16px;border-radius:13px}#serviceForm textarea{min-height:120px}#serviceForm button[type="submit"]{font-size:18px;padding:15px;border-radius:13px}
+.contact{margin-top:20px!important;border-radius:20px!important}.contact-header{padding:20px 12px;gap:10px}.contact-header h2{font-size:24px}.contact-header p{font-size:14px;letter-spacing:1.5px}.support-icon{font-size:34px}.contact-heading{padding:20px 12px 12px}.contact-heading h3{font-size:20px;line-height:1.35}.contact-heading p{font-size:14px}.support-item{width:calc(100% - 24px);margin:10px 12px;padding:13px;gap:12px;border-radius:16px}.support-icon-box{width:55px;height:55px;min-width:55px;font-size:25px}.whatsapp-logo svg{width:31px;height:31px}.support-details a{font-size:20px}.email-item .support-details a{font-size:17px}.support-details small{font-size:12px}.working-hours{width:calc(100% - 24px);margin:12px;padding:14px;border-radius:16px}.working-hours strong{font-size:19px}.working-hours span{font-size:19px}.support-footer{width:calc(100% - 24px);margin:10px 12px 14px;padding:16px 10px;gap:10px;font-size:13px;border-radius:16px}
+}
+@media(max-width:400px){#serviceForm{padding:18px 12px 16px}#serviceForm::before{font-size:21px}#serviceForm label{font-size:16px}#serviceForm input:not([type="hidden"]),#serviceForm select,#serviceForm textarea{font-size:15px}#serviceForm button[type="submit"]{font-size:17px}.contact-header h2{font-size:21px}.contact-header p{font-size:13px}.support-details a{font-size:18px}.email-item .support-details a{font-size:15px}}
 </style>
 </head>
 
@@ -927,11 +66,8 @@
 
 <header>
   <div class="brand">
-    <img
-        class="brand-logo"
-        src="/static/WhatsApp%20Image%202026-09-13%20at%2012.32.28.jpeg"
-        alt="HelpMe Doorstep Logo">
-</div>
+    <img class="brand-logo" src="/static/WhatsApp%20Image%202026-09-13%20at%2012.32.28.jpeg" alt="HelpMe Doorstep Logo">
+  </div>
   <a href="/admin">Admin</a>
 </header>
 
@@ -944,505 +80,180 @@
 
 {% for cat,msg in get_flashed_messages(with_categories=true) %}
 <div class="alert {{cat}}">{{msg}}</div>
-{% endfor %} 
-  
-  <section class="card">
+{% endfor %}
+
+<section class="card">
   <h2 style="text-align:center;">🚨 Emergency Services</h2>
-
-  <p class="emergency-note">
-    जरूरत पड़ने पर एक क्लिक में संबंधित सेवा को Call करें।
-  </p>
-
+  <p class="emergency-note">जरूरत पड़ने पर एक क्लिक में संबंधित सेवा को Call करें।</p>
   <div class="emergency-services">
-
-    <a class="emergency-button ambulance-button"
-       href="tel:102">
-      🚑 Ambulance Sewa — DIAL 102
-    </a>
-
-    <a class="emergency-button police-button"
-       href="tel:112">
-      👮 Police Sewa — DIAL 112
-    </a>
-
-    <a class="emergency-button fire-button"
-       href="tel:101">
-      🚒 Fire Sewa — DIAL 101
-    </a>
-
+    <a class="emergency-button ambulance-button" href="tel:102">🚑 Ambulance Sewa — DIAL 102</a>
+    <a class="emergency-button police-button" href="tel:112">👮 Police Sewa — DIAL 112</a>
+    <a class="emergency-button fire-button" href="tel:101">🚒 Fire Sewa — DIAL 101</a>
   </div>
 </section>
 
-  <section class="card" style="text-align:center;">
+<section class="card" style="text-align:center;">
   <h2>📋 अपने आवेदन की स्थिति देखें</h2>
   <p>मोबाइल नंबर डालकर अपने आवेदन का Status देखें।</p>
-
-  <a href="/status"
-     style="
-       display:inline-block;
-       padding:12px 25px;
-       background:#16a085;
-       color:white;
-       text-decoration:none;
-       border-radius:8px;
-       font-weight:bold;
-     ">
-    आवेदन की स्थिति देखें
-  </a>
+  <a href="/status" style="display:inline-block;padding:12px 25px;background:#16a085;color:white;text-decoration:none;border-radius:8px;font-weight:bold;">आवेदन की स्थिति देखें</a>
 </section>
 
-  <section class="card" style="text-align:center;">
-
+<section class="card" style="text-align:center;">
   <h2>🤖 AI Support</h2>
-
-  <p>
-    अपने सवाल का तुरंत सहायता प्राप्त करें।
-  </p>
-
-  <a href="/ai-support"
-     style="
-       display:inline-block;
-       padding:12px 25px;
-       background:#1976d2;
-       color:white;
-       text-decoration:none;
-       border-radius:8px;
-       font-weight:bold;
-     ">
-    🤖 AI Support खोलें
-  </a>
-
+  <p>अपने सवाल का तुरंत सहायता प्राप्त करें।</p>
+  <a href="/ai-support" style="display:inline-block;padding:12px 25px;background:#1976d2;color:white;text-decoration:none;border-radius:8px;font-weight:bold;">🤖 AI Support खोलें</a>
 </section>
+
 <form class="card" method="post" action="/request-service" id="serviceForm">
-<p class="form-note">कृपया नीचे सभी आवश्यक जानकारी सही-सही भरें</p>  
-<input type="hidden" name="latitude" id="latitude">
-<input type="hidden" name="longitude" id="longitude"> 
-<label>
-  नाम
-  <input name="customer" required placeholder="अपना नाम डालें">
-</label>
+  <p class="form-note">कृपया नीचे सभी आवश्यक जानकारी सही-सही भरें</p>
+  <input type="hidden" name="latitude" id="latitude">
+  <input type="hidden" name="longitude" id="longitude">
 
-<label>
-  उम्र
-  <input
-    name="age"
-    type="number"
-    min="1"
-    max="120"
-    required
-    placeholder="उम्र डालें">
-</label>
+  <label>नाम<input name="customer" required placeholder="अपना नाम डालें"></label>
+  <label>उम्र<input name="age" type="number" min="1" max="120" required placeholder="उम्र डालें"></label>
+  <label>मोबाइल नंबर<input name="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required placeholder="10 अंकों का मोबाइल नंबर"></label>
 
-<label>
-  मोबाइल नंबर
-  <input
-    name="phone"
-    type="tel"
-    inputmode="numeric"
-    pattern="[0-9]{10}"
-    maxlength="10"
-    required
-    placeholder="10 अंकों का मोबाइल नंबर">
-</label>
+  <label>राज्य
+    <select name="state" id="state" required>
+      <option value="">राज्य चुनें</option>
+      <option value="Andhra Pradesh">Andhra Pradesh</option><option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Assam">Assam</option><option value="Bihar">Bihar</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Delhi">Delhi</option><option value="Goa">Goa</option><option value="Gujarat">Gujarat</option><option value="Haryana">Haryana</option><option value="Himachal Pradesh">Himachal Pradesh</option><option value="Jharkhand">Jharkhand</option><option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option><option value="Madhya Pradesh">Madhya Pradesh</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Meghalaya">Meghalaya</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Odisha">Odisha</option><option value="Punjab">Punjab</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Tripura">Tripura</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="Uttarakhand">Uttarakhand</option><option value="West Bengal">West Bengal</option>
+    </select>
+  </label>
 
-<label>
-  राज्य
+  <label>जिला
+    <select name="district" id="district" required disabled><option value="">पहले State चुनें</option></select>
+  </label>
 
-  <select name="state" id="state" required>
-    <option value="">राज्य चुनें</option>
+  <label>सेवा
+    <select name="service" required>
+      <option value="">सेवा चुनें</option>
+      {% for s in services %}<option value="{{s}}">{{s}}</option>{% endfor %}
+    </select>
+  </label>
 
-    <option value="Andhra Pradesh">Andhra Pradesh</option>
-    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-    <option value="Assam">Assam</option>
-    <option value="Bihar">Bihar</option>
-    <option value="Chhattisgarh">Chhattisgarh</option>
-    <option value="Delhi">Delhi</option>
-    <option value="Goa">Goa</option>
-    <option value="Gujarat">Gujarat</option>
-    <option value="Haryana">Haryana</option>
-    <option value="Himachal Pradesh">Himachal Pradesh</option>
-    <option value="Jharkhand">Jharkhand</option>
-    <option value="Karnataka">Karnataka</option>
-    <option value="Kerala">Kerala</option>
-    <option value="Madhya Pradesh">Madhya Pradesh</option>
-    <option value="Maharashtra">Maharashtra</option>
-    <option value="Manipur">Manipur</option>
-    <option value="Meghalaya">Meghalaya</option>
-    <option value="Mizoram">Mizoram</option>
-    <option value="Nagaland">Nagaland</option>
-    <option value="Odisha">Odisha</option>
-    <option value="Punjab">Punjab</option>
-    <option value="Rajasthan">Rajasthan</option>
-    <option value="Sikkim">Sikkim</option>
-    <option value="Tamil Nadu">Tamil Nadu</option>
-    <option value="Telangana">Telangana</option>
-    <option value="Tripura">Tripura</option>
-    <option value="Uttar Pradesh">Uttar Pradesh</option>
-    <option value="Uttarakhand">Uttarakhand</option>
-    <option value="West Bengal">West Bengal</option>
-  </select>
-</label>
-
-<label>
-  जिला
-
-  <select
-    name="district"
-    id="district"
-    required
-    disabled>
-
-    <option value="">पहले State चुनें</option>
-
-  </select>
-</label>
-
-<label>
-  सेवा
-
-  <select name="service" required>
-    <option value="">सेवा चुनें</option>
-
-    {% for s in services %}
-    <option value="{{s}}">{{s}}</option>
-    {% endfor %}
-
-  </select>
-</label>
-
-<label>
-  पता
-
-  <textarea
-    name="address"
-    required
-    placeholder="अपना पूरा पता लिखें"></textarea>
-</label>
-
-<label>
-  किस काम में सहायता चाहिए?
-
-  <textarea
-    name="details"
-    required
-    placeholder="जिस काम में सहायता चाहिए वह लिखें"></textarea>
-</label>
-
-<button type="submit">
-  सेवा अनुरोध भेजें
-</button>
-
+  <label>पता<textarea name="address" required placeholder="अपना पूरा पता लिखें"></textarea></label>
+  <label>किस काम में सहायता चाहिए?<textarea name="details" required placeholder="जिस काम में सहायता चाहिए वह लिखें"></textarea></label>
+  <button type="submit">सेवा अनुरोध भेजें</button>
 </form>
 
+<!-- ================= CUSTOMER SUPPORT ================= -->
 <section class="card contact">
+  <div class="contact-header">
+    <div class="support-icon">🎧</div>
+    <div><h2>Help Me Door Step</h2><p>Customer Support</p></div>
+  </div>
 
-    <div class="contact-header">
+  <div class="contact-heading">
+    <h3>📞 Help Me Door Step Help Line</h3>
+    <p>किसी भी सहायता के लिए हमसे संपर्क करें</p>
+  </div>
 
-        <div class="support-icon">
-            🎧
-        </div>
-
-        <div>
-            <h2>Help Me Door Step</h2>
-            <p>Customer Support</p>
-        </div>
-
+  <div class="support-item phone-item">
+    <div class="support-icon-box">📞</div>
+    <div class="support-details">
+      <span>Help Line</span>
+      <a href="tel:+918887410600">+91 88874 10600</a>
+      <small>हमारी सहायता टीम से बात करें</small>
     </div>
+  </div>
 
-
-    <div class="contact-heading">
-
-        <h3>
-            📞 Help Me Door Step Help Line
-        </h3>
-
-        <p>
-            किसी भी सहायता के लिए हमसे संपर्क करें
-        </p>
-
+  <div class="support-item whatsapp-item">
+    <div class="support-icon-box whatsapp-logo">
+      <svg viewBox="0 0 24 24" aria-label="WhatsApp"><path d="M12.04 2A9.94 9.94 0 0 0 3.4 16.89L2 22l5.24-1.37A9.95 9.95 0 1 0 12.04 2zm0 18.18a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.11.81.83-3.03-.2-.31a8.2 8.2 0 1 1 6.96 3.85zm4.5-6.14c-.25-.13-1.47-.73-1.7-.81-.23-.08-.39-.13-.56.13-.16.25-.64.81-.79.98-.15.17-.29.19-.54.06-.25-.13-1.04-.38-1.98-1.21-.73-.65-1.22-1.45-1.36-1.69-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.32-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.17 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.18 1.11.15 1.53.09.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.3z"/></svg>
     </div>
-
-
-    <div class="support-item phone-item">
-
-        <div class="support-icon-box">
-            📞
-        </div>
-
-        <div class="support-details">
-
-            <span>Help Line</span>
-
-            <a href="tel:+918887410600">
-                +91 88874 10600
-            </a>
-
-            <small>
-                हमारी सहायता टीम से बात करें
-            </small>
-
-        </div>
-
+    <div class="support-details">
+      <span>WhatsApp</span>
+      <a href="https://wa.me/919219160465" target="_blank" rel="noopener noreferrer">+91 92191 60465</a>
+      <small>WhatsApp पर हमसे संपर्क करें</small>
     </div>
+  </div>
 
-
-    <div class="support-item whatsapp-item">
-
-        <div class="support-icon-box whatsapp-logo">
-
-            <svg
-                viewBox="0 0 24 24"
-                aria-label="WhatsApp">
-
-                <path d="M12.04 2A9.94 9.94 0 0 0 3.4 16.89L2 22l5.24-1.37A9.95 9.95 0 1 0 12.04 2zm0 18.18a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.11.81.83-3.03-.2-.31a8.2 8.2 0 1 1 6.96 3.85zm4.5-6.14c-.25-.13-1.47-.73-1.7-.81-.23-.08-.39-.13-.56.13-.16.25-.64.81-.79.98-.15.17-.29.19-.54.06-.25-.13-1.04-.38-1.98-1.21-.73-.65-1.22-1.45-1.36-1.69-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.65.32-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.17 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.18 1.11.15 1.53.09.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.3z"/>
-
-            </svg>
-
-        </div>
-
-        <div class="support-details">
-
-            <span>WhatsApp</span>
-
-            <a
-                href="https://wa.me/919219160465"
-                target="_blank"
-                rel="noopener noreferrer">
-
-                +91 92191 60465
-
-            </a>
-
-            <small>
-                WhatsApp पर हमसे संपर्क करें
-            </small>
-
-        </div>
-
+  <div class="support-item email-item">
+    <div class="support-icon-box">✉️</div>
+    <div class="support-details">
+      <span>Email</span>
+      <a href="mailto:info@helpmedoorstep.in">info@helpmedoorstep.in</a>
+      <small>अपनी query हमें Email करें</small>
     </div>
+  </div>
 
+  <div class="working-hours">
+    <div class="clock-icon">🕙</div>
+    <div><strong>Working Days</strong><span>10 AM to 5 PM</span></div>
+  </div>
 
-    <div class="support-item email-item">
-
-        <div class="support-icon-box">
-            ✉️
-        </div>
-
-        <div class="support-details">
-
-            <span>Email</span>
-
-            <a href="mailto:info@helpmedoorstep.in">
-
-                info@helpmedoorstep.in
-
-            </a>
-
-            <small>
-                अपनी query हमें Email करें
-            </small>
-
-        </div>
-
-    </div>
-
-
-    <div class="working-hours">
-
-        <div class="clock-icon">
-            🕙
-        </div>
-
-        <div>
-
-            <strong>
-                Working Days
-            </strong>
-
-            <span>
-                10 AM to 5 PM
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div class="support-footer">
-
-        <span>✓ Your Support</span>
-
-        <span>♥ Our Commitment</span>
-
-        <span>✓ Better Tomorrow</span>
-
-    </div>
-
+  <div class="support-footer">
+    <span>✓ Your Support</span><span>♥ Our Commitment</span><span>✓ Better Tomorrow</span>
+  </div>
 </section>
 
-  <!-- ==============================
-     CUSTOMER FORM VOICE SUPPORT
-     ============================== -->
-
+<!-- ================= CUSTOMER FORM VOICE SUPPORT ================= -->
 <script>
-(function () {
-
-    const voiceMessages = {
-        customer:
-            "कृपया अपना पूरा नाम लिखें।",
-
-        age:
-            "कृपया अपनी उम्र वर्षों में लिखें।",
-
-        phone:
-            "कृपया अपना दस अंकों का मोबाइल नंबर लिखें।",
-
-        state:
-            "कृपया अपना राज्य चुनें।",
-
-        district:
-            "कृपया अपना जिला चुनें।",
-
-        service:
-            "कृपया जिस सेवा की आवश्यकता है, वह सेवा चुनें।",
-
-        address:
-            "कृपया अपना पूरा पता लिखें, ताकि हमारी टीम सही स्थान पर सेवा दे सके।",
-
-        details:
-            "कृपया बताएं कि आपको किस काम में सहायता चाहिए।"
-    };
-
-
-    function speakMessage(message) {
-
-        if (!("speechSynthesis" in window)) {
-            return;
-        }
-
-        window.speechSynthesis.cancel();
-
-        const speech = new SpeechSynthesisUtterance(message);
-
-        speech.lang = "hi-IN";
-        speech.rate = 0.9;
-        speech.pitch = 1;
-
-        window.speechSynthesis.speak(speech);
-    }
-
-
-    Object.keys(voiceMessages).forEach(function (fieldName) {
-
-        const field = document.querySelector(
-            '[name="' + fieldName + '"]'
-        );
-
-        if (!field) {
-            return;
-        }
-
-        field.addEventListener("focus", function () {
-
-            speakMessage(
-                voiceMessages[fieldName]
-            );
-
-        });
-
-    });
-
+(function(){
+  const voiceMessages={
+    customer:"कृपया अपना पूरा नाम लिखें।",
+    age:"कृपया अपनी उम्र वर्षों में लिखें।",
+    phone:"कृपया अपना दस अंकों का मोबाइल नंबर लिखें।",
+    state:"कृपया अपना राज्य चुनें।",
+    district:"कृपया अपना जिला चुनें।",
+    service:"कृपया जिस सेवा की आवश्यकता है, वह सेवा चुनें।",
+    address:"कृपया अपना पूरा पता लिखें, ताकि हमारी टीम सही स्थान पर सेवा दे सके।",
+    details:"कृपया बताएं कि आपको किस काम में सहायता चाहिए।"
+  };
+  function speakMessage(message){
+    if(!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const speech=new SpeechSynthesisUtterance(message);
+    speech.lang="hi-IN";speech.rate=.9;speech.pitch=1;
+    window.speechSynthesis.speak(speech);
+  }
+  Object.keys(voiceMessages).forEach(function(fieldName){
+    const field=document.querySelector('[name="'+fieldName+'"]');
+    if(!field) return;
+    field.addEventListener("focus",function(){speakMessage(voiceMessages[fieldName]);});
+  });
 })();
 </script>
 
 </main>
 
 <script src="/static/india-data.js"></script>
-
 <script>
-const stateSelect = document.getElementById("state");
-const districtSelect = document.getElementById("district");
-
-stateSelect.addEventListener("change", function () {
-
-    const state = this.value;
-
-    districtSelect.innerHTML =
-        '<option value="">District चुनें</option>';
-
-    districtSelect.disabled = true;
-
-    if (!state || !indiaData[state]) {
-        return;
-    }
-
-    indiaData[state]
-        .slice()
-        .sort((a, b) => a.localeCompare(b))
-        .forEach(function (district) {
-
-            const option = document.createElement("option");
-
-            option.value = district;
-            option.textContent = district;
-
-            districtSelect.appendChild(option);
-        });
-
-    districtSelect.disabled = false;
+const stateSelect=document.getElementById("state");
+const districtSelect=document.getElementById("district");
+stateSelect.addEventListener("change",function(){
+  const state=this.value;
+  districtSelect.innerHTML='<option value="">District चुनें</option>';
+  districtSelect.disabled=true;
+  if(!state||!indiaData[state]) return;
+  indiaData[state].slice().sort((a,b)=>a.localeCompare(b)).forEach(function(district){
+    const option=document.createElement("option");option.value=district;option.textContent=district;districtSelect.appendChild(option);
+  });
+  districtSelect.disabled=false;
 });
 </script>
 
 <script>
-const serviceForm = document.getElementById("serviceForm");
-const latitudeInput = document.getElementById("latitude");
-const longitudeInput = document.getElementById("longitude");
-
-serviceForm.addEventListener("submit", function(event) {
-
-    if (latitudeInput.value && longitudeInput.value) {
-        return;
-    }
-
-    event.preventDefault();
-
-    if (!navigator.geolocation) {
-        alert("आपके Browser में Location सुविधा उपलब्ध नहीं है।");
-        return;
-    }
-
-    const submitButton = serviceForm.querySelector("button[type='submit']");
-    submitButton.disabled = true;
-    submitButton.textContent = "📍 Location प्राप्त हो रही है...";
-
-    navigator.geolocation.getCurrentPosition(
-
-        function(position) {
-
-            latitudeInput.value = position.coords.latitude;
-            longitudeInput.value = position.coords.longitude;
-
-            serviceForm.submit();
-        },
-
-        function(error) {
-
-            submitButton.disabled = false;
-            submitButton.textContent = "सेवा अनुरोध भेजें";
-
-            if (error.code === 1) {
-                alert("Location Permission Allow करें, फिर दोबारा आवेदन भेजें।");
-            } else {
-                alert("Location प्राप्त नहीं हो सकी। कृपया दोबारा प्रयास करें।");
-            }
-        },
-
-        {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
-        }
-    );
+const serviceForm=document.getElementById("serviceForm");
+const latitudeInput=document.getElementById("latitude");
+const longitudeInput=document.getElementById("longitude");
+serviceForm.addEventListener("submit",function(event){
+  if(latitudeInput.value&&longitudeInput.value) return;
+  event.preventDefault();
+  if(!navigator.geolocation){alert("आपके Browser में Location सुविधा उपलब्ध नहीं है।");return;}
+  const submitButton=serviceForm.querySelector("button[type='submit']");
+  submitButton.disabled=true;submitButton.textContent="📍 Location प्राप्त हो रही है...";
+  navigator.geolocation.getCurrentPosition(
+    function(position){
+      latitudeInput.value=position.coords.latitude;longitudeInput.value=position.coords.longitude;serviceForm.submit();
+    },
+    function(error){
+      submitButton.disabled=false;submitButton.textContent="सेवा अनुरोध भेजें";
+      if(error.code===1) alert("Location Permission Allow करें, फिर दोबारा आवेदन भेजें।");
+      else alert("Location प्राप्त नहीं हो सकी। कृपया दोबारा प्रयास करें।");
+    },
+    {enableHighAccuracy:true,timeout:15000,maximumAge:0}
+  );
 });
 </script>
 
