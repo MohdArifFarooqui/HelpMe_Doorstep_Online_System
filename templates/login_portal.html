@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HelpMe Doorstep | Login</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(135deg,#eef7f5,#f7fbff);
+    color:#183b35;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+/* MAIN PORTAL */
+
+.portal{
+    width:100%;
+    max-width:520px;
+    background:#ffffff;
+    border-radius:28px;
+    padding:25px 20px 22px;
+    box-shadow:0 15px 45px rgba(20,70,60,.15);
+    border:1px solid #dcebe7;
+}
+
+/* LOGO */
+
+.logo-box{
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.logo-box img{
+    width:110px;
+    height:110px;
+    object-fit:contain;
+    border-radius:50%;
+    background:#fff;
+    padding:5px;
+    box-shadow:0 5px 18px rgba(0,0,0,.10);
+}
+
+.portal-title{
+    text-align:center;
+    margin:5px 0 4px;
+    font-size:27px;
+    font-weight:900;
+    color:#126b57;
+}
+
+.portal-subtitle{
+    text-align:center;
+    margin:0 0 25px;
+    color:#687873;
+    font-size:15px;
+}
+
+/* LOGIN OPTIONS */
+
+.login-list{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+.login-option{
+    width:100%;
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    text-decoration:none;
+    border-radius:17px;
+    padding:12px 15px;
+    border:2px solid #e0ebe8;
+    background:#ffffff;
+    transition:.2s ease;
+    box-shadow:0 4px 12px rgba(20,70,60,.06);
+}
+
+.login-option:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(20,70,60,.12);
+}
+
+.login-icon{
+    width:48px;
+    height:48px;
+    min-width:48px;
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:27px;
+    margin-right:13px;
+}
+
+.login-content{
+    flex:1;
+    min-width:0;
+}
+
+.login-title{
+    display:block;
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+
+.login-description{
+    display:block;
+    font-size:12px;
+    color:#73817e;
+    line-height:1.3;
+}
+
+.login-arrow{
+    font-size:25px;
+    font-weight:bold;
+    margin-left:8px;
+}
+
+/* CUSTOMER */
+
+.customer{
+    border-color:#cfe9df;
+}
+
+.customer .login-icon{
+    background:#e3f7ef;
+}
+
+.customer .login-title{
+    color:#087a5c;
+}
+
+.customer .login-arrow{
+    color:#087a5c;
+}
+
+/* WORKER */
+
+.worker{
+    border-color:#d7e7f7;
+}
+
+.worker .login-icon{
+    background:#e8f3ff;
+}
+
+.worker .login-title{
+    color:#1768a5;
+}
+
+.worker .login-arrow{
+    color:#1768a5;
+}
+
+/* DISTRICT */
+
+.district{
+    border-color:#eee0c8;
+}
+
+.district .login-icon{
+    background:#fff4df;
+}
+
+.district .login-title{
+    color:#a35b00;
+}
+
+.district .login-arrow{
+    color:#a35b00;
+}
+
+/* STATE */
+
+.state{
+    border-color:#e2d8f2;
+}
+
+.state .login-icon{
+    background:#f2eaff;
+}
+
+.state .login-title{
+    color:#7040a5;
+}
+
+.state .login-arrow{
+    color:#7040a5;
+}
+
+/* SWIPE AREA */
+
+.feature-section{
+    margin-top:25px;
+}
+
+.feature-title{
+    text-align:center;
+    font-size:17px;
+    font-weight:800;
+    color:#345b54;
+    margin-bottom:10px;
+}
+
+.swipe-container{
+    display:flex;
+    overflow-x:auto;
+    gap:12px;
+    scroll-snap-type:x mandatory;
+    padding:4px 2px 10px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+}
+
+.swipe-container::-webkit-scrollbar{
+    display:none;
+}
+
+.feature-card{
+    min-width:85%;
+    scroll-snap-align:center;
+    background:#f7fbfa;
+    border:1px solid #dcece8;
+    border-radius:17px;
+    padding:16px;
+    text-align:center;
+}
+
+.feature-card strong{
+    display:block;
+    font-size:16px;
+    color:#126b57;
+    margin-bottom:6px;
+}
+
+.feature-card span{
+    display:block;
+    font-size:13px;
+    line-height:1.5;
+    color:#687873;
+}
+
+/* SWIPE HINT */
+
+.swipe-hint{
+    text-align:center;
+    color:#7b8986;
+    font-size:12px;
+    margin-top:2px;
+}
+
+/* FOOTER */
+
+.portal-footer{
+    text-align:center;
+    margin-top:20px;
+    padding-top:15px;
+    border-top:1px solid #e5eeeb;
+    color:#71807c;
+    font-size:12px;
+}
+
+.portal-footer strong{
+    color:#126b57;
+}
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+    body{
+        padding:10px;
+        align-items:flex-start;
+    }
+
+    .portal{
+        margin-top:8px;
+        padding:21px 13px 18px;
+        border-radius:23px;
+    }
+
+    .logo-box img{
+        width:92px;
+        height:92px;
+    }
+
+    .portal-title{
+        font-size:23px;
+    }
+
+    .portal-subtitle{
+        font-size:13px;
+        margin-bottom:20px;
+    }
+
+    .login-option{
+        min-height:68px;
+        padding:10px 12px;
+    }
+
+    .login-icon{
+        width:44px;
+        height:44px;
+        min-width:44px;
+        font-size:24px;
+        margin-right:11px;
+    }
+
+    .login-title{
+        font-size:17px;
+    }
+
+    .login-description{
+        font-size:11px;
+    }
+
+    .login-arrow{
+        font-size:22px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="portal">
+
+    <!-- LOGO -->
+
+    <div class="logo-box">
+
+        <img
+            src="/static/helpme-doorstep-logo.png.jpeg"
+            alt="HelpMe Doorstep Logo"
+        >
+
+    </div>
+
+    <h1 class="portal-title">
+        HelpMe Doorstep
+    </h1>
+
+    <p class="portal-subtitle">
+        अपनी भूमिका चुनें और सुरक्षित रूप से Login करें
+    </p>
+
+
+    <!-- LOGIN OPTIONS -->
+
+    <div class="login-list">
+
+        <!-- CUSTOMER -->
+
+        <a
+            href="/customer/login"
+            class="login-option customer"
+        >
+
+            <div class="login-icon">
+                👤
+            </div>
+
+            <div class="login-content">
+
+                <span class="login-title">
+                    Customer Login
+                </span>
+
+                <span class="login-description">
+                    सेवा अनुरोध, Status और Customer Dashboard
+                </span>
+
+            </div>
+
+            <div class="login-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <!-- WORKER -->
+
+        <a
+            href="/worker/login"
+            class="login-option worker"
+        >
+
+            <div class="login-icon">
+                👷
+            </div>
+
+            <div class="login-content">
+
+                <span class="login-title">
+                    Worker Login
+                </span>
+
+                <span class="login-description">
+                    Assigned Requests और Worker Dashboard
+                </span>
+
+            </div>
+
+            <div class="login-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <!-- DISTRICT ADMIN -->
+
+        <a
+            href="/admin?role=district"
+            class="login-option district"
+        >
+
+            <div class="login-icon">
+                🏢
+            </div>
+
+            <div class="login-content">
+
+                <span class="login-title">
+                    District Admin Login
+                </span>
+
+                <span class="login-description">
+                    District Requests, Workers और Management
+                </span>
+
+            </div>
+
+            <div class="login-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <!-- STATE ADMIN -->
+
+        <a
+            href="/admin?role=state"
+            class="login-option state"
+        >
+
+            <div class="login-icon">
+                🏛️
+            </div>
+
+            <div class="login-content">
+
+                <span class="login-title">
+                    State Admin Login
+                </span>
+
+                <span class="login-description">
+                    State Level Requests, Workers और Management
+                </span>
+
+            </div>
+
+            <div class="login-arrow">
+                →
+            </div>
+
+        </a>
+
+    </div>
+
+
+    <!-- SWIPE FEATURES -->
+
+    <section class="feature-section">
+
+        <div class="feature-title">
+            ✨ Dashboard Features
+        </div>
+
+        <div class="swipe-container">
+
+            <div class="feature-card">
+
+                <strong>👤 Customer</strong>
+
+                <span>
+                    अपनी Service Request भेजें,
+                    Application Status देखें और
+                    Customer Dashboard से अपनी सेवाओं को manage करें।
+                </span>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <strong>👷 Worker / CSC</strong>
+
+                <span>
+                    Assigned Customer Requests,
+                    Customer Location, Call और
+                    Request Status को manage करें।
+                </span>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <strong>🏢 District Admin</strong>
+
+                <span>
+                    अपने District के Requests और
+                    approved Workers को manage और monitor करें।
+                </span>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <strong>🏛️ State Admin</strong>
+
+                <span>
+                    अपने State के Requests,
+                    Workers और District-level operations को monitor करें।
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="swipe-hint">
+            ← Finger से Left / Right Swipe करें →
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <div class="portal-footer">
+
+        <strong>Help Me Door Step</strong><br>
+
+        सुरक्षित Login • अलग Dashboard • बेहतर सेवा
+
+    </div>
+
+</div>
+
+</body>
+      </html>
