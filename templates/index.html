@@ -266,13 +266,55 @@
 </main>
 
 <script src="/static/india-data.js"></script>
+
 <script>
-const stateSelect=document.getElementById("state");
-const districtSelect=document.getElementById("district");
-stateSelect.addEventListener("change",function(){
-  const state=this.value;
-  districtSelect.innerHTML='<option value="">District चुनें</option>';
-  districtSelect.disabled=true;
-  if(!state||!indiaData[state]) return;
-  indiaData[state].slice().sort((a,b)=>a.localeCompare(b)).forEach(function(district){
-    const option=document.cr
+const stateSelect = document.getElementById("state");
+const districtSelect = document.getElementById("district");
+
+function loadDistricts() {
+
+    const state = stateSelect.value;
+
+    // District dropdown reset
+    districtSelect.innerHTML =
+        '<option value="">District चुनें</option>';
+
+    districtSelect.disabled = true;
+
+    // State select नहीं है या data नहीं मिला
+    if (!state || !indiaData[state]) {
+        return;
+    }
+
+    // District list load करें
+    indiaData[state]
+        .slice()
+        .sort((a, b) => a.localeCompare(b))
+        .forEach(function(district) {
+
+            const option = document.createElement("option");
+
+            option.value = district;
+            option.textContent = district;
+
+            districtSelect.appendChild(option);
+        });
+
+    // District dropdown enable
+    districtSelect.disabled = false;
+}
+
+
+// State बदलने पर District load होगा
+stateSelect.addEventListener("change", function() {
+    loadDistricts();
+});
+
+
+// Page खुलते समय अगर State पहले से selected है,
+// तो District अपने आप load होगा
+if (stateSelect.value) {
+    loadDistricts();
+}
+
+</script>
