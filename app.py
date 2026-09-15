@@ -1522,8 +1522,40 @@ def admin_feedback():
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
-    feedbacks = (
+    admin_user = get_logged_in_admin()
+
+    if admin_user is False:
+        return redirect(url_for("admin"))
+
+    feedback_query = (
         DB.query(Feedback)
+        .join(
+            RequestItem,
+            Feedback.request_id == RequestItem.id
+        )
+    )
+
+    # Main Admin = सभी Feedback
+    # State Admin = केवल अपने State का Feedback
+    # District Admin = केवल अपने District का Feedback
+    if admin_user is not None:
+
+        if admin_user.admin_level == "state":
+            feedback_query = feedback_query.filter(
+                RequestItem.state == admin_user.state
+            )
+
+        elif admin_user.admin_level == "district":
+            feedback_query = feedback_query.filter(
+                RequestItem.state == admin_user.state,
+                RequestItem.district == admin_user.district
+            )
+
+        else:
+            return redirect(url_for("admin"))
+
+    feedbacks = (
+        feedback_query
         .order_by(
             Feedback.created_at.desc()
         )
