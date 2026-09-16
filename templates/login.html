@@ -7,80 +7,724 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1">
 
-    <title>Admin Login</title>
+    <title>
+        {% if request.args.get('role') == 'district' %}
+            District Admin Login
+        {% elif request.args.get('role') == 'state' %}
+            State Admin Login
+        {% else %}
+            Admin Login
+        {% endif %}
+        - HelpMe Doorstep
+    </title>
 
-    <link rel="stylesheet"
-          href="/static/style.css">
+    <style>
+
+        *{
+            box-sizing:border-box;
+        }
+
+        html,
+        body{
+            margin:0;
+            padding:0;
+            min-height:100%;
+            font-family:
+                Arial,
+                "Noto Sans Devanagari",
+                sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            padding:25px 15px;
+
+            color:#173f36;
+
+            background:
+                radial-gradient(
+                    circle at 8% 12%,
+                    rgba(255,255,255,.95) 0 7%,
+                    transparent 8%
+                ),
+                radial-gradient(
+                    circle at 92% 15%,
+                    rgba(255,255,255,.80) 0 9%,
+                    transparent 10%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eafcff 0%,
+                    #f5fffb 45%,
+                    #e8f4ff 100%
+                );
+
+            position:relative;
+            overflow-x:hidden;
+        }
+
+
+        /* =========================
+           PROFESSIONAL WAVES
+           ========================= */
+
+        body::before{
+            content:"";
+
+            position:fixed;
+
+            left:-15%;
+            top:120px;
+
+            width:130%;
+            height:360px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(71,201,174,.20),
+                    rgba(74,174,255,.15),
+                    rgba(255,255,255,.18)
+                );
+
+            border-radius:
+                50% 50% 45% 55%;
+
+            transform:rotate(-4deg);
+
+            z-index:0;
+
+            pointer-events:none;
+        }
+
+        body::after{
+            content:"";
+
+            position:fixed;
+
+            right:-20%;
+            bottom:-130px;
+
+            width:120%;
+            height:330px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(32,181,143,.11),
+                    rgba(61,157,255,.14)
+                );
+
+            border-radius:
+                55% 45% 0 0;
+
+            transform:rotate(4deg);
+
+            z-index:0;
+
+            pointer-events:none;
+        }
+
+
+        /* =========================
+           LOGIN CARD
+           ========================= */
+
+        .login-card{
+
+            width:min(520px,100%);
+
+            padding:
+                34px
+                32px
+                26px;
+
+            background:
+                rgba(255,255,255,.97);
+
+            border:
+                1px solid
+                rgba(42,143,125,.18);
+
+            border-radius:30px;
+
+            box-shadow:
+                0 25px 65px
+                rgba(25,87,77,.15),
+
+                0 5px 18px
+                rgba(50,140,170,.08);
+
+            backdrop-filter:blur(8px);
+
+            position:relative;
+
+            z-index:2;
+        }
+
+
+        /* =========================
+           LOGO
+           ========================= */
+
+        .logo-wrap{
+
+            width:112px;
+            height:112px;
+
+            margin:
+                0 auto 18px;
+
+            padding:7px;
+
+            background:#ffffff;
+
+            border-radius:50%;
+
+            border:
+                1px solid
+                #dcebe7;
+
+            display:flex;
+
+            align-items:center;
+            justify-content:center;
+
+            box-shadow:
+                0 10px 28px
+                rgba(21,101,192,.15);
+        }
+
+        .logo{
+
+            width:96px;
+            height:96px;
+
+            object-fit:contain;
+
+            border-radius:50%;
+
+            display:block;
+        }
+
+
+        /* =========================
+           BRAND
+           ========================= */
+
+        .brand-title{
+
+            margin:0;
+
+            text-align:center;
+
+            color:#0d5748;
+
+            font-size:31px;
+
+            line-height:1.2;
+
+            font-weight:900;
+        }
+
+        .login-title{
+
+            margin:
+                8px
+                0
+                28px;
+
+            text-align:center;
+
+            color:#176b5b;
+
+            font-size:20px;
+
+            line-height:1.35;
+
+            font-weight:800;
+        }
+
+
+        /* =========================
+           FORM
+           ========================= */
+
+        .form-group{
+
+            margin-bottom:18px;
+        }
+
+        .form-group label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            color:#145445;
+
+            font-size:16px;
+
+            font-weight:800;
+        }
+
+        input{
+
+            width:100%;
+
+            height:56px;
+
+            padding:
+                0
+                16px;
+
+            border:
+                1.5px solid
+                #c9ded8;
+
+            border-radius:15px;
+
+            background:#fbfefd;
+
+            color:#173e36;
+
+            font-size:16px;
+
+            outline:none;
+
+            transition:
+                .2s ease;
+        }
+
+        input:focus{
+
+            border-color:#16aa82;
+
+            background:#ffffff;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(22,170,130,.10);
+        }
+
+
+        /* =========================
+           TERMS
+           ========================= */
+
+        .terms-box{
+
+            margin-top:4px;
+
+            margin-bottom:18px;
+
+            padding:
+                15px
+                16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #effbf7,
+                    #f4fbff
+                );
+
+            border:
+                1px solid
+                #d5ebe4;
+
+            border-radius:17px;
+        }
+
+        .terms-label{
+
+            display:flex !important;
+
+            align-items:flex-start;
+
+            gap:11px;
+
+            margin:0 !important;
+
+            color:#52635f !important;
+
+            font-size:13px !important;
+
+            font-weight:400 !important;
+
+            line-height:1.55;
+        }
+
+        .terms-label input{
+
+            width:21px;
+
+            height:21px;
+
+            flex:
+                0 0 21px;
+
+            margin:
+                2px 0 0;
+
+            padding:0;
+
+            accent-color:#159d79;
+
+            cursor:pointer;
+        }
+
+        .terms-label a{
+
+            color:#075ca8;
+
+            font-weight:800;
+
+            text-decoration:none;
+        }
+
+        .terms-label a:hover{
+
+            text-decoration:underline;
+        }
+
+
+        /* =========================
+           LOGIN BUTTON
+           ========================= */
+
+        .login-btn{
+
+            width:100%;
+
+            min-height:56px;
+
+            border:0;
+
+            border-radius:15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #159d79,
+                    #087f68
+                );
+
+            color:#ffffff;
+
+            font-size:17px;
+
+            font-weight:900;
+
+            cursor:pointer;
+
+            box-shadow:
+                0 9px 20px
+                rgba(21,157,121,.22);
+
+            transition:
+                .15s ease;
+        }
+
+        .login-btn:hover{
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(21,157,121,.28);
+        }
+
+        .login-btn:active{
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =========================
+           ALERT
+           ========================= */
+
+        .alert{
+
+            margin-bottom:16px;
+
+            padding:
+                12px
+                14px;
+
+            border-radius:12px;
+
+            font-size:13px;
+
+            line-height:1.5;
+
+            text-align:center;
+        }
+
+        .alert.error{
+
+            background:#fef3f2;
+
+            color:#b42318;
+
+            border:
+                1px solid
+                #fecdca;
+        }
+
+        .alert.success{
+
+            background:#ecfdf3;
+
+            color:#067647;
+
+            border:
+                1px solid
+                #abefc6;
+        }
+
+
+        /* =========================
+           FOOTER
+           ========================= */
+
+        .footer{
+
+            margin-top:22px;
+
+            padding-top:15px;
+
+            border-top:
+                1px solid
+                #edf1f5;
+
+            text-align:center;
+
+            color:#98a2b3;
+
+            font-size:12px;
+        }
+
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media(max-width:600px){
+
+            body{
+
+                padding:
+                    14px
+                    10px;
+            }
+
+            .login-card{
+
+                width:100%;
+
+                padding:
+                    28px
+                    18px
+                    21px;
+
+                border-radius:24px;
+            }
+
+            .logo-wrap{
+
+                width:96px;
+                height:96px;
+
+                margin-bottom:15px;
+            }
+
+            .logo{
+
+                width:82px;
+                height:82px;
+            }
+
+            .brand-title{
+
+                font-size:25px;
+            }
+
+            .login-title{
+
+                font-size:17px;
+
+                margin-bottom:25px;
+            }
+
+            .form-group label{
+
+                font-size:15px;
+            }
+
+            input{
+
+                height:54px;
+
+                font-size:16px;
+            }
+
+            .terms-label{
+
+                font-size:12.5px !important;
+            }
+
+            .login-btn{
+
+                min-height:54px;
+
+                font-size:16px;
+            }
+        }
+
+
+        /* =========================
+           SMALL MOBILE
+           ========================= */
+
+        @media(max-width:360px){
+
+            .login-card{
+
+                padding:
+                    24px
+                    14px
+                    18px;
+            }
+
+            .logo-wrap{
+
+                width:88px;
+                height:88px;
+            }
+
+            .logo{
+
+                width:75px;
+                height:75px;
+            }
+
+            .brand-title{
+
+                font-size:23px;
+            }
+
+            .login-title{
+
+                font-size:16px;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-<main class="center">
+<main class="login-card">
 
-    <form class="card"
-          method="post"
-          action="/admin/login">
+    <div class="logo-wrap">
 
-        <h2>Admin Login</h2>
+        <img
+            class="logo"
+            src="/static/helpme-doorstep-logo.png.jpeg"
+            alt="HelpMe Doorstep Logo"
+        >
+
+    </div>
 
 
-        {% for cat,msg in get_flashed_messages(with_categories=true) %}
+    <h1 class="brand-title">
+        HelpMe Doorstep
+    </h1>
+
+
+    <div class="login-title">
+
+        {% if request.args.get('role') == 'district' %}
+
+            District Admin Login
+
+        {% elif request.args.get('role') == 'state' %}
+
+            State Admin Login
+
+        {% else %}
+
+            Admin Login
+
+        {% endif %}
+
+    </div>
+
+
+    {% for cat,msg in get_flashed_messages(with_categories=true) %}
 
         <div class="alert {{cat}}">
             {{msg}}
         </div>
 
-        {% endfor %}
+    {% endfor %}
 
 
-        <label>
-            Username
+    <form
+        method="post"
+        action="/admin/login"
+    >
+
+        <div class="form-group">
+
+            <label>
+                Username
+            </label>
 
             <input
                 name="username"
+                autocomplete="username"
                 required
             >
-        </label>
+
+        </div>
 
 
-        <label>
-            Password
+        <div class="form-group">
+
+            <label>
+                Password
+            </label>
 
             <input
                 type="password"
                 name="password"
+                autocomplete="current-password"
                 required
             >
-        </label>
+
+        </div>
 
 
-        <!-- TERMS & PRIVACY ACCEPTANCE -->
+        <div class="terms-box">
 
-        <div style="
-            margin:18px 0;
-            padding:14px;
-            background:#f5f7f8;
-            border-radius:10px;
-        ">
-
-            <label style="
-                display:flex;
-                align-items:flex-start;
-                gap:10px;
-                cursor:pointer;
-                font-weight:normal;
-            ">
+            <label class="terms-label">
 
                 <input
                     type="checkbox"
                     name="terms_accepted"
                     value="yes"
                     required
-                    style="
-                        width:20px;
-                        height:20px;
-                        margin-top:3px;
-                    "
                 >
 
                 <span>
@@ -115,14 +759,24 @@
         </div>
 
 
-        <button type="submit">
-            Login
+        <button
+            class="login-btn"
+            type="submit"
+        >
+            🔐 Login
         </button>
 
     </form>
 
+
+    <div class="footer">
+
+        HelpMe Doorstep<br>
+        © 2026 All Rights Reserved
+
+    </div>
+
 </main>
 
 </body>
-
 </html>
