@@ -1206,7 +1206,9 @@ def api_ai_support():
         "success": True,
         "answer": answer
     }
-
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 @app.route("/terms")
 def terms():
     return render_template("terms.html")
