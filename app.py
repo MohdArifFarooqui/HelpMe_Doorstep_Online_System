@@ -2896,7 +2896,10 @@ def login():
         )
         return redirect(url_for("admin"))
 
-    # Main Admin login
+   # ==============================
+    # MAIN ADMIN LOGIN
+    # ==============================
+
     if (
         username == ADMIN_USER
         and check_password_hash(
@@ -2906,10 +2909,19 @@ def login():
     ):
         session.clear()
         session.permanent = True
-        session["admin"] = True
-        return redirect(url_for("admin"))
 
-    # State / District Admin login
+        session["admin"] = True
+        session["admin_user_id"] = None
+
+        return redirect(
+            url_for("admin")
+        )
+
+
+    # ==============================
+    # STATE / DISTRICT ADMIN LOGIN
+    # ==============================
+
     admin_user = (
         DB.query(User)
         .filter(
@@ -2921,23 +2933,88 @@ def login():
         .first()
     )
 
+
+    # ==============================
+    # INVALID ADMIN LOGIN
+    # ==============================
+
+    if not admin_user:
+
+        flash(
+            "Mobile या Password गलत है।",
+            "error"
+        )
+
+        return redirect(
+            url_for("admin")
+        )
+
+
+    # ==============================
+    # PASSWORD CHECK
+    # ==============================
+
     if (
-        admin_user
-        and admin_user.password_hash
-        and check_password_hash(
+        not admin_user.password_hash
+        or not check_password_hash(
             admin_user.password_hash,
             password
         )
     ):
-        session.clear()
-        session.permanent = True
-        session["admin"] = True
-        session["admin_user_id"] = admin_user.id
-        return redirect(url_for("admin"))
 
-    flash("Login failed", "error")
+        flash(
+            "Mobile या Password गलत है।",
+            "error"
+        )
 
-    return redirect(url_for("admin"))
+        return redirect(
+            url_for("admin")
+        )
+
+
+    # ==============================
+    # ADMIN SESSION
+    # ==============================
+
+    session.clear()
+    session.permanent = True
+
+    session["admin"] = True
+    session["admin_user_id"] = admin_user.id
+
+
+    # ==============================
+    # AUTOMATIC ROLE REDIRECT
+    # ==============================
+
+    if admin_user.admin_level == "district":
+
+        return redirect(
+            url_for("district_admin_dashboard")
+        )
+
+
+    if admin_user.admin_level == "state":
+
+        return redirect(
+            url_for("state_admin_dashboard")
+        )
+
+
+    # ==============================
+    # INVALID ADMIN LEVEL
+    # ==============================
+
+    session.clear()
+
+    flash(
+        "Admin role valid नहीं है।",
+        "error"
+    )
+
+    return redirect(
+        url_for("admin")
+    )
 
 @app.post("/customer/notification/read/<int:nid>")
 def customer_notification_read(nid):
