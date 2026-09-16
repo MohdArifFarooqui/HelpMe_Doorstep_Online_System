@@ -7,363 +7,560 @@
     <title>State Admin Dashboard | Help Me Door Step</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+*{
+    box-sizing:border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
-        }
+html{
+    scroll-behavior:smooth;
+}
 
-        .topbar {
-            background: linear-gradient(135deg, #123c69, #1d5d9b);
-            color: white;
-            padding: 18px 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(180deg,#f1f8f6 0%,#f7fafc 100%);
+    color:#173c33;
+}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+/* =========================
+   TOP HEADER
+========================= */
 
-        .brand img {
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: white;
-            padding: 3px;
-        }
+.topbar{
+    width:100%;
+    background:#ffffff;
+    border-bottom:1px solid #dce9e5;
+    padding:16px 4%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    box-shadow:0 3px 14px rgba(20,80,65,.06);
+}
 
-        .brand h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+.brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+}
 
-        .brand p {
-            margin: 4px 0 0;
-            font-size: 13px;
-            opacity: .9;
-        }
+.brand img{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    object-fit:contain;
+    background:#fff;
+    padding:4px;
+    border:1px solid #dce9e5;
+    box-shadow:0 5px 15px rgba(18,140,126,.12);
+    flex-shrink:0;
+}
 
-        .top-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+.brand h1{
+    margin:0;
+    font-size:27px;
+    line-height:1.15;
+    color:#123f35;
+    font-weight:800;
+}
 
-        .btn {
-            border: 0;
-            border-radius: 8px;
-            padding: 10px 14px;
-            text-decoration: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-block;
-        }
+.brand p{
+    margin:6px 0 0;
+    color:#657c75;
+    font-size:13px;
+    font-weight:500;
+}
 
-        .btn-light {
-            background: white;
-            color: #123c69;
-        }
+.top-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:9px;
+    flex-wrap:wrap;
+}
 
-        .btn-secondary {
-            background: #e8eef7;
-            color: #123c69;
-        }
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:11px 16px;
+    text-decoration:none;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:700;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:42px;
+    transition:.2s ease;
+}
 
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
+.btn:hover{
+    transform:translateY(-1px);
+}
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+.btn-light{
+    background:#eaf5f2;
+    color:#17624f;
+}
 
-        .scope-box {
-            background: white;
-            border-left: 5px solid #1d5d9b;
-            border-radius: 10px;
-            padding: 16px 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,.06);
-        }
+.btn-secondary{
+    background:#e9f1fb;
+    color:#1764a0;
+}
 
-        .scope-box h2 {
-            margin: 0 0 6px;
-            font-size: 20px;
-        }
+.btn-danger{
+    background:#d93025;
+    color:#fff;
+}
 
-        .scope-box p {
-            margin: 5px 0;
-            color: #555;
-        }
+/* =========================
+   MAIN CONTAINER
+========================= */
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 14px;
-            margin-bottom: 22px;
-        }
+.container{
+    width:94%;
+    max-width:1440px;
+    margin:0 auto;
+    padding:24px 0 45px;
+}
 
-        .stat {
-            background: white;
-            border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0 2px 9px rgba(0,0,0,.07);
-        }
+/* =========================
+   STATE SCOPE
+========================= */
 
-        .stat-title {
-            font-size: 13px;
-            color: #6b7280;
-            margin-bottom: 8px;
-        }
+.scope-box{
+    background:linear-gradient(135deg,#128c7e 0%,#0d7569 100%);
+    color:#fff;
+    border-radius:20px;
+    padding:23px 25px;
+    margin-bottom:18px;
+    box-shadow:0 8px 25px rgba(18,140,126,.18);
+}
 
-        .stat-number {
-            font-size: 28px;
-            font-weight: 700;
-        }
+.scope-box h2{
+    margin:0 0 8px;
+    font-size:24px;
+    font-weight:800;
+}
 
-        .section {
-            background: white;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 22px;
-            box-shadow: 0 2px 9px rgba(0,0,0,.07);
-        }
+.scope-box p{
+    margin:6px 0;
+    font-size:13px;
+    opacity:.95;
+}
 
-        .section h2 {
-            margin: 0 0 15px;
-            font-size: 20px;
-            color: #123c69;
-        }
+/* =========================
+   STATISTICS
+========================= */
 
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:13px;
+    margin-bottom:18px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
-        }
+.stat{
+    background:#fff;
+    border:1px solid #dce9e5;
+    border-radius:17px;
+    padding:18px;
+    min-height:105px;
+    box-shadow:0 5px 18px rgba(22,91,72,.06);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
 
-        th,
-        td {
-            padding: 11px 10px;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-            font-size: 14px;
-            vertical-align: middle;
-        }
+.stat-title{
+    font-size:12px;
+    color:#687c75;
+    font-weight:700;
+    margin-bottom:7px;
+}
 
-        th {
-            background: #f1f5f9;
-            color: #374151;
-        }
+.stat-number{
+    font-size:30px;
+    font-weight:800;
+    color:#128c7e;
+    line-height:1;
+}
 
-        tr:hover td {
-            background: #fafcff;
-        }
+/* =========================
+   SECTIONS
+========================= */
 
-        .status {
-            display: inline-block;
-            padding: 5px 9px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            background: #eef2ff;
-        }
+.section{
+    background:#fff;
+    border:1px solid #dce9e5;
+    border-radius:19px;
+    padding:21px;
+    margin-bottom:18px;
+    box-shadow:0 5px 18px rgba(22,91,72,.06);
+}
 
-        .assign-form {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
+.section h2{
+    margin:0 0 15px;
+    font-size:21px;
+    color:#173c33;
+    font-weight:800;
+}
 
-        select {
-            padding: 8px;
-            border: 1px solid #d1d5db;
-            border-radius: 7px;
-            background: white;
-            min-width: 150px;
-        }
+/* =========================
+   DESKTOP TABLE
+========================= */
 
-        .btn-assign {
-            background: #123c69;
-            color: white;
-        }
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
 
-        .mobile-cards {
-            display: none;
-        }
+table{
+    width:100%;
+    min-width:1050px;
+    border-collapse:separate;
+    border-spacing:0;
+}
 
-        .card {
-            border: 1px solid #e5e7eb;
-            border-radius: 11px;
-            padding: 14px;
-            margin-bottom: 12px;
-            background: #fff;
-        }
+th,
+td{
+    padding:12px 11px;
+    border-bottom:1px solid #e5eeeb;
+    text-align:left;
+    font-size:13px;
+    vertical-align:middle;
+}
 
-        .card-title {
-            font-weight: 700;
-            color: #123c69;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
+th{
+    background:#eef6f3;
+    color:#36564e;
+    font-size:12px;
+    font-weight:800;
+    white-space:nowrap;
+}
 
-        .row {
-            display: grid;
-            grid-template-columns: 110px 1fr;
-            gap: 8px;
-            padding: 5px 0;
-            border-bottom: 1px solid #f1f1f1;
-            font-size: 13px;
-        }
+thead th:first-child{
+    border-radius:10px 0 0 10px;
+}
 
-        .row:last-child {
-            border-bottom: 0;
-        }
+thead th:last-child{
+    border-radius:0 10px 10px 0;
+}
 
-        .label {
-            font-weight: 700;
-            color: #6b7280;
-        }
+tbody tr:hover td{
+    background:#f8fcfb;
+}
 
-        .footer {
-            text-align: center;
-            padding: 25px 15px;
-            color: #6b7280;
-            font-size: 13px;
-        }
+/* =========================
+   STATUS
+========================= */
 
-        @media (max-width: 1000px) {
-            .stats {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+.status{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#eef5f2;
+    color:#17624f;
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+}
 
-        @media (max-width: 700px) {
+/* =========================
+   ASSIGN FORM
+========================= */
 
-            .topbar {
-                padding: 14px;
-            }
+.assign-form{
+    display:flex;
+    gap:7px;
+    align-items:center;
+    min-width:300px;
+}
 
-            .brand h1 {
-                font-size: 19px;
-            }
+select{
+    padding:9px 10px;
+    border:1px solid #cbdcd6;
+    border-radius:9px;
+    background:#fff;
+    color:#24443c;
+    min-width:185px;
+    font-size:12px;
+    outline:none;
+}
 
-            .brand img {
-                width: 50px;
-                height: 50px;
-            }
+select:focus{
+    border-color:#128c7e;
+    box-shadow:0 0 0 3px rgba(18,140,126,.10);
+}
 
-            .top-actions {
-                width: 100%;
-            }
+.btn-assign{
+    background:#128c7e;
+    color:#fff;
+    white-space:nowrap;
+}
 
-            .top-actions .btn,
-            .top-actions form {
-                flex: 1;
-            }
+.btn-assign:hover{
+    background:#0d7569;
+}
 
-            .top-actions form button {
-                width: 100%;
-            }
+/* =========================
+   MOBILE CARDS
+========================= */
 
-            .container {
-                padding: 12px;
-            }
+.mobile-cards{
+    display:none;
+}
 
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
+.card{
+    background:#fff;
+    border:1px solid #dce9e5;
+    border-radius:16px;
+    padding:15px;
+    margin-bottom:12px;
+    box-shadow:0 4px 14px rgba(22,91,72,.06);
+}
 
-            .stat {
-                padding: 14px;
-            }
+.card-title{
+    font-weight:800;
+    color:#128c7e;
+    margin-bottom:10px;
+    font-size:16px;
+    word-break:break-word;
+}
 
-            .stat-number {
-                font-size: 24px;
-            }
+.row{
+    display:grid;
+    grid-template-columns:105px 1fr;
+    gap:8px;
+    padding:8px 0;
+    border-bottom:1px solid #edf2f0;
+    font-size:13px;
+    line-height:1.45;
+}
 
-            .table-wrapper {
-                display: none;
-            }
+.row:last-child{
+    border-bottom:0;
+}
 
-            .mobile-cards {
-                display: block;
-            }
+.label{
+    font-weight:800;
+    color:#62766f;
+}
 
-            .section {
-                padding: 14px;
-            }
+/* =========================
+   FOOTER
+========================= */
 
-            .scope-box h2 {
-                font-size: 18px;
-            }
-        }
+.footer{
+    text-align:center;
+    padding:28px 15px;
+    color:#6b7d77;
+    font-size:13px;
+}
 
-        @media (max-width: 430px) {
+/* =========================
+   TABLET
+========================= */
 
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
+@media (max-width:1000px){
 
-            .brand {
-                width: 100%;
-            }
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
 
-            .top-actions {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
+    .brand h1{
+        font-size:24px;
+    }
+}
 
-            .top-actions form {
-                width: 100%;
-            }
+/* =========================
+   MOBILE
+========================= */
 
-            .top-actions form button {
-                width: 100%;
-            }
+@media (max-width:700px){
 
-            .row {
-                grid-template-columns: 95px 1fr;
-            }
+    .topbar{
+        padding:14px;
+        align-items:flex-start;
+    }
 
-            select {
-                width: 100%;
-                min-width: 0;
-            }
+    .brand{
+        width:100%;
+    }
 
-            .assign-form {
-                display: block;
-            }
+    .brand img{
+        width:58px;
+        height:58px;
+    }
 
-            .assign-form select,
-            .assign-form button {
-                width: 100%;
-                margin-top: 6px;
-            }
-        }
-    </style>
+    .brand h1{
+        font-size:20px;
+    }
+
+    .brand p{
+        font-size:12px;
+    }
+
+    .top-actions{
+        width:100%;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+    }
+
+    .top-actions .btn,
+    .top-actions form{
+        width:100%;
+    }
+
+    .top-actions form button{
+        width:100%;
+    }
+
+    .container{
+        width:94%;
+        padding:14px 0 30px;
+    }
+
+    .scope-box{
+        padding:17px;
+        border-radius:16px;
+    }
+
+    .scope-box h2{
+        font-size:19px;
+    }
+
+    .scope-box p{
+        font-size:12px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .stat{
+        min-height:88px;
+        padding:14px 12px;
+    }
+
+    .stat-title{
+        font-size:10px;
+    }
+
+    .stat-number{
+        font-size:25px;
+    }
+
+    .section{
+        padding:14px;
+        border-radius:16px;
+    }
+
+    .section h2{
+        font-size:19px;
+    }
+
+    /* Desktop table hidden on mobile */
+    .table-wrapper{
+        display:none;
+    }
+
+    /* Mobile cards visible */
+    .mobile-cards{
+        display:block;
+    }
+
+    .row{
+        grid-template-columns:34% 66%;
+        font-size:12.5px;
+    }
+
+    .assign-form{
+        display:block;
+        min-width:0;
+        margin-top:10px;
+    }
+
+    .assign-form select,
+    .assign-form button{
+        width:100%;
+        min-width:0;
+        margin-top:7px;
+    }
+
+    select{
+        min-width:0;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width:430px){
+
+    .top-actions{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .btn{
+        padding:10px 8px;
+        font-size:12px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat{
+        padding:13px 9px;
+    }
+
+    .stat-number{
+        font-size:23px;
+    }
+
+    .row{
+        grid-template-columns:32% 68%;
+    }
+}
+
+/* =========================
+   VERY SMALL MOBILE
+========================= */
+
+@media (max-width:360px){
+
+    .top-actions{
+        grid-template-columns:1fr;
+    }
+
+    .brand h1{
+        font-size:18px;
+    }
+
+    .scope-box h2{
+        font-size:18px;
+    }
+
+    .section h2{
+        font-size:18px;
+    }
+
+    .row{
+        grid-template-columns:35% 65%;
+        font-size:12px;
+    }
+}
+</style>
+
 </head>
 
 <body>
