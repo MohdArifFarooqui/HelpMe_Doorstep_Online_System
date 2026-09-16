@@ -231,6 +231,48 @@ body{
     display:none;
 }
 
+/* ==================================================
+   LAPTOP / DESKTOP HORIZONTAL SLIDE BAR
+   ================================================== */
+
+@media (min-width: 481px){
+
+    .swipe-container{
+        overflow-x:auto;
+        cursor:grab;
+        padding:6px 4px 16px;
+        scrollbar-width:thin;
+        scrollbar-color:#128c7e #e5efec;
+    }
+
+    .swipe-container:active{
+        cursor:grabbing;
+    }
+
+    .swipe-container::-webkit-scrollbar{
+        display:block;
+        height:10px;
+    }
+
+    .swipe-container::-webkit-scrollbar-track{
+        background:#e5efec;
+        border-radius:20px;
+    }
+
+    .swipe-container::-webkit-scrollbar-thumb{
+        background:#128c7e;
+        border-radius:20px;
+    }
+
+    .swipe-container::-webkit-scrollbar-thumb:hover{
+        background:#075e54;
+    }
+
+    .feature-card{
+        min-width:72%;
+    }
+}
+    
 .feature-card{
     min-width:85%;
     scroll-snap-align:center;
