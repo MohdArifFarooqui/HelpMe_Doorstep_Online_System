@@ -8,514 +8,649 @@
     <title>HelpMe Doorstep - Customer Login</title>
 
    <style>
-    * {
-        box-sizing: border-box;
+   *{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:#173f36;
+
+    background:
+        radial-gradient(
+            circle at 10% 18%,
+            rgba(255,255,255,.95) 0 8%,
+            transparent 9%
+        ),
+        radial-gradient(
+            circle at 90% 12%,
+            rgba(255,255,255,.80) 0 10%,
+            transparent 11%
+        ),
+        linear-gradient(
+            135deg,
+            #eafcff 0%,
+            #f5fffb 42%,
+            #e8f5ff 100%
+        );
+
+    position:relative;
+    overflow-x:hidden;
+}
+
+/* ==============================
+   PROFESSIONAL WAVE BACKGROUND
+   ============================== */
+
+body::before{
+    content:"";
+    position:fixed;
+    left:-15%;
+    top:120px;
+    width:130%;
+    height:380px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(71,201,174,.20),
+            rgba(74,174,255,.16),
+            rgba(255,255,255,.20)
+        );
+
+    border-radius:50% 50% 45% 55%;
+    transform:rotate(-4deg);
+
+    z-index:0;
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    right:-20%;
+    bottom:-120px;
+    width:120%;
+    height:330px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(32,181,143,.12),
+            rgba(61,157,255,.14)
+        );
+
+    border-radius:55% 45% 0 0;
+    transform:rotate(4deg);
+
+    z-index:0;
+    pointer-events:none;
+}
+
+/* ==============================
+   MAIN LOGIN AREA
+   ============================== */
+
+body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px 16px;
+}
+
+/* ==============================
+   CUSTOMER LOGIN CARD
+   ============================== */
+
+.login-card{
+    width:min(560px,100%);
+    margin:0 auto;
+
+    background:rgba(255,255,255,.97);
+
+    border:1px solid rgba(42,143,125,.18);
+
+    border-radius:30px;
+
+    padding:34px 32px 24px;
+
+    box-shadow:
+        0 25px 65px rgba(25,87,77,.15),
+        0 5px 18px rgba(50,140,170,.08);
+
+    backdrop-filter:blur(8px);
+
+    position:relative;
+    z-index:2;
+}
+
+/* ==============================
+   LOGO
+   ============================== */
+
+.brand-logo-wrap{
+    width:110px;
+    height:110px;
+
+    margin:0 auto 18px;
+
+    padding:7px;
+
+    background:#ffffff;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid #dcebe7;
+
+    box-shadow:
+        0 10px 28px rgba(21,101,192,.15);
+}
+
+.logo{
+    width:94px;
+    height:94px;
+
+    object-fit:contain;
+
+    display:block;
+
+    border-radius:50%;
+}
+
+/* ==============================
+   TITLE
+   ============================== */
+
+h1{
+    margin:0;
+
+    text-align:center;
+
+    color:#0d5748;
+
+    font-size:32px;
+    line-height:1.2;
+
+    font-weight:800;
+
+    letter-spacing:-.4px;
+}
+
+.subtitle{
+    text-align:center;
+
+    margin-top:8px;
+    margin-bottom:30px;
+
+    color:#5d6e69;
+
+    font-size:17px;
+
+    line-height:1.5;
+
+    font-weight:600;
+}
+
+/* ==============================
+   LABEL
+   ============================== */
+
+label{
+    display:block;
+
+    margin:0 0 9px;
+
+    color:#145445;
+
+    font-size:17px;
+
+    font-weight:800;
+}
+
+/* ==============================
+   MOBILE INPUT
+   ============================== */
+
+input[type="tel"]{
+    width:100%;
+
+    height:58px;
+
+    padding:0 17px;
+
+    border:1.5px solid #c9ded8;
+
+    border-radius:16px;
+
+    background:#fbfefd;
+
+    color:#173e36;
+
+    font-size:17px;
+
+    outline:none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+input[type="tel"]::placeholder{
+    color:#8a9995;
+}
+
+input[type="tel"]:focus{
+    border-color:#16aa82;
+
+    background:#ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(22,170,130,.10);
+}
+
+/* ==============================
+   TERMS & PRIVACY BOX
+   ============================== */
+
+.login-card > div[style]{
+    margin-top:18px !important;
+
+    padding:15px 16px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #effbf7,
+            #f4fbff
+        ) !important;
+
+    border:1px solid #d5ebe4;
+
+    border-radius:17px !important;
+}
+
+.login-card > div[style] label{
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:11px;
+
+    margin:0 !important;
+
+    color:#52635f;
+
+    font-size:14px;
+
+    line-height:1.55;
+
+    font-weight:400;
+}
+
+.login-card > div[style] input[type="checkbox"]{
+    width:21px !important;
+    height:21px !important;
+
+    flex:0 0 21px;
+
+    margin:2px 0 0 !important;
+
+    accent-color:#159d79;
+
+    cursor:pointer;
+}
+
+.login-card a{
+    color:#075ca8;
+
+    font-weight:800;
+
+    text-decoration:none;
+}
+
+.login-card a:hover{
+    text-decoration:underline;
+}
+
+/* ==============================
+   BUTTONS
+   ============================== */
+
+button{
+    width:100%;
+
+    min-height:56px;
+
+    margin-top:17px;
+
+    padding:14px 18px;
+
+    border:0;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #159d79,
+            #087f68
+        );
+
+    color:#ffffff;
+
+    font-size:17px;
+
+    font-weight:800;
+
+    letter-spacing:.1px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 9px 20px rgba(21,157,121,.22);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        opacity .15s ease;
+}
+
+button:hover{
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 12px 25px rgba(21,157,121,.28);
+}
+
+button:active{
+    transform:translateY(0);
+}
+
+button:disabled{
+    background:#aeb8c2;
+
+    box-shadow:none;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    opacity:.9;
+}
+
+/* ==============================
+   OTP SECTION
+   ============================== */
+
+#otp-box{
+    display:none;
+
+    margin-top:24px;
+
+    padding-top:4px;
+}
+
+#otp-box label{
+    margin-bottom:9px;
+}
+
+/* ==============================
+   OTP INPUT
+   ============================== */
+
+#otp{
+    width:100%;
+
+    min-height:60px;
+
+    text-align:center;
+
+    letter-spacing:7px;
+
+    font-size:23px;
+
+    font-weight:800;
+
+    border:1.5px solid #c9ded8;
+
+    border-radius:16px;
+
+    background:#fbfefd;
+}
+
+#otp:focus{
+    border-color:#16aa82;
+
+    box-shadow:
+        0 0 0 4px rgba(22,170,130,.10);
+}
+
+/* ==============================
+   MESSAGE
+   ============================== */
+
+.message{
+    margin-top:18px;
+
+    padding:13px 15px;
+
+    border-radius:13px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    display:none;
+
+    border:1px solid transparent;
+}
+
+.message.success{
+    display:block;
+
+    background:#ecfdf3;
+
+    color:#067647;
+
+    border-color:#abefc6;
+}
+
+.message.error{
+    display:block;
+
+    background:#fef3f2;
+
+    color:#b42318;
+
+    border-color:#fecdca;
+}
+
+/* ==============================
+   FOOTER
+   ============================== */
+
+.footer{
+    text-align:center;
+
+    margin-top:24px;
+
+    padding-top:16px;
+
+    border-top:1px solid #edf1f5;
+
+    color:#98a2b3;
+
+    font-size:12px;
+}
+
+/* ==============================
+   LAPTOP / DESKTOP
+   ============================== */
+
+@media (min-width:769px){
+
+    .login-card{
+        max-width:560px;
+
+        padding:
+            38px
+            38px
+            26px;
     }
 
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        min-height: 100%;
+    .brand-logo-wrap{
+        width:116px;
+        height:116px;
     }
 
-    body {
-        min-height: 100vh;
-        font-family:
-            Arial,
-            "Noto Sans Devanagari",
-            sans-serif;
-
-        background:
-            linear-gradient(
-                145deg,
-                #eaf4ff 0%,
-                #f7fbff 45%,
-                #eef8f4 100%
-            );
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 22px 14px;
+    .logo{
+        width:100px;
+        height:100px;
     }
 
-
-    /* ==============================
-       LOGIN CARD
-       ============================== */
-
-    .login-card {
-        width: 100%;
-        max-width: 430px;
-
-        background: rgba(255,255,255,0.97);
-
-        border: 1px solid rgba(25,118,210,0.10);
-
-        border-radius: 24px;
-
-        padding: 30px 24px 22px;
-
-        box-shadow:
-            0 18px 50px rgba(20,70,110,0.14),
-            0 4px 14px rgba(20,70,110,0.08);
+    h1{
+        font-size:34px;
     }
 
+    .subtitle{
+        font-size:17px;
+        margin-bottom:32px;
+    }
+}
 
-    /* ==============================
-       LOGO
-       ============================== */
+/* ==============================
+   MOBILE
+   ============================== */
 
-    .brand-logo-wrap {
-        width: 104px;
-        height: 104px;
+@media (max-width:600px){
 
-        margin: 0 auto 16px;
-
-        padding: 7px;
-
-        background: #ffffff;
-
-        border-radius: 50%;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        box-shadow:
-            0 8px 24px rgba(21,101,192,0.16);
-
-        border: 1px solid #e4edf7;
+    body{
+        padding:16px 10px;
     }
 
-    .logo {
-        width: 90px;
-        height: 90px;
+    .login-card{
+        width:100%;
 
-        object-fit: contain;
+        padding:
+            28px
+            18px
+            21px;
 
-        display: block;
-
-        border-radius: 50%;
+        border-radius:24px;
     }
 
+    .brand-logo-wrap{
+        width:96px;
+        height:96px;
 
-    /* ==============================
-       TITLE
-       ============================== */
-
-    h1 {
-        margin: 0;
-
-        text-align: center;
-
-        font-size: 27px;
-        line-height: 1.25;
-
-        font-weight: 800;
-
-        color: #1565c0;
-
-        letter-spacing: -0.3px;
+        margin-bottom:15px;
     }
 
-
-    .subtitle {
-        text-align: center;
-
-        margin-top: 7px;
-        margin-bottom: 28px;
-
-        font-size: 15px;
-
-        color: #667085;
-
-        font-weight: 600;
+    .logo{
+        width:82px;
+        height:82px;
     }
 
-
-    /* ==============================
-       FORM LABEL
-       ============================== */
-
-    label {
-        display: block;
-
-        margin-bottom: 8px;
-
-        font-size: 15px;
-
-        font-weight: 700;
-
-        color: #263238;
+    h1{
+        font-size:25px;
     }
 
+    .subtitle{
+        font-size:14px;
 
-    /* ==============================
-       INPUT
-       ============================== */
-
-    input[type="tel"] {
-        width: 100%;
-
-        min-height: 54px;
-
-        padding: 14px 16px;
-
-        border: 1.5px solid #d5dee8;
-
-        border-radius: 13px;
-
-        background: #fbfdff;
-
-        color: #17212b;
-
-        font-size: 17px;
-
-        outline: none;
-
-        transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease,
-            background 0.2s ease;
+        margin-top:7px;
+        margin-bottom:25px;
     }
 
-    input[type="tel"]::placeholder {
-        color: #98a2b3;
+    label{
+        font-size:15px;
     }
 
-    input[type="tel"]:focus {
-        border-color: #1976d2;
+    input[type="tel"]{
+        height:54px;
 
-        background: #ffffff;
-
-        box-shadow:
-            0 0 0 4px rgba(25,118,210,0.10);
+        font-size:16px;
     }
 
+    button{
+        min-height:54px;
 
-    /* ==============================
-       TERMS BOX
-       ============================== */
-
-    .login-card > div[style] {
-        margin-top: 18px !important;
-
-        padding: 14px !important;
-
-        background: #f6f9fc !important;
-
-        border: 1px solid #e5ebf2;
-
-        border-radius: 13px !important;
+        font-size:16px;
     }
 
-    .login-card > div[style] label {
-        display: flex;
-
-        align-items: flex-start;
-
-        gap: 10px;
-
-        margin: 0;
-
-        font-size: 13.5px;
-
-        line-height: 1.55;
-
-        font-weight: 500;
-
-        color: #475467;
+    .login-card > div[style] label{
+        font-size:13px;
     }
 
-    .login-card > div[style] input[type="checkbox"] {
-        flex: 0 0 auto;
+    #otp{
+        min-height:57px;
 
-        width: 20px !important;
-        height: 20px !important;
+        font-size:22px;
 
-        margin: 2px 0 0 !important;
+        letter-spacing:6px;
+    }
+}
 
-        accent-color: #1976d2;
+/* ==============================
+   SMALL MOBILE
+   ============================== */
+
+@media (max-width:360px){
+
+    body{
+        padding:10px 8px;
     }
 
-    .login-card a {
-        color: #1565c0;
+    .login-card{
+        padding:
+            24px
+            14px
+            18px;
 
-        font-weight: 700;
-
-        text-decoration: none;
+        border-radius:21px;
     }
 
-    .login-card a:hover {
-        text-decoration: underline;
+    .brand-logo-wrap{
+        width:88px;
+        height:88px;
     }
 
-
-    /* ==============================
-       BUTTONS
-       ============================== */
-
-    button {
-        width: 100%;
-
-        min-height: 54px;
-
-        margin-top: 16px;
-
-        padding: 14px 18px;
-
-        border: 0;
-
-        border-radius: 13px;
-
-        background:
-            linear-gradient(
-                135deg,
-                #1976d2,
-                #1565c0
-            );
-
-        color: #ffffff;
-
-        font-size: 16px;
-
-        font-weight: 800;
-
-        letter-spacing: 0.1px;
-
-        cursor: pointer;
-
-        box-shadow:
-            0 8px 18px rgba(25,118,210,0.22);
-
-        transition:
-            transform 0.15s ease,
-            box-shadow 0.15s ease,
-            opacity 0.15s ease;
+    .logo{
+        width:75px;
+        height:75px;
     }
 
-    button:hover {
-        transform: translateY(-1px);
-
-        box-shadow:
-            0 11px 24px rgba(25,118,210,0.28);
+    h1{
+        font-size:23px;
     }
 
-    button:active {
-        transform: translateY(0);
+    .subtitle{
+        font-size:13px;
     }
 
-    button:disabled {
-        background: #aeb8c2;
-
-        box-shadow: none;
-
-        cursor: not-allowed;
-
-        transform: none;
-
-        opacity: 0.9;
+    .login-card > div[style]{
+        padding:12px !important;
     }
 
-
-    /* ==============================
-       OTP SECTION
-       ============================== */
-
-    #otp-box {
-        display: none;
-
-        margin-top: 22px;
-
-        padding-top: 4px;
+    .login-card > div[style] label{
+        font-size:12.5px;
     }
-
-    #otp-box label {
-        margin-bottom: 8px;
-    }
-
-
-    /* ==============================
-       OTP INPUT
-       ============================== */
-
-    #otp {
-        width: 100%;
-
-        min-height: 58px;
-
-        text-align: center;
-
-        letter-spacing: 7px;
-
-        font-size: 22px;
-
-        font-weight: 800;
-    }
-
-
-    /* ==============================
-       MESSAGE
-       ============================== */
-
-    .message {
-        margin-top: 18px;
-
-        padding: 12px 14px;
-
-        border-radius: 11px;
-
-        text-align: center;
-
-        font-size: 13.5px;
-
-        line-height: 1.5;
-
-        display: none;
-
-        border: 1px solid transparent;
-    }
-
-    .message.success {
-        display: block;
-
-        background: #ecfdf3;
-
-        color: #067647;
-
-        border-color: #abefc6;
-    }
-
-    .message.error {
-        display: block;
-
-        background: #fef3f2;
-
-        color: #b42318;
-
-        border-color: #fecdca;
-    }
-
-
-    /* ==============================
-       FOOTER
-       ============================== */
-
-    .footer {
-        text-align: center;
-
-        margin-top: 22px;
-
-        padding-top: 15px;
-
-        border-top: 1px solid #edf1f5;
-
-        color: #98a2b3;
-
-        font-size: 12px;
-    }
-
-
-    /* ==============================
-       MOBILE
-       ============================== */
-
-    @media (max-width: 480px) {
-
-        body {
-            padding: 14px 10px;
-        }
-
-        .login-card {
-            max-width: 100%;
-
-            padding:
-                26px
-                18px
-                20px;
-
-            border-radius: 22px;
-        }
-
-        .brand-logo-wrap {
-            width: 94px;
-            height: 94px;
-
-            margin-bottom: 14px;
-        }
-
-        .logo {
-            width: 81px;
-            height: 81px;
-        }
-
-        h1 {
-            font-size: 24px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-
-            margin-bottom: 24px;
-        }
-
-        label {
-            font-size: 14px;
-        }
-
-        input[type="tel"] {
-            min-height: 52px;
-
-            font-size: 16px;
-        }
-
-        button {
-            min-height: 53px;
-
-            font-size: 15px;
-        }
-
-        .login-card > div[style] label {
-            font-size: 13px;
-        }
-
-        #otp {
-            font-size: 21px;
-
-            letter-spacing: 6px;
-        }
-    }
-
-
-    /* ==============================
-       SMALL MOBILE
-       ============================== */
-
-    @media (max-width: 360px) {
-
-        .login-card {
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        h1 {
-            font-size: 22px;
-        }
-
-        .brand-logo-wrap {
-            width: 88px;
-            height: 88px;
-        }
-
-        .logo {
-            width: 76px;
-            height: 76px;
-        }
-    }
-
+}
 </style>
 </head>
 
