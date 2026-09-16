@@ -350,6 +350,19 @@ async function sendOTP() {
 
     const mobile =
         document.getElementById("mobile").value.trim();
+    
+    const termsAccepted =
+        document.getElementById("termsAccepted").checked;
+
+    if (!termsAccepted) {
+
+    message.className = "message error";
+
+    message.innerText =
+        "OTP भेजने से पहले Terms & Conditions और Privacy Policy स्वीकार करना जरूरी है।";
+
+    return;
+}
 
     const button =
         document.getElementById("sendOtpBtn");
