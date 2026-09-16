@@ -356,8 +356,98 @@
                 width: 100%;
             }
         }
+        
+    .site-footer{
+    width:100%;
+    background:linear-gradient(135deg,#004e48,#00685e);
+    color:#fff;
+    padding:28px 5%;
+    margin-top:30px;
+}
 
-    </style>
+.site-footer-inner{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.site-footer-brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.site-footer-brand img{
+    width:76px;
+    height:76px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:50%;
+    padding:4px;
+}
+
+.site-footer-brand strong{
+    display:block;
+    font-size:23px;
+    font-weight:800;
+}
+
+.site-footer-brand span{
+    display:block;
+    margin-top:5px;
+    font-size:13px;
+    opacity:.9;
+}
+
+.site-footer-right{
+    text-align:right;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.site-footer-right a{
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.site-footer-copy{
+    margin-top:5px;
+    font-size:12px;
+    opacity:.9;
+}
+
+@media(max-width:700px){
+
+    .site-footer{
+        padding:23px 15px;
+    }
+
+    .site-footer-inner{
+        flex-direction:column;
+        text-align:center;
+        gap:18px;
+    }
+
+    .site-footer-brand{
+        justify-content:center;
+    }
+
+    .site-footer-brand img{
+        width:64px;
+        height:64px;
+    }
+
+    .site-footer-right{
+        text-align:center;
+        font-size:12px;
+    }
+}
+
+</style>
 
 </head>
 
@@ -769,17 +859,46 @@
          FOOTER
          ========================= -->
 
-    <footer>
+    <footer class="site-footer">
 
-        <strong>
-            Help Me Door Step
-        </strong>
+    <div class="site-footer-inner">
 
-        <p>
-            © 2026 Help Me Door Step | सभी अधिकार सुरक्षित
-        </p>
+        <div class="site-footer-brand">
 
-    </footer>
+            <img
+                src="/static/helpme-doorstep-logo.png.jpeg"
+                alt="HelpMe Doorstep"
+            >
+
+            <div>
+                <strong>HelpMe Doorstep</strong>
+
+                <span>
+                    Service | Support | Social Impact
+                </span>
+            </div>
+
+        </div>
+
+        <div class="site-footer-right">
+
+            <div>
+                <a href="/terms">Terms & Conditions</a>
+                &nbsp; | &nbsp;
+                <a href="/privacy">Privacy Policy</a>
+                &nbsp; | &nbsp;
+                <a href="/">Home</a>
+            </div>
+
+            <div class="site-footer-copy">
+                © 2026 HelpMe Doorstep | All Rights Reserved
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
 
 
 </body>
