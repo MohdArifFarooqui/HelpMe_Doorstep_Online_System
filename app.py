@@ -2502,16 +2502,73 @@ def worker_register():
 
 @app.route("/admin", methods=["GET"])
 def admin():
+
+    # ==============================
+    # ADMIN LOGIN CHECK
+    # ==============================
+
     if not session.get("admin"):
         return render_template("login.html")
+
+
+    # ==============================
+    # GET LOGGED-IN ADMIN
+    # ==============================
 
     admin_user = None
 
     if session.get("admin_user_id"):
+
         admin_user = DB.get(
             User,
             session.get("admin_user_id")
         )
+
+
+    # ==============================
+    # ADMIN ACCOUNT VALIDATION
+    # ==============================
+
+    if admin_user:
+
+        if (
+            admin_user.role != "admin"
+            or not admin_user.active
+            or not admin_user.approved
+        ):
+
+            session.clear()
+
+            flash(
+                "आपका Admin account Active नहीं है।",
+                "error"
+            )
+
+            return redirect(
+                url_for("login_portal")
+            )
+
+
+        # ==============================
+        # DISTRICT ADMIN PROTECTION
+        # ==============================
+
+        if admin_user.admin_level == "district":
+
+            return redirect(
+                url_for("district_admin_dashboard")
+            )
+
+
+        # ==============================
+        # STATE ADMIN PROTECTION
+        # ==============================
+
+        if admin_user.admin_level == "state":
+
+            return redirect(
+                url_for("state_admin_dashboard")
+            )
 
     if admin_user and admin_user.admin_level == "state":
         requests = (
