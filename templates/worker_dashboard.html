@@ -11,181 +11,367 @@
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f1f8f6;
-            color: #173f38;
+        html {
+            scroll-behavior: smooth;
         }
 
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(18,140,126,.12), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(37,211,102,.10), transparent 25%),
+                linear-gradient(135deg, #eefaf7, #f7fbfa);
+            color: #183c36;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ================= HEADER ================= */
+
         header {
-            background: #128c7e;
+            position: relative;
+            background: linear-gradient(135deg, #075e54, #128c7e);
             color: white;
-            padding: 15px 20px;
+            padding: 14px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.15);
+            overflow: hidden;
         }
 
-        header h2 {
+        header::after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            right: -100px;
+            top: -160px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.10);
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-logo {
+            width: 175px;
+            max-width: 42vw;
+            height: 58px;
+            object-fit: contain;
+            background: white;
+            border-radius: 10px;
+            padding: 5px 10px;
+        }
+
+        .brand-text h2 {
             margin: 0;
-            font-size: 22px;
+            font-size: 21px;
+        }
+
+        .brand-text p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            opacity: .88;
+        }
+
+        .header-actions {
+            position: relative;
+            z-index: 2;
         }
 
         .logout {
             background: white;
-            color: #128c7e;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 15px;
+            color: #075e54;
+            border: 0;
+            padding: 11px 18px;
+            border-radius: 11px;
+            font-size: 14px;
+            font-weight: 800;
             cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,.12);
+            transition: .2s;
         }
+
+        .logout:hover {
+            transform: translateY(-1px);
+        }
+
+        /* ================= MAIN ================= */
 
         .container {
-            width: 94%;
-            max-width: 1200px;
-            margin: 20px auto;
+            width: min(1180px, 94%);
+            margin: 24px auto 40px;
         }
 
-        .welcome,
-        .requests-box {
-            background: white;
-            border-radius: 18px;
-            padding: 22px;
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            position: relative;
+            background: rgba(255,255,255,.95);
+            border-radius: 22px;
+            padding: 25px;
             margin-bottom: 20px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 28px rgba(21,93,76,.09);
+            border: 1px solid rgba(18,140,126,.10);
+            overflow: hidden;
+        }
+
+        .welcome::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -75px;
+            top: -85px;
+            border-radius: 50%;
+            background: rgba(18,140,126,.08);
         }
 
         .welcome h1 {
-            margin: 0 0 20px;
-            font-size: 30px;
+            position: relative;
+            margin: 0 0 15px;
+            font-size: 29px;
+            color: #075e54;
         }
 
-        .info {
-            font-size: 20px;
-            line-height: 1.9;
-            color: #555;
+        .welcome-subtitle {
+            position: relative;
+            margin: 0 0 18px;
+            color: #61746f;
+            font-size: 15px;
         }
 
-        .info strong {
-            color: #444;
-        }
-
-        .requests-box h2 {
-            margin: 0 0 20px;
-            font-size: 28px;
-        }
-
-        /* Summary */
-        .summary-grid {
+        .worker-info {
+            position: relative;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
+        }
+
+        .info-item {
+            background: #f2faf8;
+            border: 1px solid #dceee9;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .info-label {
+            display: block;
+            color: #6b7e79;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #173f38;
+            font-size: 16px;
+            font-weight: 800;
+            word-break: break-word;
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
             margin-bottom: 20px;
         }
 
         .summary-card {
             background: white;
-            border-radius: 15px;
-            padding: 18px 10px;
+            border-radius: 17px;
+            padding: 19px 12px;
             text-align: center;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+            box-shadow: 0 6px 20px rgba(20,80,67,.08);
+            border: 1px solid #e5efec;
+        }
+
+        .summary-icon {
+            font-size: 22px;
+            margin-bottom: 4px;
         }
 
         .summary-number {
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 29px;
+            font-weight: 900;
+            color: #075e54;
         }
 
         .summary-label {
-            font-size: 14px;
-            color: #666;
-            font-weight: bold;
             margin-top: 5px;
+            color: #697b77;
+            font-size: 13px;
+            font-weight: 700;
         }
 
-        /* Desktop table */
+        /* ================= REQUEST BOX ================= */
+
+        .requests-box {
+            background: rgba(255,255,255,.97);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 8px 28px rgba(21,93,76,.09);
+            border: 1px solid rgba(18,140,126,.10);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: #075e54;
+            font-size: 25px;
+        }
+
+        .live-badge {
+            background: #e9f8f3;
+            color: #08745f;
+            border: 1px solid #ccece3;
+            padding: 7px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* ================= DESKTOP TABLE ================= */
+
         .table-wrapper {
             width: 100%;
             overflow-x: auto;
+            border: 1px solid #e2ece9;
+            border-radius: 15px;
         }
 
         .desktop-table {
             width: 100%;
+            min-width: 1150px;
             border-collapse: collapse;
-            min-width: 1050px;
         }
 
         .desktop-table th {
-            background: #e6f3f0;
-            padding: 13px;
+            background: #e9f7f4;
+            color: #075e54;
+            padding: 14px;
             text-align: left;
+            font-size: 13px;
             white-space: nowrap;
         }
 
         .desktop-table td {
-            padding: 13px;
-            border-bottom: 1px solid #ddd;
+            padding: 14px;
+            border-bottom: 1px solid #edf2f0;
             vertical-align: top;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .desktop-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .desktop-table tbody tr:hover {
+            background: #fbfefd;
         }
 
         .application-id {
-            font-weight: bold;
-            color: #128c7e;
+            color: #075e54;
+            font-weight: 900;
             white-space: nowrap;
+        }
+
+        .customer-name {
+            font-weight: 800;
+            color: #243f39;
+        }
+
+        .phone-number {
+            white-space: nowrap;
+            font-weight: 700;
         }
 
         .distance {
-            font-weight: bold;
-            color: #444;
+            white-space: nowrap;
+            font-weight: 800;
+            color: #475d58;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 900;
             white-space: nowrap;
         }
 
-        .status {
-            font-weight: bold;
-        }
-
         .pending {
-            color: #d28a00;
+            background: #fff4d8;
+            color: #a66a00;
         }
 
         .assigned {
-            color: #1976d2;
+            background: #e5f0ff;
+            color: #1769aa;
         }
 
         .progress {
-            color: #8e44ad;
+            background: #f0e5fa;
+            color: #76369b;
         }
 
         .completed {
-            color: #188038;
+            background: #e2f7e9;
+            color: #17733d;
         }
 
         .cancelled {
-            color: #d93025;
+            background: #fde7e5;
+            color: #b42318;
         }
 
-        /* Action buttons */
+        /* ================= ACTIONS ================= */
+
         .action-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 7px;
-            min-width: 190px;
+            min-width: 205px;
         }
 
         .action-btn {
-            display: inline-block;
-            border: none;
-            text-decoration: none;
-            padding: 9px 11px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 8px 11px;
+            border: 0;
+            border-radius: 9px;
             color: white;
-            text-align: center;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
         }
 
         .call-action {
@@ -216,13 +402,13 @@
         }
 
         .status-btn {
-            border: none;
-            padding: 9px 11px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 13px;
+            border: 0;
+            padding: 8px 10px;
+            border-radius: 9px;
             color: white;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 12px;
         }
 
         .progress-btn {
@@ -233,53 +419,77 @@
             background: #188038;
         }
 
-        /* Mobile cards hidden on desktop */
+        /* ================= MOBILE CARDS ================= */
+
         .mobile-cards {
             display: none;
         }
 
         .request-card {
-            border: 1px solid #ddd;
-            border-radius: 15px;
+            background: white;
+            border: 1px solid #dceae6;
+            border-radius: 18px;
             padding: 17px;
-            margin-bottom: 15px;
-            background: #fff;
+            margin-bottom: 13px;
+            box-shadow: 0 5px 18px rgba(22,91,72,.07);
+        }
+
+        .request-card:last-child {
+            margin-bottom: 0;
         }
 
         .request-title {
-            font-size: 21px;
-            font-weight: bold;
-            margin-bottom: 14px;
-            color: #128c7e;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            color: #075e54;
+            font-size: 18px;
+            font-weight: 900;
+            padding-bottom: 12px;
+            margin-bottom: 3px;
+            border-bottom: 1px solid #e8efed;
         }
 
         .request-row {
-            margin: 8px 0;
-            font-size: 17px;
-            color: #555;
-            word-wrap: break-word;
+            display: grid;
+            grid-template-columns: 38% 62%;
+            gap: 5px;
+            padding: 9px 0;
+            border-bottom: 1px solid #edf2f0;
+            font-size: 14px;
+            line-height: 1.45;
+            color: #4d615c;
+            word-break: break-word;
         }
 
         .request-row strong {
-            color: #333;
+            color: #36554d;
+        }
+
+        .request-row:last-of-type {
+            border-bottom: 0;
         }
 
         .mobile-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-top: 14px;
+            margin-top: 13px;
         }
 
         .mobile-action-btn {
-            display: block;
-            text-decoration: none;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
             text-align: center;
-            padding: 11px 8px;
-            border-radius: 9px;
-            font-weight: bold;
-            font-size: 14px;
+            white-space: nowrap;
         }
 
         .mobile-call {
@@ -292,64 +502,108 @@
 
         .mobile-whatsapp {
             background: #25d366;
+            grid-column: 1 / -1;
+            font-size: 14px;
         }
 
         .mobile-status {
-            margin-top: 10px;
+            margin-top: 9px;
+        }
+
+        .mobile-status form {
+            width: 100%;
         }
 
         .mobile-status .status-btn {
             width: 100%;
-            padding: 11px;
-            font-size: 14px;
+            min-height: 44px;
+            font-size: 13px;
         }
+
+        /* ================= EMPTY ================= */
 
         .empty {
             text-align: center;
-            padding: 30px;
-            color: #777;
-            font-size: 18px;
+            padding: 45px 20px;
+            color: #6c7e79;
         }
 
-        /* Mobile */
-        @media (max-width: 700px) {
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .empty h3 {
+            margin: 0 0 7px;
+            color: #36554d;
+        }
+
+        .empty p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            color: #71837e;
+            font-size: 12px;
+            padding: 5px 15px 25px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
 
             header {
-                padding: 13px 15px;
+                padding: 12px 14px;
             }
 
-            header h2 {
-                font-size: 18px;
+            .brand-area {
+                gap: 10px;
+            }
+
+            .brand-logo {
+                width: 150px;
+                height: 52px;
+            }
+
+            .brand-text {
+                display: none;
             }
 
             .logout {
+                min-height: 42px;
                 padding: 9px 14px;
-                font-size: 14px;
             }
 
             .container {
                 width: 94%;
-                margin: 15px auto;
+                margin: 15px auto 30px;
             }
 
-            .welcome,
-            .requests-box {
-                padding: 17px;
-                border-radius: 16px;
+            .welcome {
+                padding: 18px;
+                border-radius: 18px;
             }
 
             .welcome h1 {
-                font-size: 25px;
-                margin-bottom: 15px;
-            }
-
-            .info {
-                font-size: 17px;
-                line-height: 1.8;
-            }
-
-            .requests-box h2 {
                 font-size: 24px;
+            }
+
+            .welcome-subtitle {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            .worker-info {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .info-item {
+                padding: 12px;
             }
 
             .summary-grid {
@@ -359,7 +613,11 @@
 
             .summary-card {
                 padding: 14px 5px;
-                border-radius: 12px;
+                border-radius: 13px;
+            }
+
+            .summary-icon {
+                font-size: 18px;
             }
 
             .summary-number {
@@ -367,391 +625,254 @@
             }
 
             .summary-label {
-                font-size: 11px;
+                font-size: 10px;
+                line-height: 1.3;
             }
 
-            /* Mobile में desktop table बंद */
-            .desktop-table {
-                display: none;
+            .requests-box {
+                padding: 15px;
+                border-radius: 18px;
+            }
+
+            .section-heading {
+                margin-bottom: 14px;
+            }
+
+            .section-heading h2 {
+                font-size: 21px;
+            }
+
+            .live-badge {
+                font-size: 10px;
+                padding: 6px 8px;
             }
 
             .table-wrapper {
                 display: none;
             }
 
-            /* Mobile cards दिखाई दें */
             .mobile-cards {
                 display: block;
             }
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 420px) {
 
-            .mobile-actions {
-                grid-template-columns: 1fr;
+            .brand-logo {
+                width: 135px;
+                height: 48px;
+            }
+
+            .logout {
+                font-size: 12px;
+                padding: 8px 11px;
             }
 
             .summary-number {
-                font-size: 21px;
+                font-size: 20px;
             }
 
             .summary-label {
-                font-size: 10px;
+                font-size: 9px;
+            }
+
+            .requests-box {
+                padding: 13px;
+            }
+
+            .section-heading h2 {
+                font-size: 19px;
+            }
+
+            .live-badge {
+                display: none;
+            }
+
+            .request-card {
+                padding: 13px;
+            }
+
+            .request-row {
+                grid-template-columns: 37% 63%;
+                font-size: 13px;
+            }
+
+            .mobile-action-btn {
+                font-size: 12px;
+            }
+
+            .mobile-whatsapp {
+                font-size: 13px;
             }
         }
-/* ==========================================================
-   HELP ME DOORSTEP — WORKER DASHBOARD
-   PROFESSIONAL MOBILE UI PATCH
-   ========================================================== */
-
-@media (max-width: 700px) {
-
-    html,
-    body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    header {
-        width: 100%;
-        padding: 12px 14px !important;
-        gap: 10px;
-        border-radius: 0 0 16px 16px;
-    }
-
-    header h2 {
-        font-size: 19px !important;
-        line-height: 1.2;
-    }
-
-    .logout {
-        min-height: 42px;
-        padding: 9px 15px !important;
-        border-radius: 10px;
-    }
-
-    .container {
-        width: 94% !important;
-        max-width: 620px;
-        margin: 14px auto !important;
-    }
-
-    /* Worker profile card */
-    .welcome {
-        padding: 18px !important;
-        border-radius: 18px !important;
-        margin-bottom: 14px !important;
-        box-shadow: 0 5px 18px rgba(0,0,0,.07) !important;
-    }
-
-    .welcome h1 {
-        font-size: 25px !important;
-        line-height: 1.25;
-        margin-bottom: 14px !important;
-    }
-
-    .info {
-        font-size: 16px !important;
-        line-height: 1.8 !important;
-    }
-
-    /* Summary cards */
-    .summary-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 8px !important;
-        margin-bottom: 14px !important;
-    }
-
-    .summary-card {
-        min-width: 0;
-        padding: 14px 5px !important;
-        border-radius: 14px !important;
-    }
-
-    .summary-number {
-        font-size: 24px !important;
-        line-height: 1.1;
-    }
-
-    .summary-label {
-        font-size: 10.5px !important;
-        line-height: 1.3;
-        margin-top: 6px !important;
-    }
-
-    /* Request section */
-    .requests-box {
-        padding: 15px !important;
-        border-radius: 18px !important;
-        margin-bottom: 18px !important;
-    }
-
-    .requests-box h2 {
-        font-size: 22px !important;
-        line-height: 1.25;
-        margin-bottom: 14px !important;
-    }
-
-    /* Mobile request card */
-    .mobile-cards {
-        width: 100%;
-    }
-
-    .request-card {
-        width: 100%;
-        padding: 15px !important;
-        margin-bottom: 12px !important;
-        border-radius: 16px !important;
-        border: 1px solid #dce9e5 !important;
-        box-shadow: 0 4px 15px rgba(22,91,72,.07);
-    }
-
-    .request-title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        font-size: 19px !important;
-        line-height: 1.3;
-        padding-bottom: 11px;
-        margin-bottom: 4px !important;
-        border-bottom: 1px solid #e5ece9;
-    }
-
-    .request-row {
-        display: grid;
-        grid-template-columns: 39% 61%;
-        gap: 4px;
-        margin: 0 !important;
-        padding: 9px 0;
-        border-bottom: 1px solid #edf2f0;
-        font-size: 14px !important;
-        line-height: 1.45;
-        color: #445a55;
-    }
-
-    .request-row:last-of-type {
-        border-bottom: 0;
-    }
-
-    .request-row strong {
-        color: #46635b !important;
-    }
-
-    .request-row .status {
-        justify-self: start;
-    }
-
-    /* Action buttons: never allow WhatsApp text to wrap */
-    .mobile-actions {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 8px !important;
-        margin-top: 13px !important;
-    }
-
-    .mobile-action-btn {
-        min-width: 0 !important;
-        width: 100% !important;
-        min-height: 44px;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        white-space: nowrap !important;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding: 10px 6px !important;
-        border-radius: 10px !important;
-        font-size: 12.5px !important;
-        line-height: 1.15 !important;
-    }
-
-    /* WhatsApp gets a full row */
-    .mobile-whatsapp {
-        grid-column: 1 / -1;
-        font-size: 14px !important;
-    }
-
-    .mobile-status {
-        margin-top: 9px !important;
-    }
-
-    .mobile-status form {
-        width: 100%;
-    }
-
-    .mobile-status .status-btn {
-        width: 100% !important;
-        min-height: 44px;
-        border-radius: 10px;
-    }
-
-    .empty {
-        padding: 25px 12px !important;
-        font-size: 16px !important;
-    }
-}
-
-@media (max-width: 400px) {
-
-    .container {
-        width: 95% !important;
-    }
-
-    .welcome,
-    .requests-box {
-        padding: 13px !important;
-    }
-
-    .summary-grid {
-        gap: 6px !important;
-    }
-
-    .summary-card {
-        padding: 12px 3px !important;
-    }
-
-    .summary-number {
-        font-size: 21px !important;
-    }
-
-    .summary-label {
-        font-size: 9.5px !important;
-    }
-
-    .request-card {
-        padding: 13px !important;
-    }
-
-    .request-row {
-        grid-template-columns: 37% 63%;
-        font-size: 13px !important;
-    }
-
-    .mobile-action-btn {
-        font-size: 11.5px !important;
-    }
-
-    .mobile-whatsapp {
-        font-size: 13px !important;
-    }
-}
-
-        
     </style>
 </head>
 
 <body>
 
 <header>
-    <h2>🤝 HelpMe Doorstep</h2>
 
-    <form method="post" action="/worker/logout">
-        <button class="logout" type="submit">
-            Logout
-        </button>
-    </form>
+    <div class="brand-area">
+
+        <img
+            class="brand-logo"
+            src="/static/WhatsApp%20Image%202026-09-13%20at%2012.32.28.jpeg"
+            alt="HelpMe Doorstep"
+        >
+
+        <div class="brand-text">
+            <h2>Worker Dashboard</h2>
+            <p>HelpMe Doorstep Service Partner Panel</p>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+        <form method="post" action="/worker/logout">
+            <button class="logout" type="submit">
+                🚪 Logout
+            </button>
+        </form>
+    </div>
+
 </header>
 
-<div class="container">
 
-    <!-- Worker Information -->
-    <div class="welcome">
+<main class="container">
 
-        <h1>👷 Worker Dashboard</h1>
+    <!-- WORKER PROFILE -->
 
-        <div class="info">
+    <section class="welcome">
 
-            <strong>नाम:</strong>
-            {{ worker.name or "Worker" }}
-            <br>
+        <h1>
+            👋 Welcome, {{ worker.name }}
+        </h1>
 
-            <strong>मोबाइल:</strong>
-            {{ worker.mobile }}
-            <br>
+        <p class="welcome-subtitle">
+            Aapke assigned customer requests aur service activities yahan manage karein.
+        </p>
 
-            <strong>Center:</strong>
-            {{ worker.center_name or "N/A" }}
-            <br>
+        <div class="worker-info">
 
-            <strong>State:</strong>
-            {{ worker.state or "N/A" }}
-            <br>
+            <div class="info-item">
+                <span class="info-label">Worker Name</span>
+                <span class="info-value">
+                    {{ worker.name }}
+                </span>
+            </div>
 
-            <strong>District:</strong>
-            {{ worker.district or "N/A" }}
-            <br>
+            <div class="info-item">
+                <span class="info-label">Mobile Number</span>
+                <span class="info-value">
+                    {{ worker.mobile }}
+                </span>
+            </div>
 
-            <strong>Status:</strong>
-            ✅ Active
+            <div class="info-item">
+                <span class="info-label">Service Area</span>
+                <span class="info-value">
+                    {{ worker.district or '—' }}
+                    {% if worker.state %}
+                    , {{ worker.state }}
+                    {% endif %}
+                </span>
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
-    <!-- Worker Request Summary -->
-    <div class="summary-grid">
+
+    <!-- SUMMARY -->
+
+    {% set total_count = requests|length %}
+    {% set pending_count = requests|selectattr('status', 'equalto', 'Pending')|list|length %}
+    {% set assigned_count = requests|selectattr('status', 'equalto', 'Assigned')|list|length %}
+    {% set progress_count = requests|selectattr('status', 'equalto', 'In Progress')|list|length %}
+    {% set completed_count = requests|selectattr('status', 'equalto', 'Completed')|list|length %}
+    {% set cancelled_count = requests|selectattr('status', 'equalto', 'Cancelled')|list|length %}
+
+    <section class="summary-grid">
 
         <div class="summary-card">
-            <div class="summary-number">
-                {{ requests|length }}
-            </div>
-
-            <div class="summary-label">
-                📋 कुल आवेदन
-            </div>
+            <div class="summary-icon">📋</div>
+            <div class="summary-number">{{ total_count }}</div>
+            <div class="summary-label">Total Requests</div>
         </div>
 
         <div class="summary-card">
-            <div class="summary-number" style="color:#8e44ad;">
-                {{ requests|selectattr('status','equalto','In Progress')|list|length }}
-            </div>
-
-            <div class="summary-label">
-                🟣 In Progress
-            </div>
+            <div class="summary-icon">⏳</div>
+            <div class="summary-number">{{ pending_count }}</div>
+            <div class="summary-label">Pending</div>
         </div>
 
         <div class="summary-card">
-            <div class="summary-number" style="color:#188038;">
-                {{ requests|selectattr('status','equalto','Completed')|list|length }}
-            </div>
-
-            <div class="summary-label">
-                🟢 Completed
-            </div>
+            <div class="summary-icon">📌</div>
+            <div class="summary-number">{{ assigned_count }}</div>
+            <div class="summary-label">Assigned</div>
         </div>
 
-    </div>
+        <div class="summary-card">
+            <div class="summary-icon">🔄</div>
+            <div class="summary-number">{{ progress_count }}</div>
+            <div class="summary-label">In Progress</div>
+        </div>
 
-    <!-- Service Requests -->
-    <div class="requests-box">
+        <div class="summary-card">
+            <div class="summary-icon">✅</div>
+            <div class="summary-number">{{ completed_count }}</div>
+            <div class="summary-label">Completed</div>
+        </div>
 
-        <h2>📋 Service Requests</h2>
+        <div class="summary-card">
+            <div class="summary-icon">❌</div>
+            <div class="summary-number">{{ cancelled_count }}</div>
+            <div class="summary-label">Cancelled</div>
+        </div>
+
+    </section>
+
+
+    <!-- REQUESTS -->
+
+    <section class="requests-box">
+
+        <div class="section-heading">
+
+            <h2>
+                📋 Customer Requests
+            </h2>
+
+            <span class="live-badge">
+                ● LIVE REQUESTS
+            </span>
+
+        </div>
+
 
         {% if requests %}
 
-        <!-- ========================= -->
         <!-- DESKTOP TABLE -->
-        <!-- ========================= -->
 
         <div class="table-wrapper">
 
             <table class="desktop-table">
 
                 <thead>
+
                     <tr>
-                        <th>Application ID</th>
+                        <th>Application</th>
                         <th>Customer</th>
                         <th>Age</th>
-                        <th>Phone</th>
+                        <th>Mobile</th>
                         <th>Service</th>
+                        <th>Details</th>
                         <th>Address</th>
                         <th>Distance</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
+
                 </thead>
 
                 <tbody>
@@ -760,76 +881,89 @@
 
                     <tr>
 
-                        <!-- Application ID -->
                         <td>
                             <span class="application-id">
                                 {{ r.application_code }}
                             </span>
                         </td>
 
-                        <!-- Customer -->
                         <td>
-                            {{ r.customer }}
+                            <span class="customer-name">
+                                {{ r.customer }}
+                            </span>
                         </td>
 
-                        <!-- Age -->
                         <td>
-                            {{ r.age }}
+                            {{ r.age or '—' }}
                         </td>
 
-                        <!-- Phone -->
                         <td>
-                            {{ r.phone }}
+                            <span class="phone-number">
+                                {{ r.phone }}
+                            </span>
                         </td>
 
-                        <!-- Service -->
                         <td>
                             {{ r.service }}
                         </td>
 
-                        <!-- Address -->
                         <td>
-                            {{ r.address }}
+                            {{ r.details or '—' }}
                         </td>
 
-                        <!-- Distance -->
-                        <td class="distance">
+                        <td>
+                            {{ r.address or '—' }}
+                        </td>
 
-                            {% if request_distances.get(r.id) is not none %}
-                                📍 {{ request_distances.get(r.id) }} KM
+                        <td>
+                            <span class="distance">
+                                {% if r.distance_km is not none %}
+                                    {{ "%.1f"|format(r.distance_km) }} KM
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </span>
+                        </td>
+
+                        <td>
+
+                            {% if r.status == "Pending" %}
+                                <span class="status pending">
+                                    Pending
+                                </span>
+
+                            {% elif r.status == "Assigned" %}
+                                <span class="status assigned">
+                                    Assigned
+                                </span>
+
+                            {% elif r.status == "In Progress" %}
+                                <span class="status progress">
+                                    In Progress
+                                </span>
+
+                            {% elif r.status == "Completed" %}
+                                <span class="status completed">
+                                    Completed
+                                </span>
+
+                            {% elif r.status == "Cancelled" %}
+                                <span class="status cancelled">
+                                    Cancelled
+                                </span>
+
                             {% else %}
-                                —
+                                <span class="status">
+                                    {{ r.status }}
+                                </span>
                             {% endif %}
 
                         </td>
 
-                        <!-- Status -->
-                        <td>
-
-                            <div class="status
-                                {% if r.status == 'Pending' %}
-                                    pending
-                                {% elif r.status == 'Assigned' %}
-                                    assigned
-                                {% elif r.status == 'In Progress' %}
-                                    progress
-                                {% elif r.status == 'Completed' %}
-                                    completed
-                                {% elif r.status == 'Cancelled' %}
-                                    cancelled
-                                {% endif %}
-                            ">
-                                {{ r.status }}
-                            </div>
-
-                        </td>
-
-                        <!-- Actions -->
                         <td>
 
                             <div class="action-buttons">
 
-                                <!-- Call -->
                                 <a
                                     class="action-btn call-action"
                                     href="tel:{{ r.phone }}"
@@ -837,83 +971,77 @@
                                     📞 Call
                                 </a>
 
-                                <!-- Location -->
+
                                 {% if r.latitude and r.longitude %}
 
                                 <a
                                     class="action-btn location-action"
-                                    href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
                                     target="_blank"
-                                    rel="noopener"
+                                    href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
                                 >
-                                    📍 Maps
+                                    📍 Location
                                 </a>
 
                                 {% endif %}
 
-                                <!-- WhatsApp -->
+
                                 <a
                                     class="action-btn whatsapp-action"
-                                    href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
                                     target="_blank"
-                                    rel="noopener"
+                                    href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
                                 >
                                     💬 WhatsApp
                                 </a>
 
-                            </div>
 
-                            <!-- Status Actions -->
+                                {% if r.status != "Completed" %}
 
-                            {% if r.status == "Assigned" %}
+                                <div class="status-actions">
 
-                            <div class="status-actions">
-
-                                <form
-                                    method="post"
-                                    action="/worker/status/{{ r.id }}"
-                                >
-                                    <input
-                                        type="hidden"
-                                        name="status"
-                                        value="In Progress"
+                                    <form
+                                        method="post"
+                                        action="/worker/status/{{ r.id }}"
+                                        style="display:inline;"
                                     >
+                                        <input
+                                            type="hidden"
+                                            name="status"
+                                            value="In Progress"
+                                        >
 
-                                    <button
-                                        class="status-btn progress-btn"
-                                        type="submit"
+                                        <button
+                                            class="status-btn progress-btn"
+                                            type="submit"
+                                        >
+                                            🔄 In Progress
+                                        </button>
+                                    </form>
+
+
+                                    <form
+                                        method="post"
+                                        action="/worker/status/{{ r.id }}"
+                                        style="display:inline;"
                                     >
-                                        🟣 In Progress
-                                    </button>
-                                </form>
+                                        <input
+                                            type="hidden"
+                                            name="status"
+                                            value="Completed"
+                                        >
 
-                            </div>
+                                        <button
+                                            class="status-btn completed-btn"
+                                            type="submit"
+                                        >
+                                            ✅ Completed
+                                        </button>
+                                    </form>
 
-                            {% elif r.status == "In Progress" %}
+                                </div>
 
-                            <div class="status-actions">
-
-                                <form
-                                    method="post"
-                                    action="/worker/status/{{ r.id }}"
-                                >
-                                    <input
-                                        type="hidden"
-                                        name="status"
-                                        value="Completed"
-                                    >
-
-                                    <button
-                                        class="status-btn completed-btn"
-                                        type="submit"
-                                    >
-                                        🟢 Completed
-                                    </button>
-                                </form>
+                                {% endif %}
 
                             </div>
-
-                            {% endif %}
 
                         </td>
 
@@ -928,96 +1056,88 @@
         </div>
 
 
-        <!-- ========================= -->
         <!-- MOBILE CARDS -->
-        <!-- ========================= -->
 
         <div class="mobile-cards">
 
         {% for r in requests %}
 
-            <div class="request-card">
+            <article class="request-card">
 
-                <!-- Application ID -->
                 <div class="request-title">
-                    📋 {{ r.application_code }}
-                </div>
 
-                <!-- Customer -->
-                <div class="request-row">
-                    <strong>👤 Customer:</strong>
-                    {{ r.customer }}
-                </div>
-
-                <!-- Age -->
-                <div class="request-row">
-                    <strong>🎂 Age:</strong>
-                    {{ r.age }} वर्ष
-                </div>
-
-                <!-- Phone -->
-                <div class="request-row">
-                    <strong>📞 Phone:</strong>
-                    {{ r.phone }}
-                </div>
-
-                <!-- Service -->
-                <div class="request-row">
-                    <strong>🛠️ Service:</strong>
-                    {{ r.service }}
-                </div>
-
-                <!-- Details -->
-                <div class="request-row">
-                    <strong>📝 विवरण:</strong>
-                    {{ r.details }}
-                </div>
-
-                <!-- Address -->
-                <div class="request-row">
-                    <strong>📍 Address:</strong>
-                    {{ r.address }}
-                </div>
-
-                <!-- Distance -->
-                {% if request_distances.get(r.id) is not none %}
-
-                <div class="request-row">
-                    <strong>📍 दूरी:</strong>
-                    <span class="distance">
-                        {{ request_distances.get(r.id) }} KM
+                    <span>
+                        📄 {{ r.application_code }}
                     </span>
+
+                    {% if r.status == "Pending" %}
+                        <span class="status pending">Pending</span>
+
+                    {% elif r.status == "Assigned" %}
+                        <span class="status assigned">Assigned</span>
+
+                    {% elif r.status == "In Progress" %}
+                        <span class="status progress">In Progress</span>
+
+                    {% elif r.status == "Completed" %}
+                        <span class="status completed">Completed</span>
+
+                    {% elif r.status == "Cancelled" %}
+                        <span class="status cancelled">Cancelled</span>
+
+                    {% else %}
+                        <span class="status">{{ r.status }}</span>
+                    {% endif %}
+
                 </div>
 
-                {% endif %}
 
-                <!-- Status -->
                 <div class="request-row">
+                    <strong>Customer</strong>
+                    <span>{{ r.customer }}</span>
+                </div>
 
-                    <strong>📊 Status:</strong>
+                <div class="request-row">
+                    <strong>Age</strong>
+                    <span>{{ r.age or '—' }}</span>
+                </div>
 
-                    <span class="status
-                        {% if r.status == 'Pending' %}
-                            pending
-                        {% elif r.status == 'Assigned' %}
-                            assigned
-                        {% elif r.status == 'In Progress' %}
-                            progress
-                        {% elif r.status == 'Completed' %}
-                            completed
-                        {% elif r.status == 'Cancelled' %}
-                            cancelled
+                <div class="request-row">
+                    <strong>Mobile</strong>
+                    <span>{{ r.phone }}</span>
+                </div>
+
+                <div class="request-row">
+                    <strong>Service</strong>
+                    <span>{{ r.service }}</span>
+                </div>
+
+                <div class="request-row">
+                    <strong>Details</strong>
+                    <span>{{ r.details or '—' }}</span>
+                </div>
+
+                <div class="request-row">
+                    <strong>Address</strong>
+                    <span>{{ r.address or '—' }}</span>
+                </div>
+
+                <div class="request-row">
+                    <strong>Distance</strong>
+                    <span>
+                        {% if r.distance_km is not none %}
+                            {{ "%.1f"|format(r.distance_km) }} KM
+                        {% else %}
+                            —
                         {% endif %}
-                    ">
-                        {{ r.status }}
                     </span>
-
                 </div>
 
-                <!-- Operational Actions -->
+
+                <!-- MOBILE ACTIONS -->
+
                 <div class="mobile-actions">
 
-                    <!-- Call -->
                     <a
                         class="mobile-action-btn mobile-call"
                         href="tel:{{ r.phone }}"
@@ -1025,59 +1145,34 @@
                         📞 Call Customer
                     </a>
 
-                    <!-- Location -->
+
                     {% if r.latitude and r.longitude %}
 
                     <a
                         class="mobile-action-btn mobile-location"
-                        href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
                         target="_blank"
-                        rel="noopener"
+                        href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
                     >
                         📍 Customer Location
                     </a>
 
                     {% endif %}
 
-                    <!-- WhatsApp -->
+
                     <a
                         class="mobile-action-btn mobile-whatsapp"
-                        href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
                         target="_blank"
-                        rel="noopener"
+                        href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
                     >
                         💬 WhatsApp Customer
                     </a>
 
                 </div>
 
-                <!-- Mobile Status Action -->
 
-                {% if r.status == "Assigned" %}
+                <!-- MOBILE STATUS -->
 
-                <div class="mobile-status">
-
-                    <form
-                        method="post"
-                        action="/worker/status/{{ r.id }}"
-                    >
-                        <input
-                            type="hidden"
-                            name="status"
-                            value="In Progress"
-                        >
-
-                        <button
-                            class="status-btn progress-btn"
-                            type="submit"
-                        >
-                            🟣 In Progress
-                        </button>
-                    </form>
-
-                </div>
-
-                {% elif r.status == "In Progress" %}
+                {% if r.status != "Completed" %}
 
                 <div class="mobile-status">
 
@@ -1085,41 +1180,81 @@
                         method="post"
                         action="/worker/status/{{ r.id }}"
                     >
-                        <input
-                            type="hidden"
-                            name="status"
-                            value="Completed"
-                        >
 
-                        <button
-                            class="status-btn completed-btn"
-                            type="submit"
-                        >
-                            🟢 Completed
-                        </button>
+                        {% if r.status == "In Progress" %}
+
+                            <input
+                                type="hidden"
+                                name="status"
+                                value="Completed"
+                            >
+
+                            <button
+                                class="status-btn completed-btn"
+                                type="submit"
+                            >
+                                ✅ Mark as Completed
+                            </button>
+
+                        {% else %}
+
+                            <input
+                                type="hidden"
+                                name="status"
+                                value="In Progress"
+                            >
+
+                            <button
+                                class="status-btn progress-btn"
+                                type="submit"
+                            >
+                                🔄 Start / In Progress
+                            </button>
+
+                        {% endif %}
+
                     </form>
 
                 </div>
 
                 {% endif %}
 
-            </div>
+            </article>
 
         {% endfor %}
 
         </div>
 
+
         {% else %}
 
-        <div class="empty">
-            अभी कोई Service Request उपलब्ध नहीं है।
-        </div>
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    अभी कोई Customer Request नहीं है
+                </h3>
+
+                <p>
+                    New customer request assign होने पर यहाँ दिखाई देगी।
+                </p>
+
+            </div>
 
         {% endif %}
 
-    </div>
+    </section>
 
-</div>
+</main>
+
+
+<footer>
+    <strong>Help Me Door Step</strong><br>
+    © 2026 Help Me Door Step | सभी अधिकार सुरक्षित
+</footer>
 
 </body>
 </html>
