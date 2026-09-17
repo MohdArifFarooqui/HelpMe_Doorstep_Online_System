@@ -2,17 +2,21 @@
 <html lang="hi">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>हमारी सेवाएँ - HelpMe Doorstep</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     max-width: 100%;
     margin: 0;
@@ -185,7 +189,7 @@ main {
 }
 
 /* =========================
-   BOTTOM CARD
+   ACTION CARD
    ========================= */
 
 .action-card {
@@ -221,73 +225,80 @@ main {
     font-size: 17px;
 }
 
+.action-button:hover {
+    background: #e9f7f3;
+}
+
 /* =========================
    FOOTER
    ========================= */
 
-<footer class="site-footer">
+.site-footer {
+    width: 100%;
+    margin: 40px 0 0;
+    background: #075e54;
+    color: #ffffff;
+    padding: 28px 20px;
+}
 
-    <div class="site-footer-inner">
+.site-footer-inner {
+    width: min(1100px, 94%);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
 
-        <div class="site-footer-brand">
+.site-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
 
-            <img
-                src="/static/helpme-doorstep-logo.png.jpeg"
-                alt="HelpMe Doorstep"
-            >
+.site-footer-brand img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 4px;
+}
 
-            <div>
-                <strong>HelpMe Doorstep</strong>
+.site-footer-brand strong {
+    display: block;
+    font-size: 20px;
+}
 
-                <span>
-                    Service | Support | Social Impact
-                </span>
-            </div>
+.site-footer-brand span {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    opacity: .9;
+}
 
-        </div>
+.site-footer-right {
+    text-align: right;
+    font-size: 14px;
+    line-height: 1.8;
+}
 
-        <div class="site-footer-right">
+.site-footer-right a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+}
 
-            <div>
-                <a href="/terms">Terms & Conditions</a>
-                &nbsp; | &nbsp;
-                <a href="/privacy">Privacy Policy</a>
-                &nbsp; | &nbsp;
-                <a href="/">Home</a>
-            </div>
+.site-footer-right a:hover {
+    text-decoration: underline;
+}
 
-            <div class="site-footer-copy">
-                © 2026 HelpMe Doorstep | All Rights Reserved
-            </div>
+.site-footer-copy {
+    margin-top: 5px;
+    font-size: 13px;
+    opacity: .9;
+}
 
-        </div>
-
-    </div>
-
-</footer>
-            </div>
-
-        </div>
-
-        <div class="site-footer-right">
-
-            <div>
-                <a href="/terms">Terms & Conditions</a>
-                &nbsp; | &nbsp;
-                <a href="/privacy">Privacy Policy</a>
-                &nbsp; | &nbsp;
-                <a href="/">Home</a>
-            </div>
-
-            <div class="site-footer-copy">
-                © 2026 HelpMe Doorstep | All Rights Reserved
-            </div>
-
-        </div>
-
-    </div>
-
-</footer>
 /* =========================
    TABLET
    ========================= */
@@ -302,6 +313,7 @@ main {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 15px;
     }
+
 }
 
 /* =========================
@@ -394,6 +406,24 @@ main {
     .action-button {
         width: 100%;
     }
+
+    .site-footer {
+        padding: 24px 15px;
+    }
+
+    .site-footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .site-footer-brand {
+        flex-direction: column;
+    }
+
+    .site-footer-right {
+        text-align: center;
+    }
+
 }
 
 /* =========================
@@ -410,11 +440,18 @@ main {
     .service-card {
         padding: 20px 14px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
+
+<!-- =========================
+     HEADER
+     ========================= -->
 
 <header>
 
@@ -431,9 +468,16 @@ main {
 
 </header>
 
+
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
 <nav class="home-nav" aria-label="मुख्य मेनू">
 
-    <a href="/">🏠 होम</a>
+    <a href="/">
+        🏠 होम
+    </a>
 
     <a href="/about">
         ℹ️ हमारे बारे में
@@ -449,159 +493,235 @@ main {
 
 </nav>
 
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
 <main>
 
-<section class="intro">
+    <section class="intro">
 
-    <h2>
-        🏠 HelpMe Doorstep Services
-    </h2>
-
-    <p>
-        अपनी आवश्यकता के अनुसार नीचे दी गई सेवा चुनें।
-        आप घर बैठे अपना सेवा अनुरोध भेज सकते हैं।
-    </p>
-
-</section>
-
-<section class="services">
-
-    <div class="service-card">
-
-        <div class="service-icon">
-            🤰
-        </div>
-
-        <h3>
-            गर्भवती महिला सहायता
-        </h3>
+        <h2>
+            🏠 HelpMe Doorstep Services
+        </h2>
 
         <p>
-            गर्भवती महिलाओं को आवश्यक सेवा और
-            सहायता प्राप्त करने की प्रक्रिया में मदद।
+            अपनी आवश्यकता के अनुसार नीचे दी गई सेवा चुनें।
+            आप घर बैठे अपना सेवा अनुरोध भेज सकते हैं।
         </p>
 
-    </div>
+    </section>
 
-    <div class="service-card">
 
-        <div class="service-icon">
-            🏥
+    <!-- SERVICES -->
+
+    <section class="services">
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🤰
+            </div>
+
+            <h3>
+                गर्भवती महिला सहायता
+            </h3>
+
+            <p>
+                गर्भवती महिलाओं को आवश्यक सेवा और
+                सहायता प्राप्त करने की प्रक्रिया में मदद।
+            </p>
+
         </div>
 
-        <h3>
-            Serious Patient
-        </h3>
 
-        <p>
-            गंभीर मरीजों के लिए आवश्यक सहायता और
-            सेवा प्रक्रिया की जानकारी।
-        </p>
+        <div class="service-card">
 
-    </div>
+            <div class="service-icon">
+                🏥
+            </div>
 
-    <div class="service-card">
+            <h3>
+                Serious Patient
+            </h3>
 
-        <div class="service-icon">
-            👴
+            <p>
+                गंभीर मरीजों के लिए आवश्यक सहायता और
+                सेवा प्रक्रिया की जानकारी।
+            </p>
+
         </div>
 
-        <h3>
-            Senior Citizen Assistance
-        </h3>
 
-        <p>
-            वरिष्ठ नागरिकों के लिए आवश्यक सहायता
-            और doorstep service support।
-        </p>
+        <div class="service-card">
 
-    </div>
+            <div class="service-icon">
+                👴
+            </div>
 
-    <div class="service-card">
+            <h3>
+                Senior Citizen Assistance
+            </h3>
 
-        <div class="service-icon">
-            ♿
+            <p>
+                वरिष्ठ नागरिकों के लिए आवश्यक सहायता
+                और doorstep service support।
+            </p>
+
         </div>
 
-        <h3>
-            दिव्यांगजन सहायता
-        </h3>
 
-        <p>
-            दिव्यांगजनों के लिए आवश्यक सेवा सहायता
-            और सुविधा प्राप्त करने में मदद।
-        </p>
+        <div class="service-card">
 
-    </div>
+            <div class="service-icon">
+                ♿
+            </div>
 
-    <div class="service-card">
+            <h3>
+                दिव्यांगजन सहायता
+            </h3>
 
-        <div class="service-icon">
-            💻
+            <p>
+                दिव्यांगजनों के लिए आवश्यक सेवा सहायता
+                और सुविधा प्राप्त करने में मदद।
+            </p>
+
         </div>
 
-        <h3>
-            Digital & Citizen Services
-        </h3>
 
-        <p>
-            Digital और Citizen Services से संबंधित
-            आवश्यक सहायता।
-        </p>
+        <div class="service-card">
 
-    </div>
+            <div class="service-icon">
+                💻
+            </div>
 
-    <div class="service-card">
+            <h3>
+                Digital & Citizen Services
+            </h3>
 
-        <div class="service-icon">
-            🤝
+            <p>
+                Digital और Citizen Services से संबंधित
+                आवश्यक सहायता।
+            </p>
+
         </div>
 
-        <h3>
-            अन्य सहायता
-        </h3>
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🤝
+            </div>
+
+            <h3>
+                अन्य सहायता
+            </h3>
+
+            <p>
+                ऐसी अन्य आवश्यकता जिसके लिए आपको
+                सहायता की जरूरत हो।
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ACTION CARD -->
+
+    <section class="action-card">
+
+        <h2>
+            📋 सेवा का अनुरोध भेजें
+        </h2>
 
         <p>
-            ऐसी अन्य आवश्यकता जिसके लिए आपको
-            सहायता की जरूरत हो।
+            यदि आपको ऊपर दी गई किसी सेवा की आवश्यकता है,
+            तो घर बैठे अपना सेवा अनुरोध भेजें।
         </p>
 
-    </div>
+        <a
+            class="action-button"
+            href="/#serviceForm">
+            🏠 सेवा अनुरोध भेजें
+        </a>
 
-</section>
+    </section>
 
-<section class="action-card">
-
-    <h2>
-        📋 सेवा का अनुरोध भेजें
-    </h2>
-
-    <p>
-        यदि आपको ऊपर दी गई किसी सेवा की आवश्यकता है,
-        तो घर बैठे अपना सेवा अनुरोध भेजें।
-    </p>
-
-    <a
-        class="action-button"
-        href="/#serviceForm">
-        🏠 सेवा अनुरोध भेजें
-    </a>
-
-</section>
 
 </main>
 
-<footer>
 
-    <strong>
-        HelpMe Doorstep
-    </strong>
+<!-- =========================
+     FOOTER
+     ========================= -->
 
-    <p>
-        © 2026 HelpMe Doorstep | All Rights Reserved
-    </p>
+<footer class="site-footer">
+
+    <div class="site-footer-inner">
+
+
+        <div class="site-footer-brand">
+
+            <img
+                src="/static/helpme-doorstep-logo.png.jpeg"
+                alt="HelpMe Doorstep">
+
+            <div>
+
+                <strong>
+                    HelpMe Doorstep
+                </strong>
+
+                <span>
+                    Service | Support | Social Impact
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="site-footer-right">
+
+            <div>
+
+                <a href="/terms">
+                    Terms & Conditions
+                </a>
+
+                &nbsp; | &nbsp;
+
+                <a href="/privacy">
+                    Privacy Policy
+                </a>
+
+                &nbsp; | &nbsp;
+
+                <a href="/">
+                    Home
+                </a>
+
+            </div>
+
+
+            <div class="site-footer-copy">
+
+                © 2026 HelpMe Doorstep | All Rights Reserved
+
+            </div>
+
+        </div>
+
+
+    </div>
 
 </footer>
 
+
 </body>
+
 </html>
