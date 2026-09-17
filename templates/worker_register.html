@@ -67,7 +67,20 @@ required>
 </label>
 
 <label>
-CSC ID
+    संस्था का प्रकार (Organization Type)
+
+    <select name="organization_type" id="organizationType" required>
+        <option value="">-- संस्था का प्रकार चुनें --</option>
+        <option value="CSC / CSP">CSC / CSP</option>
+        <option value="Hospital / Nursing Home">Hospital / Nursing Home</option>
+        <option value="Clinic">Clinic</option>
+        <option value="Diagnostic Centre">Diagnostic Centre</option>
+        <option value="Other">Other</option>
+    </select>
+</label>    
+    
+<label id="cscIdField">
+    CSC ID
 <span style="color:#71847e;">(यदि उपलब्ध हो)</span>
 <input
 name="csc_id"
