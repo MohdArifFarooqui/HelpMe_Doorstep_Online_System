@@ -705,6 +705,88 @@
                 font-size: 13px;
             }
         }
+        
+/* ================= WORKER DASHBOARD FOOTER ================= */
+
+.worker-dashboard-footer{
+    margin-top:30px;
+    padding:24px 15px 18px;
+    text-align:center;
+    background:linear-gradient(135deg,#eef8f5,#f8fcfb);
+    border-top:1px solid #dcebe7;
+    color:#71807c;
+}
+
+.dashboard-footer-brand strong{
+    display:block;
+    color:#126b57;
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.dashboard-footer-brand span{
+    display:block;
+    font-size:12px;
+    color:#71807c;
+}
+
+.dashboard-social-title{
+    margin:14px 0 9px;
+    color:#345b54;
+    font-size:13px;
+    font-weight:700;
+}
+
+.dashboard-social-links{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin:10px 0 14px;
+}
+
+.dashboard-social-links a{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#ffffff;
+    border:1px solid #dcebe7;
+    text-decoration:none;
+    font-size:21px;
+    font-weight:700;
+    transition:0.2s ease;
+}
+
+.dashboard-social-links a:hover{
+    transform:translateY(-2px);
+    box-shadow:0 5px 12px rgba(20,70,60,.14);
+}
+
+.dashboard-social-links a:nth-child(1){
+    color:#E1306C;
+}
+
+.dashboard-social-links a:nth-child(2){
+    color:#1877F2;
+}
+
+.dashboard-social-links a:nth-child(3){
+    color:#229ED9;
+}
+
+.dashboard-social-links a:nth-child(4){
+    color:#FF0000;
+}
+
+.dashboard-footer-copy{
+    margin-top:5px;
+    font-size:12px;
+    opacity:.9;
+}
+
     </style>
 </head>
 
@@ -1250,10 +1332,53 @@
 
 </main>
 
+<footer class="worker-dashboard-footer">
 
-<footer>
-    <strong>Help Me Door Step</strong><br>
-    © 2026 Help Me Door Step | सभी अधिकार सुरक्षित
+    <div class="dashboard-footer-brand">
+        <strong>HelpMe Doorstep</strong>
+        <span>Service | Support | Social Impact</span>
+    </div>
+
+    <div class="dashboard-social-title">
+        Follow Us
+    </div>
+
+    <div class="dashboard-social-links">
+
+        <a href="https://www.instagram.com/helpmedoorstep?stkn=N3kxM3Ewa2RwaThu"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Instagram">
+            📷
+        </a>
+
+        <a href="https://www.facebook.com/share/1Ge54p8ror/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Facebook">
+            f
+        </a>
+
+        <a href="https://t.me/HelpMeDoorstep"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Telegram">
+            ✈
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCldXDVHp8_yH8qnm0KjL5zQ"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="YouTube">
+            ▶
+        </a>
+
+    </div>
+
+    <div class="dashboard-footer-copy">
+        © 2026 HelpMe Doorstep | All Rights Reserved
+    </div>
+
 </footer>
 
 </body>
