@@ -98,6 +98,17 @@ maxlength="150"
 placeholder="Center या संस्था का नाम">
 </label>
 
+<label id="facilityRegistrationField" style="display:none;">
+    Facility Registration / License Number
+    <span style="color:#71847e;">(यदि लागू हो)</span>
+
+    <input
+        name="facility_registration_no"
+        type="text"
+        maxlength="100"
+        placeholder="Registration / License Number">
+</label>
+    
 <!-- STATE -->
 <label>
 राज्य (State)
@@ -471,14 +482,22 @@ if (stateSelect.value) {
 <script>
 const organizationType = document.getElementById("organizationType");
 const cscIdField = document.getElementById("cscIdField");
-
+const facilityRegistrationField = document.getElementById("facilityRegistrationField");
+    
 function updateOrganizationFields() {
-    if (!organizationType || !cscIdField) return;
+    if (!organizationType || !cscIdField || !facilityRegistrationField) return;
 
     if (organizationType.value === "CSC / CSP") {
         cscIdField.style.display = "block";
-    } else {
+        facilityRegistrationField.style.display = "none";
+    } 
+    else if (organizationType.value === "Hospital / Nursing Home") {
         cscIdField.style.display = "none";
+        facilityRegistrationField.style.display = "block";
+    } 
+    else {
+        cscIdField.style.display = "none";
+        facilityRegistrationField.style.display = "none";
     }
 }
 
