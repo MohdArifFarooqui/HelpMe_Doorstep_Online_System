@@ -282,6 +282,7 @@ class User(Base):
     age = Column(Integer, nullable=True)
     csc_id = Column(String(50), unique=True, nullable=True)
     organization_type = Column(String(50), nullable=True)
+    facility_registration_no = Column(String(100), nullable=True)
     center_name = Column(String(150), nullable=True)
     address = Column(Text, nullable=True)
     latitude = Column(String(30), nullable=True)
