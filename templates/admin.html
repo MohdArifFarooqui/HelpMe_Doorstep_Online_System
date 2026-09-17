@@ -579,6 +579,106 @@ button:hover,
     }
 }
 
+/* ================= ADMIN FOOTER ================= */
+
+.admin-footer{
+    width:100%;
+    margin-top:30px;
+    padding:25px 15px 18px;
+    text-align:center;
+    background:linear-gradient(135deg,#063f35,#0b6b59);
+    color:#ffffff;
+    border-radius:18px 18px 0 0;
+    box-sizing:border-box;
+}
+
+.admin-footer strong{
+    display:block;
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.admin-footer-social-title{
+    font-size:13px;
+    font-weight:700;
+    margin:10px 0 10px;
+    opacity:.95;
+}
+
+.admin-footer-social{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin:8px 0 15px;
+    flex-wrap:wrap;
+}
+
+.admin-footer-social a{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#ffffff;
+    color:#126b57;
+    border:1px solid rgba(255,255,255,.7);
+    text-decoration:none;
+    font-size:0;
+    position:relative;
+    transition:.2s ease;
+}
+
+.admin-footer-social a::before{
+    font-size:20px;
+    font-weight:800;
+}
+
+.admin-footer-social a:nth-child(1)::before{
+    content:"◎";
+}
+
+.admin-footer-social a:nth-child(2)::before{
+    content:"f";
+}
+
+.admin-footer-social a:nth-child(3)::before{
+    content:"➤";
+}
+
+.admin-footer-social a:nth-child(4)::before{
+    content:"▶";
+}
+
+.admin-footer-social a:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px rgba(0,0,0,.18);
+}
+
+.admin-footer-copy{
+    font-size:12px;
+    opacity:.9;
+    margin-top:5px;
+}
+
+@media(max-width:700px){
+    .admin-footer{
+        margin-top:22px;
+        padding:22px 12px 16px;
+        border-radius:16px 16px 0 0;
+    }
+
+    .admin-footer-social{
+        gap:10px;
+    }
+
+    .admin-footer-social a{
+        width:40px;
+        height:40px;
+    }
+}    
 </style>
                                       
 </head>
