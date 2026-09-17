@@ -468,5 +468,25 @@ if (stateSelect.value) {
 }
 </script>
 
+<script>
+const organizationType = document.getElementById("organizationType");
+const cscIdField = document.getElementById("cscIdField");
+
+function updateOrganizationFields() {
+    if (!organizationType || !cscIdField) return;
+
+    if (organizationType.value === "CSC / CSP") {
+        cscIdField.style.display = "block";
+    } else {
+        cscIdField.style.display = "none";
+    }
+}
+
+if (organizationType) {
+    organizationType.addEventListener("change", updateOrganizationFields);
+    updateOrganizationFields();
+}
+</script>
+    
 </body>
 </html>
