@@ -559,6 +559,90 @@ select:focus{
         font-size:12px;
     }
 }
+/* ================= STATE ADMIN FOOTER ================= */
+
+.state-footer{
+    width:100%;
+    margin-top:30px;
+    padding:25px 15px 18px;
+    text-align:center;
+    background:linear-gradient(135deg,#063f35,#0b6b59);
+    color:#ffffff;
+    border-radius:18px 18px 0 0;
+    box-sizing:border-box;
+}
+
+.state-footer strong{
+    display:block;
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.state-footer-title{
+    font-size:13px;
+    font-weight:700;
+    margin:10px 0;
+}
+
+.state-footer-social{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin:8px 0 15px;
+    flex-wrap:wrap;
+}
+
+.state-footer-social a{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#ffffff;
+    color:#126b57;
+    border:1px solid rgba(255,255,255,.7);
+    text-decoration:none;
+    transition:.2s ease;
+}
+
+.state-footer-social a:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px rgba(0,0,0,.18);
+}
+
+.state-footer-social svg{
+    width:20px;
+    height:20px;
+    display:block;
+    fill:currentColor;
+}
+
+.state-footer-copy{
+    font-size:12px;
+    opacity:.9;
+    margin-top:5px;
+}
+
+@media(max-width:700px){
+    .state-footer{
+        margin-top:22px;
+        padding:22px 12px 16px;
+        border-radius:16px 16px 0 0;
+    }
+
+    .state-footer-social{
+        gap:10px;
+    }
+
+    .state-footer-social a{
+        width:40px;
+        height:40px;
+    }
+}
+    
 </style>
 
 </head>
