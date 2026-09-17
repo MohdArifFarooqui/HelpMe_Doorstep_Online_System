@@ -281,6 +281,7 @@ class User(Base):
     name = Column(String(120), nullable=True)
     age = Column(Integer, nullable=True)
     csc_id = Column(String(50), unique=True, nullable=True)
+    organization_type = Column(String(50), nullable=True)
     center_name = Column(String(150), nullable=True)
     address = Column(Text, nullable=True)
     latitude = Column(String(30), nullable=True)
@@ -652,6 +653,13 @@ if "password_hash" not in user_columns:
         conn.execute(
             text(
                 "ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"
+            )
+        )
+if "organization_type" not in user_columns:
+    with engine.begin() as conn:
+        conn.execute(
+            text(
+                "ALTER TABLE users ADD COLUMN organization_type VARCHAR(50)"
             )
         )
 
@@ -2426,6 +2434,10 @@ def worker_register():
     mobile = request.form.get("mobile", "").strip()
     password = request.form.get("password", "")
     csc_id = request.form.get("csc_id", "").strip() or None
+    organization_type = request.form.get(
+    "organization_type",
+    ""
+    ).strip()
     center_name = request.form.get("center_name", "").strip() or None
     address = request.form.get("address", "").strip()
     state = request.form.get("state", "").strip()
@@ -2442,7 +2454,7 @@ def worker_register():
         )
         return redirect(url_for("worker_register"))
 
-    if not name or not mobile or not password or not address or not state or not district or not latitude or not longitude:
+    if not name or not mobile or not password or not organization_type or not address or not state or not district or not latitude or not longitude:
         flash("कृपया सभी जरूरी जानकारी भरें", "error")
         return redirect(url_for("worker_register"))
 
