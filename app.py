@@ -664,6 +664,14 @@ if "organization_type" not in user_columns:
             )
         )
 
+if "facility_registration_no" not in user_columns:
+    with engine.begin() as conn:
+        conn.execute(
+            text(
+                "ALTER TABLE users ADD COLUMN facility_registration_no VARCHAR(100)"
+            )
+        )
+
 # Request columns
 request_columns = {
     col["name"] for col in inspector.get_columns("requests")
@@ -2439,6 +2447,12 @@ def worker_register():
     "organization_type",
     ""
     ).strip()
+    
+    facility_registration_no = request.form.get(
+    "facility_registration_no",
+    ""
+    ).strip() or None
+    
     center_name = request.form.get("center_name", "").strip() or None
     address = request.form.get("address", "").strip()
     state = request.form.get("state", "").strip()
@@ -2494,6 +2508,7 @@ def worker_register():
         role="worker",
         name=name,
         csc_id=csc_id,
+        facility_registration_no=facility_registration_no,
         organization_type=organization_type,
         center_name=center_name,
         address=address,
