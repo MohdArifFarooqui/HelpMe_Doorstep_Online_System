@@ -2493,6 +2493,7 @@ def worker_register():
         role="worker",
         name=name,
         csc_id=csc_id,
+        organization_type=organization_type,
         center_name=center_name,
         address=address,
         state=state,
