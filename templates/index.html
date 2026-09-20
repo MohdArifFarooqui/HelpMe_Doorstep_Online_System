@@ -719,7 +719,9 @@
 <!-- ===================== CUSTOMER SERVICE FORM ===================== -->
 <form class="card" method="post" action="/request-service" id="serviceForm">
 
-  <p class="form-note">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
+    <p class="form-note">
     कृपया नीचे सभी आवश्यक जानकारी सही-सही भरें
   </p>
 
