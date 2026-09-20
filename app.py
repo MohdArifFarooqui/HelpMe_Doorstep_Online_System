@@ -3173,7 +3173,8 @@ def login():
 
 @app.post("/customer/notification/read/<int:nid>")
 def customer_notification_read(nid):
-
+    csrf.protect()
+    
     if not session.get("customer"):
         return redirect(url_for("customer_login"))
 
