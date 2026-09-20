@@ -890,6 +890,7 @@ body{
         method="post"
         action="/admin/login"
     >
+        {{ csrf_token() }}
 
         <div class="form-group">
 
