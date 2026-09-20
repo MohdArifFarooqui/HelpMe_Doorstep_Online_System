@@ -384,6 +384,8 @@
                         class="status-form">
 
 
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        
                         <label
                             for="status-{{ complaint.id }}">
 
