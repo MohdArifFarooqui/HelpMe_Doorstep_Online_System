@@ -1567,6 +1567,8 @@ def service():
     return render_template("service.html")
 @app.post("/request-service")
 def add():
+    csrf.protect()
+    
     d = request.form
 
     vals = [
