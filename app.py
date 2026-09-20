@@ -827,7 +827,8 @@ def admin_can_access_request(request_item):
 
 @app.route("/feedback", methods=["GET", "POST"])
 def feedback():
-
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("feedback.html")
 
