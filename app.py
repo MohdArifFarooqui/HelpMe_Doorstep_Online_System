@@ -2273,6 +2273,10 @@ def customer_query():
 # ADMIN CUSTOMER QUERIES
 # ==============================
 
+# ==============================
+# ADMIN CUSTOMER QUERIES
+# ==============================
+
 @app.route("/admin/queries")
 def admin_queries():
 
@@ -2281,9 +2285,13 @@ def admin_queries():
 
     admin_user = get_logged_in_admin()
 
+    # Invalid / inactive admin
     if admin_user is False:
         return redirect(url_for("admin"))
 
+    # ==============================
+    # MAIN ADMIN
+    # ==============================
     # Main Admin = सभी queries
     if admin_user is None:
 
@@ -2295,46 +2303,54 @@ def admin_queries():
             .all()
         )
 
-    # State/District Admin = केवल अपने क्षेत्र की queries
-    # State Admin = पूरे State की queries
-        if admin_user.admin_level == "state":
+    # ==============================
+    # STATE ADMIN
+    # ==============================
+    # State Admin = केवल अपने State की queries
+    elif admin_user.admin_level == "state":
 
-            queries = (
-                DB.query(CustomerQuery)
-                .join(
-                    RequestItem,
-                    CustomerQuery.request_id == RequestItem.id
-                )
-                .filter(
-                    RequestItem.state == admin_user.state
-                )
-                .order_by(
-                    CustomerQuery.created_at.desc()
-                )
-                .all()
+        queries = (
+            DB.query(CustomerQuery)
+            .join(
+                RequestItem,
+                CustomerQuery.request_id == RequestItem.id
             )
-
-        # District Admin = केवल अपने District की queries
-        elif admin_user.admin_level == "district":
-
-            queries = (
-                DB.query(CustomerQuery)
-                .join(
-                    RequestItem,
-                    CustomerQuery.request_id == RequestItem.id
-                )
-                .filter(
-                    RequestItem.state == admin_user.state,
-                    RequestItem.district == admin_user.district
-                )
-                .order_by(
-                    CustomerQuery.created_at.desc()
-                )
-                .all()
+            .filter(
+                RequestItem.state == admin_user.state
             )
+            .order_by(
+                CustomerQuery.created_at.desc()
+            )
+            .all()
+        )
 
-        else:
-            queries = []
+    # ==============================
+    # DISTRICT ADMIN
+    # ==============================
+    # District Admin = केवल अपने State + District की queries
+    elif admin_user.admin_level == "district":
+
+        queries = (
+            DB.query(CustomerQuery)
+            .join(
+                RequestItem,
+                CustomerQuery.request_id == RequestItem.id
+            )
+            .filter(
+                RequestItem.state == admin_user.state,
+                RequestItem.district == admin_user.district
+            )
+            .order_by(
+                CustomerQuery.created_at.desc()
+            )
+            .all()
+        )
+
+    # ==============================
+    # UNKNOWN ADMIN LEVEL
+    # ==============================
+    else:
+        queries = []
 
     return render_template(
         "admin_queries.html",
