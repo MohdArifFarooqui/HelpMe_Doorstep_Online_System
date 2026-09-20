@@ -9,6 +9,7 @@ from zoneinfo import ZoneInfo
 from math import radians, sin, cos, sqrt, atan2
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker, scoped_session
@@ -57,6 +58,9 @@ def verify_otp(mobile, otp):
 app = Flask(__name__)
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
+csrf = CSRFProtect()
+csrf.init_app(app)
+app.config["WTF_CSRF_CHECK_DEFAULT"] = False
 
 if not SECRET_KEY:
     raise RuntimeError(
