@@ -2848,6 +2848,8 @@ def get_nearby_workers(request_item):
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
