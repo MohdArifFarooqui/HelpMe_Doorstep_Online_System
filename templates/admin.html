@@ -1736,11 +1736,13 @@ button:hover,
                 {% if not w.approved %}
 
                 <form
-                  method="post"
-                  action="/admin/worker/approve/{{ w.id }}"
-                >
+  method="post"
+  action="/admin/worker/approve/{{ w.id }}"
+>
 
-                  <button
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <button
                     class="btn btn-success"
                     type="submit"
                   >
