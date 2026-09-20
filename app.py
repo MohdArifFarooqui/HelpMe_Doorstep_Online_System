@@ -1702,7 +1702,8 @@ def admin_feedback():
 
 @app.route("/complaint", methods=["GET", "POST"])
 def complaint():
-
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("complaint.html")
 
