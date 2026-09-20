@@ -3698,6 +3698,7 @@ def worker_dashboard():
 
 @app.post("/worker/logout")
 def worker_logout():
+    csrf.protect()
     session.clear()
     return redirect(url_for("worker_login"))
 
