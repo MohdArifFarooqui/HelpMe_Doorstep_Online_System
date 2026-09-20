@@ -890,7 +890,8 @@ body{
         method="post"
         action="/admin/login"
     >
-        {{ csrf_token() }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
 
         <div class="form-group">
 
