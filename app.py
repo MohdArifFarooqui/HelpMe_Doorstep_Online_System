@@ -3537,6 +3537,9 @@ def check_status():
 
 @app.post("/worker/status/<int:rid>")
 def worker_status(rid):
+    
+    csrf.protect()
+    
     if not session.get("worker"):
         return redirect(url_for("worker_login"))
 
