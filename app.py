@@ -3443,29 +3443,60 @@ def worker_verify_widget_token():
 
 @app.get("/status")
 def check_status():
-    phone = request.args.get(
-        "phone",
-        ""
-    ).strip()
+
+    # ==============================
+    # CUSTOMER LOGIN REQUIRED
+    # ==============================
+
+    if not session.get("customer"):
+        return redirect(url_for("customer_login"))
+
+    customer_id = session.get("customer_id")
+
+    if not customer_id:
+        session.clear()
+        return redirect(url_for("customer_login"))
+
+    customer = DB.get(
+        User,
+        customer_id
+    )
+
+    # ==============================
+    # VALID CUSTOMER CHECK
+    # ==============================
+
+    if (
+        not customer
+        or customer.role != "customer"
+        or not customer.active
+    ):
+        session.clear()
+        return redirect(url_for("customer_login"))
+
+    # ==============================
+    # ONLY LOGGED-IN CUSTOMER DATA
+    # ==============================
 
     notifications = (
         DB.query(Notification)
-        .filter(Notification.customer_phone == phone)
-        .order_by(Notification.id.desc())
-        .all()
-    ) if phone else []
-
-    if not phone:
-        return render_template(
-            "status.html",
-            requests=[],
-            notifications=[]
+        .filter(
+            Notification.customer_phone == customer.mobile
         )
+        .order_by(
+            Notification.id.desc()
+        )
+        .all()
+    )
 
     requests = (
         DB.query(RequestItem)
-        .filter(RequestItem.phone == phone)
-        .order_by(RequestItem.id.desc())
+        .filter(
+            RequestItem.phone == customer.mobile
+        )
+        .order_by(
+            RequestItem.id.desc()
+        )
         .all()
     )
 
@@ -3474,7 +3505,6 @@ def check_status():
         requests=requests,
         notifications=notifications
     )
-
 
 @app.post("/worker/status/<int:rid>")
 def worker_status(rid):
