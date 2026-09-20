@@ -1371,6 +1371,8 @@ button:hover,
                 class="inline-form"
               >
 
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
                 <select
                   name="worker_id"
                   class="worker-select"
