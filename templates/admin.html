@@ -1763,6 +1763,8 @@ button:hover,
                   action="/admin/worker/toggle/{{ w.id }}"
                 >
 
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  
                   {% if w.active %}
 
                     <button
