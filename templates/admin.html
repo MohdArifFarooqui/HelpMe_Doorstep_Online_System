@@ -1456,6 +1456,8 @@ button:hover,
                 style="margin-top:8px;"
               >
 
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
                 <select
                   name="status"
                   onchange="this.form.submit()"
