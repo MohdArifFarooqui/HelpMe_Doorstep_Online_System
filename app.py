@@ -2380,6 +2380,8 @@ def admin_queries():
 
 def update_query_status(query_id):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
