@@ -3018,8 +3018,10 @@ def create_admin():
 
 
 @app.post("/admin/login")
-@csrf.protect
 def login():
+
+    csrf.protect()gh
+
     username = request.form.get("username", "").strip()
     password = request.form.get("password", "")
     
