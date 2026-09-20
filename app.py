@@ -2296,23 +2296,45 @@ def admin_queries():
         )
 
     # State/District Admin = केवल अपने क्षेत्र की queries
-    else:
+    # State Admin = पूरे State की queries
+        if admin_user.admin_level == "state":
 
-        queries = (
-            DB.query(CustomerQuery)
-            .join(
-                RequestItem,
-                CustomerQuery.request_id == RequestItem.id
+            queries = (
+                DB.query(CustomerQuery)
+                .join(
+                    RequestItem,
+                    CustomerQuery.request_id == RequestItem.id
+                )
+                .filter(
+                    RequestItem.state == admin_user.state
+                )
+                .order_by(
+                    CustomerQuery.created_at.desc()
+                )
+                .all()
             )
-            .filter(
-                RequestItem.state == admin_user.state,
-                RequestItem.district == admin_user.district
+
+        # District Admin = केवल अपने District की queries
+        elif admin_user.admin_level == "district":
+
+            queries = (
+                DB.query(CustomerQuery)
+                .join(
+                    RequestItem,
+                    CustomerQuery.request_id == RequestItem.id
+                )
+                .filter(
+                    RequestItem.state == admin_user.state,
+                    RequestItem.district == admin_user.district
+                )
+                .order_by(
+                    CustomerQuery.created_at.desc()
+                )
+                .all()
             )
-            .order_by(
-                CustomerQuery.created_at.desc()
-            )
-            .all()
-        )
+
+        else:
+            queries = []
 
     return render_template(
         "admin_queries.html",
@@ -2447,19 +2469,19 @@ def worker_register():
     "organization_type",
     ""
     ).strip()
-    
+
     facility_registration_no = request.form.get(
     "facility_registration_no",
     ""
     ).strip() or None
-    
+
     center_name = request.form.get("center_name", "").strip() or None
     address = request.form.get("address", "").strip()
     state = request.form.get("state", "").strip()
     district = request.form.get("district", "").strip()
     latitude = request.form.get("latitude", "").strip()
     longitude = request.form.get("longitude", "").strip()
-    
+
     terms_accepted = request.form.get("terms_accepted", "").strip()
 
     if terms_accepted != "yes":
