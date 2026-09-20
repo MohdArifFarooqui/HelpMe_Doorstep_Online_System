@@ -1257,6 +1257,8 @@ def customer_login():
 @app.post("/customer/logout")
 def customer_logout():
 
+    csrf.protect()
+    
     session.clear()
 
     flash(
