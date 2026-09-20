@@ -2732,6 +2732,9 @@ def admin():
 
 @app.post("/admin/worker/approve/<int:worker_id>")
 def approve_worker(worker_id):
+    
+    csrf.protect()
+     
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
