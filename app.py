@@ -1970,6 +1970,8 @@ def admin_complaints():
 )
 def update_complaint_status(complaint_id):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
