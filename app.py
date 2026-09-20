@@ -3203,6 +3203,8 @@ def customer_notification_read(nid):
 @app.post("/admin/status/<int:rid>")
 def status(rid):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
