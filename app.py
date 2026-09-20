@@ -2957,6 +2957,9 @@ def assign_request(rid):
 
 @app.post("/admin/create-admin")
 def create_admin():
+
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
