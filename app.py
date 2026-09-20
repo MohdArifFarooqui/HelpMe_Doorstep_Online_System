@@ -2762,6 +2762,9 @@ def approve_worker(worker_id):
 
 @app.post("/admin/worker/toggle/<int:worker_id>")
 def toggle_worker(worker_id):
+
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
