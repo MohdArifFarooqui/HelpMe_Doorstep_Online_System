@@ -56,11 +56,14 @@ def verify_otp(mobile, otp):
 
 app = Flask(__name__)
 
-app.secret_key = os.environ.get(
-    "SECRET_KEY",
-    "change-this-secret-key"
-)
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
+if not SECRET_KEY:
+    raise RuntimeError(
+        "SECRET_KEY environment variable is not configured."
+    )
+
+app.secret_key = SECRET_KEY
 # =========================
 # SESSION CONFIGURATION
 # =========================
@@ -160,10 +163,12 @@ Base = declarative_base()
 
 ADMIN_USER = os.environ.get("ADMIN_USERNAME", "admin")
 
-ADMIN_HASH = os.environ.get(
-    "ADMIN_PASSWORD_HASH",
-    generate_password_hash("ChangeMe123!")
-)
+ADMIN_HASH = os.environ.get("ADMIN_PASSWORD_HASH")
+
+if not ADMIN_HASH:
+    raise RuntimeError(
+        "ADMIN_PASSWORD_HASH environment variable is not configured."
+    )
 
 SERVICES = [
     "गर्भवती महिला सहायता",
