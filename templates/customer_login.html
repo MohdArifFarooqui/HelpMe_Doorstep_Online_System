@@ -1264,7 +1264,11 @@ const accessToken =
                    "yes"
                 );
 
-
+                formData.append(
+                    "csrf_token",
+                   "{{ csrf_token() }}"
+                );
+                
                 const response =
                     await fetch(
                         "/api/verify-widget-token",
