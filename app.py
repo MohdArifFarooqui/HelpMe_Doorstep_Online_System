@@ -3604,6 +3604,7 @@ def worker_status(rid):
 
 @app.post("/admin/logout")
 def logout():
+    csrf.protect()
     session.clear()
     return redirect(url_for("admin"))
 
