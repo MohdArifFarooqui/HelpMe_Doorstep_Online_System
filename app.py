@@ -3712,7 +3712,7 @@ def worker_dashboard():
         else:
             request_distances[r.id] = None
 
-          r.distance_km = request_distances[r.id]
+            r.distance_km = request_distances[r.id]
      
     return render_template(
         "worker_dashboard.html",
