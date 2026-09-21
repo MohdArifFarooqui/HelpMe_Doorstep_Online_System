@@ -84,6 +84,8 @@ app.permanent_session_lifetime = timedelta(days=7)
 
 @app.post("/api/send-otp")
 def send_otp():
+    csrf.protect()
+    
     mobile = request.form.get("mobile", "").strip()
 
     if not mobile.isdigit() or len(mobile) != 10:
