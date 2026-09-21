@@ -3352,6 +3352,8 @@ def status(rid):
 @app.post("/api/worker/verify-widget-token")
 def worker_verify_widget_token():
 
+    csrs.protect()
+    
     mobile = request.form.get(
         "mobile",
         ""
