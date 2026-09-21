@@ -1085,7 +1085,11 @@
                                         method="post"
                                         action="/worker/status/{{ r.id }}"
                                         style="display:inline;"
-                                    >
+                                    
+                                        >
+
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        
                                         <input
                                             type="hidden"
                                             name="status"
@@ -1100,12 +1104,13 @@
                                         </button>
                                     </form>
 
-
                                     <form
                                         method="post"
                                         action="/worker/status/{{ r.id }}"
                                         style="display:inline;"
                                     >
+                                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        
                                         <input
                                             type="hidden"
                                             name="status"
@@ -1262,8 +1267,9 @@
                     <form
                         method="post"
                         action="/worker/status/{{ r.id }}"
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     >
-
+                    
                         {% if r.status == "In Progress" %}
 
                             <input
