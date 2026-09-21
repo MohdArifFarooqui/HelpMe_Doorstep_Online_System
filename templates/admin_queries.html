@@ -260,3 +260,233 @@
                     }}
 
                 </div>
+
+<!-- ================= CUSTOMER QUERIES LIST ================= -->
+
+<div style="margin-top:30px;">
+
+    {% if queries %}
+
+        {% for query in queries %}
+
+        <div class="query-card"
+             style="
+                background:#ffffff;
+                border-radius:14px;
+                padding:22px;
+                margin-bottom:20px;
+                box-shadow:0 4px 15px rgba(0,0,0,0.08);
+                border-left:5px solid #2563eb;
+             ">
+
+            <!-- Query Header -->
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                flex-wrap:wrap;
+                gap:10px;
+                margin-bottom:15px;
+            ">
+
+                <div>
+                    <strong style="font-size:18px;">
+                        ❓ Customer Query #{{ query.id }}
+                    </strong>
+                </div>
+
+                <div>
+                    {% if query.status == "Resolved" %}
+                        <span style="
+                            background:#16a34a;
+                            color:white;
+                            padding:6px 12px;
+                            border-radius:20px;
+                            font-size:13px;
+                        ">
+                            Resolved
+                        </span>
+
+                    {% elif query.status == "In Progress" %}
+                        <span style="
+                            background:#f59e0b;
+                            color:white;
+                            padding:6px 12px;
+                            border-radius:20px;
+                            font-size:13px;
+                        ">
+                            In Progress
+                        </span>
+
+                    {% else %}
+                        <span style="
+                            background:#dc2626;
+                            color:white;
+                            padding:6px 12px;
+                            border-radius:20px;
+                            font-size:13px;
+                        ">
+                            Pending
+                        </span>
+                    {% endif %}
+                </div>
+
+            </div>
+
+
+            <!-- Query Details -->
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+                gap:14px;
+                margin-bottom:18px;
+            ">
+
+                <div>
+                    <strong>Application ID</strong><br>
+                    HM/DS{{ "%02d"|format(query.request_id) }}
+                </div>
+
+                <div>
+                    <strong>Customer Mobile</strong><br>
+                    {{ query.mobile }}
+                </div>
+
+                <div>
+                    <strong>Query Category</strong><br>
+                    {{ query.category }}
+                </div>
+
+                <div>
+                    <strong>Date & Time</strong><br>
+                    {{ query.created_at }}
+                </div>
+
+            </div>
+
+
+            <!-- Full Query -->
+            <div style="
+                background:#f8fafc;
+                border-radius:10px;
+                padding:15px;
+                margin-bottom:18px;
+            ">
+
+                <strong>Customer Query:</strong>
+
+                <div style="
+                    margin-top:8px;
+                    line-height:1.6;
+                    white-space:pre-wrap;
+                ">
+                    {{ query.details }}
+                </div>
+
+            </div>
+
+
+            <!-- Status Update -->
+            <form
+                method="post"
+                action="/admin/query/{{ query.id }}/status"
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                    flex-wrap:wrap;
+                "
+            >
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <label>
+                    <strong>Change Status:</strong>
+                </label>
+
+                <select
+                    name="status"
+                    required
+                    style="
+                        padding:9px 12px;
+                        border:1px solid #cbd5e1;
+                        border-radius:8px;
+                        min-width:180px;
+                    "
+                >
+
+                    <option
+                        value="Pending"
+                        {% if query.status == "Pending" %}selected{% endif %}
+                    >
+                        Pending
+                    </option>
+
+                    <option
+                        value="In Progress"
+                        {% if query.status == "In Progress" %}selected{% endif %}
+                    >
+                        In Progress
+                    </option>
+
+                    <option
+                        value="Resolved"
+                        {% if query.status == "Resolved" %}selected{% endif %}
+                    >
+                        Resolved
+                    </option>
+
+                </select>
+
+                <button
+                    type="submit"
+                    style="
+                        background:#2563eb;
+                        color:white;
+                        border:none;
+                        padding:10px 18px;
+                        border-radius:8px;
+                        cursor:pointer;
+                        font-weight:600;
+                    "
+                >
+                    Update Status
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div style="
+            background:#ffffff;
+            padding:35px;
+            text-align:center;
+            border-radius:14px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        ">
+
+            <div style="font-size:45px;">
+                ❓
+            </div>
+
+            <h3>No Customer Queries Found</h3>
+
+            <p style="color:#64748b;">
+                अभी तक किसी customer ने कोई query submit नहीं की है।
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+<!-- ================= END CUSTOMER QUERIES LIST ================= -->
