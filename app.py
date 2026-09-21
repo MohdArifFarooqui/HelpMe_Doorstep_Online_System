@@ -1107,7 +1107,7 @@ def ai_support():
 @app.post("/api/ai-support")
 def api_ai_support():
 
-    {{ csrf_token() }}
+    csrf_protect()
     
     data = request.get_json(silent=True) or {}
 
