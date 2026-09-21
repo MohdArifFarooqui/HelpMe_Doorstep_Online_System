@@ -2096,11 +2096,10 @@ def update_complaint_status(complaint_id):
 @app.route("/query", methods=["GET", "POST"])
 def customer_query():
 
-    csrf.protect() 
-    
-if request.method == "GET":
-        return render_template("query.html")
+    csrf.protect()
 
+    if request.method == "GET":
+        return render_template("query.html")
     application_code = (
         request.form.get(
             "application_code",
