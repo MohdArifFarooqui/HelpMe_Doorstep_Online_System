@@ -811,10 +811,11 @@
 
     <div class="header-actions">
         <form method="post" action="/worker/logout">
-            <button class="logout" type="submit">
-                🚪 Logout
-            </button>
-        </form>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="logout" type="submit">
+        🚪 Logout
+    </button>
+</form>
     </div>
 
 </header>
