@@ -565,6 +565,9 @@
                 action="/customer/notification/read/{{ n.id }}"
                 style="margin-top:10px;"
             >
+
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
                 <button
                     type="submit"
                     class="btn btn-status"
