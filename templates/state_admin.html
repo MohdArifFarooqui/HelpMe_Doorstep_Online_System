@@ -674,6 +674,7 @@ select:focus{
         </a>
 
         <form method="post" action="/admin/logout" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-danger">
                 Logout
             </button>
