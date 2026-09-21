@@ -957,7 +957,8 @@ select:focus{
                     class="assign-form"
                     style="margin-top:10px;"
                 >
-
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
                     <select name="worker_id" required>
 
                         <option value="">
