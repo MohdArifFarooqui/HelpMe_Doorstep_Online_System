@@ -1277,6 +1277,8 @@ def customer_logout():
 @app.post("/api/verify-widget-token")
 def verify_widget_token():
 
+    csrf_protect()
+    
     mobile = request.form.get("mobile", "").strip()
     access_token = request.form.get("access_token", "").strip()
     
