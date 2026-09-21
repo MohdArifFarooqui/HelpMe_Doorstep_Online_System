@@ -1193,7 +1193,7 @@ select:focus{
 <body>
 <header class="topbar">
 <div class="brand"><img src="/static/helpme-doorstep-logo.png.jpeg" alt="HelpMe Doorstep Logo"><div><h1>District Admin Dashboard</h1><p>District level Customer Requests & Worker Management</p></div></div>
-<div class="nav"><a class="btn btn-home" href="/">🏠 Home</a><a class="btn btn-status" href="/status">📋 Customer Status</a><form method="post" action="/admin/logout" style="margin:0"><button class="btn btn-danger" type="submit">🚪 Logout</button></form></div>
+<div class="nav"><a class="btn btn-home" href="/">🏠 Home</a><a class="btn btn-status" href="/status">📋 Customer Status</a><form method="post" action="/admin/logout" style="margin:0"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-danger" type="submit">🚪 Logout</button></form></div>
 </header>
 <main class="container">
 <section class="scope"><h2>📍 {{ admin.district or "District" }}, {{ admin.state or "State" }}</h2><p><strong>Admin Code:</strong> {{ admin.admin_code }}</p><p><strong>Access:</strong> केवल आपके District के Customer Requests और Workers</p></section>
