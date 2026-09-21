@@ -847,7 +847,8 @@ select:focus{
                                 action="/admin/assign/{{ r.id }}"
                                 class="assign-form"
                             >
-
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                
                                 <select name="worker_id" required>
 
                                     <option value="">
