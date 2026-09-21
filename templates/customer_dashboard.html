@@ -409,6 +409,9 @@
     <h2>🤝 HelpMe Doorstep</h2>
 
     <form method="post" action="/customer/logout">
+        
+       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+        
         <button class="logout" type="submit">
             Logout
         </button>
