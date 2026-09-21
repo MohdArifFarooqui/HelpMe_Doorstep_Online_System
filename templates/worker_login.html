@@ -1096,7 +1096,11 @@ console.log(
                     accessToken
                 );
 
-
+                formData.append(
+                    "csrf_token",
+                   "{{ csrf_token() }}"
+                );
+                
                 const response =
                     await fetch(
                         "/api/worker/verify-widget-token",
