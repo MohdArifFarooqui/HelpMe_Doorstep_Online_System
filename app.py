@@ -3614,6 +3614,8 @@ def logout():
 
 @app.route("/worker/login", methods=["GET", "POST"])
 def worker_login():
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("worker_login.html")
 
