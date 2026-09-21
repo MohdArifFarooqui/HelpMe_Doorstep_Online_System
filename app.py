@@ -1251,6 +1251,9 @@ def terms():
 @app.route("/privacy")
 def privacy():
     return render_template("privacy.html")
+@app.route("/disclaimer")
+def disclaimer():
+    return render_template("disclaimer.html")
 @app.route("/about")
 def about():
     return render_template("about.html")
