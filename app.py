@@ -3722,6 +3722,8 @@ def worker_logout():
 @app.route("/admin/reset-registrations", methods=["GET", "POST"])
 def reset_registrations():
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -3735,7 +3737,7 @@ def reset_registrations():
 
     # GET पर पहले confirmation दिखाएं
     if request.method == "GET":
-        return """
+        return f"""
         <!doctype html>
         <html>
         <head>
@@ -3756,6 +3758,9 @@ def reset_registrations():
             </p>
 
             <form method="post">
+                
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">  
+                
                 <button
                     type="submit"
                     style="
