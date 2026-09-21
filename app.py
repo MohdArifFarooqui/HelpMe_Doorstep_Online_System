@@ -2494,6 +2494,8 @@ def update_query_status(query_id):
     )
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("worker_register.html")
 
