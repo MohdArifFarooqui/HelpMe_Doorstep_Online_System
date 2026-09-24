@@ -1,6 +1,8 @@
 package com.helpmedoorstep.app
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
@@ -53,6 +55,36 @@ class MainActivity : AppCompatActivity() {
         webView.settings.allowContentAccess = true
 
         webView.webViewClient = object : WebViewClient() {
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                url: String?
+            ): Boolean {
+
+                if (url.isNullOrBlank()) return false
+
+                if (
+                    url.startsWith("fb://") ||
+                    url.startsWith("tg://") ||
+                    url.startsWith("instagram://") ||
+                    url.startsWith("youtube://") ||
+                    url.startsWith("https://t.me/")
+                ) {
+                    try {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(url)
+                        )
+                        startActivity(intent)
+                    } catch (_: Exception) {
+                        // App installed nahi hai to kuch nahi hoga.
+                    }
+
+                    return true
+                }
+
+                return false
+            }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
