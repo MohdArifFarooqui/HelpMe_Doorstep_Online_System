@@ -30,6 +30,8 @@
 
 <form class="card" method="post" action="/worker/register">
 
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
 {% for cat,msg in get_flashed_messages(with_categories=true) %}
 <div class="alert {{cat}}">{{msg}}</div>
 {% endfor %}

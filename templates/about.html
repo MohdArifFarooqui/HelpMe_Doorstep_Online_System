@@ -447,6 +447,212 @@
     }
 }
 
+/* =========================
+   FOUNDER PROFILE
+   ========================= */
+
+.founder-profile {
+    overflow: hidden;
+}
+
+.founder-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.founder-photo {
+    width: 230px;
+    height: 280px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 18px;
+    border: 4px solid #075e54;
+    box-shadow: 0 8px 22px rgba(0,0,0,.14);
+    background: #fff;
+}
+
+.founder-info {
+    flex: 1;
+}
+
+.founder-info h3 {
+    margin: 0 0 6px;
+    color: #075e54;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.founder-role {
+    margin: 0 0 15px !important;
+    color: #168b62 !important;
+    font-size: 17px !important;
+    font-weight: 700;
+}
+
+.digital-signature {
+    margin-top: 20px;
+    padding: 16px;
+    background: #f7faf9;
+    border: 1px solid #dce9e5;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.digital-signature img {
+    display: block;
+    width: 260px;
+    max-width: 90%;
+    height: auto;
+    max-height: 100px;
+    object-fit: contain;
+    margin: 0 auto 5px;
+}
+
+.digital-signature strong {
+    display: block;
+    color: #173c33;
+    font-size: 16px;
+}
+
+.digital-signature span {
+    display: block;
+    margin-top: 3px;
+    color: #168b62;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.digital-signature small {
+    display: block;
+    margin-top: 9px;
+    color: #687872;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* Founder mobile layout */
+
+@media (max-width: 700px) {
+
+    .founder-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .founder-photo {
+        width: 210px;
+        height: 255px;
+    }
+
+    .founder-info h3 {
+        font-size: 24px;
+    }
+
+    .founder-role {
+        font-size: 16px !important;
+    }
+
+    .founder-info > p:not(.founder-role) {
+        text-align: left;
+    }
+
+    .digital-signature {
+        width: 100%;
+    }
+}        
+
+/* =========================
+   VERIFICATION STAMPS
+   ========================= */
+
+.verification-section {
+    margin-top: 25px;
+    padding: 22px;
+    background: #f8fbfa;
+    border: 1px solid #dce9e5;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.verification-section h3 {
+    margin: 0 0 20px;
+    color: #075e54;
+    font-size: 21px;
+}
+
+.verification-stamps {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.verification-item {
+    width: 220px;
+    padding: 12px;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e3ece9;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.verification-item img {
+    display: block;
+    width: 190px;
+    height: 190px;
+    object-fit: contain;
+    margin: 0 auto 8px;
+}
+
+.verification-item strong {
+    display: block;
+    color: #075e54;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.verification-item small {
+    display: block;
+    margin-top: 6px;
+    color: #687872;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.verification-note {
+    margin: 20px auto 0;
+    max-width: 760px;
+    color: #687872;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .verification-section {
+        padding: 16px 10px;
+    }
+
+    .verification-stamps {
+        gap: 16px;
+    }
+
+    .verification-item {
+        width: 165px;
+    }
+
+    .verification-item img {
+        width: 145px;
+        height: 145px;
+    }
+}
+        
 </style>
 
 </head>
@@ -508,6 +714,58 @@
 
         </section>
 
+<!-- =========================
+     FOUNDER PROFILE
+     ========================= -->
+
+<section class="card founder-profile">
+
+    <h2>👤 Founder & Project Lead</h2>
+
+    <div class="founder-content">
+
+        <img
+            class="founder-photo"
+            src="/static/founder_profile.jpg.jpeg"
+            alt="Mohd Arif Farooqui - Founder & Project Lead">
+
+        <div class="founder-info">
+
+            <h3>Mohd Arif Farooqui</h3>
+
+            <p class="founder-role">
+                Founder & Project Lead — HelpMe Doorstep
+            </p>
+
+            <p>
+                HelpMe Doorstep की product vision, digital platform
+                development और service workflow को आगे बढ़ाने का
+                उद्देश्य एक practical, accessible और technology-enabled
+                support system उपलब्ध कराना है।
+            </p>
+
+            <div class="digital-signature">
+
+                <img
+                    src="/static/Original_Handwritten_Signature.jpeg"
+                    alt="Mohd Arif Farooqui Digital Signature">
+
+                <strong>Mohd Arif Farooqui</strong>
+
+                <span>Founder & Project Lead</span>
+
+                <small>
+                    Digital signature image for platform identification.
+                    This is not a Government DSC or e-Sign certificate.
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
         <!-- MISSION -->
 
@@ -731,9 +989,62 @@
                 के लिए किया जाता है।
             </p>
 
+            <div class="verification-section">
+
+    <h3>🔐 Platform Verification</h3>
+
+    <div class="verification-stamps">
+
+        <div class="verification-item">
+            <img
+                src="/static/TESTED_original.png"
+                alt="HelpMe Doorstep Tested Verification Stamp">
+            <strong>TESTED</strong>
+            <small>
+                Internal platform testing indicator.
+            </small>
+        </div>
+
+        <div class="verification-item">
+            <img
+                src="/static/CSRF_PROTECTION_original.png"
+                alt="CSRF Protection Verification Stamp">
+            <strong>CSRF PROTECTION</strong>
+            <small>
+                Security protection indicator for applicable web forms and requests.
+            </small>
+        </div>
+
+    </div>
+
+    <p class="verification-note">
+        These verification indicators are internal platform indicators
+        and do not represent government certification, licensing,
+        accreditation, or third-party security certification.
+    </p>
+
+</div>
+            
         </section>
 
+<!-- DISCLAIMER -->
 
+<section class="card disclaimer-link-card">
+
+    <h2>⚖️ Disclaimer & Legal Notice</h2>
+
+    <p>
+        HelpMe Doorstep की services, information और platform use से
+        संबंधित महत्वपूर्ण terms और limitations जानने के लिए
+        Disclaimer & Legal Notice देखें।
+    </p>
+
+    <a href="/disclaimer" class="disclaimer-link">
+        View Disclaimer & Legal Notice →
+    </a>
+
+</section>
+        
         <!-- CONTACT -->
 
         <section class="card contact">

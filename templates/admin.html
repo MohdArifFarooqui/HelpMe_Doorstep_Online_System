@@ -729,6 +729,8 @@ button:hover,
             action="/admin/logout"
             style="display:inline;">
 
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
         <button class="btn btn-danger"
                 type="submit">
           Logout
@@ -870,6 +872,8 @@ button:hover,
     <form method="post"
           action="/admin/create-admin">
 
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      
       <div class="form-grid">
 
 
@@ -1371,6 +1375,8 @@ button:hover,
                 class="inline-form"
               >
 
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
                 <select
                   name="worker_id"
                   class="worker-select"
@@ -1452,6 +1458,8 @@ button:hover,
                 style="margin-top:8px;"
               >
 
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
                 <select
                   name="status"
                   onchange="this.form.submit()"
@@ -1736,11 +1744,13 @@ button:hover,
                 {% if not w.approved %}
 
                 <form
-                  method="post"
-                  action="/admin/worker/approve/{{ w.id }}"
-                >
+  method="post"
+  action="/admin/worker/approve/{{ w.id }}"
+>
 
-                  <button
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <button
                     class="btn btn-success"
                     type="submit"
                   >
@@ -1761,6 +1771,8 @@ button:hover,
                   action="/admin/worker/toggle/{{ w.id }}"
                 >
 
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  
                   {% if w.active %}
 
                     <button

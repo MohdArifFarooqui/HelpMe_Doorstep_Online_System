@@ -798,7 +798,7 @@
 
         <img
             class="brand-logo"
-            src="/static/WhatsApp%20Image%202026-09-13%20at%2012.32.28.jpeg"
+            src="/static/helpme-doorstep-logo.png.jpeg"
             alt="HelpMe Doorstep"
         >
 
@@ -811,10 +811,11 @@
 
     <div class="header-actions">
         <form method="post" action="/worker/logout">
-            <button class="logout" type="submit">
-                🚪 Logout
-            </button>
-        </form>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="logout" type="submit">
+        🚪 Logout
+    </button>
+</form>
     </div>
 
 </header>
@@ -1084,7 +1085,11 @@
                                         method="post"
                                         action="/worker/status/{{ r.id }}"
                                         style="display:inline;"
-                                    >
+                                    
+                                        >
+
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        
                                         <input
                                             type="hidden"
                                             name="status"
@@ -1099,12 +1104,13 @@
                                         </button>
                                     </form>
 
-
                                     <form
                                         method="post"
                                         action="/worker/status/{{ r.id }}"
                                         style="display:inline;"
                                     >
+                                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        
                                         <input
                                             type="hidden"
                                             name="status"
@@ -1261,8 +1267,9 @@
                     <form
                         method="post"
                         action="/worker/status/{{ r.id }}"
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     >
-
+                    
                         {% if r.status == "In Progress" %}
 
                             <input

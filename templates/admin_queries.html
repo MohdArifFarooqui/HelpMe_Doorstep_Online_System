@@ -15,17 +15,29 @@
 
     <style>
 
+        body {
+            margin: 0;
+            background: #f4f8f7;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
         .queries-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .queries-header h1 {
             margin: 0;
+            color: #123c36;
         }
 
         .dashboard-btn {
@@ -35,13 +47,23 @@
             color: #ffffff;
             text-decoration: none;
             border-radius: 9px;
+            font-weight: 600;
         }
+
+        .dashboard-btn:hover {
+            background: #075d99;
+        }
+
+
+        /* =========================
+           SUMMARY
+           ========================= */
 
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .summary-card {
@@ -50,20 +72,34 @@
             border-radius: 15px;
             padding: 18px;
             text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .summary-title {
+            color: #526b65;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         .summary-number {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
-            margin-top: 6px;
+            margin-top: 7px;
+            color: #123c36;
         }
+
+
+        /* =========================
+           QUERY CARD
+           ========================= */
 
         .query-card {
             background: #ffffff;
             border: 1px solid #dce9e5;
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
         }
 
         .query-top {
@@ -72,68 +108,203 @@
             align-items: flex-start;
             gap: 15px;
             flex-wrap: wrap;
+            margin-bottom: 18px;
         }
 
         .query-id {
             font-size: 20px;
             font-weight: bold;
+            color: #123c36;
         }
 
         .query-date {
             color: #71847e;
-            font-size: 14px;
-            margin-top: 5px;
+            font-size: 13px;
+            margin-top: 6px;
         }
+
+
+        /* =========================
+           STATUS BADGES
+           ========================= */
 
         .status-badge {
             display: inline-block;
-            padding: 7px 12px;
+            padding: 7px 13px;
             border-radius: 20px;
+            font-size: 13px;
             font-weight: bold;
+        }
+
+        .status-pending {
             background: #fff3cd;
             color: #856404;
         }
 
-        .query-info {
-            margin-top: 15px;
-            line-height: 1.7;
+        .status-progress {
+            background: #fff0d5;
+            color: #9a5b00;
         }
 
-        .query-details {
-            margin-top: 12px;
-            padding: 14px;
-            background: #f5f8f7;
+        .status-resolved {
+            background: #dff5e8;
+            color: #146c43;
+        }
+
+
+        /* =========================
+           QUERY INFORMATION
+           ========================= */
+
+        .query-info {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .query-info-item {
+            background: #f8fafc;
+            border: 1px solid #e5ecea;
             border-radius: 10px;
+            padding: 13px;
+            line-height: 1.6;
+        }
+
+        .query-info-item strong {
+            color: #31564e;
+        }
+
+
+        /* =========================
+           FULL QUERY
+           ========================= */
+
+        .query-details {
+            background: #f5f8f7;
+            border: 1px solid #e2ebe8;
+            border-radius: 11px;
+            padding: 16px;
+            margin-bottom: 18px;
+            line-height: 1.7;
             white-space: pre-wrap;
             word-break: break-word;
         }
 
+        .query-details-title {
+            font-weight: bold;
+            color: #123c36;
+            margin-bottom: 7px;
+        }
+
+
+        /* =========================
+           STATUS FORM
+           ========================= */
+
         .status-form {
-            margin-top: 16px;
-            padding-top: 15px;
             border-top: 1px solid #e4ece8;
+            padding-top: 16px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-form label {
+            font-weight: 600;
+            color: #31564e;
         }
 
         .status-form select {
-            max-width: 300px;
+            min-width: 190px;
+            padding: 10px 12px;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+
+            background: #ffffff;
+            font-size: 14px;
         }
 
         .update-btn {
             width: auto;
+
             padding: 10px 18px;
-            margin-top: 10px;
+
             background: #168b62;
+            color: #ffffff;
+
+            border: 0;
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+            font-size: 14px;
         }
+
+        .update-btn:hover {
+            background: #11724f;
+        }
+
+
+        /* =========================
+           EMPTY
+           ========================= */
 
         .empty-box {
             text-align: center;
-            padding: 40px 20px;
+
+            padding: 45px 20px;
+
             background: #ffffff;
+
             border: 1px solid #dce9e5;
+
             border-radius: 16px;
+
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
         }
 
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .empty-box h3 {
+            margin: 8px 0;
+            color: #123c36;
+        }
+
+        .empty-box p {
+            color: #64748b;
+            margin: 0;
+        }
+
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media (max-width: 800px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
         @media (max-width: 600px) {
+
+            main {
+                margin: 15px auto;
+                padding: 0 10px;
+            }
 
             .queries-header {
                 align-items: stretch;
@@ -144,12 +315,26 @@
             }
 
             .dashboard-btn {
-                text-align: center;
                 width: 100%;
+                text-align: center;
+                box-sizing: border-box;
             }
 
             .summary-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .summary-card {
+                padding: 14px 8px;
+            }
+
+            .summary-title {
+                font-size: 12px;
+            }
+
+            .summary-number {
+                font-size: 25px;
             }
 
             .query-card {
@@ -162,19 +347,37 @@
 
             .query-id {
                 font-size: 18px;
-                margin-bottom: 8px;
             }
 
             .status-badge {
                 margin-top: 10px;
             }
 
-            .status-form select {
-                max-width: 100%;
+            .query-info {
+                grid-template-columns: 1fr;
             }
 
+            .status-form {
+                align-items: stretch;
+            }
+
+            .status-form label {
+                width: 100%;
+            }
+
+            .status-form select,
             .update-btn {
                 width: 100%;
+                box-sizing: border-box;
+            }
+
+        }
+
+
+        @media (max-width: 360px) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -187,13 +390,17 @@
 <body>
 
 
+<!-- =========================
+     HEADER
+     ========================= -->
+
 <header>
 
     <div class="brand">
 
         <img
             class="brand-logo"
-            src="/static/WhatsApp%20Image%202026-09-13%20at%2012.32.28.jpeg"
+            src="/static/helpme-doorstep-logo.png.jpeg"
             alt="HelpMe Doorstep Logo">
 
     </div>
@@ -201,11 +408,19 @@
 </header>
 
 
+<!-- =========================
+     MAIN
+     ========================= -->
+
 <main>
 
 
     <div class="card">
 
+
+        <!-- =========================
+             PAGE HEADER
+             ========================= -->
 
         <div class="queries-header">
 
@@ -224,14 +439,18 @@
         </div>
 
 
-        <!-- SUMMARY -->
+        <!-- =========================
+             SUMMARY
+             ========================= -->
 
         <div class="summary-grid">
 
 
+            <!-- TOTAL -->
+
             <div class="summary-card">
 
-                <div>
+                <div class="summary-title">
                     Total Queries
                 </div>
 
@@ -244,9 +463,11 @@
             </div>
 
 
+            <!-- PENDING -->
+
             <div class="summary-card">
 
-                <div>
+                <div class="summary-title">
                     Pending
                 </div>
 
@@ -254,9 +475,369 @@
 
                     {{
                         queries
-                        |selectattr("status", "equalto", "Pending")
+                        |selectattr(
+                            "status",
+                            "equalto",
+                            "Pending"
+                        )
                         |list
                         |length
                     }}
 
                 </div>
+
+            </div>
+
+
+            <!-- IN PROGRESS -->
+
+            <div class="summary-card">
+
+                <div class="summary-title">
+                    In Progress
+                </div>
+
+                <div class="summary-number">
+
+                    {{
+                        queries
+                        |selectattr(
+                            "status",
+                            "equalto",
+                            "In Progress"
+                        )
+                        |list
+                        |length
+                    }}
+
+                </div>
+
+            </div>
+
+
+            <!-- RESOLVED -->
+
+            <div class="summary-card">
+
+                <div class="summary-title">
+                    Resolved
+                </div>
+
+                <div class="summary-number">
+
+                    {{
+                        queries
+                        |selectattr(
+                            "status",
+                            "equalto",
+                            "Resolved"
+                        )
+                        |list
+                        |length
+                    }}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             CUSTOMER QUERY LIST
+             ========================= -->
+
+        {% if queries %}
+
+
+            {% for query in queries %}
+
+
+            <div class="query-card">
+
+
+                <!-- =========================
+                     QUERY HEADER
+                     ========================= -->
+
+                <div class="query-top">
+
+
+                    <div>
+
+                        <div class="query-id">
+
+                            ❓ Customer Query #{{ query.id }}
+
+                        </div>
+
+
+                        <div class="query-date">
+
+                            Submitted:
+                            {{ query.created_at }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div>
+
+
+                        {% if query.status == "Resolved" %}
+
+                            <span
+                                class="status-badge status-resolved">
+
+                                Resolved
+
+                            </span>
+
+
+                        {% elif query.status == "In Progress" %}
+
+                            <span
+                                class="status-badge status-progress">
+
+                                In Progress
+
+                            </span>
+
+
+                        {% else %}
+
+                            <span
+                                class="status-badge status-pending">
+
+                                Pending
+
+                            </span>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================
+                     QUERY INFORMATION
+                     ========================= -->
+
+                <div class="query-info">
+
+
+                    <!-- APPLICATION ID -->
+
+                    <div class="query-info-item">
+
+                        <strong>
+                            Application ID
+                        </strong>
+
+                        <br>
+
+                        HM/DS{{ "%02d"|format(query.request_id) }}
+
+                    </div>
+
+
+                    <!-- CUSTOMER MOBILE -->
+
+                    <div class="query-info-item">
+
+                        <strong>
+                            Customer Mobile
+                        </strong>
+
+                        <br>
+
+                        {{ query.customer_phone }}
+
+                    </div>
+
+
+                    <!-- QUERY CATEGORY -->
+
+                    <div class="query-info-item">
+
+                        <strong>
+                            Query Category
+                        </strong>
+
+                        <br>
+
+                        {{ query.category }}
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div class="query-info-item">
+
+                        <strong>
+                            Submitted Date
+                        </strong>
+
+                        <br>
+
+                        {{ query.created_at }}
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================
+                     FULL CUSTOMER QUERY
+                     ========================= -->
+
+                <div class="query-details">
+
+                    <div class="query-details-title">
+
+                        Customer Query:
+
+                    </div>
+
+
+                    {{ query.details }}
+
+
+                </div>
+
+
+                <!-- =========================
+                     STATUS UPDATE
+                     ========================= -->
+
+                <form
+                    method="post"
+                    action="/admin/query/{{ query.id }}/status"
+                    class="status-form">
+
+
+                    <!-- CSRF TOKEN -->
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}">
+
+
+                    <label
+                        for="query-status-{{ query.id }}">
+
+                        Change Status:
+
+                    </label>
+
+
+                    <select
+                        id="query-status-{{ query.id }}"
+                        name="status"
+                        required>
+
+
+                        <option
+                            value="Pending"
+                            {% if query.status == "Pending" %}
+                                selected
+                            {% endif %}>
+
+                            Pending
+
+                        </option>
+
+
+                        <option
+                            value="In Progress"
+                            {% if query.status == "In Progress" %}
+                                selected
+                            {% endif %}>
+
+                            In Progress
+
+                        </option>
+
+
+                        <option
+                            value="Resolved"
+                            {% if query.status == "Resolved" %}
+                                selected
+                            {% endif %}>
+
+                            Resolved
+
+                        </option>
+
+
+                    </select>
+
+
+                    <button
+                        type="submit"
+                        class="update-btn">
+
+                        Update Status
+
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <!-- =========================
+                 EMPTY STATE
+                 ========================= -->
+
+            <div class="empty-box">
+
+
+                <div class="empty-icon">
+                    ❓
+                </div>
+
+
+                <h3>
+                    No Customer Queries Found
+                </h3>
+
+
+                <p>
+                    अभी तक किसी customer ने कोई query submit नहीं की है।
+                </p>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

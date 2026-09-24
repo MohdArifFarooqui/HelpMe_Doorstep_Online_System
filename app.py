@@ -9,6 +9,7 @@ from zoneinfo import ZoneInfo
 from math import radians, sin, cos, sqrt, atan2
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker, scoped_session
@@ -56,11 +57,17 @@ def verify_otp(mobile, otp):
 
 app = Flask(__name__)
 
-app.secret_key = os.environ.get(
-    "SECRET_KEY",
-    "change-this-secret-key"
-)
+SECRET_KEY = os.environ.get("SECRET_KEY")
+csrf = CSRFProtect()
+csrf.init_app(app)
+app.config["WTF_CSRF_CHECK_DEFAULT"] = False
 
+if not SECRET_KEY:
+    raise RuntimeError(
+        "SECRET_KEY environment variable is not configured."
+    )
+
+app.secret_key = SECRET_KEY
 # =========================
 # SESSION CONFIGURATION
 # =========================
@@ -77,6 +84,8 @@ app.permanent_session_lifetime = timedelta(days=7)
 
 @app.post("/api/send-otp")
 def send_otp():
+    csrf.protect()
+    
     mobile = request.form.get("mobile", "").strip()
 
     if not mobile.isdigit() or len(mobile) != 10:
@@ -160,10 +169,12 @@ Base = declarative_base()
 
 ADMIN_USER = os.environ.get("ADMIN_USERNAME", "admin")
 
-ADMIN_HASH = os.environ.get(
-    "ADMIN_PASSWORD_HASH",
-    generate_password_hash("ChangeMe123!")
-)
+ADMIN_HASH = os.environ.get("ADMIN_PASSWORD_HASH")
+
+if not ADMIN_HASH:
+    raise RuntimeError(
+        "ADMIN_PASSWORD_HASH environment variable is not configured."
+    )
 
 SERVICES = [
     "गर्भवती महिला सहायता",
@@ -818,7 +829,8 @@ def admin_can_access_request(request_item):
 
 @app.route("/feedback", methods=["GET", "POST"])
 def feedback():
-
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("feedback.html")
 
@@ -1095,6 +1107,8 @@ def ai_support():
 @app.post("/api/ai-support")
 def api_ai_support():
 
+    csrf_protect()
+    
     data = request.get_json(silent=True) or {}
 
     question = (
@@ -1237,6 +1251,9 @@ def terms():
 @app.route("/privacy")
 def privacy():
     return render_template("privacy.html")
+@app.route("/disclaimer")
+def disclaimer():
+    return render_template("disclaimer.html")
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -1248,6 +1265,8 @@ def customer_login():
 @app.post("/customer/logout")
 def customer_logout():
 
+    csrf.protect()
+    
     session.clear()
 
     flash(
@@ -1261,6 +1280,8 @@ def customer_logout():
 @app.post("/api/verify-widget-token")
 def verify_widget_token():
 
+    csrf_protect()
+    
     mobile = request.form.get("mobile", "").strip()
     access_token = request.form.get("access_token", "").strip()
     
@@ -1556,6 +1577,8 @@ def service():
     return render_template("service.html")
 @app.post("/request-service")
 def add():
+    csrf.protect()
+    
     d = request.form
 
     vals = [
@@ -1688,7 +1711,8 @@ def admin_feedback():
 
 @app.route("/complaint", methods=["GET", "POST"])
 def complaint():
-
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("complaint.html")
 
@@ -1961,6 +1985,8 @@ def admin_complaints():
 )
 def update_complaint_status(complaint_id):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -2079,9 +2105,10 @@ def update_complaint_status(complaint_id):
 @app.route("/query", methods=["GET", "POST"])
 def customer_query():
 
+    csrf.protect()
+
     if request.method == "GET":
         return render_template("query.html")
-
     application_code = (
         request.form.get(
             "application_code",
@@ -2273,6 +2300,10 @@ def customer_query():
 # ADMIN CUSTOMER QUERIES
 # ==============================
 
+# ==============================
+# ADMIN CUSTOMER QUERIES
+# ==============================
+
 @app.route("/admin/queries")
 def admin_queries():
 
@@ -2281,9 +2312,13 @@ def admin_queries():
 
     admin_user = get_logged_in_admin()
 
+    # Invalid / inactive admin
     if admin_user is False:
         return redirect(url_for("admin"))
 
+    # ==============================
+    # MAIN ADMIN
+    # ==============================
     # Main Admin = सभी queries
     if admin_user is None:
 
@@ -2295,46 +2330,54 @@ def admin_queries():
             .all()
         )
 
-    # State/District Admin = केवल अपने क्षेत्र की queries
-    # State Admin = पूरे State की queries
-        if admin_user.admin_level == "state":
+    # ==============================
+    # STATE ADMIN
+    # ==============================
+    # State Admin = केवल अपने State की queries
+    elif admin_user.admin_level == "state":
 
-            queries = (
-                DB.query(CustomerQuery)
-                .join(
-                    RequestItem,
-                    CustomerQuery.request_id == RequestItem.id
-                )
-                .filter(
-                    RequestItem.state == admin_user.state
-                )
-                .order_by(
-                    CustomerQuery.created_at.desc()
-                )
-                .all()
+        queries = (
+            DB.query(CustomerQuery)
+            .join(
+                RequestItem,
+                CustomerQuery.request_id == RequestItem.id
             )
-
-        # District Admin = केवल अपने District की queries
-        elif admin_user.admin_level == "district":
-
-            queries = (
-                DB.query(CustomerQuery)
-                .join(
-                    RequestItem,
-                    CustomerQuery.request_id == RequestItem.id
-                )
-                .filter(
-                    RequestItem.state == admin_user.state,
-                    RequestItem.district == admin_user.district
-                )
-                .order_by(
-                    CustomerQuery.created_at.desc()
-                )
-                .all()
+            .filter(
+                RequestItem.state == admin_user.state
             )
+            .order_by(
+                CustomerQuery.created_at.desc()
+            )
+            .all()
+        )
 
-        else:
-            queries = []
+    # ==============================
+    # DISTRICT ADMIN
+    # ==============================
+    # District Admin = केवल अपने State + District की queries
+    elif admin_user.admin_level == "district":
+
+        queries = (
+            DB.query(CustomerQuery)
+            .join(
+                RequestItem,
+                CustomerQuery.request_id == RequestItem.id
+            )
+            .filter(
+                RequestItem.state == admin_user.state,
+                RequestItem.district == admin_user.district
+            )
+            .order_by(
+                CustomerQuery.created_at.desc()
+            )
+            .all()
+        )
+
+    # ==============================
+    # UNKNOWN ADMIN LEVEL
+    # ==============================
+    else:
+        queries = []
 
     return render_template(
         "admin_queries.html",
@@ -2353,6 +2396,8 @@ def admin_queries():
 
 def update_query_status(query_id):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -2458,6 +2503,8 @@ def update_query_status(query_id):
     )
 @app.route("/worker/register", methods=["GET", "POST"])
 def worker_register():
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("worker_register.html")
 
@@ -2707,6 +2754,9 @@ def admin():
 
 @app.post("/admin/worker/approve/<int:worker_id>")
 def approve_worker(worker_id):
+    
+    csrf.protect()
+     
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -2734,6 +2784,9 @@ def approve_worker(worker_id):
 
 @app.post("/admin/worker/toggle/<int:worker_id>")
 def toggle_worker(worker_id):
+
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -2817,6 +2870,8 @@ def get_nearby_workers(request_item):
 @app.post("/admin/assign/<int:rid>")
 def assign_request(rid):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -2924,6 +2979,9 @@ def assign_request(rid):
 
 @app.post("/admin/create-admin")
 def create_admin():
+
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -2994,6 +3052,9 @@ def create_admin():
 
 @app.post("/admin/login")
 def login():
+
+    csrf.protect()
+
     username = request.form.get("username", "").strip()
     password = request.form.get("password", "")
     
@@ -3128,7 +3189,8 @@ def login():
 
 @app.post("/customer/notification/read/<int:nid>")
 def customer_notification_read(nid):
-
+    csrf.protect()
+    
     if not session.get("customer"):
         return redirect(url_for("customer_login"))
 
@@ -3164,6 +3226,8 @@ def customer_notification_read(nid):
 @app.post("/admin/status/<int:rid>")
 def status(rid):
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -3291,6 +3355,8 @@ def status(rid):
 @app.post("/api/worker/verify-widget-token")
 def worker_verify_widget_token():
 
+    csrf.protect()
+    
     mobile = request.form.get(
         "mobile",
         ""
@@ -3427,29 +3493,60 @@ def worker_verify_widget_token():
 
 @app.get("/status")
 def check_status():
-    phone = request.args.get(
-        "phone",
-        ""
-    ).strip()
+
+    # ==============================
+    # CUSTOMER LOGIN REQUIRED
+    # ==============================
+
+    if not session.get("customer"):
+        return redirect(url_for("customer_login"))
+
+    customer_id = session.get("customer_id")
+
+    if not customer_id:
+        session.clear()
+        return redirect(url_for("customer_login"))
+
+    customer = DB.get(
+        User,
+        customer_id
+    )
+
+    # ==============================
+    # VALID CUSTOMER CHECK
+    # ==============================
+
+    if (
+        not customer
+        or customer.role != "customer"
+        or not customer.active
+    ):
+        session.clear()
+        return redirect(url_for("customer_login"))
+
+    # ==============================
+    # ONLY LOGGED-IN CUSTOMER DATA
+    # ==============================
 
     notifications = (
         DB.query(Notification)
-        .filter(Notification.customer_phone == phone)
-        .order_by(Notification.id.desc())
-        .all()
-    ) if phone else []
-
-    if not phone:
-        return render_template(
-            "status.html",
-            requests=[],
-            notifications=[]
+        .filter(
+            Notification.customer_phone == customer.mobile
         )
+        .order_by(
+            Notification.id.desc()
+        )
+        .all()
+    )
 
     requests = (
         DB.query(RequestItem)
-        .filter(RequestItem.phone == phone)
-        .order_by(RequestItem.id.desc())
+        .filter(
+            RequestItem.phone == customer.mobile
+        )
+        .order_by(
+            RequestItem.id.desc()
+        )
         .all()
     )
 
@@ -3459,9 +3556,11 @@ def check_status():
         notifications=notifications
     )
 
-
 @app.post("/worker/status/<int:rid>")
 def worker_status(rid):
+    
+    csrf.protect()
+    
     if not session.get("worker"):
         return redirect(url_for("worker_login"))
 
@@ -3516,6 +3615,7 @@ def worker_status(rid):
 
 @app.post("/admin/logout")
 def logout():
+    csrf.protect()
     session.clear()
     return redirect(url_for("admin"))
 
@@ -3526,6 +3626,8 @@ def logout():
 
 @app.route("/worker/login", methods=["GET", "POST"])
 def worker_login():
+    csrf.protect()
+    
     if request.method == "GET":
         return render_template("worker_login.html")
 
@@ -3610,6 +3712,8 @@ def worker_dashboard():
         else:
             request_distances[r.id] = None
 
+        r.distance_km = request_distances[r.id]
+     
     return render_template(
         "worker_dashboard.html",
         worker=worker,
@@ -3620,6 +3724,7 @@ def worker_dashboard():
 
 @app.post("/worker/logout")
 def worker_logout():
+    csrf.protect()
     session.clear()
     return redirect(url_for("worker_login"))
 
@@ -3630,6 +3735,8 @@ def worker_logout():
 @app.route("/admin/reset-registrations", methods=["GET", "POST"])
 def reset_registrations():
 
+    csrf.protect()
+    
     if not session.get("admin"):
         return redirect(url_for("admin"))
 
@@ -3643,7 +3750,7 @@ def reset_registrations():
 
     # GET पर पहले confirmation दिखाएं
     if request.method == "GET":
-        return """
+        return f"""
         <!doctype html>
         <html>
         <head>
@@ -3664,6 +3771,9 @@ def reset_registrations():
             </p>
 
             <form method="post">
+                
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">  
+                
                 <button
                     type="submit"
                     style="

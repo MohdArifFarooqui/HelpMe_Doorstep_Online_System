@@ -224,6 +224,7 @@ Home
 <form method="post"
       action="/feedback">
 
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">      
 
 <label>
 📋 Application ID

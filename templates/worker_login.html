@@ -598,7 +598,7 @@ a{
         <div class="flat-logo">
 
             <img
-                src="/static/WhatsApp%20Image%202026-09-13%20at%2012.32.28.jpeg"
+                src="/static/helpme-doorstep-logo.png.jpeg"
                 alt="HelpMe Doorstep"
             >
 
@@ -1096,7 +1096,11 @@ console.log(
                     accessToken
                 );
 
-
+                formData.append(
+                    "csrf_token",
+                   "{{ csrf_token() }}"
+                );
+                
                 const response =
                     await fetch(
                         "/api/worker/verify-widget-token",
@@ -1169,7 +1173,7 @@ console.log(
 
             },
             
-            msg91ReqId
+            msg91ReqId 
 
         );
 

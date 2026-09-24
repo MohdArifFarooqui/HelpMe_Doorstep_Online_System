@@ -674,6 +674,7 @@ select:focus{
         </a>
 
         <form method="post" action="/admin/logout" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-danger">
                 Logout
             </button>
@@ -846,7 +847,8 @@ select:focus{
                                 action="/admin/assign/{{ r.id }}"
                                 class="assign-form"
                             >
-
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                
                                 <select name="worker_id" required>
 
                                     <option value="">
@@ -955,7 +957,8 @@ select:focus{
                     class="assign-form"
                     style="margin-top:10px;"
                 >
-
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
                     <select name="worker_id" required>
 
                         <option value="">
