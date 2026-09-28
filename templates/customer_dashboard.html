@@ -13,125 +13,329 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --hm-blue: #1268d9;
+            --hm-blue-dark: #084a9b;
+            --hm-green: #18a957;
+            --hm-green-dark: #08783d;
+            --hm-bg: #f4f8fc;
+            --hm-card: #ffffff;
+            --hm-text: #10233f;
+            --hm-muted: #68778d;
+            --hm-border: #e4ebf3;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f1f8f6;
-            color: #173f38;
+            background: linear-gradient(
+                180deg,
+                #f5f9ff 0%,
+                #eef8f5 100%
+            );
+            color: var(--hm-text);
         }
 
+        /* =========================
+           HEADER
+           ========================= */
+
         header {
-            background: #128c7e;
-            color: white;
-            padding: 15px 20px;
+            position: relative;
+            min-height: 72px;
+            padding: 8px 16px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--hm-border);
+            box-shadow: 0 2px 12px rgba(15,55,95,.08);
+
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
+
+            z-index: 10;
         }
 
         header h2 {
             margin: 0;
-            font-size: 21px;
+            padding: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .brand-logo {
-            width: 150px;
-            height: 45px;
+        header .brand-logo {
+            width: 190px;
+            height: 58px;
             object-fit: contain;
             display: block;
         }
-        
+
+        header form {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
         .logout {
-            background: white;
-            color: #128c7e;
-            border: none;
-            padding: 9px 16px;
-            border-radius: 9px;
-            font-weight: bold;
+            background: #ffffff;
+            color: #d63031;
+            border: 1px solid #ffd5d5;
+            padding: 8px 13px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
         }
 
+        /* =========================
+           MAIN CONTAINER
+           ========================= */
+
         .container {
-            width: 94%;
-            max-width: 1100px;
-            margin: 20px auto;
+            width: min(94%, 1100px);
+            margin: 18px auto 30px;
         }
 
+        /* =========================
+           COMMON CARD
+           ========================= */
+
         .card {
-            background: white;
-            border-radius: 18px;
+            background: #ffffff;
+            border: 1px solid var(--hm-border);
+            border-radius: 20px;
             padding: 22px;
             margin-bottom: 20px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 22px rgba(20,60,100,.07);
+        }
+
+        /* =========================
+           WELCOME
+           ========================= */
+
+        .welcome {
+            position: relative;
+            overflow: hidden;
+
+            background: linear-gradient(
+                135deg,
+                #eaf5ff 0%,
+                #f0fff7 100%
+            );
+
+            border: 1px solid #dceaf7;
+            border-radius: 22px;
+            padding: 24px;
+
+            box-shadow: 0 8px 25px rgba(25,80,130,.09);
+        }
+
+        .welcome::after {
+            content: "";
+            position: absolute;
+
+            width: 150px;
+            height: 150px;
+
+            right: -45px;
+            top: -45px;
+
+            border-radius: 50%;
+            background: rgba(18,104,217,.08);
         }
 
         .welcome h1 {
-            margin: 0 0 12px;
-            font-size: 29px;
+            position: relative;
+            z-index: 1;
+
+            margin: 0 0 8px;
+
+            font-size: 28px;
+            color: var(--hm-blue-dark);
         }
 
         .welcome p {
-            color: #666;
-            font-size: 17px;
+            position: relative;
+            z-index: 1;
+
+            margin: 6px 0;
+
+            color: var(--hm-muted);
+            font-size: 16px;
             line-height: 1.6;
-            margin: 5px 0;
         }
 
         .mobile {
+            color: var(--hm-green-dark);
             font-weight: bold;
-            color: #128c7e;
         }
+
+        /* =========================
+           SUMMARY
+           ========================= */
 
         .summary {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
-            margin-bottom: 20px;
+            margin: 16px 0;
         }
 
         .summary-box {
-            background: white;
-            border-radius: 15px;
-            padding: 18px 10px;
+            background: #ffffff;
+            border: 1px solid var(--hm-border);
+            border-radius: 18px;
+
+            padding: 17px 10px;
+
             text-align: center;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+
+            box-shadow: 0 5px 18px rgba(20,60,100,.07);
         }
 
         .summary-number {
             font-size: 28px;
             font-weight: bold;
+            color: var(--hm-blue);
         }
 
         .summary-label {
             margin-top: 5px;
             font-size: 14px;
-            color: #666;
+            color: var(--hm-muted);
             font-weight: bold;
         }
 
+        /* =========================
+           CUSTOMER APP QUICK ACTIONS
+           ========================= */
+
+        .customer-app-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+
+            margin: 18px 0;
+        }
+
+        .customer-app-action {
+            min-height: 105px;
+
+            padding: 14px 8px;
+
+            background: #ffffff;
+            border: 1px solid var(--hm-border);
+            border-radius: 18px;
+
+            text-decoration: none;
+            color: var(--hm-text);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            box-shadow: 0 5px 18px rgba(20,60,100,.07);
+
+            transition: .2s ease;
+        }
+
+        .customer-app-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 24px rgba(20,60,100,.12);
+        }
+
+        .customer-app-icon {
+            width: 46px;
+            height: 46px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            margin-bottom: 8px;
+        }
+
+        .customer-app-action strong {
+            font-size: 13px;
+        }
+
+        .customer-app-action span {
+            display: block;
+
+            margin-top: 3px;
+
+            font-size: 11px;
+            color: var(--hm-muted);
+        }
+
+        .action-book .customer-app-icon {
+            background: #e7f0ff;
+            color: #1268d9;
+        }
+
+        .action-request .customer-app-icon {
+            background: #fff1df;
+            color: #f08a00;
+        }
+
+        .action-status .customer-app-icon {
+            background: #e5f8ed;
+            color: #159447;
+        }
+
+        .action-support .customer-app-icon {
+            background: #f0eaff;
+            color: #7b42d8;
+        }
+
+        /* =========================
+           SECTION TITLE
+           ========================= */
+
         .section-title {
             margin: 0 0 18px;
+
+            color: var(--hm-text);
+            font-weight: 800;
             font-size: 25px;
         }
 
+        /* =========================
+           REQUEST CARD
+           ========================= */
+
         .request-card {
-            border: 1px solid #dfe8e4;
-            border-radius: 15px;
+            border: 1px solid #e1eaf4;
+            border-radius: 16px;
+
             padding: 18px;
             margin-bottom: 15px;
-            background: #fbfdfc;
+
+            background: #fbfdff;
         }
 
         .application-id {
             font-size: 20px;
             font-weight: bold;
-            color: #128c7e;
+
+            color: var(--hm-blue);
+
             margin-bottom: 12px;
         }
 
         .row {
             margin: 9px 0;
+
             line-height: 1.6;
+
             color: #555;
         }
 
@@ -139,10 +343,17 @@
             color: #333;
         }
 
+        /* =========================
+           STATUS
+           ========================= */
+
         .status {
             display: inline-block;
+
             padding: 7px 13px;
+
             border-radius: 20px;
+
             font-weight: bold;
             font-size: 14px;
         }
@@ -172,111 +383,346 @@
             color: #991b1b;
         }
 
+        /* =========================
+           MESSAGE
+           ========================= */
+
         .message {
             margin-bottom: 14px;
+
             padding: 12px 15px;
+
             border-radius: 10px;
+
             background: #eef7f4;
+
             font-weight: bold;
             line-height: 1.6;
         }
 
+        /* =========================
+           NOTIFICATION
+           ========================= */
+
         .notification {
             border: 1px solid #f0df9c;
+
             background: #fffbea;
+
             border-radius: 12px;
+
             padding: 15px;
+
             margin-bottom: 10px;
+
             line-height: 1.6;
         }
 
         .notification-date {
             color: #777;
             font-size: 12px;
+
             margin-top: 6px;
         }
+
+        @keyframes pulseAlert {
+
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+
+        }
+
+        /* =========================
+           ACTION BUTTONS
+           ========================= */
 
         .actions {
             display: flex;
             gap: 10px;
+
             flex-wrap: wrap;
+
             margin-top: 15px;
         }
 
         .btn {
             display: inline-block;
-            text-decoration: none;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 9px;
-            font-weight: bold;
-            cursor: pointer;
-        }
 
-        .btn-call {
-            background: #128c7e;
-            color: white;
+            text-decoration: none;
+
+            border: none;
+
+            min-height: 42px;
+
+            padding: 10px 16px;
+
+            border-radius: 11px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            text-align: center;
         }
 
         .btn-status {
-            background: #1976d2;
+            background: linear-gradient(
+                135deg,
+                #1268d9,
+                #0b54b5
+            );
+
             color: white;
         }
 
+        .btn-call {
+            background: linear-gradient(
+                135deg,
+                #16a85a,
+                #08783d
+            );
+
+            color: white;
+        }
+
+        /* =========================
+           EMPTY
+           ========================= */
+
         .empty {
             text-align: center;
+
             padding: 30px 10px;
+
             color: #777;
+
             font-size: 17px;
+
+            line-height: 1.7;
         }
+
+        /* =========================
+           CONTACT
+           ========================= */
 
         .contact {
             text-align: center;
+
             line-height: 2;
         }
 
         .contact a {
             color: #128c7e;
+
             font-weight: bold;
+
             text-decoration: none;
         }
+
+        /* =========================
+           CUSTOMER FOOTER
+           ========================= */
+
+        .customer-footer {
+            margin-top: 30px;
+
+            padding: 22px 15px 18px;
+
+            background: linear-gradient(
+                135deg,
+                #edf9f5,
+                #f6fbff
+            );
+
+            border-top: 1px solid #dcebe7;
+
+            text-align: center;
+
+            color: #71807c;
+        }
+
+        .customer-footer-brand strong {
+            display: block;
+
+            color: #126b57;
+
+            font-size: 18px;
+
+            margin-bottom: 4px;
+        }
+
+        .customer-footer-brand span {
+            display: block;
+
+            font-size: 12px;
+
+            color: #71807c;
+        }
+
+        .customer-social-title {
+            margin: 14px 0 9px;
+
+            color: #345b54;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .customer-social-links {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 11px;
+
+            width: 100%;
+
+            margin: 9px auto 7px;
+
+            flex-wrap: nowrap;
+        }
+
+        .customer-social-links a {
+            width: 42px;
+            height: 42px;
+
+            flex: 0 0 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+
+            border: 1px solid #dce7ef;
+
+            box-shadow: 0 4px 12px rgba(20,60,100,.10);
+
+            text-decoration: none;
+
+            transition: .2s ease;
+        }
+
+        .customer-social-links a:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 15px rgba(20,60,100,.15);
+        }
+
+        .customer-social-links a:nth-child(1) {
+            color: #E1306C;
+        }
+
+        .customer-social-links a:nth-child(2) {
+            color: #1877F2;
+        }
+
+        .customer-social-links a:nth-child(3) {
+            color: #229ED9;
+        }
+
+        .customer-social-links a:nth-child(4) {
+            color: #FF0000;
+        }
+
+        .customer-social-links svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .customer-footer-copy {
+            width: 100%;
+
+            margin: 0 auto;
+
+            text-align: center;
+
+            line-height: 1.5;
+
+            font-size: 12px;
+
+            color: #536575;
+        }
+
+        /* =========================
+           MOBILE
+           ========================= */
 
         @media (max-width: 700px) {
 
             header {
-                padding: 13px 15px;
+                min-height: 64px;
+
+                padding: 7px 12px;
+
+                justify-content: center;
             }
 
-            header h2 {
-                font-size: 17px;
+            header .brand-logo {
+                width: 155px;
+                height: 48px;
+            }
+
+            header form {
+                right: 10px;
             }
 
             .logout {
-                padding: 8px 12px;
-                font-size: 13px;
+                padding: 7px 9px;
+
+                font-size: 11px;
+
+                white-space: nowrap;
             }
 
             .container {
                 width: 94%;
-                margin: 15px auto;
+
+                margin: 13px auto 25px;
             }
 
             .card {
                 padding: 17px;
-                border-radius: 15px;
+
+                border-radius: 17px;
+            }
+
+            .welcome {
+                padding: 19px;
+
+                border-radius: 19px;
             }
 
             .welcome h1 {
-                font-size: 25px;
+                font-size: 23px;
+            }
+
+            .welcome p {
+                font-size: 14px;
             }
 
             .summary {
-                grid-template-columns: repeat(3, 1fr);
                 gap: 7px;
             }
 
             .summary-box {
-                padding: 14px 5px;
+                padding: 13px 5px;
+
+                border-radius: 14px;
             }
 
             .summary-number {
@@ -284,7 +730,40 @@
             }
 
             .summary-label {
+                font-size: 11px;
+            }
+
+            /* 2 x 2 QUICK ACTIONS */
+
+            .customer-app-actions {
+                grid-template-columns: repeat(2, 1fr);
+
+                gap: 9px;
+
+                margin: 14px 0;
+            }
+
+            .customer-app-action {
+                min-height: 94px;
+
+                border-radius: 16px;
+            }
+
+            .customer-app-icon {
+                width: 42px;
+                height: 42px;
+
+                font-size: 21px;
+
+                border-radius: 12px;
+            }
+
+            .customer-app-action strong {
                 font-size: 12px;
+            }
+
+            .customer-app-action span {
+                font-size: 10px;
             }
 
             .section-title {
@@ -305,603 +784,86 @@
 
             .btn {
                 display: block;
-                text-align: center;
+
+                width: 100%;
+
                 margin-top: 8px;
             }
+
+            /* FOOTER */
+
+            .customer-social-links {
+                justify-content: center;
+
+                align-items: center;
+
+                gap: 9px;
+
+                margin: 8px auto 6px;
+            }
+
+            .customer-social-links a {
+                width: 42px;
+                height: 42px;
+
+                flex-basis: 42px;
+            }
+
+            .customer-footer-copy {
+                width: 100%;
+
+                text-align: center;
+
+                margin: 0 auto;
+
+                font-size: 11px;
+            }
+
         }
-        
-        @keyframes pulseAlert {
-         0% {
-        transform: scale(1);
-       }
 
-        50% {
-        transform: scale(1.08);
-       }
-
-        100% {
-        transform: scale(1);
-       }
-   }
-/* ================= CUSTOMER FOOTER ================= */
-
-.customer-footer{
-    margin-top:30px;
-    padding:24px 15px 18px;
-    text-align:center;
-    background:linear-gradient(135deg,#eef8f5,#f8fcfb);
-    border-top:1px solid #dcebe7;
-    color:#71807c;
-}
-
-.customer-footer-brand strong{
-    display:block;
-    color:#126b57;
-    font-size:18px;
-    margin-bottom:4px;
-}
-
-.customer-footer-brand span{
-    display:block;
-    font-size:12px;
-    color:#71807c;
-}
-
-.customer-social-title{
-    margin:14px 0 9px;
-    color:#345b54;
-    font-size:13px;
-    font-weight:700;
-}
-
-.customer-social-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-    margin:10px 0 14px;
-}
-
-.customer-social-links a{
-    width:42px;
-    height:42px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:#ffffff;
-    border:1px solid #dcebe7;
-    text-decoration:none;
-    font-size:21px;
-    font-weight:700;
-    transition:0.2s ease;
-}
-
-.customer-social-links a:hover{
-    transform:translateY(-2px);
-    box-shadow:0 5px 12px rgba(20,70,60,.14);
-}
-
-.customer-social-links a:nth-child(1){
-    color:#E1306C;
-}
-
-.customer-social-links a:nth-child(2){
-    color:#1877F2;
-}
-
-.customer-social-links a:nth-child(3){
-    color:#229ED9;
-}
-
-.customer-social-links a:nth-child(4){
-    color:#FF0000;
-}
-
-.customer-footer-copy{
-    margin-top:5px;
-    font-size:12px;
-    opacity:.9;
-}
-
-/* =========================================
-   CUSTOMER DASHBOARD HEADER - RESPONSIVE
-   ========================================= */
-
-header{
-    position:relative;
-    min-height:72px;
-    padding:10px 20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-/* Header logo container */
-header h2{
-    margin:0;
-    padding:0;
-
-    display:flex;
-    align-items:center;
-}
-
-/* Flat / wide dashboard logo */
-header .brand-logo{
-    width:170px;
-    height:52px;
-    object-fit:contain;
-    display:block;
-}
-
-/* =========================================
-   MOBILE HEADER
-   ========================================= */
-
-@media(max-width:700px){
-
-    header{
-        min-height:64px;
-        padding:8px 12px;
-
-        justify-content:center;
-    }
-
-    header h2{
-        margin:0;
-        padding:0;
-
-        display:flex;
-        align-items:center;
-        justify-content:center;
-    }
-
-    header .brand-logo{
-        width:145px;
-        height:45px;
-    }
-
-    /* Logout हमेशा right side */
-    header form{
-        position:absolute;
-        right:12px;
-        top:50%;
-        transform:translateY(-50%);
-    }
-
-    header .logout{
-        padding:7px 10px;
-        font-size:12px;
-        white-space:nowrap;
-    }
-}
-
-/* =========================================================
-   HELPME DOORSTEP - CUSTOMER APP UI
-   PROFESSIONAL MOBILE DASHBOARD
-   ========================================================= */
-
-:root{
-    --hm-blue:#1268d9;
-    --hm-blue-dark:#084a9b;
-    --hm-green:#18a957;
-    --hm-green-dark:#08783d;
-    --hm-bg:#f4f8fc;
-    --hm-card:#ffffff;
-    --hm-text:#10233f;
-    --hm-muted:#68778d;
-    --hm-border:#e4ebf3;
-}
-
-/* PAGE */
-body{
-    background:linear-gradient(180deg,#f5f9ff 0%,#eef8f5 100%);
-    color:var(--hm-text);
-}
-
-/* HEADER */
-header{
-    position:relative;
-    min-height:72px;
-    padding:8px 16px;
-    background:#ffffff;
-    border-bottom:1px solid var(--hm-border);
-    box-shadow:0 2px 12px rgba(15,55,95,.08);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:10;
-}
-
-header h2{
-    margin:0;
-    padding:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-header .brand-logo{
-    width:190px;
-    height:58px;
-    object-fit:contain;
-}
-
-header form{
-    position:absolute;
-    right:15px;
-    top:50%;
-    transform:translateY(-50%);
-}
-
-.logout{
-    background:#ffffff;
-    color:#d63031;
-    border:1px solid #ffd5d5;
-    padding:8px 13px;
-    border-radius:10px;
-    font-weight:700;
-}
-
-/* MAIN CONTAINER */
-.container{
-    width:min(94%,1100px);
-    margin:18px auto 30px;
-}
-
-/* WELCOME CARD */
-.welcome{
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(135deg,#eaf5ff 0%,#f0fff7 100%);
-    border:1px solid #dceaf7;
-    border-radius:22px;
-    padding:24px;
-    box-shadow:0 8px 25px rgba(25,80,130,.09);
-}
-
-.welcome::after{
-    content:"";
-    position:absolute;
-    width:150px;
-    height:150px;
-    right:-45px;
-    top:-45px;
-    border-radius:50%;
-    background:rgba(18,104,217,.08);
-}
-
-.welcome h1{
-    position:relative;
-    z-index:1;
-    margin:0 0 8px;
-    font-size:28px;
-    color:var(--hm-blue-dark);
-}
-
-.welcome p{
-    position:relative;
-    z-index:1;
-    margin:6px 0;
-    color:var(--hm-muted);
-}
-
-.mobile{
-    color:var(--hm-green-dark);
-}
-
-/* SUMMARY */
-.summary{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin:16px 0;
-}
-
-.summary-box{
-    background:#ffffff;
-    border:1px solid var(--hm-border);
-    border-radius:18px;
-    padding:17px 10px;
-    text-align:center;
-    box-shadow:0 5px 18px rgba(20,60,100,.07);
-}
-
-.summary-number{
-    font-size:28px;
-    color:var(--hm-blue);
-}
-
-.summary-label{
-    color:var(--hm-muted);
-}
-
-/* PROFESSIONAL QUICK ACTIONS */
-.customer-app-actions{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin:18px 0;
-}
-
-.customer-app-action{
-    min-height:105px;
-    padding:14px 8px;
-    background:#ffffff;
-    border:1px solid var(--hm-border);
-    border-radius:18px;
-    text-decoration:none;
-    color:var(--hm-text);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    box-shadow:0 5px 18px rgba(20,60,100,.07);
-    transition:.2s ease;
-}
-
-.customer-app-action:hover{
-    transform:translateY(-2px);
-    box-shadow:0 9px 24px rgba(20,60,100,.12);
-}
-
-.customer-app-icon{
-    width:46px;
-    height:46px;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:23px;
-    margin-bottom:8px;
-}
-
-.customer-app-action strong{
-    font-size:13px;
-}
-
-.customer-app-action span{
-    display:block;
-    margin-top:3px;
-    font-size:11px;
-    color:var(--hm-muted);
-}
-
-/* ACTION COLORS */
-.action-book .customer-app-icon{
-    background:#e7f0ff;
-    color:#1268d9;
-}
-
-.action-request .customer-app-icon{
-    background:#fff1df;
-    color:#f08a00;
-}
-
-.action-status .customer-app-icon{
-    background:#e5f8ed;
-    color:#159447;
-}
-
-.action-support .customer-app-icon{
-    background:#f0eaff;
-    color:#7b42d8;
-}
-
-/* COMMON CARDS */
-.card{
-    background:#ffffff;
-    border:1px solid var(--hm-border);
-    border-radius:20px;
-    box-shadow:0 6px 22px rgba(20,60,100,.07);
-}
-
-/* SECTION TITLES */
-.section-title{
-    color:var(--hm-text);
-    font-weight:800;
-}
-
-/* REQUEST CARDS */
-.request-card{
-    background:#fbfdff;
-    border:1px solid #e1eaf4;
-    border-radius:16px;
-}
-
-.application-id{
-    color:var(--hm-blue);
-}
-
-/* BUTTONS */
-.btn{
-    min-height:42px;
-    border-radius:11px;
-    padding:10px 16px;
-}
-
-.btn-status{
-    background:linear-gradient(135deg,#1268d9,#0b54b5);
-}
-
-.btn-call{
-    background:linear-gradient(135deg,#16a85a,#08783d);
-}
-
-/* FOOTER */
-.customer-footer{
-    margin-top:30px;
-    padding:22px 15px 18px;
-    background:linear-gradient(135deg,#edf9f5,#f6fbff);
-    border-top:1px solid #dcebe7;
-    text-align:center;
-}
-
-/* SOCIAL BUTTONS */
-.customer-social-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:11px;
-    width:100%;
-    margin:9px auto 7px;
-    flex-wrap:nowrap;
-}
-
-.customer-social-links a{
-    width:42px;
-    height:42px;
-    flex:0 0 42px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#ffffff;
-    border:1px solid #dce7ef;
-    box-shadow:0 4px 12px rgba(20,60,100,.10);
-}
-
-.customer-social-links svg{
-    width:21px;
-    height:21px;
-}
-
-/* COPYRIGHT */
-.customer-footer-copy{
-    width:100%;
-    margin:0 auto;
-    text-align:center;
-    line-height:1.5;
-    font-size:12px;
-    color:#536575;
-}
-
-/* MOBILE */
-@media(max-width:700px){
-
-    header{
-        min-height:64px;
-        padding:7px 12px;
-    }
-
-    header .brand-logo{
-        width:155px;
-        height:48px;
-    }
-
-    header form{
-        right:10px;
-    }
-
-    .logout{
-        padding:7px 9px;
-        font-size:11px;
-    }
-
-    .container{
-        width:94%;
-        margin:13px auto 25px;
-    }
-
-    .welcome{
-        padding:19px;
-        border-radius:19px;
-    }
-
-    .welcome h1{
-        font-size:23px;
-    }
-
-    .summary{
-        gap:7px;
-    }
-
-    .summary-box{
-        padding:13px 5px;
-        border-radius:14px;
-    }
-
-    .summary-number{
-        font-size:23px;
-    }
-
-    .summary-label{
-        font-size:11px;
-    }
-
-    /* 2 x 2 APP BUTTONS */
-    .customer-app-actions{
-        grid-template-columns:repeat(2,1fr);
-        gap:9px;
-        margin:14px 0;
-    }
-
-    .customer-app-action{
-        min-height:94px;
-        border-radius:16px;
-    }
-
-    .customer-app-icon{
-        width:42px;
-        height:42px;
-        font-size:21px;
-        border-radius:12px;
-    }
-
-    .customer-app-action strong{
-        font-size:12px;
-    }
-
-    .customer-app-action span{
-        font-size:10px;
-    }
-
-    /* FOOTER CENTER */
-    .customer-social-links{
-        justify-content:center;
-        align-items:center;
-        gap:9px;
-        margin:8px auto 6px;
-    }
-
-    .customer-social-links a{
-        width:42px;
-        height:42px;
-        flex-basis:42px;
-    }
-
-    .customer-footer-copy{
-        width:100%;
-        text-align:center;
-        margin:0 auto;
-        font-size:11px;
-    }
-}
-        
     </style>
+
 </head>
 
 
 <body>
 
 
+<!-- =========================
+     HEADER
+     ========================= -->
+
 <header>
 
     <h2>
-    <img src="/static/helpme-doorstep-flat-logo.png.jpeg"
-         alt="HelpMe Doorstep"
-         class="brand-logo">
-</h2>
 
-    <form method="post" action="/customer/logout">
-        
-       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
-        
-        <button class="logout" type="submit">
+        <img
+            src="/static/helpme-doorstep-flat-logo.png.jpeg"
+            alt="HelpMe Doorstep"
+            class="brand-logo"
+        >
+
+    </h2>
+
+
+    <form
+        method="post"
+        action="/customer/logout"
+    >
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
+
+        <button
+            class="logout"
+            type="submit"
+        >
             Logout
         </button>
+
     </form>
 
 </header>
@@ -910,7 +872,9 @@ header form{
 <div class="container">
 
 
-    <!-- CUSTOMER WELCOME -->
+    <!-- =========================
+         CUSTOMER WELCOME
+         ========================= -->
 
     <div class="card welcome">
 
@@ -932,9 +896,12 @@ header form{
     </div>
 
 
-    <!-- SUMMARY -->
+    <!-- =========================
+         SUMMARY
+         ========================= -->
 
     <div class="summary">
+
 
         <div class="summary-box">
 
@@ -951,8 +918,16 @@ header form{
 
         <div class="summary-box">
 
-            <div class="summary-number" style="color:#8e44ad;">
-                {{ requests|selectattr('status','equalto','In Progress')|list|length }}
+            <div
+                class="summary-number"
+                style="color:#8e44ad;"
+            >
+                {{
+                    requests
+                    |selectattr('status','equalto','In Progress')
+                    |list
+                    |length
+                }}
             </div>
 
             <div class="summary-label">
@@ -964,8 +939,16 @@ header form{
 
         <div class="summary-box">
 
-            <div class="summary-number" style="color:#188038;">
-                {{ requests|selectattr('status','equalto','Completed')|list|length }}
+            <div
+                class="summary-number"
+                style="color:#188038;"
+            >
+                {{
+                    requests
+                    |selectattr('status','equalto','Completed')
+                    |list
+                    |length
+                }}
             </div>
 
             <div class="summary-label">
@@ -974,474 +957,208 @@ header form{
 
         </div>
 
+
     </div>
 
-   /* =========================================================
-   HELPME DOORSTEP - CUSTOMER APP UI
-   PROFESSIONAL MOBILE DASHBOARD
-   ========================================================= */
 
-:root{
-    --hm-blue:#1268d9;
-    --hm-blue-dark:#084a9b;
-    --hm-green:#18a957;
-    --hm-green-dark:#08783d;
-    --hm-bg:#f4f8fc;
-    --hm-card:#ffffff;
-    --hm-text:#10233f;
-    --hm-muted:#68778d;
-    --hm-border:#e4ebf3;
-}
+    <!-- =========================
+         CUSTOMER APP QUICK ACTIONS
+         ========================= -->
 
-/* PAGE */
-body{
-    background:linear-gradient(180deg,#f5f9ff 0%,#eef8f5 100%);
-    color:var(--hm-text);
-}
+    <div class="customer-app-actions">
 
-/* HEADER */
-header{
-    position:relative;
-    min-height:72px;
-    padding:8px 16px;
-    background:#ffffff;
-    border-bottom:1px solid var(--hm-border);
-    box-shadow:0 2px 12px rgba(15,55,95,.08);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:10;
-}
 
-header h2{
-    margin:0;
-    padding:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+        <!-- BOOK SERVICE -->
 
-header .brand-logo{
-    width:190px;
-    height:58px;
-    object-fit:contain;
-}
+        <a
+            class="customer-app-action action-book"
+            href="/"
+        >
 
-header form{
-    position:absolute;
-    right:15px;
-    top:50%;
-    transform:translateY(-50%);
-}
+            <div class="customer-app-icon">
+                🛒
+            </div>
 
-.logout{
-    background:#ffffff;
-    color:#d63031;
-    border:1px solid #ffd5d5;
-    padding:8px 13px;
-    border-radius:10px;
-    font-weight:700;
-}
+            <strong>
+                Book Service
+            </strong>
 
-/* MAIN CONTAINER */
-.container{
-    width:min(94%,1100px);
-    margin:18px auto 30px;
-}
+            <span>
+                नई Service Request
+            </span>
 
-/* WELCOME CARD */
-.welcome{
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(135deg,#eaf5ff 0%,#f0fff7 100%);
-    border:1px solid #dceaf7;
-    border-radius:22px;
-    padding:24px;
-    box-shadow:0 8px 25px rgba(25,80,130,.09);
-}
+        </a>
 
-.welcome::after{
-    content:"";
-    position:absolute;
-    width:150px;
-    height:150px;
-    right:-45px;
-    top:-45px;
-    border-radius:50%;
-    background:rgba(18,104,217,.08);
-}
 
-.welcome h1{
-    position:relative;
-    z-index:1;
-    margin:0 0 8px;
-    font-size:28px;
-    color:var(--hm-blue-dark);
-}
+        <!-- MY REQUESTS -->
 
-.welcome p{
-    position:relative;
-    z-index:1;
-    margin:6px 0;
-    color:var(--hm-muted);
-}
+        <a
+            class="customer-app-action action-request"
+            href="#customer-requests"
+        >
 
-.mobile{
-    color:var(--hm-green-dark);
-}
+            <div class="customer-app-icon">
+                📋
+            </div>
 
-/* SUMMARY */
-.summary{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin:16px 0;
-}
+            <strong>
+                My Requests
+            </strong>
 
-.summary-box{
-    background:#ffffff;
-    border:1px solid var(--hm-border);
-    border-radius:18px;
-    padding:17px 10px;
-    text-align:center;
-    box-shadow:0 5px 18px rgba(20,60,100,.07);
-}
+            <span>
+                अपने आवेदन देखें
+            </span>
 
-.summary-number{
-    font-size:28px;
-    color:var(--hm-blue);
-}
+        </a>
 
-.summary-label{
-    color:var(--hm-muted);
-}
 
-/* PROFESSIONAL QUICK ACTIONS */
-.customer-app-actions{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin:18px 0;
-}
+        <!-- TRACK STATUS -->
 
-.customer-app-action{
-    min-height:105px;
-    padding:14px 8px;
-    background:#ffffff;
-    border:1px solid var(--hm-border);
-    border-radius:18px;
-    text-decoration:none;
-    color:var(--hm-text);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    box-shadow:0 5px 18px rgba(20,60,100,.07);
-    transition:.2s ease;
-}
+        <a
+            class="customer-app-action action-status"
+            href="/status?phone={{ customer.mobile }}"
+        >
 
-.customer-app-action:hover{
-    transform:translateY(-2px);
-    box-shadow:0 9px 24px rgba(20,60,100,.12);
-}
+            <div class="customer-app-icon">
+                📊
+            </div>
 
-.customer-app-icon{
-    width:46px;
-    height:46px;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:23px;
-    margin-bottom:8px;
-}
+            <strong>
+                Track Status
+            </strong>
 
-.customer-app-action strong{
-    font-size:13px;
-}
+            <span>
+                Application Status
+            </span>
 
-.customer-app-action span{
-    display:block;
-    margin-top:3px;
-    font-size:11px;
-    color:var(--hm-muted);
-}
+        </a>
 
-/* ACTION COLORS */
-.action-book .customer-app-icon{
-    background:#e7f0ff;
-    color:#1268d9;
-}
 
-.action-request .customer-app-icon{
-    background:#fff1df;
-    color:#f08a00;
-}
+        <!-- SUPPORT -->
 
-.action-status .customer-app-icon{
-    background:#e5f8ed;
-    color:#159447;
-}
+        <a
+            class="customer-app-action action-support"
+            href="tel:9219160465"
+        >
 
-.action-support .customer-app-icon{
-    background:#f0eaff;
-    color:#7b42d8;
-}
+            <div class="customer-app-icon">
+                🎧
+            </div>
 
-/* COMMON CARDS */
-.card{
-    background:#ffffff;
-    border:1px solid var(--hm-border);
-    border-radius:20px;
-    box-shadow:0 6px 22px rgba(20,60,100,.07);
-}
+            <strong>
+                Support
+            </strong>
 
-/* SECTION TITLES */
-.section-title{
-    color:var(--hm-text);
-    font-weight:800;
-}
+            <span>
+                Help Line
+            </span>
 
-/* REQUEST CARDS */
-.request-card{
-    background:#fbfdff;
-    border:1px solid #e1eaf4;
-    border-radius:16px;
-}
+        </a>
 
-.application-id{
-    color:var(--hm-blue);
-}
 
-/* BUTTONS */
-.btn{
-    min-height:42px;
-    border-radius:11px;
-    padding:10px 16px;
-}
+    </div>
 
-.btn-status{
-    background:linear-gradient(135deg,#1268d9,#0b54b5);
-}
 
-.btn-call{
-    background:linear-gradient(135deg,#16a85a,#08783d);
-}
-
-/* FOOTER */
-.customer-footer{
-    margin-top:30px;
-    padding:22px 15px 18px;
-    background:linear-gradient(135deg,#edf9f5,#f6fbff);
-    border-top:1px solid #dcebe7;
-    text-align:center;
-}
-
-/* SOCIAL BUTTONS */
-.customer-social-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:11px;
-    width:100%;
-    margin:9px auto 7px;
-    flex-wrap:nowrap;
-}
-
-.customer-social-links a{
-    width:42px;
-    height:42px;
-    flex:0 0 42px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#ffffff;
-    border:1px solid #dce7ef;
-    box-shadow:0 4px 12px rgba(20,60,100,.10);
-}
-
-.customer-social-links svg{
-    width:21px;
-    height:21px;
-}
-
-/* COPYRIGHT */
-.customer-footer-copy{
-    width:100%;
-    margin:0 auto;
-    text-align:center;
-    line-height:1.5;
-    font-size:12px;
-    color:#536575;
-}
-
-/* MOBILE */
-@media(max-width:700px){
-
-    header{
-        min-height:64px;
-        padding:7px 12px;
-    }
-
-    header .brand-logo{
-        width:155px;
-        height:48px;
-    }
-
-    header form{
-        right:10px;
-    }
-
-    .logout{
-        padding:7px 9px;
-        font-size:11px;
-    }
-
-    .container{
-        width:94%;
-        margin:13px auto 25px;
-    }
-
-    .welcome{
-        padding:19px;
-        border-radius:19px;
-    }
-
-    .welcome h1{
-        font-size:23px;
-    }
-
-    .summary{
-        gap:7px;
-    }
-
-    .summary-box{
-        padding:13px 5px;
-        border-radius:14px;
-    }
-
-    .summary-number{
-        font-size:23px;
-    }
-
-    .summary-label{
-        font-size:11px;
-    }
-
-    /* 2 x 2 APP BUTTONS */
-    .customer-app-actions{
-        grid-template-columns:repeat(2,1fr);
-        gap:9px;
-        margin:14px 0;
-    }
-
-    .customer-app-action{
-        min-height:94px;
-        border-radius:16px;
-    }
-
-    .customer-app-icon{
-        width:42px;
-        height:42px;
-        font-size:21px;
-        border-radius:12px;
-    }
-
-    .customer-app-action strong{
-        font-size:12px;
-    }
-
-    .customer-app-action span{
-        font-size:10px;
-    }
-
-    /* FOOTER CENTER */
-    .customer-social-links{
-        justify-content:center;
-        align-items:center;
-        gap:9px;
-        margin:8px auto 6px;
-    }
-
-    .customer-social-links a{
-        width:42px;
-        height:42px;
-        flex-basis:42px;
-    }
-
-    .customer-footer-copy{
-        width:100%;
-        text-align:center;
-        margin:0 auto;
-        font-size:11px;
-    }
-}
-    
-   <!-- NOTIFICATIONS -->
+    <!-- =========================
+         NOTIFICATIONS
+         ========================= -->
 
     {% if notifications %}
 
-    {% set unread_count = notifications|selectattr('is_read','equalto',False)|list|length %}
+    {% set unread_count =
+        notifications
+        |selectattr('is_read','equalto',False)
+        |list
+        |length
+    %}
 
-    <div class="card" id="customer-notifications">
 
-       <h2 class="section-title">
-           🔔 Customer Message Alerts
+    <div
+        class="card"
+        id="customer-notifications"
+    >
 
-           {% if unread_count > 0 %}
-           <span style="
-               display:inline-block;
-               background:#e53935;
-               color:white;
-               padding:5px 10px;
-               border-radius:20px;
-               font-size:13px;
-               margin-left:6px;
-               vertical-align:middle;
-               animation:pulseAlert 1.5s infinite;
-          ">
-           🔴 {{ unread_count }} New Alert
-           </span>
-           {% endif %}
-</h2>
+        <h2 class="section-title">
 
-{% if unread_count > 0 %}
-<div style="
-    margin-bottom:15px;
-    padding:12px 14px;
-    background:#fff3cd;
-    border:1px solid #ffe08a;
-    border-radius:10px;
-    font-weight:bold;
-    color:#856404;
-">
-    🔔 आपके लिए नई सूचना उपलब्ध है। कृपया नीचे Notification देखें।
-</div>
-{% endif %}
+            🔔 Customer Message Alerts
+
+
+            {% if unread_count > 0 %}
+
+            <span
+                style="
+                    display:inline-block;
+                    background:#e53935;
+                    color:white;
+                    padding:5px 10px;
+                    border-radius:20px;
+                    font-size:13px;
+                    margin-left:6px;
+                    vertical-align:middle;
+                    animation:pulseAlert 1.5s infinite;
+                "
+            >
+
+                🔴 {{ unread_count }} New Alert
+
+            </span>
+
+            {% endif %}
+
+        </h2>
+
+
+        {% if unread_count > 0 %}
+
+        <div
+            style="
+                margin-bottom:15px;
+                padding:12px 14px;
+                background:#fff3cd;
+                border:1px solid #ffe08a;
+                border-radius:10px;
+                font-weight:bold;
+                color:#856404;
+            "
+        >
+
+            🔔 आपके लिए नई सूचना उपलब्ध है।
+            कृपया नीचे Notification देखें।
+
+        </div>
+
+        {% endif %}
+
 
         {% for n in notifications %}
 
-        <div class="notification"
-             style="
+
+        <div
+            class="notification"
+            style="
                 {% if n.is_read %}
                 opacity:0.65;
                 background:#f5f5f5;
                 border-color:#ddd;
                 {% endif %}
-             ">
+            "
+        >
 
             <div>
+
                 📢 <strong>सूचना:</strong>
+
                 {{ n.message }}
+
             </div>
 
 
             {% if n.created_at %}
 
             <div class="notification-date">
+
                 {{ n.created_at.strftime("%d-%m-%Y %H:%M") }}
+
             </div>
 
             {% endif %}
@@ -1455,43 +1172,66 @@ header form{
                 style="margin-top:10px;"
             >
 
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+
                 <button
                     type="submit"
                     class="btn btn-status"
                 >
                     ✓ पढ़ लिया
                 </button>
+
             </form>
+
 
             {% else %}
 
-            <div style="
-                margin-top:8px;
-                color:#188038;
-                font-size:13px;
-                font-weight:bold;
-            ">
+            <div
+                style="
+                    margin-top:8px;
+                    color:#188038;
+                    font-size:13px;
+                    font-weight:bold;
+                "
+            >
+
                 ✓ पढ़ा गया
+
             </div>
 
             {% endif %}
 
+
         </div>
+
 
         {% endfor %}
 
+
     </div>
+
 
     {% endif %}
 
-    <!-- APPLICATIONS -->
 
-    <div class="card" id="customer-requests">
+    <!-- =========================
+         APPLICATIONS
+         ========================= -->
+
+    <div
+        class="card"
+        id="customer-requests"
+    >
 
         <h2 class="section-title">
+
             📋 मेरे Service Requests
+
         </h2>
 
 
@@ -1500,8 +1240,11 @@ header form{
 
         {% for r in requests %}
 
+
         <div class="request-card">
 
+
+            <!-- APPLICATION ID -->
 
             <div class="application-id">
 
@@ -1512,61 +1255,87 @@ header form{
 
             <!-- STATUS MESSAGE -->
 
+
             {% if r.status == "Pending" %}
 
             <div class="message">
+
                 ⏳ आपका आवेदन प्राप्त हो गया है।
+
                 Worker Assign होने की प्रतीक्षा है।
+
             </div>
 
 
             {% elif r.status == "Assigned" %}
 
             <div class="message">
+
                 👷 आपका Worker Assign कर दिया गया है।
+
                 जल्द ही आपसे संपर्क किया जाएगा।
+
             </div>
 
 
             {% elif r.status == "In Progress" %}
 
             <div class="message">
+
                 🔧 आपका काम अभी चल रहा है।
+
             </div>
 
 
             {% elif r.status == "Completed" %}
 
             <div class="message">
+
                 ✅ आपका काम सफलतापूर्वक पूरा हो गया है।
+
             </div>
 
 
             {% elif r.status == "Cancelled" %}
 
             <div class="message">
+
                 ❌ आपका आवेदन Cancelled कर दिया गया है।
+
             </div>
+
 
             {% endif %}
 
 
+            <!-- CUSTOMER NAME -->
+
             <div class="row">
 
-                <strong>👤 नाम:</strong>
+                <strong>
+                    👤 नाम:
+                </strong>
+
                 {{ r.customer }}
 
             </div>
 
 
+            <!-- AGE -->
+
             <div class="row">
 
-                <strong>🎂 उम्र:</strong>
+                <strong>
+                    🎂 उम्र:
+                </strong>
+
                 {{ r.age }} वर्ष
+
 
                 {% if r.age >= 60 %}
 
                 <br>
+
                 👴 Senior Citizen
 
                 {% endif %}
@@ -1574,31 +1343,49 @@ header form{
             </div>
 
 
+            <!-- SERVICE -->
+
             <div class="row">
 
-                <strong>🛠️ सेवा:</strong>
+                <strong>
+                    🛠️ सेवा:
+                </strong>
+
                 {{ r.service }}
 
             </div>
 
 
+            <!-- ADDRESS -->
+
             <div class="row">
 
-                <strong>📍 पता:</strong>
+                <strong>
+                    📍 पता:
+                </strong>
+
                 {{ r.address }}
 
             </div>
 
 
+            <!-- STATE / DISTRICT -->
+
             {% if r.state %}
 
             <div class="row">
 
-                <strong>🗺️ State:</strong>
+                <strong>
+                    🗺️ State:
+                </strong>
+
                 {{ r.state }}
 
+
                 {% if r.district %}
+
                 — {{ r.district }}
+
                 {% endif %}
 
             </div>
@@ -1606,11 +1393,16 @@ header form{
             {% endif %}
 
 
+            <!-- DETAILS -->
+
             {% if r.details %}
 
             <div class="row">
 
-                <strong>📝 विवरण:</strong>
+                <strong>
+                    📝 विवरण:
+                </strong>
+
                 {{ r.details }}
 
             </div>
@@ -1618,9 +1410,13 @@ header form{
             {% endif %}
 
 
+            <!-- STATUS -->
+
             <div class="row">
 
-                <strong>📊 Status:</strong>
+                <strong>
+                    📊 Status:
+                </strong>
 
                 <br>
 
@@ -1671,9 +1467,13 @@ header form{
             </div>
 
 
+            <!-- CREATED DATE -->
+
             <div class="row">
 
-                <strong>📅 आवेदन दिनांक:</strong>
+                <strong>
+                    📅 आवेदन दिनांक:
+                </strong>
 
                 {{ r.created_at.strftime("%d-%m-%Y %H:%M") }}
 
@@ -1684,9 +1484,10 @@ header form{
 
             <div class="actions">
 
+
                 <a
                     class="btn btn-status"
-                    href="/status"
+                    href="/status?phone={{ customer.mobile }}"
                 >
                     📊 पूरा Status देखें
                 </a>
@@ -1703,10 +1504,12 @@ header form{
 
                 {% endif %}
 
+
             </div>
 
 
         </div>
+
 
         {% endfor %}
 
@@ -1720,6 +1523,7 @@ header form{
 
             <br><br>
 
+
             <a
                 class="btn btn-status"
                 href="/"
@@ -1732,102 +1536,216 @@ header form{
 
         {% endif %}
 
+
     </div>
 
 
-    <!-- CONTACT -->
+    <!-- =========================
+         CONTACT SUPPORT
+         ========================= -->
 
     <div class="card contact">
 
-        <strong>📞 HelpMe Doorstep सहायता</strong>
+        <strong>
+            📞 HelpMe Doorstep सहायता
+        </strong>
 
         <br>
+
 
         <a href="tel:9219160465">
             9219160465
         </a>
 
+
         &nbsp;&nbsp;|&nbsp;&nbsp;
+
 
         <a
             href="https://wa.me/919219160465"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
         >
             💬 WhatsApp
         </a>
 
+
     </div>
 
 
 </div>
 
-<!-- CUSTOMER FOOTER -->
+
+<!-- =========================
+     CUSTOMER FOOTER
+     ========================= -->
 
 <footer class="customer-footer">
 
+
     <div class="customer-footer-brand">
-        <strong>HelpMe Doorstep</strong>
-        <span>Service | Support | Social Impact</span>
+
+        <strong>
+            HelpMe Doorstep
+        </strong>
+
+        <span>
+            Service | Support | Social Impact
+        </span>
+
     </div>
 
+
     <div class="customer-social-title">
+
         Follow Us
+
     </div>
+
+
+    <!-- SOCIAL BUTTONS -->
 
     <div class="customer-social-links">
 
-    <a href="https://www.instagram.com/helpmedoorstep?stkn=N3kxM3Ewa2RwaThu"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Instagram">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="12" cy="12" r="4"
-                    fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
-        </svg>
-    </a>
 
-    <a href="https://www.facebook.com/share/1Ge54p8ror/"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Facebook">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"
-                  fill="currentColor"/>
-        </svg>
-    </a>
+        <!-- INSTAGRAM -->
 
-    <a href="https://t.me/HelpMeDoorstep"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Telegram">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21.5 3.5 2.8 10.7c-1.3.5-1.3 1.4-.2 1.8l4.8 1.5 1.8 5.7c.2.6.1.8.8.8.5 0 .7-.2 1-.5.3-.3 1.3-1.3 2.5-2.4l5-3.8 5.1 3.8c.9.5 1.5.2 1.7-.8l3-14.1c.3-1.3-.5-1.9-1.6-1.5z"
-                  fill="currentColor"/>
-        </svg>
-    </a>
+        <a
+            href="https://www.instagram.com/helpmedoorstep/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+        >
 
-    <a href="https://www.youtube.com/channel/UCldXDVHp8_yH8qnm0KjL5zQ"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="YouTube">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21.6 7.2a2.9 2.9 0 0 0-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5a2.9 2.9 0 0 0-2 2C2 8.9 2 12 2 12s0 3.1.4 4.8a2.9 2.9 0 0 0 2 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.9 2.9 0 0 0 2-2c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8z"
-                  fill="currentColor"/>
-            <path d="m10 9 5 3-5 3V9z" fill="white"/>
-        </svg>
-    </a>
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
 
-</div>
+                <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    rx="5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
 
-    <div class="customer-footer-copy">
-        © 2026 HelpMe Doorstep | All Rights Reserved
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
+
+                <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="1.2"
+                    fill="currentColor"
+                />
+
+            </svg>
+
+        </a>
+
+
+        <!-- FACEBOOK -->
+
+        <a
+            href="https://www.facebook.com/share/16e54p8ror/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+        >
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"
+                    fill="currentColor"
+                />
+
+            </svg>
+
+        </a>
+
+
+        <!-- TELEGRAM -->
+
+        <a
+            href="https://t.me/HelpMeDoorstep"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram"
+        >
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M21.5 3.5 2.8 10.7c-1.3.5-1.3 1.4-.2 1.8l4.8 1.5 1.8 5.7c.2.6.1.8.8.8.5 0 .7-.2 1-.5.3-.3 1.3-1.3 2.5-2.4l5-3.8 5.1 3.8c.9.5 1.5.2 1.7-.8l3-14.1c.3-1.3-.5-1.9-1.6-1.5z"
+                    fill="currentColor"
+                />
+
+            </svg>
+
+        </a>
+
+
+        <!-- YOUTUBE -->
+
+        <a
+            href="https://www.youtube.com/channel/UC1dXDHp8_yH8qnmKjL5zQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+        >
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M21.6 7.2a2.9 2.9 0 0 0-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5a2.9 2.9 0 0 0-2 2C2 8.9 2 12 2 12s0 3.1.4 4.8a2.9 2.9 0 0 0 2 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.9 2.9 0 0 0 2-2c.4-1.7.4-4.8-.4-4.8z"
+                    fill="currentColor"
+                />
+
+                <path
+                    d="m10 9 5 3-5 3V9z"
+                    fill="white"
+                />
+
+            </svg>
+
+        </a>
+
+
     </div>
 
+
+    <!-- COPYRIGHT -->
+
+    <div class="customer-footer-copy">
+
+        © 2026 HelpMe Doorstep | All Rights Reserved
+
+    </div>
+
+
 </footer>
-    
+
+
 </body>
+
 </html>
