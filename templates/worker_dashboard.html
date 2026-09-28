@@ -1306,57 +1306,82 @@
                 </div>
 
 
-                <!-- MOBILE STATUS -->
+               <!-- MOBILE STATUS -->
 
-                {% if r.status != "Completed" %}
+{% if r.status != "Completed" %}
 
-                <div class="mobile-status">
+<div class="mobile-status">
 
-                    <form
-                        method="post"
-                        action="/worker/status/{{ r.id }}"
-                    >
-                    
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    
-                        {% if r.status == "In Progress" %}
+    <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    ">
 
-                            <input
-                                type="hidden"
-                                name="status"
-                                value="Completed"
-                            >
+        <!-- IN PROGRESS -->
 
-                            <button
-                                class="status-btn completed-btn"
-                                type="submit"
-                            >
-                                ✅ Mark as Completed
-                            </button>
+        <form
+            method="post"
+            action="/worker/status/{{ r.id }}"
+        >
 
-                        {% else %}
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
 
-                            <input
-                                type="hidden"
-                                name="status"
-                                value="In Progress"
-                            >
+            <input
+                type="hidden"
+                name="status"
+                value="In Progress"
+            >
 
-                            <button
-                                class="status-btn progress-btn"
-                                type="submit"
-                            >
-                                🔄 Start / In Progress
-                            </button>
+            <button
+                class="status-btn progress-btn"
+                type="submit"
+                style="width:100%;min-height:44px;"
+            >
+                🔄 In Progress
+            </button>
 
-                        {% endif %}
+        </form>
 
-                    </form>
 
-                </div>
+        <!-- COMPLETED -->
 
-                {% endif %}
+        <form
+            method="post"
+            action="/worker/status/{{ r.id }}"
+        >
 
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <input
+                type="hidden"
+                name="status"
+                value="Completed"
+            >
+
+            <button
+                class="status-btn completed-btn"
+                type="submit"
+                style="width:100%;min-height:44px;"
+            >
+                ✅ Completed
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endif %}
             </article>
 
         {% endfor %}
