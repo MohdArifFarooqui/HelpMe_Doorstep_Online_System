@@ -1575,6 +1575,35 @@ def home():
 @app.get("/service")
 def service():
     return render_template("service.html")
+
+@app.get("/status")
+def application_status():
+    phone = request.args.get("phone", "").strip()
+
+    requests = []
+    notifications = []
+
+    if phone:
+        requests = (
+            DB.query(RequestItem)
+            .filter(RequestItem.phone == phone)
+            .order_by(RequestItem.created_at.desc())
+            .all()
+        )
+
+        notifications = (
+            DB.query(Notification)
+            .filter(Notification.customer_phone == phone)
+            .order_by(Notification.created_at.desc())
+            .all()
+        )
+
+    return render_template(
+        "status.html",
+        requests=requests,
+        notifications=notifications
+    )
+
 @app.post("/request-service")
 def add():
     csrf.protect()
