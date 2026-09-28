@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>District Admin Dashboard - HelpMe Doorstep</title>
+
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -13,129 +16,47 @@ html,
 body{
     margin:0;
     padding:0;
+    width:100%;
     min-height:100%;
     font-family:Arial,"Noto Sans Devanagari",sans-serif;
 }
 
 body{
-    min-height:100vh;
     color:#173f36;
-
     background:
-        radial-gradient(
-            circle at 8% 10%,
-            rgba(255,255,255,.95) 0 7%,
-            transparent 8%
-        ),
-        radial-gradient(
-            circle at 92% 14%,
-            rgba(255,255,255,.80) 0 9%,
-            transparent 10%
-        ),
         linear-gradient(
             135deg,
-            #eafcff 0%,
-            #f5fffb 45%,
-            #e9f4ff 100%
+            #eefcff 0%,
+            #f7fffc 48%,
+            #edf6ff 100%
         );
-
-    position:relative;
     overflow-x:hidden;
 }
 
 
-/* =================================
-   PROFESSIONAL BACKGROUND WAVES
-   ================================= */
-
-body::before{
-    content:"";
-
-    position:fixed;
-
-    left:-15%;
-    top:110px;
-
-    width:130%;
-    height:380px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(71,201,174,.18),
-            rgba(74,174,255,.14),
-            rgba(255,255,255,.18)
-        );
-
-    border-radius:
-        50% 50% 45% 55%;
-
-    transform:rotate(-4deg);
-
-    z-index:0;
-
-    pointer-events:none;
-}
-
-body::after{
-    content:"";
-
-    position:fixed;
-
-    right:-20%;
-    bottom:-140px;
-
-    width:120%;
-    height:340px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(32,181,143,.10),
-            rgba(61,157,255,.13)
-        );
-
-    border-radius:
-        55% 45% 0 0;
-
-    transform:rotate(4deg);
-
-    z-index:0;
-
-    pointer-events:none;
-}
-
-
-/* =================================
-   TOP HEADER
-   ================================= */
+/* ==============================
+   HEADER
+   ============================== */
 
 .topbar{
     position:relative;
-    z-index:5;
+    z-index:10;
 
     width:100%;
 
-    padding:
-        14px
-        4%;
+    padding:13px 4%;
 
-    background:
-        rgba(255,255,255,.97);
+    background:rgba(255,255,255,.98);
 
-    border-bottom:
-        1px solid
-        rgba(29,120,105,.13);
+    border-bottom:1px solid #dce9e5;
 
     box-shadow:
-        0 7px 25px
-        rgba(24,75,70,.10);
+        0 6px 24px
+        rgba(20,80,70,.10);
 
     display:flex;
-
-    justify-content:space-between;
-
     align-items:center;
+    justify-content:space-between;
 
     gap:18px;
 
@@ -143,16 +64,13 @@ body::after{
 }
 
 
-/* =================================
-   BRAND + LOGO
-   ================================= */
+/* BRAND */
 
 .brand{
     display:flex;
-
     align-items:center;
 
-    gap:14px;
+    gap:13px;
 
     min-width:0;
 }
@@ -161,60 +79,55 @@ body::after{
     width:76px;
     height:76px;
 
-    padding:4px;
-
     object-fit:contain;
-
-    border-radius:50%;
 
     background:#fff;
 
-    border:
-        1px solid
-        #dcebe7;
+    border-radius:14px;
+
+    padding:4px;
+
+    border:1px solid #dce9e5;
 
     box-shadow:
-        0 8px 22px
-        rgba(25,87,77,.15);
+        0 7px 18px
+        rgba(20,80,70,.12);
 
-    flex:0 0 76px;
+    flex-shrink:0;
+}
+
+.brand-text{
+    min-width:0;
 }
 
 .brand h1{
     margin:0;
 
-    color:#0d5748;
+    color:#075b4b;
 
-    font-size:27px;
-
-    line-height:1.2;
+    font-size:25px;
 
     font-weight:900;
+
+    line-height:1.2;
 }
 
 .brand p{
-    margin:
-        5px
-        0
-        0;
+    margin:5px 0 0;
 
-    color:#657872;
+    color:#667873;
 
-    font-size:13px;
+    font-size:12px;
 
     line-height:1.4;
 }
 
 
-/* =================================
-   NAVIGATION
-   ================================= */
+/* NAV */
 
 .nav{
     display:flex;
-
     align-items:center;
-
     justify-content:flex-end;
 
     gap:8px;
@@ -223,33 +136,26 @@ body::after{
 }
 
 .btn{
-    display:inline-flex;
+    min-height:42px;
 
-    align-items:center;
-
-    justify-content:center;
-
-    min-height:43px;
-
-    padding:
-        10px
-        15px;
+    padding:9px 14px;
 
     border:0;
 
-    border-radius:12px;
+    border-radius:11px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 
     text-decoration:none;
 
-    font-size:13px;
-
+    font-size:12px;
     font-weight:800;
 
     cursor:pointer;
 
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease;
+    transition:.18s ease;
 }
 
 .btn:hover{
@@ -257,15 +163,13 @@ body::after{
 }
 
 .btn-home{
-    background:#eaf7f3;
-
-    color:#11644f;
+    background:#e9f7f3;
+    color:#126450;
 }
 
 .btn-status{
     background:#eaf3ff;
-
-    color:#1764a0;
+    color:#17639b;
 }
 
 .btn-danger{
@@ -279,60 +183,52 @@ body::after{
     color:#fff;
 
     box-shadow:
-        0 7px 16px
+        0 6px 15px
         rgba(198,40,40,.18);
 }
 
 
-/* =================================
-   MAIN CONTAINER
-   ================================= */
+/* ==============================
+   MAIN
+   ============================== */
 
 .container{
-    position:relative;
-
-    z-index:2;
-
     width:94%;
+    max-width:1450px;
 
-    max-width:1440px;
+    margin:22px auto 45px;
 
-    margin:
-        24px
-        auto
-        50px;
+    position:relative;
+    z-index:2;
 }
 
 
-/* =================================
-   DISTRICT SCOPE
-   ================================= */
+/* ==============================
+   DISTRICT SCOPE CARD
+   ============================== */
 
 .scope{
     position:relative;
-
     overflow:hidden;
+
+    padding:24px 26px;
+
+    margin-bottom:18px;
+
+    color:#fff;
+
+    border-radius:22px;
 
     background:
         linear-gradient(
             135deg,
-            #0d8171,
-            #095f55
+            #0b8170,
+            #075e52
         );
 
-    color:#fff;
-
-    border-radius:23px;
-
-    padding:
-        25px
-        28px;
-
-    margin-bottom:20px;
-
     box-shadow:
-        0 13px 32px
-        rgba(13,102,91,.18);
+        0 13px 30px
+        rgba(8,100,85,.18);
 }
 
 .scope::after{
@@ -340,11 +236,11 @@ body::after{
 
     position:absolute;
 
-    width:270px;
-    height:270px;
+    width:280px;
+    height:280px;
 
-    right:-80px;
-    top:-135px;
+    right:-100px;
+    top:-145px;
 
     border-radius:50%;
 
@@ -354,148 +250,19 @@ body::after{
 
 .scope h2{
     position:relative;
-
     z-index:1;
 
-    margin:
-        0
-        0
-        9px;
+    margin:0 0 9px;
 
-    font-size:27px;
-
-    line-height:1.2;
+    font-size:25px;
+    font-weight:900;
 }
 
 .scope p{
     position:relative;
-
     z-index:1;
 
-    margin:
-        5px
-        0;
-
-    font-size:14px;
-
-    line-height:1.5;
-
-    opacity:.96;
-}
-
-
-/* =================================
-   STATISTICS
-   ================================= */
-
-.stats{
-    display:grid;
-
-    grid-template-columns:
-        repeat(5,1fr);
-
-    gap:14px;
-
-    margin-bottom:20px;
-}
-
-.stat{
-    background:
-        rgba(255,255,255,.98);
-
-    border:
-        1px solid
-        #dce9e5;
-
-    border-radius:18px;
-
-    padding:
-        19px
-        12px;
-
-    text-align:center;
-
-    box-shadow:
-        0 8px 23px
-        rgba(22,91,72,.07);
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease;
-}
-
-.stat:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 12px 28px
-        rgba(22,91,72,.10);
-}
-
-.stat .n{
-    font-size:32px;
-
-    font-weight:900;
-
-    line-height:1.1;
-
-    color:#0d7564;
-}
-
-.stat .l{
-    margin-top:7px;
-
-    color:#61766f;
-
-    font-size:12px;
-
-    font-weight:800;
-}
-
-
-/* =================================
-   CONTENT SECTIONS
-   ================================= */
-
-.section{
-    background:
-        rgba(255,255,255,.98);
-
-    border:
-        1px solid
-        #dce9e5;
-
-    border-radius:22px;
-
-    padding:22px;
-
-    margin-bottom:20px;
-
-    box-shadow:
-        0 8px 25px
-        rgba(22,91,72,.07);
-}
-
-.section h2{
-    margin:
-        0
-        0
-        7px;
-
-    color:#154e43;
-
-    font-size:22px;
-
-    line-height:1.3;
-}
-
-.hint{
-    margin:
-        0
-        0
-        17px;
-
-    color:#6a7c76;
+    margin:5px 0;
 
     font-size:13px;
 
@@ -503,20 +270,121 @@ body::after{
 }
 
 
-/* =================================
-   DESKTOP TABLE
-   ================================= */
+/* ==============================
+   STAT CARDS
+   ============================== */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:13px;
+
+    margin-bottom:20px;
+}
+
+.stat{
+    padding:18px 10px;
+
+    background:#fff;
+
+    border:1px solid #dce9e5;
+
+    border-radius:17px;
+
+    text-align:center;
+
+    box-shadow:
+        0 7px 20px
+        rgba(22,91,72,.07);
+
+    transition:.18s ease;
+}
+
+.stat:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 11px 25px
+        rgba(22,91,72,.11);
+}
+
+.stat-number{
+    color:#087663;
+
+    font-size:30px;
+
+    line-height:1.1;
+
+    font-weight:900;
+}
+
+.stat-label{
+    margin-top:6px;
+
+    color:#61746e;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+
+/* ==============================
+   SECTION CARD
+   ============================== */
+
+.section{
+    margin-bottom:20px;
+
+    padding:21px;
+
+    background:#fff;
+
+    border:1px solid #dce9e5;
+
+    border-radius:21px;
+
+    box-shadow:
+        0 7px 23px
+        rgba(22,91,72,.07);
+}
+
+.section-title{
+    margin:0;
+
+    color:#154e43;
+
+    font-size:21px;
+
+    font-weight:900;
+}
+
+.section-description{
+    margin:6px 0 17px;
+
+    color:#6a7b76;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+
+/* ==============================
+   TABLE
+   ============================== */
 
 .table-wrap{
     width:100%;
 
     overflow-x:auto;
 
-    border:
-        1px solid
-        #e0ebe8;
+    border:1px solid #e0ebe8;
 
-    border-radius:16px;
+    border-radius:15px;
 
     background:#fff;
 }
@@ -532,14 +400,12 @@ body::after{
 }
 
 .table th{
-    padding:
-        14px
-        12px;
+    padding:13px 11px;
 
     background:
         linear-gradient(
             180deg,
-            #f2f8f6,
+            #f3f9f7,
             #eaf4f1
         );
 
@@ -547,44 +413,30 @@ body::after{
 
     text-align:left;
 
-    font-size:12px;
+    font-size:11px;
 
     font-weight:900;
 
     white-space:nowrap;
 
-    border-bottom:
-        1px solid
-        #dce9e5;
-}
-
-.table th:first-child{
-    border-top-left-radius:15px;
-}
-
-.table th:last-child{
-    border-top-right-radius:15px;
+    border-bottom:1px solid #dce9e5;
 }
 
 .table td{
-    padding:
-        13px
-        12px;
+    padding:12px 11px;
 
     color:#334e48;
 
-    font-size:13px;
-
-    line-height:1.45;
+    font-size:12px;
 
     vertical-align:top;
 
-    border-bottom:
-        1px solid
-        #e9efed;
+    line-height:1.45;
+
+    border-bottom:1px solid #e9efed;
 }
 
-.table tbody tr:last-child td{
+.table tr:last-child td{
     border-bottom:0;
 }
 
@@ -593,11 +445,11 @@ body::after{
 }
 
 
-/* =================================
+/* ==============================
    APPLICATION CODE
-   ================================= */
+   ============================== */
 
-.code{
+.application-code{
     color:#087b68;
 
     font-weight:900;
@@ -606,22 +458,19 @@ body::after{
 }
 
 
-/* =================================
-   STATUS PILL
-   ================================= */
+/* ==============================
+   STATUS
+   ============================== */
 
-.pill{
+.status-pill{
     display:inline-flex;
 
     align-items:center;
-
     justify-content:center;
 
-    min-height:29px;
+    min-height:28px;
 
-    padding:
-        5px
-        11px;
+    padding:5px 10px;
 
     border-radius:999px;
 
@@ -629,7 +478,7 @@ body::after{
 
     color:#08705d;
 
-    font-size:11px;
+    font-size:10px;
 
     font-weight:900;
 
@@ -637,55 +486,42 @@ body::after{
 }
 
 
-/* =================================
-   ASSIGN WORKER
-   ================================= */
+/* ==============================
+   ASSIGN FORM
+   ============================== */
 
-.form-row{
+.assign-form{
     display:flex;
 
     align-items:center;
 
-    gap:7px;
-}
-
-.form-row form{
-    display:flex;
-
-    align-items:center;
-
-    gap:7px;
+    gap:6px;
 
     width:100%;
 }
 
-select{
-    min-height:41px;
-
+.assign-form select{
     width:100%;
+    min-width:170px;
 
-    min-width:185px;
+    min-height:40px;
 
-    padding:
-        8px
-        11px;
+    padding:8px 10px;
 
-    border:
-        1px solid
-        #cbdcd6;
+    border:1px solid #cbdcd6;
 
-    border-radius:10px;
+    border-radius:9px;
 
     background:#fff;
 
     color:#244b43;
 
-    font-size:12px;
+    font-size:11px;
 
     outline:none;
 }
 
-select:focus{
+.assign-form select:focus{
     border-color:#159d79;
 
     box-shadow:
@@ -693,16 +529,14 @@ select:focus{
         rgba(21,157,121,.10);
 }
 
-.assign{
-    min-height:41px;
+.assign-button{
+    min-height:40px;
 
-    padding:
-        9px
-        15px;
+    padding:8px 14px;
 
     border:0;
 
-    border-radius:10px;
+    border-radius:9px;
 
     background:
         linear-gradient(
@@ -713,32 +547,26 @@ select:focus{
 
     color:#fff;
 
-    font-size:12px;
+    font-size:11px;
 
     font-weight:900;
 
     cursor:pointer;
 
     white-space:nowrap;
-
-    box-shadow:
-        0 6px 15px
-        rgba(21,157,121,.18);
 }
 
-.assign:hover{
+.assign-button:hover{
     transform:translateY(-1px);
 }
 
 
-/* =================================
-   EMPTY STATE
-   ================================= */
+/* ==============================
+   EMPTY
+   ============================== */
 
 .empty{
-    padding:
-        38px
-        15px;
+    padding:35px 15px;
 
     text-align:center;
 
@@ -746,19 +574,117 @@ select:focus{
 
     background:#fbfefd;
 
-    border:
-        1px dashed
-        #d5e5e0;
+    border:1px dashed #d5e5e0;
 
     border-radius:15px;
 
-    font-size:14px;
+    font-size:13px;
 }
 
 
-/* =================================
+/* ==============================
+   FOOTER
+   ============================== */
+
+.district-footer{
+    width:100%;
+
+    margin-top:25px;
+
+    padding:24px 15px 17px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #063f35,
+            #0b6b59
+        );
+
+    color:#fff;
+
+    border-radius:18px 18px 0 0;
+}
+
+.district-footer strong{
+    display:block;
+
+    margin-bottom:7px;
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.footer-follow{
+    margin:8px 0;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+.social{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:11px;
+
+    margin:9px 0 14px;
+
+    flex-wrap:wrap;
+}
+
+.social a{
+    width:41px;
+    height:41px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:#126b57;
+
+    text-decoration:none;
+
+    transition:.18s ease;
+}
+
+.social a:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 6px 14px
+        rgba(0,0,0,.18);
+}
+
+.social svg{
+    width:20px;
+    height:20px;
+
+    fill:currentColor;
+}
+
+.copyright{
+    margin-top:4px;
+
+    font-size:11px;
+
+    opacity:.9;
+}
+
+
+/* ==============================
    TABLET
-   ================================= */
+   ============================== */
 
 @media(max-width:1000px){
 
@@ -779,118 +705,105 @@ select:focus{
 }
 
 
-/* =================================
+/* ==============================
    MOBILE
-   ================================= */
+   ============================== */
 
 @media(max-width:700px){
 
     .topbar{
-        padding:
-            12px
-            12px
-            14px;
+        padding:11px 12px 13px;
     }
 
     .brand{
         width:100%;
 
-        gap:11px;
+        gap:10px;
     }
 
     .brand img{
         width:60px;
         height:60px;
-
-        flex:0 0 60px;
     }
 
     .brand h1{
-        font-size:21px;
+        font-size:20px;
     }
 
     .brand p{
-        font-size:11px;
+        font-size:10px;
     }
 
     .nav{
+        width:100%;
+
         display:grid;
 
         grid-template-columns:
-            1fr
-            1fr;
+            1fr 1fr;
 
         gap:7px;
-
-        width:100%;
     }
 
-    .nav .btn,
     .nav form{
         width:100%;
     }
 
+    .nav .btn,
     .nav form button{
         width:100%;
     }
 
     .btn{
-        min-height:41px;
+        min-height:40px;
 
-        padding:
-            9px
-            8px;
+        padding:8px 6px;
 
-        font-size:11px;
+        font-size:10px;
     }
 
     .container{
         width:94%;
 
         margin:
-            14px
+            13px
             auto
-            35px;
+            32px;
     }
 
     .scope{
-        padding:
-            18px
-            16px;
+        padding:18px 15px;
 
         border-radius:18px;
     }
 
     .scope h2{
-        font-size:21px;
+        font-size:20px;
     }
 
     .scope p{
-        font-size:12px;
+        font-size:11px;
     }
 
     .stats{
         grid-template-columns:
-            1fr
-            1fr;
+            1fr 1fr;
 
         gap:9px;
     }
 
     .stat{
-        padding:
-            15px
-            8px;
+        padding:14px 7px;
 
         border-radius:15px;
     }
 
-    .stat .n{
-        font-size:26px;
+    .stat-number{
+        font-size:25px;
     }
 
-    .stat .l{
-        font-size:10px;
+    .stat-label{
+        font-size:9px;
     }
 
     .section{
@@ -899,16 +812,17 @@ select:focus{
         border-radius:18px;
     }
 
-    .section h2{
-        font-size:19px;
+    .section-title{
+        font-size:18px;
     }
 
-    .hint{
-        font-size:12px;
+    .section-description{
+        font-size:11px;
     }
 
 
-    /* Mobile cards */
+    /* MOBILE REQUEST CARDS */
+
     .table-wrap{
         overflow:visible;
 
@@ -927,23 +841,22 @@ select:focus{
         display:none;
     }
 
-    .table tbody,
-    .table tr{
+    .table tbody{
         display:block;
 
         width:100%;
     }
 
     .table tr{
+        display:block;
+
+        width:100%;
+
         margin-bottom:11px;
 
-        padding:
-            9px
-            10px;
+        padding:9px;
 
-        border:
-            1px solid
-            #dfeae6;
+        border:1px solid #dfeae6;
 
         border-radius:15px;
 
@@ -958,24 +871,20 @@ select:focus{
         display:grid;
 
         grid-template-columns:
-            37%
-            63%;
+            36%
+            64%;
 
         width:100%;
 
         min-width:0;
 
-        padding:
-            8px
-            2px;
+        padding:8px 2px;
 
-        font-size:12px;
+        font-size:11px;
 
         overflow-wrap:anywhere;
 
-        border-bottom:
-            1px solid
-            #eef2f1;
+        border-bottom:1px solid #eef2f1;
     }
 
     .table td::before{
@@ -983,106 +892,109 @@ select:focus{
 
         font-weight:900;
 
-        padding-right:6px;
+        padding-right:5px;
     }
 
-    .table td:nth-child(1)::before{
+    .request-table .table td:nth-child(1)::before{
         content:"Application";
     }
 
-    .table td:nth-child(2)::before{
+    .request-table .table td:nth-child(2)::before{
         content:"Customer";
     }
 
-    .table td:nth-child(3)::before{
+    .request-table .table td:nth-child(3)::before{
         content:"Age";
     }
 
-    .table td:nth-child(4)::before{
+    .request-table .table td:nth-child(4)::before{
         content:"Mobile";
     }
 
-    .table td:nth-child(5)::before{
+    .request-table .table td:nth-child(5)::before{
         content:"Service";
     }
 
-    .table td:nth-child(6)::before{
+    .request-table .table td:nth-child(6)::before{
         content:"Address";
     }
 
-    .table td:nth-child(7)::before{
+    .request-table .table td:nth-child(7)::before{
         content:"Status";
     }
 
-    .table td:nth-child(8)::before{
+    .request-table .table td:nth-child(8)::before{
         content:"Worker";
     }
 
-    .table td:nth-child(9)::before{
+    .request-table .table td:nth-child(9)::before{
         content:"Action";
+    }
+
+
+    /* WORKER TABLE */
+
+    .worker-table .table td:nth-child(1)::before{
+        content:"Name";
+    }
+
+    .worker-table .table td:nth-child(2)::before{
+        content:"Mobile";
+    }
+
+    .worker-table .table td:nth-child(3)::before{
+        content:"Center";
+    }
+
+    .worker-table .table td:nth-child(4)::before{
+        content:"Status";
+    }
+
+    .worker-table .table td:nth-child(5)::before{
+        content:"Approval";
     }
 
     .table td:last-child{
         border-bottom:0;
     }
 
-    .form-row,
-    .form-row form{
+    .assign-form{
         display:grid;
 
         grid-template-columns:
-            1fr
-            auto;
-
-        width:100%;
+            1fr auto;
 
         gap:6px;
     }
 
-    .form-row select{
+    .assign-form select{
         min-width:0;
-
-        width:100%;
     }
 
-    .assign{
+    .assign-button{
+        padding:8px 10px;
+    }
+
+    .district-footer{
+        margin-top:20px;
+
         padding:
-            9px
-            11px;
-    }
+            21px
+            12px
+            15px;
 
-
-    /* Worker cards */
-    .worker-table
-    .table td:nth-child(1)::before{
-        content:"Name";
-    }
-
-    .worker-table
-    .table td:nth-child(2)::before{
-        content:"Mobile";
-    }
-
-    .worker-table
-    .table td:nth-child(3)::before{
-        content:"Center";
-    }
-
-    .worker-table
-    .table td:nth-child(4)::before{
-        content:"Status";
-    }
-
-    .worker-table
-    .table td:nth-child(5)::before{
-        content:"Approval";
+        border-radius:
+            16px
+            16px
+            0
+            0;
     }
 }
 
 
-/* =================================
-   VERY SMALL MOBILE
-   ================================= */
+/* ==============================
+   SMALL MOBILE
+   ============================== */
 
 @media(max-width:380px){
 
@@ -1090,181 +1002,594 @@ select:focus{
         grid-template-columns:1fr;
     }
 
-    .stats{
-        grid-template-columns:
-            1fr
-            1fr;
-    }
-
     .table td{
         grid-template-columns:
             34%
             66%;
 
-        font-size:11.5px;
-    }
-}
-/* ================= DISTRICT ADMIN FOOTER ================= */
-
-.district-footer{
-    width:100%;
-    margin-top:30px;
-    padding:25px 15px 18px;
-    text-align:center;
-    background:linear-gradient(135deg,#063f35,#0b6b59);
-    color:#ffffff;
-    border-radius:18px 18px 0 0;
-    box-sizing:border-box;
-}
-
-.district-footer strong{
-    display:block;
-    font-size:18px;
-    font-weight:800;
-    margin-bottom:8px;
-}
-
-.district-footer-social-title{
-    font-size:13px;
-    font-weight:700;
-    margin:10px 0;
-}
-
-.district-footer-social{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-    margin:8px 0 15px;
-    flex-wrap:wrap;
-}
-
-.district-footer-social a{
-    width:42px;
-    height:42px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:#ffffff;
-    color:#126b57;
-    border:1px solid rgba(255,255,255,.7);
-    text-decoration:none;
-    transition:.2s ease;
-}
-
-.district-footer-social a:hover{
-    transform:translateY(-2px);
-    box-shadow:0 6px 14px rgba(0,0,0,.18);
-}
-
-.district-footer-social svg{
-    width:20px;
-    height:20px;
-    display:block;
-    fill:currentColor;
-}
-
-.district-footer-copy{
-    font-size:12px;
-    opacity:.9;
-    margin-top:5px;
-}
-
-@media(max-width:700px){
-    .district-footer{
-        margin-top:22px;
-        padding:22px 12px 16px;
-        border-radius:16px 16px 0 0;
-    }
-
-    .district-footer-social{
-        gap:10px;
-    }
-
-    .district-footer-social a{
-        width:40px;
-        height:40px;
+        font-size:10.5px;
     }
 }
 
 </style>
 </head>
+
+
 <body>
+
+
+<!-- ==============================
+     HEADER
+     ============================== -->
+
 <header class="topbar">
-<div class="brand"><img src="/static/helpme-doorstep-flat-logo.png.jpeg" alt="HelpMe Doorstep Logo"><div><h1>District Admin Dashboard</h1><p>District level Customer Requests & Worker Management</p></div></div>
-<div class="nav"><a class="btn btn-home" href="/">🏠 Home</a><a class="btn btn-status" href="/status">📋 Customer Status</a><form method="post" action="/admin/logout" style="margin:0"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-danger" type="submit">🚪 Logout</button></form></div>
+
+    <div class="brand">
+
+        <img
+            src="/static/helpme-doorstep-flat-logo.png.jpeg"
+            alt="HelpMe Doorstep Logo"
+        >
+
+        <div class="brand-text">
+
+            <h1>
+                District Admin Dashboard
+            </h1>
+
+            <p>
+                District Customer Requests & Worker Management
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav">
+
+        <a
+            class="btn btn-home"
+            href="/"
+        >
+            🏠 Home
+        </a>
+
+
+        <a
+            class="btn btn-status"
+            href="/status"
+        >
+            📋 Customer Status
+        </a>
+
+
+        <form
+            method="post"
+            action="/admin/logout"
+            style="margin:0"
+        >
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <button
+                class="btn btn-danger"
+                type="submit"
+            >
+                🚪 Logout
+            </button>
+
+        </form>
+
+    </div>
+
 </header>
+
+
+
 <main class="container">
-<section class="scope"><h2>📍 {{ admin.district or "District" }}, {{ admin.state or "State" }}</h2><p><strong>Admin Code:</strong> {{ admin.admin_code }}</p><p><strong>Access:</strong> केवल आपके District के Customer Requests और Workers</p></section>
-<section class="stats">
-<div class="stat"><div class="n">{{ requests|length }}</div><div class="l">Total Requests</div></div>
-<div class="stat"><div class="n">{{ pending_count }}</div><div class="l">Pending</div></div>
-<div class="stat"><div class="n">{{ assigned_count }}</div><div class="l">Assigned</div></div>
-<div class="stat"><div class="n">{{ progress_count }}</div><div class="l">In Progress</div></div>
-<div class="stat"><div class="n">{{ completed_count }}</div><div class="l">Completed</div></div>
+
+
+<!-- ==============================
+     DISTRICT INFORMATION
+     ============================== -->
+
+<section class="scope">
+
+    <h2>
+        📍 {{ admin.district or "District" }},
+        {{ admin.state or "State" }}
+    </h2>
+
+    <p>
+        <strong>Admin Code:</strong>
+        {{ admin.admin_code }}
+    </p>
+
+    <p>
+        <strong>Access:</strong>
+        केवल आपके District के Customer Requests और Workers
+    </p>
+
 </section>
-<section class="section"><h2>📋 District Customer Requests</h2><p class="hint">इस सूची में केवल आपके State और District के applications दिखाई देंगे।</p>
-{% if requests %}<div class="table-wrap"><table class="table"><thead><tr><th>Application</th><th>Customer</th><th>Age</th><th>Mobile</th><th>Service</th><th>Address</th><th>Status</th><th>Worker</th><th>Action</th></tr></thead><tbody>
-{% for r in requests %}<tr><td><span class="code">{{ r.application_code }}</span></td><td>{{ r.customer }}</td><td>{{ r.age }}</td><td>{{ r.phone }}</td><td>{{ r.service }}</td><td>{{ r.address }}</td><td><span class="pill">{{ r.status }}</span></td><td>{% if r.assigned_worker_id %}Assigned{% else %}Not Assigned{% endif %}</td><td><div class="form-row"><form method="post" action="/admin/assign/{{ r.id }}" style="display:flex;gap:6px;width:100%"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><select name="worker_id" required><option value="">Worker Select</option>{% for w in workers %}<option value="{{ w.id }}" {% if r.assigned_worker_id == w.id %}selected{% endif %}>{{ w.name or w.mobile }}</option>{% endfor %}</select><button class="assign" type="submit">Assign</button></form></div></td></tr>{% endfor %}
-</tbody></table></div>{% else %}<div class="empty">इस District में अभी कोई Customer Request नहीं है।</div>{% endif %}</section>
-<section class="section worker-table"><h2>👷 District Workers</h2><p class="hint">केवल आपके District के active/approved workers।</p>
-{% if workers %}<div class="table-wrap"><table class="table"><thead><tr><th>Name</th><th>Mobile</th><th>Center</th><th>Status</th><th>Approval</th></tr></thead><tbody>{% for w in workers %}<tr><td>{{ w.name or "—" }}</td><td>{{ w.mobile }}</td><td>{{ w.center_name or "—" }}</td><td><span class="pill">{% if w.active %}Active{% else %}Inactive{% endif %}</span></td><td>{% if w.approved %}Approved{% else %}Pending{% endif %}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty">इस District में कोई Worker उपलब्ध नहीं है।</div>{% endif %}</section>
+
+
+
+<!-- ==============================
+     STATISTICS
+     ============================== -->
+
+<section class="stats">
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            {{ requests|length }}
+        </div>
+
+        <div class="stat-label">
+            Total Requests
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            {{ pending_count }}
+        </div>
+
+        <div class="stat-label">
+            Pending
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            {{ assigned_count }}
+        </div>
+
+        <div class="stat-label">
+            Assigned
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            {{ progress_count }}
+        </div>
+
+        <div class="stat-label">
+            In Progress
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            {{ completed_count }}
+        </div>
+
+        <div class="stat-label">
+            Completed
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ==============================
+     CUSTOMER REQUESTS
+     ============================== -->
+
+<section class="section request-table">
+
+    <h2 class="section-title">
+        📋 District Customer Requests
+    </h2>
+
+    <p class="section-description">
+        इस सूची में केवल आपके State और District के applications दिखाई देंगे।
+    </p>
+
+
+    {% if requests %}
+
+    <div class="table-wrap">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Application</th>
+                    <th>Customer</th>
+                    <th>Age</th>
+                    <th>Mobile</th>
+                    <th>Service</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Worker</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for r in requests %}
+
+                <tr>
+
+
+                    <td>
+
+                        <span class="application-code">
+
+                            {{ r.application_code }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ r.customer }}
+                    </td>
+
+
+                    <td>
+                        {{ r.age }}
+                    </td>
+
+
+                    <td>
+                        {{ r.phone }}
+                    </td>
+
+
+                    <td>
+                        {{ r.service }}
+                    </td>
+
+
+                    <td>
+                        {{ r.address }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="status-pill">
+
+                            {{ r.status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        {% if r.assigned_worker_id %}
+
+                            Assigned
+
+                        {% else %}
+
+                            Not Assigned
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <form
+                            class="assign-form"
+                            method="post"
+                            action="/admin/assign/{{ r.id }}"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
+
+                            <select
+                                name="worker_id"
+                                required
+                            >
+
+                                <option value="">
+                                    Worker Select
+                                </option>
+
+
+                                {% for w in workers %}
+
+                                <option
+                                    value="{{ w.id }}"
+                                    {% if r.assigned_worker_id == w.id %}
+                                    selected
+                                    {% endif %}
+                                >
+
+                                    {{ w.name or w.mobile }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+
+                            <button
+                                class="assign-button"
+                                type="submit"
+                            >
+                                Assign
+                            </button>
+
+                        </form>
+
+                    </td>
+
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+        <div class="empty">
+
+            इस District में अभी कोई Customer Request नहीं है।
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- ==============================
+     DISTRICT WORKERS
+     ============================== -->
+
+<section class="section worker-table">
+
+    <h2 class="section-title">
+        👷 District Workers
+    </h2>
+
+    <p class="section-description">
+        केवल आपके District के active/approved workers।
+    </p>
+
+
+    {% if workers %}
+
+    <div class="table-wrap">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Center</th>
+                    <th>Status</th>
+                    <th>Approval</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for w in workers %}
+
+                <tr>
+
+                    <td>
+                        {{ w.name or "—" }}
+                    </td>
+
+                    <td>
+                        {{ w.mobile }}
+                    </td>
+
+                    <td>
+                        {{ w.center_name or "—" }}
+                    </td>
+
+                    <td>
+
+                        <span class="status-pill">
+
+                            {% if w.active %}
+                                Active
+                            {% else %}
+                                Inactive
+                            {% endif %}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {% if w.approved %}
+                            Approved
+                        {% else %}
+                            Pending
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+        <div class="empty">
+
+            इस District में कोई Worker उपलब्ध नहीं है।
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
 </main>
+
+
+
+<!-- ==============================
+     FOOTER
+     ============================== -->
 
 <footer class="district-footer">
 
-    <strong>HelpMe Doorstep</strong>
+    <strong>
+        HelpMe Doorstep
+    </strong>
 
-    <div class="district-footer-social-title">
+
+    <div class="footer-follow">
         Follow Us
     </div>
 
-    <div class="district-footer-social">
 
-        <a href="https://www.instagram.com/helpmedoorstep?stkn=N3kxM3Ewa2RwaThu"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Instagram">
+    <div class="social">
+
+
+        <!-- INSTAGRAM -->
+
+        <a
+            href="https://www.instagram.com/helpmedoorstep/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+        >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zM17.5 6.2A1.3 1.3 0 1 1 16.2 7.5a1.3 1.3 0 0 1 1.3-1.3z"/>
+
             </svg>
+
         </a>
 
-        <a href="https://www.facebook.com/share/1Ge54p8ror/"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Facebook">
+
+        <!-- FACEBOOK -->
+
+        <a
+            href="https://www.facebook.com/share/16e54p8ror/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+        >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.7-1.6h1.8V4.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1V11H8v3h2.6v8h2.9z"/>
+
             </svg>
+
         </a>
 
-        <a href="https://t.me/HelpMeDoorstep"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Telegram">
+
+        <!-- TELEGRAM -->
+
+        <a
+            href="https://t.me/HelpMeDoorstep"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram"
+        >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M21.7 3.4 18.5 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L6 13.7l-4.9-1.5c-1.1-.3-1.1-1.1.2-1.6L20.5 2.1c.9-.3 1.7.2 1.2 1.3z"/>
+
             </svg>
+
         </a>
 
-        <a href="https://www.youtube.com/channel/UCldXDVHp8_yH8qnm0KjL5zQ"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="YouTube">
+
+        <!-- YOUTUBE -->
+
+        <a
+            href="https://www.youtube.com/channel/UC1dXDHp8_yH8qnmKjL5zQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+        >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/>
+
             </svg>
+
         </a>
+
 
     </div>
 
-    <div class="district-footer-copy">
+
+    <div class="copyright">
         © 2026 HelpMe Doorstep | All Rights Reserved
     </div>
 
-</footer>    
-    
+</footer>
+
+
 </body>
 </html>
