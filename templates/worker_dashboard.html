@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Worker Dashboard - HelpMe Doorstep</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -18,831 +26,1352 @@
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
+
             background:
-                radial-gradient(circle at 10% 10%, rgba(18,140,126,.12), transparent 28%),
-                radial-gradient(circle at 90% 20%, rgba(37,211,102,.10), transparent 25%),
-                linear-gradient(135deg, #eefaf7, #f7fbfa);
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(18,140,126,.10),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(37,211,102,.08),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eefaf7,
+                    #f7fbfa
+                );
+
             color: #183c36;
+
             min-height: 100vh;
+
             overflow-x: hidden;
         }
 
-        /* ================= HEADER ================= */
+
+        /* =========================
+           HEADER
+           ========================= */
 
         header {
+
             position: relative;
-            background: linear-gradient(135deg, #075e54, #128c7e);
-            color: white;
-            padding: 14px 22px;
+
+            min-height: 72px;
+
+            padding: 8px 16px;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #e1ece9;
+
+            box-shadow:
+                0 2px 12px rgba(15,55,95,.08);
+
             display: flex;
-            justify-content: space-between;
+
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,.15);
-            overflow: hidden;
+
+            justify-content: center;
+
+            z-index: 10;
         }
 
-        header::after {
-            content: "";
-            position: absolute;
-            width: 240px;
-            height: 240px;
-            right: -100px;
-            top: -160px;
-            border-radius: 50%;
-            background: rgba(255,255,255,.10);
-        }
 
         .brand-area {
+
+            width: 100%;
+
             display: flex;
+
             align-items: center;
-            gap: 15px;
+
+            justify-content: center;
+
             position: relative;
-            z-index: 2;
         }
+
 
         .brand-logo {
-            width: 175px;
-            max-width: 42vw;
+
+            width: 190px;
+
             height: 58px;
+
             object-fit: contain;
-            background: white;
-            border-radius: 10px;
-            padding: 5px 10px;
-        }
 
-        .brand-text h2 {
-            margin: 0;
-            font-size: 21px;
-        }
-
-        .brand-text p {
-            margin: 4px 0 0;
-            font-size: 13px;
-            opacity: .88;
-        }
-
-        .header-actions {
-            position: relative;
-            z-index: 2;
-        }
-
-        .logout {
-            background: white;
-            color: #075e54;
-            border: 0;
-            padding: 11px 18px;
-            border-radius: 11px;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 3px 10px rgba(0,0,0,.12);
-            transition: .2s;
-        }
-
-        .logout:hover {
-            transform: translateY(-1px);
-        }
-
-        /* ================= MAIN ================= */
-
-        .container {
-            width: min(1180px, 94%);
-            margin: 24px auto 40px;
-        }
-
-        /* ================= WELCOME ================= */
-
-        .welcome {
-            position: relative;
-            background: rgba(255,255,255,.95);
-            border-radius: 22px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 28px rgba(21,93,76,.09);
-            border: 1px solid rgba(18,140,126,.10);
-            overflow: hidden;
-        }
-
-        .welcome::before {
-            content: "";
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            right: -75px;
-            top: -85px;
-            border-radius: 50%;
-            background: rgba(18,140,126,.08);
-        }
-
-        .welcome h1 {
-            position: relative;
-            margin: 0 0 15px;
-            font-size: 29px;
-            color: #075e54;
-        }
-
-        .welcome-subtitle {
-            position: relative;
-            margin: 0 0 18px;
-            color: #61746f;
-            font-size: 15px;
-        }
-
-        .worker-info {
-            position: relative;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .info-item {
-            background: #f2faf8;
-            border: 1px solid #dceee9;
-            border-radius: 14px;
-            padding: 14px;
-        }
-
-        .info-label {
             display: block;
-            color: #6b7e79;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 5px;
         }
 
-        .info-value {
-            color: #173f38;
-            font-size: 16px;
-            font-weight: 800;
-            word-break: break-word;
-        }
 
-        /* ================= SUMMARY ================= */
+        .brand-text {
 
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 13px;
-            margin-bottom: 20px;
-        }
-
-        .summary-card {
-            background: white;
-            border-radius: 17px;
-            padding: 19px 12px;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(20,80,67,.08);
-            border: 1px solid #e5efec;
-        }
-
-        .summary-icon {
-            font-size: 22px;
-            margin-bottom: 4px;
-        }
-
-        .summary-number {
-            font-size: 29px;
-            font-weight: 900;
-            color: #075e54;
-        }
-
-        .summary-label {
-            margin-top: 5px;
-            color: #697b77;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        /* ================= REQUEST BOX ================= */
-
-        .requests-box {
-            background: rgba(255,255,255,.97);
-            border-radius: 22px;
-            padding: 24px;
-            box-shadow: 0 8px 28px rgba(21,93,76,.09);
-            border: 1px solid rgba(18,140,126,.10);
-        }
-
-        .section-heading {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 18px;
-        }
-
-        .section-heading h2 {
-            margin: 0;
-            color: #075e54;
-            font-size: 25px;
-        }
-
-        .live-badge {
-            background: #e9f8f3;
-            color: #08745f;
-            border: 1px solid #ccece3;
-            padding: 7px 11px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 800;
-            white-space: nowrap;
-        }
-
-        /* ================= DESKTOP TABLE ================= */
-
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            border: 1px solid #e2ece9;
-            border-radius: 15px;
-        }
-
-        .desktop-table {
-            width: 100%;
-            min-width: 1150px;
-            border-collapse: collapse;
-        }
-
-        .desktop-table th {
-            background: #e9f7f4;
-            color: #075e54;
-            padding: 14px;
-            text-align: left;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-
-        .desktop-table td {
-            padding: 14px;
-            border-bottom: 1px solid #edf2f0;
-            vertical-align: top;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .desktop-table tr:last-child td {
-            border-bottom: 0;
-        }
-
-        .desktop-table tbody tr:hover {
-            background: #fbfefd;
-        }
-
-        .application-id {
-            color: #075e54;
-            font-weight: 900;
-            white-space: nowrap;
-        }
-
-        .customer-name {
-            font-weight: 800;
-            color: #243f39;
-        }
-
-        .phone-number {
-            white-space: nowrap;
-            font-weight: 700;
-        }
-
-        .distance {
-            white-space: nowrap;
-            font-weight: 800;
-            color: #475d58;
-        }
-
-        /* ================= STATUS ================= */
-
-        .status {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 900;
-            white-space: nowrap;
-        }
-
-        .pending {
-            background: #fff4d8;
-            color: #a66a00;
-        }
-
-        .assigned {
-            background: #e5f0ff;
-            color: #1769aa;
-        }
-
-        .progress {
-            background: #f0e5fa;
-            color: #76369b;
-        }
-
-        .completed {
-            background: #e2f7e9;
-            color: #17733d;
-        }
-
-        .cancelled {
-            background: #fde7e5;
-            color: #b42318;
-        }
-
-        /* ================= ACTIONS ================= */
-
-        .action-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-            min-width: 205px;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 36px;
-            padding: 8px 11px;
-            border: 0;
-            border-radius: 9px;
-            color: white;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .call-action {
-            background: #128c7e;
-        }
-
-        .location-action {
-            background: #1976d2;
-        }
-
-        .whatsapp-action {
-            background: #25d366;
-        }
-
-        .progress-action {
-            background: #8e44ad;
-        }
-
-        .completed-action {
-            background: #188038;
-        }
-
-        .status-actions {
-            margin-top: 8px;
-            display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
-        }
-
-        .status-btn {
-            border: 0;
-            padding: 8px 10px;
-            border-radius: 9px;
-            color: white;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .progress-btn {
-            background: #8e44ad;
-        }
-
-        .completed-btn {
-            background: #188038;
-        }
-
-        /* ================= MOBILE CARDS ================= */
-
-        .mobile-cards {
             display: none;
         }
 
-        .request-card {
-            background: white;
-            border: 1px solid #dceae6;
-            border-radius: 18px;
-            padding: 17px;
-            margin-bottom: 13px;
-            box-shadow: 0 5px 18px rgba(22,91,72,.07);
+
+        .header-actions {
+
+            position: absolute;
+
+            right: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            z-index: 5;
         }
 
-        .request-card:last-child {
-            margin-bottom: 0;
+
+        .logout {
+
+            background: #ffffff;
+
+            color: #d63031;
+
+            border: 1px solid #ffd5d5;
+
+            padding: 9px 13px;
+
+            min-height: 44px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,.06);
         }
 
-        .request-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
+
+        /* =========================
+           MAIN
+           ========================= */
+
+        .container {
+
+            width: min(1180px, 94%);
+
+            margin: 18px auto 35px;
+        }
+
+
+        /* =========================
+           WELCOME
+           ========================= */
+
+        .welcome {
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eaf8f5,
+                    #f4fbff
+                );
+
+            border-radius: 22px;
+
+            padding: 24px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 8px 28px rgba(21,93,76,.08);
+
+            border: 1px solid #dcece8;
+
+            overflow: hidden;
+        }
+
+
+        .welcome::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 170px;
+
+            height: 170px;
+
+            right: -70px;
+
+            top: -70px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(18,140,126,.08);
+        }
+
+
+        .welcome h1 {
+
+            position: relative;
+
+            z-index: 1;
+
+            margin: 0 0 8px;
+
+            font-size: 28px;
+
             color: #075e54;
-            font-size: 18px;
-            font-weight: 900;
-            padding-bottom: 12px;
-            margin-bottom: 3px;
-            border-bottom: 1px solid #e8efed;
         }
 
-        .request-row {
+
+        .welcome-subtitle {
+
+            position: relative;
+
+            z-index: 1;
+
+            margin: 0 0 18px;
+
+            color: #61746f;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+        }
+
+
+        .worker-info {
+
+            position: relative;
+
+            z-index: 1;
+
             display: grid;
-            grid-template-columns: 38% 62%;
-            gap: 5px;
-            padding: 9px 0;
-            border-bottom: 1px solid #edf2f0;
-            font-size: 14px;
-            line-height: 1.45;
-            color: #4d615c;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .info-item {
+
+            background: #ffffff;
+
+            border: 1px solid #dceee9;
+
+            border-radius: 15px;
+
+            padding: 14px;
+        }
+
+
+        .info-label {
+
+            display: block;
+
+            color: #6b7e79;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .info-value {
+
+            color: #173f38;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
             word-break: break-word;
         }
 
-        .request-row strong {
-            color: #36554d;
-        }
 
-        .request-row:last-of-type {
-            border-bottom: 0;
-        }
+        /* =========================
+           SUMMARY
+           ========================= */
 
-        .mobile-actions {
+        .summary-grid {
+
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 13px;
+
+            grid-template-columns:
+                repeat(6, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 18px;
         }
 
-        .mobile-action-btn {
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 800;
+
+        .summary-card {
+
+            background: #ffffff;
+
+            border-radius: 16px;
+
+            padding: 16px 8px;
+
             text-align: center;
+
+            box-shadow:
+                0 6px 20px rgba(20,80,67,.07);
+
+            border: 1px solid #e5efec;
+        }
+
+
+        .summary-icon {
+
+            font-size: 21px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .summary-number {
+
+            font-size: 27px;
+
+            font-weight: 900;
+
+            color: #075e54;
+        }
+
+
+        .summary-label {
+
+            margin-top: 5px;
+
+            color: #697b77;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           REQUEST BOX
+           ========================= */
+
+        .requests-box {
+
+            background: rgba(255,255,255,.98);
+
+            border-radius: 22px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 8px 28px rgba(21,93,76,.08);
+
+            border: 1px solid #dcece8;
+        }
+
+
+        .section-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .section-heading h2 {
+
+            margin: 0;
+
+            color: #075e54;
+
+            font-size: 24px;
+        }
+
+
+        .live-badge {
+
+            background: #e9f8f3;
+
+            color: #08745f;
+
+            border: 1px solid #ccece3;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
             white-space: nowrap;
         }
 
-        .mobile-call {
+
+        /* =========================
+           DESKTOP TABLE
+           ========================= */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            border: 1px solid #e2ece9;
+
+            border-radius: 15px;
+        }
+
+
+        .desktop-table {
+
+            width: 100%;
+
+            min-width: 1150px;
+
+            border-collapse: collapse;
+        }
+
+
+        .desktop-table th {
+
+            background: #e9f7f4;
+
+            color: #075e54;
+
+            padding: 13px;
+
+            text-align: left;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+
+        .desktop-table td {
+
+            padding: 13px;
+
+            border-bottom:
+                1px solid #edf2f0;
+
+            vertical-align: top;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .desktop-table tr:last-child td {
+
+            border-bottom: 0;
+        }
+
+
+        .desktop-table tbody tr:hover {
+
+            background: #fbfefd;
+        }
+
+
+        .application-id {
+
+            color: #075e54;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+        }
+
+
+        .customer-name {
+
+            font-weight: 800;
+
+            color: #243f39;
+        }
+
+
+        .phone-number {
+
+            white-space: nowrap;
+
+            font-weight: 700;
+        }
+
+
+        .distance {
+
+            white-space: nowrap;
+
+            font-weight: 800;
+
+            color: #475d58;
+        }
+
+
+        /* =========================
+           STATUS
+           ========================= */
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+        }
+
+
+        .pending {
+
+            background: #fff4d8;
+
+            color: #a66a00;
+        }
+
+
+        .assigned {
+
+            background: #e5f0ff;
+
+            color: #1769aa;
+        }
+
+
+        .progress {
+
+            background: #f0e5fa;
+
+            color: #76369b;
+        }
+
+
+        .completed {
+
+            background: #e2f7e9;
+
+            color: #17733d;
+        }
+
+
+        .cancelled {
+
+            background: #fde7e5;
+
+            color: #b42318;
+        }
+
+
+        /* =========================
+           ACTIONS
+           ========================= */
+
+        .action-buttons {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            min-width: 210px;
+        }
+
+
+        .action-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 40px;
+
+            padding: 8px 11px;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+        }
+
+
+        .call-action {
+
             background: #128c7e;
         }
 
-        .mobile-location {
+
+        .location-action {
+
             background: #1976d2;
         }
 
-        .mobile-whatsapp {
+
+        .whatsapp-action {
+
             background: #25d366;
-            grid-column: 1 / -1;
-            font-size: 14px;
         }
 
-        .mobile-status {
-            margin-top: 9px;
+
+        .progress-action {
+
+            background: #8e44ad;
         }
 
-        .mobile-status form {
-            width: 100%;
+
+        .completed-action {
+
+            background: #188038;
         }
 
-        .mobile-status .status-btn {
-            width: 100%;
-            min-height: 44px;
+
+        .status-actions {
+
+            margin-top: 8px;
+
+            display: flex;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .status-btn {
+
+            border: 0;
+
+            min-height: 40px;
+
+            padding: 8px 10px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            font-size: 12px;
+        }
+
+
+        .progress-btn {
+
+            background: #8e44ad;
+        }
+
+
+        .completed-btn {
+
+            background: #188038;
+        }
+
+
+        /* =========================
+           MOBILE CARDS
+           ========================= */
+
+        .mobile-cards {
+
+            display: none;
+        }
+
+
+        .request-card {
+
+            background: #ffffff;
+
+            border: 1px solid #dceae6;
+
+            border-radius: 18px;
+
+            padding: 16px;
+
+            margin-bottom: 12px;
+
+            box-shadow:
+                0 5px 18px rgba(22,91,72,.07);
+        }
+
+
+        .request-title {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 8px;
+
+            color: #075e54;
+
+            font-size: 17px;
+
+            font-weight: 900;
+
+            padding-bottom: 11px;
+
+            margin-bottom: 3px;
+
+            border-bottom:
+                1px solid #e8efed;
+        }
+
+
+        .request-row {
+
+            display: grid;
+
+            grid-template-columns: 38% 62%;
+
+            gap: 5px;
+
+            padding: 9px 0;
+
+            border-bottom:
+                1px solid #edf2f0;
+
             font-size: 13px;
+
+            line-height: 1.45;
+
+            color: #4d615c;
+
+            word-break: break-word;
         }
 
-        /* ================= EMPTY ================= */
 
-        .empty {
-            text-align: center;
-            padding: 45px 20px;
-            color: #6c7e79;
-        }
+        .request-row strong {
 
-        .empty-icon {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
-
-        .empty h3 {
-            margin: 0 0 7px;
             color: #36554d;
         }
 
+
+        .request-row:last-of-type {
+
+            border-bottom: 0;
+        }
+
+
+        .mobile-actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 8px;
+
+            margin-top: 13px;
+        }
+
+
+        .mobile-action-btn {
+
+            min-height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-align: center;
+
+            white-space: nowrap;
+        }
+
+
+        .mobile-call {
+
+            background: #128c7e;
+        }
+
+
+        .mobile-location {
+
+            background: #1976d2;
+        }
+
+
+        .mobile-whatsapp {
+
+            background: #25d366;
+
+            grid-column: 1 / -1;
+
+            font-size: 13px;
+        }
+
+
+        .mobile-status {
+
+            margin-top: 9px;
+        }
+
+
+        .mobile-status-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 8px;
+        }
+
+
+        .mobile-status form {
+
+            width: 100%;
+        }
+
+
+        .mobile-status .status-btn {
+
+            width: 100%;
+
+            min-height: 44px;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           EMPTY
+           ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 45px 20px;
+
+            color: #6c7e79;
+        }
+
+
+        .empty-icon {
+
+            font-size: 42px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .empty h3 {
+
+            margin: 0 0 7px;
+
+            color: #36554d;
+        }
+
+
         .empty p {
+
             margin: 0;
+
             font-size: 14px;
         }
 
-        /* ================= FOOTER ================= */
 
-        footer {
+        /* =========================
+           FOOTER
+           ========================= */
+
+        .worker-dashboard-footer {
+
+            margin-top: 30px;
+
+            padding: 24px 15px 18px;
+
             text-align: center;
-            color: #71837e;
-            font-size: 12px;
-            padding: 5px 15px 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef8f5,
+                    #f8fcfb
+                );
+
+            border-top:
+                1px solid #dcebe7;
+
+            color: #71807c;
         }
 
-        /* ================= MOBILE ================= */
+
+        .dashboard-footer-brand strong {
+
+            display: block;
+
+            color: #126b57;
+
+            font-size: 18px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .dashboard-footer-brand span {
+
+            display: block;
+
+            font-size: 12px;
+
+            color: #71807c;
+        }
+
+
+        .dashboard-social-title {
+
+            margin: 14px 0 9px;
+
+            color: #345b54;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .dashboard-social-links {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 11px;
+
+            margin: 9px auto 7px;
+
+            flex-wrap: nowrap;
+        }
+
+
+        .dashboard-social-links a {
+
+            width: 42px;
+
+            height: 42px;
+
+            flex: 0 0 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+
+            border:
+                1px solid #dcebe7;
+
+            box-shadow:
+                0 4px 12px rgba(20,60,100,.10);
+
+            text-decoration: none;
+
+            transition: .2s ease;
+        }
+
+
+        .dashboard-social-links a:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 15px rgba(20,70,60,.14);
+        }
+
+
+        .dashboard-social-links a:nth-child(1) {
+
+            color: #E1306C;
+        }
+
+
+        .dashboard-social-links a:nth-child(2) {
+
+            color: #1877F2;
+        }
+
+
+        .dashboard-social-links a:nth-child(3) {
+
+            color: #229ED9;
+        }
+
+
+        .dashboard-social-links a:nth-child(4) {
+
+            color: #FF0000;
+        }
+
+
+        .dashboard-social-links svg {
+
+            width: 21px;
+
+            height: 21px;
+        }
+
+
+        .dashboard-footer-copy {
+
+            margin-top: 5px;
+
+            font-size: 12px;
+
+            color: #536575;
+        }
+
+
+        /* =========================
+           MOBILE
+           ========================= */
 
         @media (max-width: 800px) {
 
+
             header {
-                padding: 12px 14px;
+
+                min-height: 64px;
+
+                padding: 7px 12px;
             }
+
 
             .brand-area {
-                gap: 10px;
+
+                width: 100%;
+
+                justify-content: center;
             }
+
 
             .brand-logo {
-                width: 150px;
-                height: 52px;
-            }
 
-            .brand-text {
-                display: none;
-            }
+                width: 155px;
 
-            .logout {
-                min-height: 42px;
-                padding: 9px 14px;
-            }
+                max-width: 52vw;
 
-            .container {
-                width: 94%;
-                margin: 15px auto 30px;
-            }
-
-            .welcome {
-                padding: 18px;
-                border-radius: 18px;
-            }
-
-            .welcome h1 {
-                font-size: 24px;
-            }
-
-            .welcome-subtitle {
-                font-size: 13px;
-                line-height: 1.5;
-            }
-
-            .worker-info {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            .info-item {
-                padding: 12px;
-            }
-
-            .summary-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 7px;
-            }
-
-            .summary-card {
-                padding: 14px 5px;
-                border-radius: 13px;
-            }
-
-            .summary-icon {
-                font-size: 18px;
-            }
-
-            .summary-number {
-                font-size: 23px;
-            }
-
-            .summary-label {
-                font-size: 10px;
-                line-height: 1.3;
-            }
-
-            .requests-box {
-                padding: 15px;
-                border-radius: 18px;
-            }
-
-            .section-heading {
-                margin-bottom: 14px;
-            }
-
-            .section-heading h2 {
-                font-size: 21px;
-            }
-
-            .live-badge {
-                font-size: 10px;
-                padding: 6px 8px;
-            }
-
-            .table-wrapper {
-                display: none;
-            }
-
-            .mobile-cards {
-                display: block;
-            }
-        }
-
-        @media (max-width: 420px) {
-
-            .brand-logo {
-                width: 135px;
                 height: 48px;
             }
 
-            .logout {
-                font-size: 12px;
-                padding: 8px 11px;
+
+            .header-actions {
+
+                right: 10px;
             }
+
+
+            .logout {
+
+                padding: 7px 9px;
+
+                min-height: 40px;
+
+                font-size: 11px;
+            }
+
+
+            .container {
+
+                width: 94%;
+
+                margin: 13px auto 25px;
+            }
+
+
+            .welcome {
+
+                padding: 19px;
+
+                border-radius: 19px;
+            }
+
+
+            .welcome h1 {
+
+                font-size: 23px;
+            }
+
+
+            .welcome-subtitle {
+
+                font-size: 13px;
+            }
+
+
+            .worker-info {
+
+                grid-template-columns: 1fr;
+
+                gap: 8px;
+            }
+
+
+            .info-item {
+
+                padding: 12px;
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+                gap: 7px;
+            }
+
+
+            .summary-card {
+
+                padding: 13px 5px;
+
+                border-radius: 14px;
+            }
+
+
+            .summary-icon {
+
+                font-size: 18px;
+            }
+
 
             .summary-number {
-                font-size: 20px;
+
+                font-size: 22px;
             }
+
 
             .summary-label {
+
                 font-size: 9px;
+
+                line-height: 1.3;
             }
+
 
             .requests-box {
-                padding: 13px;
+
+                padding: 15px;
+
+                border-radius: 18px;
             }
+
+
+            .section-heading {
+
+                margin-bottom: 13px;
+            }
+
 
             .section-heading h2 {
-                font-size: 19px;
+
+                font-size: 21px;
             }
 
+
             .live-badge {
+
+                font-size: 9px;
+
+                padding: 6px 8px;
+            }
+
+
+            .table-wrapper {
+
                 display: none;
             }
 
-            .request-card {
+
+            .mobile-cards {
+
+                display: block;
+            }
+
+
+            .dashboard-social-links {
+
+                justify-content: center;
+
+                gap: 9px;
+
+                margin: 8px auto 6px;
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+
+            .brand-logo {
+
+                width: 140px;
+
+                height: 45px;
+            }
+
+
+            .logout {
+
+                font-size: 10px;
+
+                padding: 7px 9px;
+            }
+
+
+            .summary-number {
+
+                font-size: 20px;
+            }
+
+
+            .summary-label {
+
+                font-size: 8px;
+            }
+
+
+            .requests-box {
+
                 padding: 13px;
             }
 
+
+            .section-heading h2 {
+
+                font-size: 19px;
+            }
+
+
+            .live-badge {
+
+                display: none;
+            }
+
+
+            .request-card {
+
+                padding: 13px;
+            }
+
+
             .request-row {
-                grid-template-columns: 37% 63%;
+
+                grid-template-columns:
+                    37% 63%;
+
                 font-size: 13px;
             }
 
+
             .mobile-action-btn {
+
+                font-size: 11px;
+            }
+
+
+            .mobile-whatsapp {
+
                 font-size: 12px;
             }
 
-            .mobile-whatsapp {
-                font-size: 13px;
+
+            .dashboard-footer-copy {
+
+                font-size: 11px;
             }
+
         }
-        
-/* ================= WORKER DASHBOARD FOOTER ================= */
 
-.worker-dashboard-footer{
-    margin-top:30px;
-    padding:24px 15px 18px;
-    text-align:center;
-    background:linear-gradient(135deg,#eef8f5,#f8fcfb);
-    border-top:1px solid #dcebe7;
-    color:#71807c;
-}
-
-.dashboard-footer-brand strong{
-    display:block;
-    color:#126b57;
-    font-size:18px;
-    margin-bottom:4px;
-}
-
-.dashboard-footer-brand span{
-    display:block;
-    font-size:12px;
-    color:#71807c;
-}
-
-.dashboard-social-title{
-    margin:14px 0 9px;
-    color:#345b54;
-    font-size:13px;
-    font-weight:700;
-}
-
-.dashboard-social-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-    margin:10px 0 14px;
-}
-
-.dashboard-social-links a{
-    width:42px;
-    height:42px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:#ffffff;
-    border:1px solid #dcebe7;
-    text-decoration:none;
-    font-size:21px;
-    font-weight:700;
-    transition:0.2s ease;
-}
-
-.dashboard-social-links a:hover{
-    transform:translateY(-2px);
-    box-shadow:0 5px 12px rgba(20,70,60,.14);
-}
-
-.dashboard-social-links a:nth-child(1){
-    color:#E1306C;
-}
-
-.dashboard-social-links a:nth-child(2){
-    color:#1877F2;
-}
-
-.dashboard-social-links a:nth-child(3){
-    color:#229ED9;
-}
-
-.dashboard-social-links a:nth-child(4){
-    color:#FF0000;
-}
-
-.dashboard-footer-copy{
-    margin-top:5px;
-    font-size:12px;
-    opacity:.9;
-}
-
-/* =========================================
-   WORKER DASHBOARD HEADER - RESPONSIVE FIX
-   ========================================= */
-
-@media (max-width:800px){
-
-    header{
-        min-height:64px;
-        padding:8px 12px;
-        justify-content:center;
-        position:relative;
-    }
-
-    .brand-area{
-        position:static;
-        width:100%;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-    }
-
-    .brand-logo{
-        width:145px;
-        max-width:55vw;
-        height:45px;
-        object-fit:contain;
-    }
-
-    .brand-text{
-        display:none;
-    }
-
-    .header-actions{
-        position:absolute;
-        right:12px;
-        top:50%;
-        transform:translateY(-50%);
-        z-index:5;
-    }
-
-    .logout{
-        min-height:40px;
-        padding:8px 11px;
-        font-size:12px;
-        white-space:nowrap;
-    }
-}
-        
     </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =========================
+     HEADER
+     ========================= -->
+
 <header>
 
+
     <div class="brand-area">
+
 
         <img
             class="brand-logo"
@@ -850,250 +1379,509 @@
             alt="HelpMe Doorstep"
         >
 
+
         <div class="brand-text">
-            <h2>Worker Dashboard</h2>
-            <p>HelpMe Doorstep Service Partner Panel</p>
+
+            <h2>
+                Worker Dashboard
+            </h2>
+
+            <p>
+                HelpMe Doorstep Service Partner Panel
+            </p>
+
         </div>
 
+
     </div>
 
+
     <div class="header-actions">
-        <form method="post" action="/worker/logout">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <button class="logout" type="submit">
-        🚪 Logout
-    </button>
-</form>
+
+        <form
+            method="post"
+            action="/worker/logout"
+        >
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+
+            <button
+                class="logout"
+                type="submit"
+            >
+                🚪 Logout
+            </button>
+
+        </form>
+
     </div>
+
 
 </header>
 
 
+
+<!-- =========================
+     MAIN
+     ========================= -->
+
 <main class="container">
 
-    <!-- WORKER PROFILE -->
+
+    <!-- =========================
+         WORKER PROFILE
+         ========================= -->
 
     <section class="welcome">
+
 
         <h1>
             👋 Welcome, {{ worker.name }}
         </h1>
 
+
         <p class="welcome-subtitle">
-            Aapke assigned customer requests aur service activities yahan manage karein.
+
+            Aapke assigned customer requests
+            aur service activities yahan manage karein.
+
         </p>
+
 
         <div class="worker-info">
 
+
             <div class="info-item">
-                <span class="info-label">Worker Name</span>
+
+                <span class="info-label">
+                    Worker Name
+                </span>
+
                 <span class="info-value">
                     {{ worker.name }}
                 </span>
+
             </div>
 
+
             <div class="info-item">
-                <span class="info-label">Mobile Number</span>
+
+                <span class="info-label">
+                    Mobile Number
+                </span>
+
                 <span class="info-value">
                     {{ worker.mobile }}
                 </span>
+
             </div>
+
 
             <div class="info-item">
-                <span class="info-label">Service Area</span>
-                <span class="info-value">
-                    {{ worker.district or '—' }}
-                    {% if worker.state %}
-                    , {{ worker.state }}
-                    {% endif %}
+
+                <span class="info-label">
+                    Service Area
                 </span>
+
+                <span class="info-value">
+
+                    {{ worker.district or '—' }}
+
+                    {% if worker.state %}
+
+                    , {{ worker.state }}
+
+                    {% endif %}
+
+                </span>
+
             </div>
 
+
         </div>
+
 
     </section>
 
 
-    <!-- SUMMARY -->
 
-    {% set total_count = requests|length %}
-    {% set pending_count = requests|selectattr('status', 'equalto', 'Pending')|list|length %}
-    {% set assigned_count = requests|selectattr('status', 'equalto', 'Assigned')|list|length %}
-    {% set progress_count = requests|selectattr('status', 'equalto', 'In Progress')|list|length %}
-    {% set completed_count = requests|selectattr('status', 'equalto', 'Completed')|list|length %}
-    {% set cancelled_count = requests|selectattr('status', 'equalto', 'Cancelled')|list|length %}
+    <!-- =========================
+         SUMMARY
+         ========================= -->
+
+    {% set total_count =
+        requests|length
+    %}
+
+    {% set pending_count =
+        requests
+        |selectattr('status','equalto','Pending')
+        |list
+        |length
+    %}
+
+    {% set assigned_count =
+        requests
+        |selectattr('status','equalto','Assigned')
+        |list
+        |length
+    %}
+
+    {% set progress_count =
+        requests
+        |selectattr('status','equalto','In Progress')
+        |list
+        |length
+    %}
+
+    {% set completed_count =
+        requests
+        |selectattr('status','equalto','Completed')
+        |list
+        |length
+    %}
+
+    {% set cancelled_count =
+        requests
+        |selectattr('status','equalto','Cancelled')
+        |list
+        |length
+    %}
+
+
 
     <section class="summary-grid">
 
-        <div class="summary-card">
-            <div class="summary-icon">📋</div>
-            <div class="summary-number">{{ total_count }}</div>
-            <div class="summary-label">Total Requests</div>
-        </div>
 
         <div class="summary-card">
-            <div class="summary-icon">⏳</div>
-            <div class="summary-number">{{ pending_count }}</div>
-            <div class="summary-label">Pending</div>
+
+            <div class="summary-icon">
+                📋
+            </div>
+
+            <div class="summary-number">
+                {{ total_count }}
+            </div>
+
+            <div class="summary-label">
+                Total
+            </div>
+
         </div>
 
-        <div class="summary-card">
-            <div class="summary-icon">📌</div>
-            <div class="summary-number">{{ assigned_count }}</div>
-            <div class="summary-label">Assigned</div>
-        </div>
 
         <div class="summary-card">
-            <div class="summary-icon">🔄</div>
-            <div class="summary-number">{{ progress_count }}</div>
-            <div class="summary-label">In Progress</div>
+
+            <div class="summary-icon">
+                ⏳
+            </div>
+
+            <div class="summary-number">
+                {{ pending_count }}
+            </div>
+
+            <div class="summary-label">
+                Pending
+            </div>
+
         </div>
 
-        <div class="summary-card">
-            <div class="summary-icon">✅</div>
-            <div class="summary-number">{{ completed_count }}</div>
-            <div class="summary-label">Completed</div>
-        </div>
 
         <div class="summary-card">
-            <div class="summary-icon">❌</div>
-            <div class="summary-number">{{ cancelled_count }}</div>
-            <div class="summary-label">Cancelled</div>
+
+            <div class="summary-icon">
+                📌
+            </div>
+
+            <div class="summary-number">
+                {{ assigned_count }}
+            </div>
+
+            <div class="summary-label">
+                Assigned
+            </div>
+
         </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                🔄
+            </div>
+
+            <div class="summary-number">
+                {{ progress_count }}
+            </div>
+
+            <div class="summary-label">
+                In Progress
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                ✅
+            </div>
+
+            <div class="summary-number">
+                {{ completed_count }}
+            </div>
+
+            <div class="summary-label">
+                Completed
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                ❌
+            </div>
+
+            <div class="summary-number">
+                {{ cancelled_count }}
+            </div>
+
+            <div class="summary-label">
+                Cancelled
+            </div>
+
+        </div>
+
 
     </section>
 
 
-    <!-- REQUESTS -->
+
+    <!-- =========================
+         CUSTOMER REQUESTS
+         ========================= -->
 
     <section class="requests-box">
 
+
         <div class="section-heading">
+
 
             <h2>
                 📋 Customer Requests
             </h2>
 
+
             <span class="live-badge">
                 ● LIVE REQUESTS
             </span>
 
+
         </div>
+
 
 
         {% if requests %}
 
-        <!-- DESKTOP TABLE -->
+
+        <!-- =========================
+             DESKTOP TABLE
+             ========================= -->
 
         <div class="table-wrapper">
 
+
             <table class="desktop-table">
+
 
                 <thead>
 
                     <tr>
-                        <th>Application</th>
-                        <th>Customer</th>
-                        <th>Age</th>
-                        <th>Mobile</th>
-                        <th>Service</th>
-                        <th>Details</th>
-                        <th>Address</th>
-                        <th>Distance</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+
+                        <th>
+                            Application
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Age
+                        </th>
+
+                        <th>
+                            Mobile
+                        </th>
+
+                        <th>
+                            Service
+                        </th>
+
+                        <th>
+                            Details
+                        </th>
+
+                        <th>
+                            Address
+                        </th>
+
+                        <th>
+                            Distance
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
                     </tr>
 
                 </thead>
 
+
+
                 <tbody>
+
 
                 {% for r in requests %}
 
+
                     <tr>
 
+
                         <td>
+
                             <span class="application-id">
                                 {{ r.application_code }}
                             </span>
+
                         </td>
 
+
                         <td>
+
                             <span class="customer-name">
                                 {{ r.customer }}
                             </span>
+
                         </td>
+
 
                         <td>
                             {{ r.age or '—' }}
                         </td>
 
+
                         <td>
+
                             <span class="phone-number">
                                 {{ r.phone }}
                             </span>
+
                         </td>
+
 
                         <td>
                             {{ r.service }}
                         </td>
 
+
                         <td>
                             {{ r.details or '—' }}
                         </td>
+
 
                         <td>
                             {{ r.address or '—' }}
                         </td>
 
-                        <td>
-                            <span class="distance">
-                                {% if r.distance_km is not none %}
-                                    {{ "%.1f"|format(r.distance_km) }} KM
-                                {% else %}
-                                    —
-                                {% endif %}
-                            </span>
-                        </td>
 
                         <td>
+
+                            <span class="distance">
+
+                                {% if r.distance_km is not none %}
+
+                                    {{ "%.1f"|format(r.distance_km) }} KM
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
 
                             {% if r.status == "Pending" %}
-                                <span class="status pending">
-                                    Pending
-                                </span>
+
+                            <span class="status pending">
+                                ⏳ Pending
+                            </span>
+
 
                             {% elif r.status == "Assigned" %}
-                                <span class="status assigned">
-                                    Assigned
-                                </span>
+
+                            <span class="status assigned">
+                                📌 Assigned
+                            </span>
+
 
                             {% elif r.status == "In Progress" %}
-                                <span class="status progress">
-                                    In Progress
-                                </span>
+
+                            <span class="status progress">
+                                🔄 In Progress
+                            </span>
+
 
                             {% elif r.status == "Completed" %}
-                                <span class="status completed">
-                                    Completed
-                                </span>
+
+                            <span class="status completed">
+                                ✅ Completed
+                            </span>
+
 
                             {% elif r.status == "Cancelled" %}
-                                <span class="status cancelled">
-                                    Cancelled
-                                </span>
+
+                            <span class="status cancelled">
+                                ❌ Cancelled
+                            </span>
+
 
                             {% else %}
-                                <span class="status">
-                                    {{ r.status }}
-                                </span>
+
+                            <span class="status">
+                                {{ r.status }}
+                            </span>
+
+
                             {% endif %}
+
 
                         </td>
 
+
                         <td>
 
+
                             <div class="action-buttons">
+
 
                                 <a
                                     class="action-btn call-action"
@@ -1103,11 +1891,13 @@
                                 </a>
 
 
+
                                 {% if r.latitude and r.longitude %}
 
                                 <a
                                     class="action-btn location-action"
                                     target="_blank"
+                                    rel="noopener noreferrer"
                                     href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
                                 >
                                     📍 Location
@@ -1116,28 +1906,35 @@
                                 {% endif %}
 
 
+
                                 <a
                                     class="action-btn whatsapp-action"
                                     target="_blank"
+                                    rel="noopener noreferrer"
                                     href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
                                 >
                                     💬 WhatsApp
                                 </a>
 
 
+
                                 {% if r.status != "Completed" %}
 
+
                                 <div class="status-actions">
+
 
                                     <form
                                         method="post"
                                         action="/worker/status/{{ r.id }}"
-                                        style="display:inline;"
-                                    
+                                    >
+
+                                        <input
+                                            type="hidden"
+                                            name="csrf_token"
+                                            value="{{ csrf_token() }}"
                                         >
 
-                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                        
                                         <input
                                             type="hidden"
                                             name="status"
@@ -1150,15 +1947,22 @@
                                         >
                                             🔄 In Progress
                                         </button>
+
                                     </form>
+
+
 
                                     <form
                                         method="post"
                                         action="/worker/status/{{ r.id }}"
-                                        style="display:inline;"
                                     >
-                                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                        
+
+                                        <input
+                                            type="hidden"
+                                            name="csrf_token"
+                                            value="{{ csrf_token() }}"
+                                        >
+
                                         <input
                                             type="hidden"
                                             name="status"
@@ -1171,108 +1975,221 @@
                                         >
                                             ✅ Completed
                                         </button>
+
                                     </form>
+
 
                                 </div>
 
+
                                 {% endif %}
+
 
                             </div>
 
+
                         </td>
+
 
                     </tr>
 
+
                 {% endfor %}
+
 
                 </tbody>
 
+
             </table>
+
 
         </div>
 
 
-        <!-- MOBILE CARDS -->
+
+        <!-- =========================
+             MOBILE REQUEST CARDS
+             ========================= -->
 
         <div class="mobile-cards">
 
+
         {% for r in requests %}
+
 
             <article class="request-card">
 
+
                 <div class="request-title">
+
 
                     <span>
                         📄 {{ r.application_code }}
                     </span>
 
+
+
                     {% if r.status == "Pending" %}
-                        <span class="status pending">Pending</span>
+
+                    <span class="status pending">
+                        Pending
+                    </span>
+
 
                     {% elif r.status == "Assigned" %}
-                        <span class="status assigned">Assigned</span>
+
+                    <span class="status assigned">
+                        Assigned
+                    </span>
+
 
                     {% elif r.status == "In Progress" %}
-                        <span class="status progress">In Progress</span>
+
+                    <span class="status progress">
+                        In Progress
+                    </span>
+
 
                     {% elif r.status == "Completed" %}
-                        <span class="status completed">Completed</span>
+
+                    <span class="status completed">
+                        Completed
+                    </span>
+
 
                     {% elif r.status == "Cancelled" %}
-                        <span class="status cancelled">Cancelled</span>
+
+                    <span class="status cancelled">
+                        Cancelled
+                    </span>
+
 
                     {% else %}
-                        <span class="status">{{ r.status }}</span>
+
+                    <span class="status">
+                        {{ r.status }}
+                    </span>
+
+
                     {% endif %}
 
+
                 </div>
 
 
-                <div class="request-row">
-                    <strong>Customer</strong>
-                    <span>{{ r.customer }}</span>
-                </div>
 
                 <div class="request-row">
-                    <strong>Age</strong>
-                    <span>{{ r.age or '—' }}</span>
-                </div>
 
-                <div class="request-row">
-                    <strong>Mobile</strong>
-                    <span>{{ r.phone }}</span>
-                </div>
+                    <strong>
+                        Customer
+                    </strong>
 
-                <div class="request-row">
-                    <strong>Service</strong>
-                    <span>{{ r.service }}</span>
-                </div>
-
-                <div class="request-row">
-                    <strong>Details</strong>
-                    <span>{{ r.details or '—' }}</span>
-                </div>
-
-                <div class="request-row">
-                    <strong>Address</strong>
-                    <span>{{ r.address or '—' }}</span>
-                </div>
-
-                <div class="request-row">
-                    <strong>Distance</strong>
                     <span>
-                        {% if r.distance_km is not none %}
-                            {{ "%.1f"|format(r.distance_km) }} KM
-                        {% else %}
-                            —
-                        {% endif %}
+                        {{ r.customer }}
                     </span>
+
                 </div>
+
+
+
+                <div class="request-row">
+
+                    <strong>
+                        Age
+                    </strong>
+
+                    <span>
+                        {{ r.age or '—' }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="request-row">
+
+                    <strong>
+                        Mobile
+                    </strong>
+
+                    <span>
+                        {{ r.phone }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="request-row">
+
+                    <strong>
+                        Service
+                    </strong>
+
+                    <span>
+                        {{ r.service }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="request-row">
+
+                    <strong>
+                        Details
+                    </strong>
+
+                    <span>
+                        {{ r.details or '—' }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="request-row">
+
+                    <strong>
+                        Address
+                    </strong>
+
+                    <span>
+                        {{ r.address or '—' }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="request-row">
+
+                    <strong>
+                        Distance
+                    </strong>
+
+                    <span>
+
+                        {% if r.distance_km is not none %}
+
+                            {{ "%.1f"|format(r.distance_km) }} KM
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
 
 
                 <!-- MOBILE ACTIONS -->
 
                 <div class="mobile-actions">
+
 
                     <a
                         class="mobile-action-btn mobile-call"
@@ -1282,11 +2199,13 @@
                     </a>
 
 
+
                     {% if r.latitude and r.longitude %}
 
                     <a
                         class="mobile-action-btn mobile-location"
                         target="_blank"
+                        rel="noopener noreferrer"
                         href="https://www.google.com/maps?q={{ r.latitude }},{{ r.longitude }}"
                     >
                         📍 Customer Location
@@ -1295,190 +2214,312 @@
                     {% endif %}
 
 
+
                     <a
                         class="mobile-action-btn mobile-whatsapp"
                         target="_blank"
+                        rel="noopener noreferrer"
                         href="https://wa.me/91{{ r.phone|replace(' ','') }}?text=Namaste%20{{ r.customer|urlencode }}%2C%20HelpMe%20Doorstep%20सेवा%20के%20लिए%20मैं%20आपसे%20संपर्क%20कर%20रहा%20हूँ।"
                     >
                         💬 WhatsApp Customer
                     </a>
 
+
                 </div>
 
 
-               <!-- MOBILE STATUS -->
 
-{% if r.status != "Completed" %}
+                <!-- MOBILE STATUS -->
 
-<div class="mobile-status">
-
-    <div style="
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:8px;
-    ">
-
-        <!-- IN PROGRESS -->
-
-        <form
-            method="post"
-            action="/worker/status/{{ r.id }}"
-        >
-
-            <input
-                type="hidden"
-                name="csrf_token"
-                value="{{ csrf_token() }}"
-            >
-
-            <input
-                type="hidden"
-                name="status"
-                value="In Progress"
-            >
-
-            <button
-                class="status-btn progress-btn"
-                type="submit"
-                style="width:100%;min-height:44px;"
-            >
-                🔄 In Progress
-            </button>
-
-        </form>
+                {% if r.status != "Completed" %}
 
 
-        <!-- COMPLETED -->
+                <div class="mobile-status">
 
-        <form
-            method="post"
-            action="/worker/status/{{ r.id }}"
-        >
 
-            <input
-                type="hidden"
-                name="csrf_token"
-                value="{{ csrf_token() }}"
-            >
+                    <div class="mobile-status-grid">
 
-            <input
-                type="hidden"
-                name="status"
-                value="Completed"
-            >
 
-            <button
-                class="status-btn completed-btn"
-                type="submit"
-                style="width:100%;min-height:44px;"
-            >
-                ✅ Completed
-            </button>
+                        <form
+                            method="post"
+                            action="/worker/status/{{ r.id }}"
+                        >
 
-        </form>
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
 
-    </div>
+                            <input
+                                type="hidden"
+                                name="status"
+                                value="In Progress"
+                            >
 
-</div>
+                            <button
+                                class="status-btn progress-btn"
+                                type="submit"
+                            >
+                                🔄 In Progress
+                            </button>
 
-{% endif %}
+                        </form>
+
+
+
+                        <form
+                            method="post"
+                            action="/worker/status/{{ r.id }}"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="status"
+                                value="Completed"
+                            >
+
+                            <button
+                                class="status-btn completed-btn"
+                                type="submit"
+                            >
+                                ✅ Completed
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+
+
+                {% endif %}
+
+
             </article>
 
+
         {% endfor %}
+
 
         </div>
 
 
         {% else %}
 
-            <div class="empty">
 
-                <div class="empty-icon">
-                    📭
-                </div>
+        <!-- =========================
+             EMPTY
+             ========================= -->
 
-                <h3>
-                    अभी कोई Customer Request नहीं है
-                </h3>
+        <div class="empty">
 
-                <p>
-                    New customer request assign होने पर यहाँ दिखाई देगी।
-                </p>
 
+            <div class="empty-icon">
+                📭
             </div>
+
+
+            <h3>
+                अभी कोई Customer Request नहीं है
+            </h3>
+
+
+            <p>
+                New customer request assign होने पर यहाँ दिखाई देगी।
+            </p>
+
+
+        </div>
+
 
         {% endif %}
 
+
     </section>
+
 
 </main>
 
+
+
+<!-- =========================
+     FOOTER
+     ========================= -->
+
 <footer class="worker-dashboard-footer">
 
+
     <div class="dashboard-footer-brand">
-        <strong>HelpMe Doorstep</strong>
-        <span>Service | Support | Social Impact</span>
+
+        <strong>
+            HelpMe Doorstep
+        </strong>
+
+        <span>
+            Service | Support | Social Impact
+        </span>
+
     </div>
 
+
     <div class="dashboard-social-title">
+
         Follow Us
+
     </div>
+
 
     <div class="dashboard-social-links">
 
-    <a href="https://www.instagram.com/helpmedoorstep?stkn=N3kM3Ewa2rWaThu"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Instagram">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"
-                  fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="12" cy="12" r="4"
-                    fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="17.5" cy="6.5" r="1"
-                    fill="currentColor"/>
-        </svg>
-    </a>
 
-    <a href="https://www.facebook.com/"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Facebook">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor"
-                  d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"/>
-        </svg>
-    </a>
+        <!-- INSTAGRAM -->
 
-    <a href="https://t.me/HelpMeDoorstep"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Telegram">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor"
-                  d="M21.5 4.5 18.3 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L5.7 13.6.8 12c-1.1-.3-1.1-1.1.2-1.6L20.1 3c.9-.3 1.7.2 1.4 1.5z"/>
-        </svg>
-    </a>
+        <a
+            href="https://www.instagram.com/helpmedoorstep/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+        >
 
-    <a href="https://www.youtube.com/channel/UC1dXDHp8_yH8qnmKjL5zQ"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="YouTube">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor"
-                  d="M21.6 7.2a2.9 2.9 0 0 0-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5a2.9 2.9 0 0 0-2 2C1.9 8.9 1.9 12 1.9 12s0 3.1.5 4.8a2.9 2.9 0 0 0 2 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.9 2.9 0 0 0 2-2c.5-1.7.5-4.8.5-4.8s0-3.1-.5-4.8z"/>
-            <path fill="white"
-                  d="m10 15.5 5-3.5-5-3.5z"/>
-        </svg>
-    </a>
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
 
-</div>
-    
-    <div class="dashboard-footer-copy">
-        © 2026 HelpMe Doorstep | All Rights Reserved
+                <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    rx="5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
+
+                <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="1.2"
+                    fill="currentColor"
+                />
+
+            </svg>
+
+        </a>
+
+
+
+        <!-- FACEBOOK -->
+
+        <a
+            href="https://www.facebook.com/share/16e54p8ror/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+        >
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    fill="currentColor"
+                    d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"
+                />
+
+            </svg>
+
+        </a>
+
+
+
+        <!-- TELEGRAM -->
+
+        <a
+            href="https://t.me/HelpMeDoorstep"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram"
+        >
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    fill="currentColor"
+                    d="M21.5 4.5 18.3 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L5.7 13.6.8 12c-1.1-.3-1.1-1.1.2-1.6L20.1 3c.9-.3 1.7.2 1.4 1.5z"
+                />
+
+            </svg>
+
+        </a>
+
+
+
+        <!-- YOUTUBE -->
+
+        <a
+            href="https://www.youtube.com/channel/UC1dXDHp8_yH8qnmKjL5zQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+        >
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path
+                    fill="currentColor"
+                    d="M21.6 7.2a2.9 2.9 0 0 0-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5a2.9 2.9 0 0 0-2 2C1.9 8.9 1.9 12 1.9 12s0 3.1.5 4.8a2.9 2.9 0 0 0 2 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.9 2.9 0 0 0 2-2c.5-1.7.5-4.8.5-4.8s0-3.1-.5-4.8z"
+                />
+
+                <path
+                    fill="white"
+                    d="m10 15.5 5-3.5-5-3.5z"
+                />
+
+            </svg>
+
+        </a>
+
+
     </div>
+
+
+    <div class="dashboard-footer-copy">
+
+        © 2026 HelpMe Doorstep | All Rights Reserved
+
+    </div>
+
 
 </footer>
 
+
 </body>
+
 </html>
