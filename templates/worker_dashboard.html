@@ -787,6 +787,54 @@
     opacity:.9;
 }
 
+/* =========================================
+   WORKER DASHBOARD HEADER - RESPONSIVE FIX
+   ========================================= */
+
+@media (max-width:800px){
+
+    header{
+        min-height:64px;
+        padding:8px 12px;
+        justify-content:center;
+        position:relative;
+    }
+
+    .brand-area{
+        position:static;
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .brand-logo{
+        width:145px;
+        max-width:55vw;
+        height:45px;
+        object-fit:contain;
+    }
+
+    .brand-text{
+        display:none;
+    }
+
+    .header-actions{
+        position:absolute;
+        right:12px;
+        top:50%;
+        transform:translateY(-50%);
+        z-index:5;
+    }
+
+    .logout{
+        min-height:40px;
+        padding:8px 11px;
+        font-size:12px;
+        white-space:nowrap;
+    }
+}
+        
     </style>
 </head>
 
