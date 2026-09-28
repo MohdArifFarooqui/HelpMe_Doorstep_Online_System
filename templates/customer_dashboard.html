@@ -1385,7 +1385,7 @@ header form{
 
     {% set unread_count = notifications|selectattr('is_read','equalto',False)|list|length %}
 
-    <div class="card">
+    <div class="card" id="customer-requests">
 
        <h2 class="section-title">
            🔔 Customer Message Alerts
