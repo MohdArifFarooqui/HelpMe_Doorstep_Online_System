@@ -1107,7 +1107,7 @@ def ai_support():
 @app.post("/api/ai-support")
 def api_ai_support():
 
-    csrf_protect()
+    csrf.protect()
     
     data = request.get_json(silent=True) or {}
 
@@ -1280,7 +1280,7 @@ def customer_logout():
 @app.post("/api/verify-widget-token")
 def verify_widget_token():
 
-    csrf_protect()
+    csrf.protect()
     
     mobile = request.form.get("mobile", "").strip()
     access_token = request.form.get("access_token", "").strip()
