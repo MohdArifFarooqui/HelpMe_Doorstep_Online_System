@@ -688,6 +688,21 @@ body{
     white-space:nowrap;
 }
 
+.whatsapp-icon{
+    width:22px;
+    height:22px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:7px;
+}
+
+.whatsapp-icon svg{
+    width:22px;
+    height:22px;
+    display:block;
+}
+    
 .phone-button{
     background:#16a85a;
     color:#fff;
@@ -776,16 +791,16 @@ body{
 }
 
 .social-links a{
-    width:48px;
-    height:48px;
-    flex:0 0 48px;
+    width:52px;
+    height:52px;
+    flex:0 0 52px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
     border-radius:50%;
-    background:#ffffff;
+    background:#fff;
 
     text-decoration:none;
 
@@ -795,9 +810,10 @@ body{
 }
 
 .social-links a svg{
-    width:26px;
-    height:26px;
+    width:29px;
+    height:29px;
     display:block;
+    flex:none;
 }
 
 .social-links a:nth-child(1){
@@ -966,9 +982,10 @@ body{
     }
 
     .brand-logo{
-        width:205px;
-        height:58px;
+        width:235px;
+        height:68px;
         object-fit:contain;
+        display:block;
     }
 
     .container{
@@ -1071,10 +1088,10 @@ body{
 @media(max-width:390px){
 
     .brand-logo{
-        width:185px;
-        height:56px;
+        width:215px;
+        height:64px;
+        object-fit:contain;
     }
-
     .header-left{
         left:8px;
     }
@@ -1849,7 +1866,15 @@ body{
             rel="noopener noreferrer"
             class="support-button whatsapp-button"
         >
-            💬 WhatsApp
+            <span class="whatsapp-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+        <path
+            fill="currentColor"
+            d="M12 2a9.9 9.9 0 0 0-8.6 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm0 17.9a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 1 1 12 19.9zm4.4-5.9c-.2-.1-1.4-.7-1.6-.7-.2-.1-.4-.1-.5.1-.2.2-.6.7-.7.8-.1.2-.3.2-.5.1-1.4-.7-2.3-1.3-3.2-2.9-.2-.3.2-.3.6-1 .1-.2.1-.3 0-.5l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.4c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.1-.4-.2z"
+        />
+    </svg>
+</span>
+WhatsApp
         </a>
 
     </div>
