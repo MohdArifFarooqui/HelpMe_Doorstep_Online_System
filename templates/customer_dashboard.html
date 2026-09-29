@@ -1,1611 +1,1852 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Customer Dashboard - HelpMe Doorstep</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        :root {
-            --hm-blue: #1268d9;
-            --hm-blue-dark: #084a9b;
-            --hm-green: #18a957;
-            --hm-green-dark: #08783d;
-            --hm-bg: #f4f8fc;
-            --hm-card: #ffffff;
-            --hm-text: #10233f;
-            --hm-muted: #68778d;
-            --hm-border: #e4ebf3;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(
-                180deg,
-                #f5f9ff 0%,
-                #eef8f5 100%
-            );
-            color: var(--hm-text);
-        }
-
-        /* =========================
-           HEADER
-           ========================= */
-
-        header {
-            position: relative;
-            min-height: 72px;
-            padding: 8px 16px;
-            background: #ffffff;
-            border-bottom: 1px solid var(--hm-border);
-            box-shadow: 0 2px 12px rgba(15,55,95,.08);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            z-index: 10;
-        }
-
-        header h2 {
-            margin: 0;
-            padding: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        header .brand-logo {
-            width: 190px;
-            height: 58px;
-            object-fit: contain;
-            display: block;
-        }
-
-        header form {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .logout {
-            background: #ffffff;
-            color: #d63031;
-            border: 1px solid #ffd5d5;
-            padding: 8px 13px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        /* =========================
-           MAIN CONTAINER
-           ========================= */
-
-        .container {
-            width: min(94%, 1100px);
-            margin: 18px auto 30px;
-        }
-
-        /* =========================
-           COMMON CARD
-           ========================= */
-
-        .card {
-            background: #ffffff;
-            border: 1px solid var(--hm-border);
-            border-radius: 20px;
-            padding: 22px;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 22px rgba(20,60,100,.07);
-        }
-
-        /* =========================
-           WELCOME
-           ========================= */
-
-        .welcome {
-            position: relative;
-            overflow: hidden;
-
-            background: linear-gradient(
-                135deg,
-                #eaf5ff 0%,
-                #f0fff7 100%
-            );
-
-            border: 1px solid #dceaf7;
-            border-radius: 22px;
-            padding: 24px;
-
-            box-shadow: 0 8px 25px rgba(25,80,130,.09);
-        }
-
-        .welcome::after {
-            content: "";
-            position: absolute;
-
-            width: 150px;
-            height: 150px;
-
-            right: -45px;
-            top: -45px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            border-radius: 50%;
-            background: rgba(18,104,217,.08);
-        }
+<title>Customer Dashboard - HelpMe Doorstep</title>
 
-        .welcome h1 {
-            position: relative;
-            z-index: 1;
+<style>
 
-            margin: 0 0 8px;
+*{
+    box-sizing:border-box;
+}
 
-            font-size: 28px;
-            color: var(--hm-blue-dark);
-        }
+html{
+    scroll-behavior:smooth;
+}
 
-        .welcome p {
-            position: relative;
-            z-index: 1;
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f8fc;
+    color:#14253d;
+    overflow-x:hidden;
+}
 
-            margin: 6px 0;
+/* ================= HEADER ================= */
 
-            color: var(--hm-muted);
-            font-size: 16px;
-            line-height: 1.6;
-        }
+.app-header{
+    position:sticky;
+    top:0;
+    z-index:100;
 
-        .mobile {
-            color: var(--hm-green-dark);
-            font-weight: bold;
-        }
+    height:72px;
 
-        /* =========================
-           SUMMARY
-           ========================= */
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin: 16px 0;
-        }
+    background:#fff;
 
-        .summary-box {
-            background: #ffffff;
-            border: 1px solid var(--hm-border);
-            border-radius: 18px;
+    border-bottom:1px solid #e2eaf1;
 
-            padding: 17px 10px;
+    box-shadow:
+        0 3px 14px rgba(20,60,100,.08);
+}
 
-            text-align: center;
+.header-side{
+    position:absolute;
 
-            box-shadow: 0 5px 18px rgba(20,60,100,.07);
-        }
+    top:0;
+    height:72px;
 
-        .summary-number {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--hm-blue);
-        }
+    display:flex;
+    align-items:center;
+}
 
-        .summary-label {
-            margin-top: 5px;
-            font-size: 14px;
-            color: var(--hm-muted);
-            font-weight: bold;
-        }
+.header-left{
+    left:14px;
+}
 
-        /* =========================
-           CUSTOMER APP QUICK ACTIONS
-           ========================= */
+.header-right{
+    right:14px;
+}
 
-        .customer-app-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+.header-icon{
+    width:42px;
+    height:42px;
 
-            margin: 18px 0;
-        }
+    border:0;
+    border-radius:50%;
 
-        .customer-app-action {
-            min-height: 105px;
+    background:#eef5fb;
 
-            padding: 14px 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            background: #ffffff;
-            border: 1px solid var(--hm-border);
-            border-radius: 18px;
+    color:#1268d9;
 
-            text-decoration: none;
-            color: var(--hm-text);
+    font-size:21px;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+    text-decoration:none;
+}
 
-            text-align: center;
+.brand-logo{
+    width:185px;
+    height:58px;
 
-            box-shadow: 0 5px 18px rgba(20,60,100,.07);
+    object-fit:contain;
+}
 
-            transition: .2s ease;
-        }
+/* ================= MAIN ================= */
 
-        .customer-app-action:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 9px 24px rgba(20,60,100,.12);
-        }
+.container{
+    width:min(1100px,94%);
+    margin:15px auto 100px;
+}
 
-        .customer-app-icon {
-            width: 46px;
-            height: 46px;
+/* ================= WELCOME ================= */
 
-            border-radius: 14px;
+.welcome{
+    position:relative;
+    overflow:hidden;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    min-height:190px;
 
-            font-size: 23px;
+    padding:25px 22px;
 
-            margin-bottom: 8px;
-        }
+    border-radius:23px;
 
-        .customer-app-action strong {
-            font-size: 13px;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            #dff3ff 0%,
+            #eafcff 48%,
+            #e9f9ef 100%
+        );
 
-        .customer-app-action span {
-            display: block;
+    border:1px solid #d8eaf4;
 
-            margin-top: 3px;
+    box-shadow:
+        0 7px 25px rgba(25,90,130,.08);
+}
 
-            font-size: 11px;
-            color: var(--hm-muted);
-        }
+.welcome::before{
+    content:"";
 
-        .action-book .customer-app-icon {
-            background: #e7f0ff;
-            color: #1268d9;
-        }
+    position:absolute;
 
-        .action-request .customer-app-icon {
-            background: #fff1df;
-            color: #f08a00;
-        }
+    width:190px;
+    height:190px;
 
-        .action-status .customer-app-icon {
-            background: #e5f8ed;
-            color: #159447;
-        }
+    right:-70px;
+    top:-70px;
 
-        .action-support .customer-app-icon {
-            background: #f0eaff;
-            color: #7b42d8;
-        }
+    border-radius:50%;
 
-        /* =========================
-           SECTION TITLE
-           ========================= */
+    background:rgba(24,169,87,.10);
+}
 
-        .section-title {
-            margin: 0 0 18px;
+.welcome::after{
+    content:"";
 
-            color: var(--hm-text);
-            font-weight: 800;
-            font-size: 25px;
-        }
+    position:absolute;
 
-        /* =========================
-           REQUEST CARD
-           ========================= */
+    width:130px;
+    height:130px;
 
-        .request-card {
-            border: 1px solid #e1eaf4;
-            border-radius: 16px;
+    right:55px;
+    bottom:-90px;
 
-            padding: 18px;
-            margin-bottom: 15px;
+    border-radius:50%;
 
-            background: #fbfdff;
-        }
+    background:rgba(18,104,217,.09);
+}
 
-        .application-id {
-            font-size: 20px;
-            font-weight: bold;
+.welcome-content{
+    position:relative;
+    z-index:2;
 
-            color: var(--hm-blue);
+    max-width:600px;
+}
 
-            margin-bottom: 12px;
-        }
+.welcome-small{
+    font-size:16px;
+    color:#245b85;
+    font-weight:700;
+    margin-bottom:3px;
+}
 
-        .row {
-            margin: 9px 0;
+.welcome-title{
+    margin:0;
 
-            line-height: 1.6;
+    font-size:34px;
+    line-height:1.05;
 
-            color: #555;
-        }
+    color:#1268d9;
+    font-weight:900;
+}
 
-        .row strong {
-            color: #333;
-        }
+.welcome-title span{
+    color:#159447;
+}
 
-        /* =========================
-           STATUS
-           ========================= */
+.welcome-text{
+    margin:10px 0 0;
 
-        .status {
-            display: inline-block;
+    color:#405a70;
 
-            padding: 7px 13px;
+    font-size:15px;
 
-            border-radius: 20px;
+    line-height:1.5;
+}
 
-            font-weight: bold;
-            font-size: 14px;
-        }
+/* ================= SUMMARY ================= */
 
-        .pending {
-            background: #fff3cd;
-            color: #856404;
-        }
+.summary{
+    display:grid;
 
-        .assigned {
-            background: #dbeafe;
-            color: #1e40af;
-        }
+    grid-template-columns:
+        repeat(3,1fr);
 
-        .progress {
-            background: #ede9fe;
-            color: #6b21a8;
-        }
+    gap:12px;
 
-        .completed {
-            background: #dcfce7;
-            color: #166534;
-        }
+    margin:15px 0;
+}
 
-        .cancelled {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+.summary-card{
+    background:#fff;
 
-        /* =========================
-           MESSAGE
-           ========================= */
+    border:1px solid #e1eaf2;
 
-        .message {
-            margin-bottom: 14px;
+    border-radius:18px;
 
-            padding: 12px 15px;
+    min-height:105px;
 
-            border-radius: 10px;
+    padding:17px 12px;
 
-            background: #eef7f4;
+    text-align:center;
 
-            font-weight: bold;
-            line-height: 1.6;
-        }
+    box-shadow:
+        0 5px 18px rgba(20,60,100,.07);
+}
 
-        /* =========================
-           NOTIFICATION
-           ========================= */
+.summary-icon{
+    font-size:27px;
+}
 
-        .notification {
-            border: 1px solid #f0df9c;
+.summary-number{
+    margin-top:3px;
 
-            background: #fffbea;
+    font-size:28px;
+    font-weight:900;
 
-            border-radius: 12px;
+    color:#1268d9;
+}
 
-            padding: 15px;
+.summary-label{
+    margin-top:3px;
 
-            margin-bottom: 10px;
+    color:#65758a;
 
-            line-height: 1.6;
-        }
+    font-size:12px;
+    font-weight:700;
+}
 
-        .notification-date {
-            color: #777;
-            font-size: 12px;
+/* ================= QUICK ACTIONS ================= */
 
-            margin-top: 6px;
-        }
+.quick-actions{
+    display:grid;
 
-        @keyframes pulseAlert {
+    grid-template-columns:
+        repeat(4,1fr);
 
-            0% {
-                transform: scale(1);
-            }
+    gap:12px;
 
-            50% {
-                transform: scale(1.08);
-            }
+    margin-bottom:20px;
+}
 
-            100% {
-                transform: scale(1);
-            }
+.quick-card{
+    min-height:118px;
 
-        }
+    padding:14px 8px;
 
-        /* =========================
-           ACTION BUTTONS
-           ========================= */
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
 
-        .actions {
-            display: flex;
-            gap: 10px;
+    text-align:center;
 
-            flex-wrap: wrap;
+    background:#fff;
 
-            margin-top: 15px;
-        }
+    border:1px solid #e1eaf2;
 
-        .btn {
-            display: inline-block;
+    border-radius:18px;
 
-            text-decoration: none;
+    text-decoration:none;
 
-            border: none;
+    color:#14253d;
 
-            min-height: 42px;
+    box-shadow:
+        0 5px 18px rgba(20,60,100,.07);
 
-            padding: 10px 16px;
+    transition:.18s ease;
+}
 
-            border-radius: 11px;
+.quick-card:hover{
+    transform:translateY(-2px);
 
-            font-weight: bold;
+    box-shadow:
+        0 9px 25px rgba(20,60,100,.12);
+}
 
-            cursor: pointer;
+.quick-icon{
+    width:48px;
+    height:48px;
 
-            text-align: center;
-        }
+    border-radius:14px;
 
-        .btn-status {
-            background: linear-gradient(
-                135deg,
-                #1268d9,
-                #0b54b5
-            );
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            color: white;
-        }
+    font-size:25px;
 
-        .btn-call {
-            background: linear-gradient(
-                135deg,
-                #16a85a,
-                #08783d
-            );
+    margin-bottom:8px;
+}
 
-            color: white;
-        }
+.quick-title{
+    font-size:13px;
+    font-weight:800;
+}
 
-        /* =========================
-           EMPTY
-           ========================= */
+.quick-subtitle{
+    margin-top:4px;
 
-        .empty {
-            text-align: center;
+    font-size:10px;
 
-            padding: 30px 10px;
+    color:#75859a;
+}
 
-            color: #777;
+.book .quick-icon{
+    background:#e4f0ff;
+    color:#1268d9;
+}
 
-            font-size: 17px;
+.requests .quick-icon{
+    background:#fff0dc;
+    color:#ec8500;
+}
 
-            line-height: 1.7;
-        }
+.status-card .quick-icon{
+    background:#e2f8eb;
+    color:#159447;
+}
 
-        /* =========================
-           CONTACT
-           ========================= */
+.support .quick-icon{
+    background:#eee6ff;
+    color:#7541ca;
+}
 
-        .contact {
-            text-align: center;
+/* ================= SECTION ================= */
 
-            line-height: 2;
-        }
+.card{
+    background:#fff;
 
-        .contact a {
-            color: #128c7e;
+    border:1px solid #e1eaf2;
 
-            font-weight: bold;
+    border-radius:20px;
 
-            text-decoration: none;
-        }
+    padding:20px;
 
-        /* =========================
-           CUSTOMER FOOTER
-           ========================= */
+    margin-bottom:17px;
 
-        .customer-footer {
-            margin-top: 30px;
+    box-shadow:
+        0 6px 22px rgba(20,60,100,.07);
+}
 
-            padding: 22px 15px 18px;
+.section-heading{
+    display:flex;
 
-            background: linear-gradient(
-                135deg,
-                #edf9f5,
-                #f6fbff
-            );
+    align-items:center;
+    justify-content:space-between;
 
-            border-top: 1px solid #dcebe7;
+    gap:10px;
 
-            text-align: center;
+    margin-bottom:15px;
+}
 
-            color: #71807c;
-        }
+.section-heading h2{
+    margin:0;
 
-        .customer-footer-brand strong {
-            display: block;
+    font-size:22px;
 
-            color: #126b57;
+    color:#10233f;
+}
 
-            font-size: 18px;
+.view-status{
+    color:#1268d9;
 
-            margin-bottom: 4px;
-        }
+    text-decoration:none;
 
-        .customer-footer-brand span {
-            display: block;
+    font-size:13px;
 
-            font-size: 12px;
+    font-weight:800;
 
-            color: #71807c;
-        }
+    white-space:nowrap;
+}
 
-        .customer-social-title {
-            margin: 14px 0 9px;
+/* ================= NOTIFICATIONS ================= */
 
-            color: #345b54;
+.notification-alert{
+    padding:11px 13px;
 
-            font-size: 13px;
+    margin-bottom:12px;
 
-            font-weight: 700;
-        }
+    background:#fff4cf;
 
-        .customer-social-links {
-            display: flex;
+    border:1px solid #f1dd91;
 
-            justify-content: center;
-            align-items: center;
+    border-radius:11px;
 
-            gap: 11px;
+    color:#7c5a00;
 
-            width: 100%;
+    font-size:13px;
 
-            margin: 9px auto 7px;
+    font-weight:700;
+}
 
-            flex-wrap: nowrap;
-        }
+.notification{
+    padding:14px;
 
-        .customer-social-links a {
-            width: 42px;
-            height: 42px;
+    margin-bottom:10px;
 
-            flex: 0 0 42px;
+    background:#fffbea;
 
-            display: flex;
+    border:1px solid #f0df9c;
 
-            align-items: center;
-            justify-content: center;
+    border-radius:13px;
 
-            border-radius: 50%;
+    line-height:1.55;
+}
 
-            background: #ffffff;
+.notification.read{
+    opacity:.65;
 
-            border: 1px solid #dce7ef;
+    background:#f5f5f5;
 
-            box-shadow: 0 4px 12px rgba(20,60,100,.10);
+    border-color:#ddd;
+}
 
-            text-decoration: none;
+.notification-date{
+    margin-top:6px;
 
-            transition: .2s ease;
-        }
+    color:#7b7b7b;
 
-        .customer-social-links a:hover {
-            transform: translateY(-2px);
+    font-size:11px;
+}
 
-            box-shadow: 0 6px 15px rgba(20,60,100,.15);
-        }
+.read-button{
+    margin-top:9px;
 
-        .customer-social-links a:nth-child(1) {
-            color: #E1306C;
-        }
+    padding:9px 13px;
 
-        .customer-social-links a:nth-child(2) {
-            color: #1877F2;
-        }
+    border:0;
 
-        .customer-social-links a:nth-child(3) {
-            color: #229ED9;
-        }
+    border-radius:9px;
 
-        .customer-social-links a:nth-child(4) {
-            color: #FF0000;
-        }
+    background:#1268d9;
 
-        .customer-social-links svg {
-            width: 21px;
-            height: 21px;
-        }
+    color:#fff;
 
-        .customer-footer-copy {
-            width: 100%;
+    font-weight:700;
 
-            margin: 0 auto;
+    cursor:pointer;
+}
 
-            text-align: center;
+/* ================= REQUEST CARD ================= */
 
-            line-height: 1.5;
+.request-card{
+    padding:17px;
 
-            font-size: 12px;
+    margin-bottom:13px;
 
-            color: #536575;
-        }
+    background:#fbfdff;
 
-        /* =========================
-           MOBILE
-           ========================= */
+    border:1px solid #e0e9f2;
 
-        @media (max-width: 700px) {
+    border-radius:17px;
+}
 
-            header {
-                min-height: 64px;
+.request-top{
+    display:flex;
 
-                padding: 7px 12px;
+    align-items:center;
+    justify-content:space-between;
 
-                justify-content: center;
-            }
+    gap:10px;
 
-            header .brand-logo {
-                width: 155px;
-                height: 48px;
-            }
+    margin-bottom:12px;
+}
 
-            header form {
-                right: 10px;
-            }
+.application-id{
+    color:#1268d9;
 
-            .logout {
-                padding: 7px 9px;
+    font-size:18px;
 
-                font-size: 11px;
+    font-weight:900;
+}
 
-                white-space: nowrap;
-            }
+.status{
+    display:inline-flex;
 
-            .container {
-                width: 94%;
+    align-items:center;
+    justify-content:center;
 
-                margin: 13px auto 25px;
-            }
+    padding:6px 11px;
 
-            .card {
-                padding: 17px;
+    border-radius:20px;
 
-                border-radius: 17px;
-            }
+    font-size:11px;
 
-            .welcome {
-                padding: 19px;
+    font-weight:800;
 
-                border-radius: 19px;
-            }
+    white-space:nowrap;
+}
 
-            .welcome h1 {
-                font-size: 23px;
-            }
+.pending{
+    background:#fff3cd;
+    color:#856404;
+}
 
-            .welcome p {
-                font-size: 14px;
-            }
+.assigned{
+    background:#dbeafe;
+    color:#1e40af;
+}
 
-            .summary {
-                gap: 7px;
-            }
+.progress{
+    background:#ede9fe;
+    color:#6b21a8;
+}
 
-            .summary-box {
-                padding: 13px 5px;
+.completed{
+    background:#dcfce7;
+    color:#166534;
+}
 
-                border-radius: 14px;
-            }
+.cancelled{
+    background:#fee2e2;
+    color:#991b1b;
+}
 
-            .summary-number {
-                font-size: 23px;
-            }
+.message{
+    padding:11px 13px;
 
-            .summary-label {
-                font-size: 11px;
-            }
+    margin-bottom:12px;
 
-            /* 2 x 2 QUICK ACTIONS */
+    background:#eef7f4;
 
-            .customer-app-actions {
-                grid-template-columns: repeat(2, 1fr);
+    border-radius:10px;
 
-                gap: 9px;
+    color:#34564e;
 
-                margin: 14px 0;
-            }
+    font-size:13px;
 
-            .customer-app-action {
-                min-height: 94px;
+    line-height:1.5;
 
-                border-radius: 16px;
-            }
+    font-weight:600;
+}
 
-            .customer-app-icon {
-                width: 42px;
-                height: 42px;
+.request-info{
+    display:grid;
 
-                font-size: 21px;
+    grid-template-columns:
+        1fr 1fr;
 
-                border-radius: 12px;
-            }
+    gap:8px 15px;
+}
 
-            .customer-app-action strong {
-                font-size: 12px;
-            }
+.info-row{
+    padding:5px 0;
 
-            .customer-app-action span {
-                font-size: 10px;
-            }
+    font-size:13px;
 
-            .section-title {
-                font-size: 22px;
-            }
+    line-height:1.45;
+}
 
-            .request-card {
-                padding: 15px;
-            }
+.info-label{
+    display:block;
 
-            .application-id {
-                font-size: 18px;
-            }
+    margin-bottom:2px;
 
-            .actions {
-                display: block;
-            }
+    color:#718197;
 
-            .btn {
-                display: block;
+    font-size:11px;
 
-                width: 100%;
+    font-weight:800;
+}
 
-                margin-top: 8px;
-            }
+.info-value{
+    color:#25394f;
 
-            /* FOOTER */
+    word-break:break-word;
+}
 
-            .customer-social-links {
-                justify-content: center;
+.request-actions{
+    display:grid;
 
-                align-items: center;
+    grid-template-columns:
+        1fr 1fr;
 
-                gap: 9px;
+    gap:9px;
 
-                margin: 8px auto 6px;
-            }
+    margin-top:14px;
+}
 
-            .customer-social-links a {
-                width: 42px;
-                height: 42px;
+.action-btn{
+    min-height:43px;
 
-                flex-basis: 42px;
-            }
+    display:flex;
 
-            .customer-footer-copy {
-                width: 100%;
+    align-items:center;
+    justify-content:center;
 
-                text-align: center;
+    padding:9px;
 
-                margin: 0 auto;
+    border-radius:10px;
 
-                font-size: 11px;
-            }
+    text-decoration:none;
 
-        }
+    font-size:12px;
 
-    </style>
+    font-weight:800;
 
+    text-align:center;
+}
+
+.track-btn{
+    background:#1268d9;
+    color:#fff;
+}
+
+.call-btn{
+    background:#16a85a;
+    color:#fff;
+}
+
+/* ================= SUPPORT ================= */
+
+.support-card{
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f1f8ff,
+            #effaf5
+        );
+}
+
+.support-icon{
+    font-size:32px;
+}
+
+.support-card h3{
+    margin:7px 0;
+
+    color:#173b54;
+}
+
+.support-card p{
+    margin:5px 0 14px;
+
+    color:#6b7b8d;
+
+    font-size:13px;
+}
+
+.support-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.support-button{
+    min-height:42px;
+
+    padding:10px 17px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:800;
+}
+
+.phone-button{
+    background:#16a85a;
+    color:#fff;
+}
+
+.whatsapp-button{
+    background:#128c7e;
+    color:#fff;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    padding:30px 15px;
+
+    text-align:center;
+
+    color:#718095;
+
+    line-height:1.7;
+}
+
+.empty-button{
+    display:inline-flex;
+
+    margin-top:12px;
+
+    padding:11px 18px;
+
+    background:#1268d9;
+
+    color:#fff;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:800;
+}
+
+/* ================= FOOTER ================= */
+
+.customer-footer{
+    margin-top:25px;
+
+    padding:24px 15px 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e9faf4,
+            #f2fbff
+        );
+
+    border-top:1px solid #dcebe7;
+
+    text-align:center;
+}
+
+.footer-brand{
+    color:#126b57;
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.footer-follow{
+    margin:10px 0;
+
+    color:#47655e;
+
+    font-size:12px;
+
+    font-weight:800;
+}
+
+.social-links{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:12px;
+
+    margin:9px 0 13px;
+}
+
+.social-links a{
+    width:43px;
+    height:43px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:#126b57;
+
+    text-decoration:none;
+
+    box-shadow:
+        0 3px 10px rgba(20,80,70,.10);
+}
+
+.social-links svg{
+    width:22px;
+    height:22px;
+}
+
+.footer-copy{
+    color:#405e57;
+
+    font-size:11px;
+}
+
+/* ================= BOTTOM NAV ================= */
+
+.bottom-nav{
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    z-index:200;
+
+    height:70px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    background:#fff;
+
+    border-top:1px solid #dfe8ef;
+
+    box-shadow:
+        0 -4px 18px rgba(20,60,100,.10);
+}
+
+.bottom-item{
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:3px;
+
+    color:#68798c;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.bottom-item span:first-child{
+    font-size:21px;
+}
+
+.bottom-item.active{
+    color:#1268d9;
+}
+
+.bottom-new{
+    position:relative;
+
+    margin-top:-18px;
+}
+
+.bottom-new .plus{
+    width:51px;
+    height:51px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#1268d9;
+
+    color:#fff;
+
+    font-size:30px;
+
+    box-shadow:
+        0 5px 14px rgba(18,104,217,.35);
+
+    border:4px solid #fff;
+}
+
+.bottom-new small{
+    margin-top:2px;
+
+    color:#42566d;
+
+    font-size:9px;
+
+    font-weight:800;
+}
+
+/* ================= DESKTOP ================= */
+
+@media(min-width:701px){
+
+    .bottom-nav{
+        display:none;
+    }
+
+}
+
+/* ================= TABLET ================= */
+
+@media(max-width:850px){
+
+    .quick-actions{
+        grid-template-columns:
+            repeat(4,1fr);
+    }
+
+    .welcome-title{
+        font-size:30px;
+    }
+
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+    .app-header{
+        height:64px;
+    }
+
+    .header-side{
+        height:64px;
+    }
+
+    .header-icon{
+        width:39px;
+        height:39px;
+
+        font-size:19px;
+    }
+
+    .brand-logo{
+        width:165px;
+        height:54px;
+    }
+
+    .container{
+        width:94%;
+
+        margin-top:11px;
+
+        margin-bottom:85px;
+    }
+
+    .welcome{
+        min-height:175px;
+
+        padding:22px 17px;
+
+        border-radius:20px;
+    }
+
+    .welcome-small{
+        font-size:14px;
+    }
+
+    .welcome-title{
+        font-size:29px;
+    }
+
+    .welcome-text{
+        max-width:250px;
+
+        font-size:13px;
+    }
+
+    .summary{
+        gap:9px;
+    }
+
+    .summary-card{
+        min-height:93px;
+
+        padding:13px 6px;
+
+        border-radius:15px;
+    }
+
+    .summary-icon{
+        font-size:23px;
+    }
+
+    .summary-number{
+        font-size:25px;
+    }
+
+    .summary-label{
+        font-size:10px;
+    }
+
+    .quick-actions{
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:9px;
+    }
+
+    .quick-card{
+        min-height:108px;
+
+        border-radius:15px;
+    }
+
+    .quick-icon{
+        width:44px;
+        height:44px;
+
+        font-size:22px;
+    }
+
+    .card{
+        padding:15px;
+
+        border-radius:17px;
+    }
+
+    .section-heading h2{
+        font-size:19px;
+    }
+
+    .request-info{
+        grid-template-columns:1fr;
+        gap:2px;
+    }
+
+    .request-actions{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media(max-width:390px){
+
+    .brand-logo{
+        width:145px;
+    }
+
+    .header-left{
+        left:8px;
+    }
+
+    .header-right{
+        right:8px;
+    }
+
+    .welcome-title{
+        font-size:26px;
+    }
+
+    .summary-number{
+        font-size:23px;
+    }
+
+    .quick-title{
+        font-size:12px;
+    }
+
+    .quick-subtitle{
+        font-size:9px;
+    }
+
+}
+
+</style>
 </head>
 
 
 <body>
 
 
-<!-- =========================
-     HEADER
-     ========================= -->
+<!-- ================= HEADER ================= -->
 
-<header>
+<header class="app-header">
 
-    <h2>
+    <div class="header-side header-left">
 
-        <img
-            src="/static/helpme-doorstep-flat-logo.png.jpeg"
-            alt="HelpMe Doorstep"
-            class="brand-logo"
+        <a
+            href="#customer-requests"
+            class="header-icon"
+            aria-label="My Requests"
         >
+            ☰
+        </a>
 
-    </h2>
+    </div>
 
 
-    <form
-        method="post"
-        action="/customer/logout"
+    <img
+        src="/static/helpme-doorstep-flat-logo.png.jpeg"
+        alt="HelpMe Doorstep"
+        class="brand-logo"
     >
 
-        <input
-            type="hidden"
-            name="csrf_token"
-            value="{{ csrf_token() }}"
-        >
 
-        <button
-            class="logout"
-            type="submit"
-        >
-            Logout
-        </button>
+    <div class="header-side header-right">
 
-    </form>
+        {% if notifications %}
+    
+        <a
+            href="#customer-notifications"
+            class="header-icon"
+            aria-label="Notifications"
+        >
+            🔔
+        </a>
+
+        {% else %}
+
+        <a
+            href="#customer-requests"
+            class="header-icon"
+            aria-label="Requests"
+        >
+            🔔
+        </a>
+
+        {% endif %}
+
+    </div>
 
 </header>
 
 
-<div class="container">
+<!-- ================= MAIN ================= -->
+
+<main class="container">
 
 
-    <!-- =========================
-         CUSTOMER WELCOME
-         ========================= -->
+<!-- ================= WELCOME ================= -->
 
-    <div class="card welcome">
+<section class="welcome">
 
-        <h1>
-            👋 Customer Dashboard
+    <div class="welcome-content">
+
+        <div class="welcome-small">
+            Welcome to
+        </div>
+
+        <h1 class="welcome-title">
+            HelpMe
+            <span>Doorstep</span>
         </h1>
 
-        <p>
-            HelpMe Doorstep में आपका स्वागत है।
-        </p>
-
-        <p>
-            📱 Registered Mobile:
-            <span class="mobile">
-                {{ customer.mobile }}
-            </span>
+        <p class="welcome-text">
+            आपकी Service, हमारी Support
+            <br>
+            घर बैठे सहायता के लिए आपका स्वागत है।
         </p>
 
     </div>
 
-
-    <!-- =========================
-         SUMMARY
-         ========================= -->
-
-    <div class="summary">
+</section>
 
 
-        <div class="summary-box">
+<!-- ================= SUMMARY ================= -->
 
-            <div class="summary-number">
-                {{ requests|length }}
-            </div>
+<section class="summary">
 
-            <div class="summary-label">
-                📋 कुल आवेदन
-            </div>
+    <div class="summary-card">
 
+        <div class="summary-icon">
+            📄
         </div>
 
-
-        <div class="summary-box">
-
-            <div
-                class="summary-number"
-                style="color:#8e44ad;"
-            >
-                {{
-                    requests
-                    |selectattr('status','equalto','In Progress')
-                    |list
-                    |length
-                }}
-            </div>
-
-            <div class="summary-label">
-                🔄 In Progress
-            </div>
-
+        <div class="summary-number">
+            {{ requests|length }}
         </div>
 
-
-        <div class="summary-box">
-
-            <div
-                class="summary-number"
-                style="color:#188038;"
-            >
-                {{
-                    requests
-                    |selectattr('status','equalto','Completed')
-                    |list
-                    |length
-                }}
-            </div>
-
-            <div class="summary-label">
-                ✅ Completed
-            </div>
-
+        <div class="summary-label">
+            Total Requests
         </div>
-
 
     </div>
 
 
-    <!-- =========================
-         CUSTOMER APP QUICK ACTIONS
-         ========================= -->
+    <div class="summary-card">
 
-    <div class="customer-app-actions">
+        <div class="summary-icon">
+            🔄
+        </div>
 
+        <div class="summary-number">
+            {{
+                requests
+                |selectattr(
+                    'status',
+                    'equalto',
+                    'In Progress'
+                )
+                |list
+                |length
+            }}
+        </div>
 
-        <!-- BOOK SERVICE -->
-
-        <a
-            class="customer-app-action action-book"
-            href="/"
-        >
-
-            <div class="customer-app-icon">
-                🛒
-            </div>
-
-            <strong>
-                Book Service
-            </strong>
-
-            <span>
-                नई Service Request
-            </span>
-
-        </a>
-
-
-        <!-- MY REQUESTS -->
-
-        <a
-            class="customer-app-action action-request"
-            href="#customer-requests"
-        >
-
-            <div class="customer-app-icon">
-                📋
-            </div>
-
-            <strong>
-                My Requests
-            </strong>
-
-            <span>
-                अपने आवेदन देखें
-            </span>
-
-        </a>
-
-
-        <!-- TRACK STATUS -->
-
-        <a
-            class="customer-app-action action-status"
-            href="/status?phone={{ customer.mobile }}"
-        >
-
-            <div class="customer-app-icon">
-                📊
-            </div>
-
-            <strong>
-                Track Status
-            </strong>
-
-            <span>
-                Application Status
-            </span>
-
-        </a>
-
-
-        <!-- SUPPORT -->
-
-        <a
-            class="customer-app-action action-support"
-            href="tel:9219160465"
-        >
-
-            <div class="customer-app-icon">
-                🎧
-            </div>
-
-            <strong>
-                Support
-            </strong>
-
-            <span>
-                Help Line
-            </span>
-
-        </a>
-
+        <div class="summary-label">
+            In Progress
+        </div>
 
     </div>
 
 
-    <!-- =========================
-         NOTIFICATIONS
-         ========================= -->
+    <div class="summary-card">
 
-    {% if notifications %}
+        <div class="summary-icon">
+            ✅
+        </div>
 
-    {% set unread_count =
-        notifications
-        |selectattr('is_read','equalto',False)
-        |list
-        |length
-    %}
+        <div
+            class="summary-number"
+            style="color:#159447;"
+        >
+            {{
+                requests
+                |selectattr(
+                    'status',
+                    'equalto',
+                    'Completed'
+                )
+                |list
+                |length
+            }}
+        </div>
+
+        <div class="summary-label">
+            Completed
+        </div>
+
+    </div>
+
+</section>
 
 
-    <div
-        class="card"
-        id="customer-notifications"
+<!-- ================= REAL QUICK ACTIONS ================= -->
+
+<section class="quick-actions">
+
+
+    <!-- REAL: NEW SERVICE REQUEST -->
+
+    <a
+        href="/"
+        class="quick-card book"
     >
 
-        <h2 class="section-title">
+        <div class="quick-icon">
+            🛒
+        </div>
 
-            🔔 Customer Message Alerts
+        <div class="quick-title">
+            New Request
+        </div>
 
+        <div class="quick-subtitle">
+            Service Book करें
+        </div>
+
+    </a>
+
+
+    <!-- REAL: MY REQUESTS -->
+
+    <a
+        href="#customer-requests"
+        class="quick-card requests"
+    >
+
+        <div class="quick-icon">
+            📋
+        </div>
+
+        <div class="quick-title">
+            My Requests
+        </div>
+
+        <div class="quick-subtitle">
+            अपने आवेदन देखें
+        </div>
+
+    </a>
+
+
+    <!-- REAL: STATUS -->
+
+    <a
+        href="/status?phone={{ customer.mobile }}"
+        class="quick-card status-card"
+    >
+
+        <div class="quick-icon">
+            📊
+        </div>
+
+        <div class="quick-title">
+            Track Status
+        </div>
+
+        <div class="quick-subtitle">
+            Application Status
+        </div>
+
+    </a>
+
+
+    <!-- REAL: SUPPORT -->
+
+    <a
+        href="tel:9219160465"
+        class="quick-card support"
+    >
+
+        <div class="quick-icon">
+            🎧
+        </div>
+
+        <div class="quick-title">
+            Help & Support
+        </div>
+
+        <div class="quick-subtitle">
+            Contact Support
+        </div>
+
+    </a>
+
+
+</section>
+
+
+<!-- ================= NOTIFICATIONS ================= -->
+
+{% if notifications %}
+
+{% set unread_count =
+    notifications
+    |selectattr(
+        'is_read',
+        'equalto',
+        False
+    )
+    |list
+    |length
+%}
+
+
+<section
+    class="card"
+    id="customer-notifications"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            🔔 Notifications
 
             {% if unread_count > 0 %}
 
             <span
                 style="
                     display:inline-block;
-                    background:#e53935;
-                    color:white;
-                    padding:5px 10px;
+                    margin-left:5px;
+                    padding:4px 8px;
                     border-radius:20px;
-                    font-size:13px;
-                    margin-left:6px;
+                    background:#e53935;
+                    color:#fff;
+                    font-size:11px;
                     vertical-align:middle;
-                    animation:pulseAlert 1.5s infinite;
                 "
             >
-
-                🔴 {{ unread_count }} New Alert
-
+                {{ unread_count }}
             </span>
 
             {% endif %}
 
         </h2>
 
-
-        {% if unread_count > 0 %}
-
-        <div
-            style="
-                margin-bottom:15px;
-                padding:12px 14px;
-                background:#fff3cd;
-                border:1px solid #ffe08a;
-                border-radius:10px;
-                font-weight:bold;
-                color:#856404;
-            "
-        >
-
-            🔔 आपके लिए नई सूचना उपलब्ध है।
-            कृपया नीचे Notification देखें।
-
-        </div>
-
-        {% endif %}
-
-
-        {% for n in notifications %}
-
-
-        <div
-            class="notification"
-            style="
-                {% if n.is_read %}
-                opacity:0.65;
-                background:#f5f5f5;
-                border-color:#ddd;
-                {% endif %}
-            "
-        >
-
-            <div>
-
-                📢 <strong>सूचना:</strong>
-
-                {{ n.message }}
-
-            </div>
-
-
-            {% if n.created_at %}
-
-            <div class="notification-date">
-
-                {{ n.created_at.strftime("%d-%m-%Y %H:%M") }}
-
-            </div>
-
-            {% endif %}
-
-
-            {% if not n.is_read %}
-
-            <form
-                method="post"
-                action="/customer/notification/read/{{ n.id }}"
-                style="margin-top:10px;"
-            >
-
-                <input
-                    type="hidden"
-                    name="csrf_token"
-                    value="{{ csrf_token() }}"
-                >
-
-
-                <button
-                    type="submit"
-                    class="btn btn-status"
-                >
-                    ✓ पढ़ लिया
-                </button>
-
-            </form>
-
-
-            {% else %}
-
-            <div
-                style="
-                    margin-top:8px;
-                    color:#188038;
-                    font-size:13px;
-                    font-weight:bold;
-                "
-            >
-
-                ✓ पढ़ा गया
-
-            </div>
-
-            {% endif %}
-
-
-        </div>
-
-
-        {% endfor %}
-
-
     </div>
 
+
+    {% if unread_count > 0 %}
+
+    <div class="notification-alert">
+
+        🔔 आपके लिए नई सूचना उपलब्ध है।
+
+    </div>
 
     {% endif %}
 
 
-    <!-- =========================
-         APPLICATIONS
-         ========================= -->
+    {% for n in notifications %}
 
     <div
-        class="card"
-        id="customer-requests"
+        class="notification
+        {% if n.is_read %}read{% endif %}"
     >
 
-        <h2 class="section-title">
+        <div>
 
-            📋 मेरे Service Requests
+            📢
+            <strong>
+                सूचना:
+            </strong>
 
-        </h2>
-
-
-        {% if requests %}
-
-
-        {% for r in requests %}
-
-
-        <div class="request-card">
-
-
-            <!-- APPLICATION ID -->
-
-            <div class="application-id">
-
-                📄 {{ r.application_code }}
-
-            </div>
-
-
-            <!-- STATUS MESSAGE -->
-
-
-            {% if r.status == "Pending" %}
-
-            <div class="message">
-
-                ⏳ आपका आवेदन प्राप्त हो गया है।
-
-                Worker Assign होने की प्रतीक्षा है।
-
-            </div>
-
-
-            {% elif r.status == "Assigned" %}
-
-            <div class="message">
-
-                👷 आपका Worker Assign कर दिया गया है।
-
-                जल्द ही आपसे संपर्क किया जाएगा।
-
-            </div>
-
-
-            {% elif r.status == "In Progress" %}
-
-            <div class="message">
-
-                🔧 आपका काम अभी चल रहा है।
-
-            </div>
-
-
-            {% elif r.status == "Completed" %}
-
-            <div class="message">
-
-                ✅ आपका काम सफलतापूर्वक पूरा हो गया है।
-
-            </div>
-
-
-            {% elif r.status == "Cancelled" %}
-
-            <div class="message">
-
-                ❌ आपका आवेदन Cancelled कर दिया गया है।
-
-            </div>
-
-
-            {% endif %}
-
-
-            <!-- CUSTOMER NAME -->
-
-            <div class="row">
-
-                <strong>
-                    👤 नाम:
-                </strong>
-
-                {{ r.customer }}
-
-            </div>
-
-
-            <!-- AGE -->
-
-            <div class="row">
-
-                <strong>
-                    🎂 उम्र:
-                </strong>
-
-                {{ r.age }} वर्ष
-
-
-                {% if r.age >= 60 %}
-
-                <br>
-
-                👴 Senior Citizen
-
-                {% endif %}
-
-            </div>
-
-
-            <!-- SERVICE -->
-
-            <div class="row">
-
-                <strong>
-                    🛠️ सेवा:
-                </strong>
-
-                {{ r.service }}
-
-            </div>
-
-
-            <!-- ADDRESS -->
-
-            <div class="row">
-
-                <strong>
-                    📍 पता:
-                </strong>
-
-                {{ r.address }}
-
-            </div>
-
-
-            <!-- STATE / DISTRICT -->
-
-            {% if r.state %}
-
-            <div class="row">
-
-                <strong>
-                    🗺️ State:
-                </strong>
-
-                {{ r.state }}
-
-
-                {% if r.district %}
-
-                — {{ r.district }}
-
-                {% endif %}
-
-            </div>
-
-            {% endif %}
-
-
-            <!-- DETAILS -->
-
-            {% if r.details %}
-
-            <div class="row">
-
-                <strong>
-                    📝 विवरण:
-                </strong>
-
-                {{ r.details }}
-
-            </div>
-
-            {% endif %}
-
-
-            <!-- STATUS -->
-
-            <div class="row">
-
-                <strong>
-                    📊 Status:
-                </strong>
-
-                <br>
-
-
-                {% if r.status == "Pending" %}
-
-                <span class="status pending">
-                    ⏳ Pending
-                </span>
-
-
-                {% elif r.status == "Assigned" %}
-
-                <span class="status assigned">
-                    👷 Assigned
-                </span>
-
-
-                {% elif r.status == "In Progress" %}
-
-                <span class="status progress">
-                    🔄 In Progress
-                </span>
-
-
-                {% elif r.status == "Completed" %}
-
-                <span class="status completed">
-                    ✅ Completed
-                </span>
-
-
-                {% elif r.status == "Cancelled" %}
-
-                <span class="status cancelled">
-                    ❌ Cancelled
-                </span>
-
-
-                {% else %}
-
-                <span class="status">
-                    {{ r.status }}
-                </span>
-
-                {% endif %}
-
-            </div>
-
-
-            <!-- CREATED DATE -->
-
-            <div class="row">
-
-                <strong>
-                    📅 आवेदन दिनांक:
-                </strong>
-
-                {{ r.created_at.strftime("%d-%m-%Y %H:%M") }}
-
-            </div>
-
-
-            <!-- ACTIONS -->
-
-            <div class="actions">
-
-
-                <a
-                    class="btn btn-status"
-                    href="/status?phone={{ customer.mobile }}"
-                >
-                    📊 पूरा Status देखें
-                </a>
-
-
-                {% if r.phone %}
-
-                <a
-                    class="btn btn-call"
-                    href="tel:{{ r.phone }}"
-                >
-                    📞 Contact
-                </a>
-
-                {% endif %}
-
-
-            </div>
-
+            {{ n.message }}
 
         </div>
 
 
-        {% endfor %}
+        {% if n.created_at %}
 
+        <div class="notification-date">
 
-        {% else %}
-
-
-        <div class="empty">
-
-            📭 अभी तक आपने कोई Service Request नहीं भेजी है।
-
-            <br><br>
-
-
-            <a
-                class="btn btn-status"
-                href="/"
-            >
-                ➕ Service Request भेजें
-            </a>
+            {{ n.created_at.strftime(
+                "%d-%m-%Y %H:%M"
+            ) }}
 
         </div>
-
 
         {% endif %}
 
 
+        {% if not n.is_read %}
+
+        <form
+            method="post"
+            action="/customer/notification/read/{{ n.id }}"
+        >
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <button
+                type="submit"
+                class="read-button"
+            >
+                ✓ पढ़ लिया
+            </button>
+
+        </form>
+
+        {% else %}
+
+        <div
+            style="
+                margin-top:7px;
+                color:#188038;
+                font-size:11px;
+                font-weight:700;
+            "
+        >
+            ✓ पढ़ा गया
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+{% endif %}
+
+
+<!-- ================= MY REQUESTS ================= -->
+
+<section
+    class="card"
+    id="customer-requests"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            📋 Recent Requests
+        </h2>
+
+        <a
+            href="/status?phone={{ customer.mobile }}"
+            class="view-status"
+        >
+            View All →
+        </a>
+
     </div>
 
 
-    <!-- =========================
-         CONTACT SUPPORT
-         ========================= -->
+    {% if requests %}
 
-    <div class="card contact">
 
-        <strong>
-            📞 HelpMe Doorstep सहायता
-        </strong>
+    {% for r in requests %}
+
+    <article class="request-card">
+
+
+        <div class="request-top">
+
+            <div class="application-id">
+
+                {{ r.application_code }}
+
+            </div>
+
+
+            {% if r.status == "Pending" %}
+
+            <span class="status pending">
+                ⏳ Pending
+            </span>
+
+            {% elif r.status == "Assigned" %}
+
+            <span class="status assigned">
+                👷 Assigned
+            </span>
+
+            {% elif r.status == "In Progress" %}
+
+            <span class="status progress">
+                🔄 In Progress
+            </span>
+
+            {% elif r.status == "Completed" %}
+
+            <span class="status completed">
+                ✅ Completed
+            </span>
+
+            {% elif r.status == "Cancelled" %}
+
+            <span class="status cancelled">
+                ❌ Cancelled
+            </span>
+
+            {% else %}
+
+            <span class="status">
+                {{ r.status }}
+            </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- STATUS MESSAGE -->
+
+        {% if r.status == "Pending" %}
+
+        <div class="message">
+
+            ⏳ आपका आवेदन प्राप्त हो गया है।
+            Worker Assign होने की प्रतीक्षा है।
+
+        </div>
+
+        {% elif r.status == "Assigned" %}
+
+        <div class="message">
+
+            👷 आपका Worker Assign कर दिया गया है।
+            जल्द ही आपसे संपर्क किया जाएगा।
+
+        </div>
+
+        {% elif r.status == "In Progress" %}
+
+        <div class="message">
+
+            🔧 आपका काम अभी चल रहा है।
+
+        </div>
+
+        {% elif r.status == "Completed" %}
+
+        <div class="message">
+
+            ✅ आपका काम सफलतापूर्वक पूरा हो गया है।
+
+        </div>
+
+        {% elif r.status == "Cancelled" %}
+
+        <div class="message">
+
+            ❌ आपका आवेदन Cancelled कर दिया गया है।
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- REQUEST INFORMATION -->
+
+        <div class="request-info">
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Customer
+                </span>
+
+                <span class="info-value">
+                    {{ r.customer }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Age
+                </span>
+
+                <span class="info-value">
+                    {{ r.age }} वर्ष
+
+                    {% if r.age >= 60 %}
+                    — Senior Citizen
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Service
+                </span>
+
+                <span class="info-value">
+                    {{ r.service }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Mobile
+                </span>
+
+                <span class="info-value">
+                    {{ r.phone }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    State / District
+                </span>
+
+                <span class="info-value">
+                    {{ r.state or "-" }}
+
+                    {% if r.district %}
+                    / {{ r.district }}
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Application Date
+                </span>
+
+                <span class="info-value">
+
+                    {{ r.created_at.strftime(
+                        "%d-%m-%Y %H:%M"
+                    ) }}
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row"
+                 style="grid-column:1/-1;">
+
+                <span class="info-label">
+                    Address
+                </span>
+
+                <span class="info-value">
+                    {{ r.address }}
+                </span>
+
+            </div>
+
+
+            {% if r.details %}
+
+            <div class="info-row"
+                 style="grid-column:1/-1;">
+
+                <span class="info-label">
+                    Details
+                </span>
+
+                <span class="info-value">
+                    {{ r.details }}
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- REAL ACTIONS -->
+
+        <div class="request-actions">
+
+            <a
+                href="/status?phone={{ customer.mobile }}"
+                class="action-btn track-btn"
+            >
+                📊 Track Status
+            </a>
+
+
+            {% if r.phone %}
+
+            <a
+                href="tel:{{ r.phone }}"
+                class="action-btn call-btn"
+            >
+                📞 Contact
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+    </article>
+
+    {% endfor %}
+
+
+    {% else %}
+
+    <div class="empty">
+
+        📭 अभी तक आपने कोई Service Request नहीं भेजी है।
 
         <br>
 
-
-        <a href="tel:9219160465">
-            9219160465
+        <a
+            href="/"
+            class="empty-button"
+        >
+            ➕ New Service Request
         </a>
 
+    </div>
 
-        &nbsp;&nbsp;|&nbsp;&nbsp;
+    {% endif %}
 
+</section>
+
+
+<!-- ================= SUPPORT ================= -->
+
+<section class="card support-card">
+
+    <div class="support-icon">
+        🎧
+    </div>
+
+    <h3>
+        Need Help?
+    </h3>
+
+    <p>
+        हमारी Support Team आपकी सहायता के लिए उपलब्ध है।
+    </p>
+
+    <div class="support-buttons">
+
+        <a
+            href="tel:9219160465"
+            class="support-button phone-button"
+        >
+            📞 Call Support
+        </a>
 
         <a
             href="https://wa.me/919219160465"
             target="_blank"
             rel="noopener noreferrer"
+            class="support-button whatsapp-button"
         >
             💬 WhatsApp
         </a>
 
-
     </div>
 
+</section>
 
-</div>
+
+</main>
 
 
-<!-- =========================
-     CUSTOMER FOOTER
-     ========================= -->
+<!-- ================= FOOTER ================= -->
 
 <footer class="customer-footer">
 
-
-    <div class="customer-footer-brand">
-
-        <strong>
-            HelpMe Doorstep
-        </strong>
-
-        <span>
-            Service | Support | Social Impact
-        </span>
-
+    <div class="footer-brand">
+        HelpMe Doorstep
     </div>
 
-
-    <div class="customer-social-title">
-
+    <div class="footer-follow">
         Follow Us
-
     </div>
 
 
-    <!-- SOCIAL BUTTONS -->
-
-    <div class="customer-social-links">
+    <div class="social-links">
 
 
         <!-- INSTAGRAM -->
@@ -1617,10 +1858,7 @@
             aria-label="Instagram"
         >
 
-            <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-            >
+            <svg viewBox="0 0 24 24">
 
                 <rect
                     x="3"
@@ -1663,14 +1901,11 @@
             aria-label="Facebook"
         >
 
-            <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-            >
+            <svg viewBox="0 0 24 24">
 
                 <path
-                    d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"
                     fill="currentColor"
+                    d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"
                 />
 
             </svg>
@@ -1687,14 +1922,11 @@
             aria-label="Telegram"
         >
 
-            <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-            >
+            <svg viewBox="0 0 24 24">
 
                 <path
-                    d="M21.5 3.5 2.8 10.7c-1.3.5-1.3 1.4-.2 1.8l4.8 1.5 1.8 5.7c.2.6.1.8.8.8.5 0 .7-.2 1-.5.3-.3 1.3-1.3 2.5-2.4l5-3.8 5.1 3.8c.9.5 1.5.2 1.7-.8l3-14.1c.3-1.3-.5-1.9-1.6-1.5z"
                     fill="currentColor"
+                    d="M21.5 4.5 18.3 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3-1 .5.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L5.7 13.6.8 12c-1.1-.3-1.1-1.1.2-1.6L20.1 3c.9-.3 1.7.2 1.4 1.5z"
                 />
 
             </svg>
@@ -1711,41 +1943,92 @@
             aria-label="YouTube"
         >
 
-            <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-            >
+            <svg viewBox="0 0 24 24">
 
                 <path
-                    d="M21.6 7.2a2.9 2.9 0 0 0-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5a2.9 2.9 0 0 0-2 2C2 8.9 2 12 2 12s0 3.1.4 4.8a2.9 2.9 0 0 0 2 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.9 2.9 0 0 0 2-2c.4-1.7.4-4.8-.4-4.8z"
                     fill="currentColor"
+                    d="M21.6 7.2a2.9 2.9 0 0 0-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5a2.9 2.9 0 0 0-2 2C1.9 8.9 1.9 12 1.9 12s0 3.1.5 4.8a2.9 2.9 0 0 0 2 2c1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5a2.9 2.9 0 0 0 2-2c.5-1.7.5-4.8-.5-4.8s0-3.1-.5-4.8z"
                 />
 
                 <path
-                    d="m10 9 5 3-5 3V9z"
-                    fill="white"
+                    fill="#fff"
+                    d="m10 15.5 5-3.5-5-3.5z"
                 />
 
             </svg>
 
         </a>
 
-
     </div>
 
 
-    <!-- COPYRIGHT -->
+    <div class="footer-copy">
 
-    <div class="customer-footer-copy">
-
-        © 2026 HelpMe Doorstep | All Rights Reserved
+        © 2026 HelpMe Doorstep
+        <br>
+        All Rights Reserved
 
     </div>
-
 
 </footer>
 
 
-</body>
+<!-- ================= REAL MOBILE NAV ================= -->
 
+<nav class="bottom-nav">
+
+
+    <a
+        href="/"
+        class="bottom-item active"
+    >
+
+        <span>🏠</span>
+        <span>Home</span>
+
+    </a>
+
+
+    <a
+        href="#customer-requests"
+        class="bottom-item"
+    >
+
+        <span>📋</span>
+        <span>Requests</span>
+
+    </a>
+
+
+    <a
+        href="/"
+        class="bottom-item bottom-new"
+    >
+
+        <span class="plus">
+            +
+        </span>
+
+        <small>
+            New Request
+        </small>
+
+    </a>
+
+
+    <a
+        href="/status?phone={{ customer.mobile }}"
+        class="bottom-item"
+    >
+
+        <span>📊</span>
+        <span>Status</span>
+
+    </a>
+
+
+</nav>
+
+
+</body>
 </html>
