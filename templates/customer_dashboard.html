@@ -102,22 +102,20 @@ body{
 
 .welcome{
     position:relative;
+    width:100%;
     overflow:hidden;
+    border-radius:22px;
+    margin-bottom:22px;
+    background:#eef9ff;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
 
-    min-height:190px;
-
-    padding:25px 22px;
-
-    border-radius:23px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #dff3ff 0%,
-            #eafcff 48%,
-            #e9f9ef 100%
-        );
-
+.welcome-banner{
+    width:100%;
+    height:auto;
+    display:block;
+    object-fit:cover;
+}
     border:1px solid #d8eaf4;
 
     box-shadow:
@@ -1186,24 +1184,12 @@ body{
 <!-- ================= WELCOME ================= -->
 
 <section class="welcome">
-
-    <div class="welcome-content">
-
-        <div class="welcome-small">
-            Welcome to
-        </div>
-
-        <h1 class="welcome-title">
-            HelpMe
-            <span>Doorstep</span>
-        </h1>
-
-        <p class="welcome-text">
-            आपकी Service, हमारी Support
-            <br>
-            घर बैठे सहायता के लिए आपका स्वागत है।
-        </p>
-
+    <img
+        src="/static/helpme-doorstep-welcome-banner.png"
+        alt="Welcome to HelpMe Doorstep"
+        class="welcome-banner"
+    >
+</section>
     </div>
 
 </section>
