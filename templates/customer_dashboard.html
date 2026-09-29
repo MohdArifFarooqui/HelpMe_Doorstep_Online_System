@@ -865,11 +865,18 @@ body{
     right:0;
     bottom:0;
 
-    z-index:200;
+    z-index:9999;
 
     height:70px;
 
-    display:grid;
+    padding-bottom:env(safe-area-inset-bottom);
+
+    background:#fff;
+
+    border-top:1px solid #dfe8ef;
+
+    box-shadow:
+        0 -4px 18px rgba(20,60,100,.10);
 
     grid-template-columns:
         repeat(4,1fr);
