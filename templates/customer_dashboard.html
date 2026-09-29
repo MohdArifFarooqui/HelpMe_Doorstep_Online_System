@@ -86,12 +86,11 @@ body{
 }
 
 .brand-logo{
-    width:185px;
-    height:58px;
-
+    width:225px;
+    height:64px;
     object-fit:contain;
+    display:block;
 }
-
 /* ================= MAIN ================= */
 
 .container{
@@ -671,17 +670,22 @@ body{
 }
 
 .support-button{
-    min-height:42px;
+    min-height:48px;
+    padding:0 18px;
 
-    padding:10px 17px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 
-    border-radius:10px;
+    line-height:1;
+    border-radius:11px;
 
     text-decoration:none;
 
-    font-size:13px;
-
+    font-size:14px;
     font-weight:800;
+
+    white-space:nowrap;
 }
 
 .phone-button{
@@ -763,39 +767,60 @@ body{
 
 .social-links{
     display:flex;
-
     justify-content:center;
     align-items:center;
-
-    gap:12px;
-
-    margin:9px 0 13px;
+    gap:14px;
+    margin:14px 0 18px;
+    padding:6px 0;
+    min-height:60px;
 }
 
 .social-links a{
-    width:43px;
-    height:43px;
+    width:48px;
+    height:48px;
+    flex:0 0 48px;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
     border-radius:50%;
-
-    background:#fff;
-
-    color:#126b57;
+    background:#ffffff;
 
     text-decoration:none;
 
-    box-shadow:
-        0 3px 10px rgba(20,80,70,.10);
+    box-shadow:0 4px 12px rgba(0,0,0,.14);
+
+    overflow:hidden;
 }
 
-.social-links svg{
-    width:22px;
-    height:22px;
+.social-links a svg{
+    width:26px;
+    height:26px;
+    display:block;
+}
+
+.social-links a:nth-child(1){
+    color:#E4405F;
+}
+
+.social-links a:nth-child(2){
+    color:#1877F2;
+}
+
+.social-links a:nth-child(3){
+    color:#229ED9;
+}
+
+.social-links a:nth-child(4){
+    color:#FF0000;
+}
+
+.footer-copy{
+    margin-top:4px;
+    padding-bottom:8px;
+    text-align:center;
+    line-height:1.5;
 }
 
 .footer-copy{
@@ -941,8 +966,9 @@ body{
     }
 
     .brand-logo{
-        width:165px;
-        height:54px;
+        width:205px;
+        height:58px;
+        object-fit:contain;
     }
 
     .container{
@@ -1045,7 +1071,8 @@ body{
 @media(max-width:390px){
 
     .brand-logo{
-        width:145px;
+        width:185px;
+        height:56px;
     }
 
     .header-left{
