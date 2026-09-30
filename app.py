@@ -2977,14 +2977,13 @@ def assign_request(rid):
     )
 
     if admin_user is not None:
-        if admin_user.admin_level == "district":
+    if admin_user.admin_level == "district":
         return redirect(url_for("district_admin_dashboard"))
 
-        if admin_user.admin_level == "state":
+    if admin_user.admin_level == "state":
         return redirect(url_for("state_admin_dashboard"))
 
-        return redirect(url_for("admin"))
-
+return redirect(url_for("admin"))
 @app.post("/admin/create-admin")
 def create_admin():
 
