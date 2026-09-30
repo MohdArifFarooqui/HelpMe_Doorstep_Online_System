@@ -2976,7 +2976,7 @@ def assign_request(rid):
         "success"
     )
 
-    if admin_user is not None:
+if admin_user is not None:
     if admin_user.admin_level == "district":
         return redirect(url_for("district_admin_dashboard"))
 
