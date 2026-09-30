@@ -1713,12 +1713,7 @@ def add():
         "success"
     )
 
-    return redirect(
-        url_for(
-            "check_status",
-            phone=vals[2]
-        )
-    )
+    return redirect(url_for("customer_login"))
 
 # ==============================
 # ADMIN CUSTOMER FEEDBACK
