@@ -108,26 +108,22 @@
             display:block;
         }
 
-       .logout-image-button{
-    width:58px;
-    height:58px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:transparent !important;
-    border:0 !important;
-    padding:0;
-    margin:0;
-    text-decoration:none;
-    box-shadow:none !important;
-    border-radius:0;
-}
-
-.logout-image-button svg{
-    width:58px;
-    height:58px;
-    display:block;
-}
+       .header-home-button{
+            min-width:92px;
+            height:44px;
+            padding:0 12px;
+            border-radius:14px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:5px;
+            background:#f1f7ff;
+            color:#1268d9;
+            border:1px solid #dcecff;
+            font-size:15px;
+            font-weight:850;
+            text-decoration:none;
+        }
         /* =========================
            MAIN
         ========================= */
@@ -1303,83 +1299,11 @@
 
         <div class="header-side header-right">
 
-    <a href="/worker/logout"
-       class="logout-image-button"
-       aria-label="Logout"
-       onclick="event.preventDefault(); document.getElementById('logout-form-header').submit();">
-
-        <svg viewBox="0 0 220 220"
-             xmlns="http://www.w3.org/2000/svg"
-             aria-hidden="true">
-
-            <defs>
-                <linearGradient id="logoutBlue"
-                                x1="0" y1="0"
-                                x2="1" y2="1">
-                    <stop offset="0" stop-color="#1683e8"/>
-                    <stop offset="1" stop-color="#0756c7"/>
-                </linearGradient>
-
-                <filter id="logoutShadow"
-                        x="-20%" y="-20%"
-                        width="140%" height="140%">
-                    <feDropShadow
-                        dx="0"
-                        dy="5"
-                        stdDeviation="5"
-                        flood-color="#1b5fae"
-                        flood-opacity=".28"/>
-                </filter>
-            </defs>
-
-            <rect x="8"
-                  y="8"
-                  width="204"
-                  height="204"
-                  rx="34"
-                  fill="url(#logoutBlue)"
-                  stroke="#8fc7ff"
-                  stroke-width="5"
-                  filter="url(#logoutShadow)"/>
-
-            <rect x="103"
-                  y="38"
-                  width="14"
-                  height="78"
-                  rx="7"
-                  fill="#ffffff"/>
-
-            <path d="M82 60
-                     A55 55 0 1 0 138 60
-                     L128 74
-                     A37 37 0 1 1 92 74Z"
-                  fill="#ffffff"/>
-
-            <text x="110"
-                  y="174"
-                  text-anchor="middle"
-                  font-family="Arial, Helvetica, sans-serif"
-                  font-size="25"
-                  font-weight="800"
-                  fill="#ffffff">
-                LOGOUT
-            </text>
-
-        </svg>
-
-    </a>
-
-
-    <form id="logout-form-header"
-          method="post"
-          action="/worker/logout"
-          style="display:none;">
-
-        <input type="hidden"
-               name="csrf_token"
-               value="{{ csrf_token() }}">
-
-    </form>
+    <a href="#worker-home"
+   class="header-home-button"
+   aria-label="Home">
+    🏠 <span>Home</span>
+</a>
 
 </div>
 
