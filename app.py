@@ -281,6 +281,44 @@ def create_customer_notification(phone, message, request_id=None):
 
     DB.add(notification)
 
+    # ==============================
+# WORKER NOTIFICATIONS
+# ==============================
+
+class WorkerNotification(Base):
+    __tablename__ = "worker_notifications"
+
+    id = Column(Integer, primary_key=True)
+    worker_id = Column(Integer, nullable=False)
+    request_id = Column(Integer, nullable=True)
+    message = Column(Text, nullable=False)
+    is_read = Column(Boolean, default=False, nullable=False)
+
+    created_at = Column(
+        DateTime,
+        default=lambda: datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).replace(tzinfo=None),
+        nullable=False
+    )
+
+
+def create_worker_notification(
+    worker_id,
+    message,
+    request_id=None
+):
+    if not worker_id or not message:
+        return
+
+    notification = WorkerNotification(
+        worker_id=worker_id,
+        request_id=request_id,
+        message=message,
+        is_read=False
+    )
+
+    DB.add(notification)
 
 class User(Base):
     __tablename__ = "users"
@@ -2975,8 +3013,19 @@ def assign_request(rid):
     request_item.assigned_worker_id = worker.id
     request_item.status = "Assigned"
 
-    DB.commit()
+    # ==============================
+    # WORKER ASSIGNMENT NOTIFICATION
+    # ==============================
 
+    create_worker_notification(
+        worker.id,
+        f"नई Request {request_item.application_code} आपको assign की गई है। "
+        f"Customer: {request_item.customer}",
+        request_item.id
+    )
+    
+    DB.commit()
+    
     flash(
         f"Request {request_item.application_code} "
         f"successfully Worker को assign कर दी गई।",
@@ -3837,6 +3886,11 @@ def reset_registrations():
 def health():
     return {"status": "ok"}
 
+# ==============================
+# CREATE NEW DATABASE TABLES
+# ==============================
+
+Base.metadata.create_all(engine)
 
 if __name__ == "__main__":
     app.run(
