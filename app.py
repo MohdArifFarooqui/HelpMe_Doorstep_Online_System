@@ -2976,12 +2976,12 @@ def assign_request(rid):
         "success"
     )
 
-if admin_user is not None:
-    if admin_user.admin_level == "district":
-        return redirect(url_for("district_admin_dashboard"))
+    if admin_user is not None:
+        if admin_user.admin_level == "district":
+            return redirect(url_for("district_admin_dashboard"))
 
-    if admin_user.admin_level == "state":
-        return redirect(url_for("state_admin_dashboard"))
+        if admin_user.admin_level == "state":
+            return redirect(url_for("state_admin_dashboard"))
 
 return redirect(url_for("admin"))
 
