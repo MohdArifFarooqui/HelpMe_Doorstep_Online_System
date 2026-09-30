@@ -317,6 +317,13 @@ class User(Base):
     )
 
     @property
+    def worker_code(self):
+        if self.role != "worker":
+            return ""
+
+        return f"HM/DS/WR{self.id:02d}"
+    
+    @property
     def admin_code(self):
         if self.role != "admin":
             return ""
