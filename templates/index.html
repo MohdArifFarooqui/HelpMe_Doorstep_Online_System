@@ -728,16 +728,6 @@
   <input type="hidden" name="latitude" id="latitude">
   <input type="hidden" name="longitude" id="longitude">
 
-  <div class="location-box">
-    <button type="button" id="getLocationBtn" class="location-button">
-        📍 Location अनुमति दें
-    </button>
-
-    <div id="locationStatus" class="location-status">
-        आवेदन भेजने से पहले अपनी Location की अनुमति दें।
-    </div>
-</div>
-
 <style>
 .location-box{
     margin:15px 0 22px;
@@ -859,6 +849,18 @@
     <textarea name="details" required placeholder="जिस काम में सहायता चाहिए वह लिखें"></textarea>
   </label>
 
+  <div class="location-box">
+    <button type="button" id="getLocationBtn" class="location-button">
+        📍 Location अनुमति दें
+    </button>
+
+    <div id="locationStatus" class="location-status">
+        आवेदन भेजने से पहले अपनी Location की अनुमति दें।
+    </div>
+</div>
+
+<button type="submit">सेवा अनुरोध भेजें</button>
+    
   <button type="submit">सेवा अनुरोध भेजें</button>
 
 </form>
