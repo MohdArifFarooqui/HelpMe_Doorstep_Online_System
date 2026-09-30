@@ -404,6 +404,30 @@ def district_admin_dashboard():
         .all()
     )
 
+    # ==============================
+    # WORKER NOTIFICATIONS
+    # ==============================
+
+    worker_notifications = (
+        DB.query(WorkerNotification)
+        .filter(
+            WorkerNotification.worker_id == worker.id
+        )
+        .order_by(
+            WorkerNotification.id.desc()
+        )
+        .all()
+    )
+
+    worker_unread_count = (
+        DB.query(WorkerNotification)
+        .filter(
+            WorkerNotification.worker_id == worker.id,
+            WorkerNotification.is_read == False
+        )
+        .count()
+    )
+    
     # केवल उसी State + District के active/approved workers
     workers = (
         DB.query(User)
@@ -3777,14 +3801,39 @@ def worker_dashboard():
             request_distances[r.id] = None
 
         r.distance_km = request_distances[r.id]
-     
+
+       # ==============================
+    # WORKER NOTIFICATIONS
+    # ==============================
+
+    worker_notifications = (
+        DB.query(WorkerNotification)
+        .filter(
+            WorkerNotification.worker_id == worker.id
+        )
+        .order_by(
+            WorkerNotification.id.desc()
+        )
+        .all()
+    )
+
+    worker_unread_count = (
+        DB.query(WorkerNotification)
+        .filter(
+            WorkerNotification.worker_id == worker.id,
+            WorkerNotification.is_read == False
+        )
+        .count()
+    )
+    
     return render_template(
         "worker_dashboard.html",
         worker=worker,
         requests=requests,
-        request_distances=request_distances
+        request_distances=request_distances,
+        worker_notifications=worker_notifications,
+        worker_unread_count=worker_unread_count
     )
-
 
 @app.post("/worker/logout")
 def worker_logout():
