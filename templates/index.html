@@ -728,6 +728,51 @@
   <input type="hidden" name="latitude" id="latitude">
   <input type="hidden" name="longitude" id="longitude">
 
+  <div class="location-box">
+    <button type="button" id="getLocationBtn" class="location-button">
+        📍 Location अनुमति दें
+    </button>
+
+    <div id="locationStatus" class="location-status">
+        आवेदन भेजने से पहले अपनी Location की अनुमति दें।
+    </div>
+</div>
+
+<style>
+.location-box{
+    margin:15px 0 22px;
+    padding:16px;
+    border-radius:16px;
+    background:#eef8f5;
+    border:1px solid #cfe9df;
+    text-align:center;
+}
+
+.location-button{
+    width:100%;
+    padding:14px 16px;
+    border:0;
+    border-radius:13px;
+    background:linear-gradient(135deg,#1976d2,#1268c4);
+    color:#fff;
+    font-size:17px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.location-button:disabled{
+    opacity:.7;
+    cursor:wait;
+}
+
+.location-status{
+    margin-top:9px;
+    color:#56736c;
+    font-size:13px;
+    line-height:1.5;
+}
+</style>
+    
   <label>
     नाम
     <input name="customer" required placeholder="अपना नाम डालें">
@@ -926,6 +971,99 @@
 })();
 </script>
 
+<script>
+(function(){
+
+    const locationBtn = document.getElementById("getLocationBtn");
+    const locationStatus = document.getElementById("locationStatus");
+    const latitudeInput = document.getElementById("latitude");
+    const longitudeInput = document.getElementById("longitude");
+    const serviceForm = document.getElementById("serviceForm");
+
+    if(!locationBtn) return;
+
+    locationBtn.addEventListener("click", function(){
+
+        if(!navigator.geolocation){
+            locationStatus.textContent =
+                "❌ आपके browser में Location सुविधा उपलब्ध नहीं है।";
+            return;
+        }
+
+        locationBtn.disabled = true;
+        locationBtn.textContent = "📍 Location प्राप्त की जा रही है...";
+        locationStatus.textContent =
+            "कृपया Location permission Allow करें।";
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position){
+
+                latitudeInput.value = position.coords.latitude;
+                longitudeInput.value = position.coords.longitude;
+
+                locationBtn.textContent = "✅ Location सफलतापूर्वक मिल गई";
+                locationBtn.style.background =
+                    "linear-gradient(135deg,#11966f,#087f60)";
+
+                locationStatus.textContent =
+                    "आपकी Location सुरक्षित रूप से प्राप्त हो गई है। अब आवेदन भेज सकते हैं।";
+
+                locationBtn.disabled = false;
+            },
+
+            function(error){
+
+                locationBtn.disabled = false;
+                locationBtn.textContent = "📍 Location अनुमति दें";
+
+                if(error.code === 1){
+                    locationStatus.textContent =
+                        "❌ Location permission Allow करें और फिर दोबारा दबाएँ।";
+                }else if(error.code === 2){
+                    locationStatus.textContent =
+                        "❌ Location उपलब्ध नहीं है। GPS/Location चालू करें।";
+                }else{
+                    locationStatus.textContent =
+                        "❌ Location प्राप्त नहीं हो सकी। फिर से प्रयास करें।";
+                }
+            },
+
+            {
+                enableHighAccuracy:true,
+                timeout:15000,
+                maximumAge:0
+            }
+        );
+    });
+
+
+    if(serviceForm){
+
+        serviceForm.addEventListener("submit", function(event){
+
+            if(!latitudeInput.value || !longitudeInput.value){
+
+                event.preventDefault();
+
+                locationStatus.textContent =
+                    "⚠️ पहले 'Location अनुमति दें' बटन दबाकर Location प्राप्त करें।";
+
+                locationBtn.scrollIntoView({
+                    behavior:"smooth",
+                    block:"center"
+                });
+
+                return false;
+            }
+
+        });
+
+    }
+
+})();
+</script>
+    
 </main>
 
 <script src="/static/india-data.js"></script>
